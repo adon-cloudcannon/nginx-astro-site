@@ -1,0 +1,9 @@
+{
+    "project" : "NGINX Unit",
+    "author" : "NGINX, Inc.",
+    "copyright" : "2017-2024",
+    "version" : "1.32.1",
+    "release_date" : "Mar 26, 2024",
+    "nxt_baseurl" : "https://unit.nginx.org/",
+    "nxt_rss_file" : "rss.xml"
+}

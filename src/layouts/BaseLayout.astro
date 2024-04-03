@@ -6,6 +6,10 @@ import Logo from '../theme/logo.svg'
 import Icon from '../theme/icon.png'
 
 import meta from '../data/meta.json';
+
+import { getGithubUrl } from '../js/github'
+
+let edit_on_github_url = getGithubUrl(Astro);
 ---
 
 <!DOCTYPE html>
@@ -112,7 +116,7 @@ import meta from '../data/meta.json';
 </div>
 <div id="content">
     <slot />
-    { frontmatter.edit_on_github_url && <div class="nxt_github_link"><a href="{{ edit_on_github_url }}"><div></div>Edit this page</a></div>}
+    { edit_on_github_url && <div class="nxt_github_link"><a href={ edit_on_github_url }><div></div>Edit this page</a></div>}
     <p id="footer">
         © { meta.copyright } <a href="https://www.nginx.com/">{ meta.author }</a>
     </p>

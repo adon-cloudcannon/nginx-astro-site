@@ -5,5 +5,7 @@
     "version" : "1.32.1",
     "release_date" : "Mar 26, 2024",
     "nxt_baseurl" : "https://unit.nginx.org/",
-    "nxt_rss_file" : "rss.xml"
+    "nxt_rss_file" : "rss.xml",
+    "edit_on_github_project" : "nginx/unit-docs",
+    "edit_on_github_branch" : "master"
 }

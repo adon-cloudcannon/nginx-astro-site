@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: WebAssembly Components with Fermyon's Spin SDK for Rust
+---
 # WebAssembly Components with Fermyon’s Spin SDK for Rust
 
 In our blog series [Part 1](/news/2024/wasm-component-model-part-1/) and [Part 2](/news/2024/wasm-component-model-part-2/) , we have covered the core mechanism of the WebAssembly Component Model and showcased how to create a Wasm Component using WASI 0.2 APIs and the **wasi/http:proxy** world.

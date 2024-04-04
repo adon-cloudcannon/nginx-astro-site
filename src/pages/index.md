@@ -1,6 +1,8 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: Universal web app server
+pagename: index
+order: 0
 ---
 
 # Universal web app server

@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.32.0 Released
+---
 # Unit 1.32.0 Released
 
 Unit 1.32.0 comes with a new language module for WebAssembly that supports

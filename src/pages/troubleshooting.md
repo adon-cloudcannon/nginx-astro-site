@@ -1,6 +1,7 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: Troubleshooting
+order: 10
 ---
 # Troubleshooting
 

@@ -1,6 +1,7 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: SSL/TLS certificates
+order: 7
 ---
 
 <a id="configuration-ssl"></a>

@@ -1,6 +1,7 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: Usage statistics
+order: 8
 ---
 <a id="configuration-stats"></a>
 

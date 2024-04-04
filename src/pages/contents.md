@@ -1,6 +1,3 @@
----
-layout: ../layouts/BaseLayout.astro
----
 * [About](index.md)
 * [Key features](keyfeatures.md)
   * [Flexibility](keyfeatures.md#flexibility)

@@ -38,13 +38,11 @@ function nxt_tab_init() {
 function nxt_nav_init() {
     const observer = new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
-
             const toc_id = (entry.target.classList.contains('section'))
                            ? entry.target.id
                            : entry.target.previousElementSibling.id;
 
-            const selector = '#side .toctree-l1 a[href="#' + toc_id + '"]'
-
+            const selector = '#side .toctree-l1 a[href="/how-to/#' + toc_id + '"]'
             const anchor = document.querySelector(selector)
 
             if (anchor) {
@@ -54,7 +52,7 @@ function nxt_nav_init() {
         }
     })
 
-    const sections = '#content > :not(#howto) div.section'
+    const sections = '#content div.section'
 
     for (const el of document.querySelectorAll(sections)) {
         observer.observe(el)

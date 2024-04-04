@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit Beta 0.6 Released
+---
 # Unit Beta 0.6 Released
 
 Hello,

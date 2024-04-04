@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.27.0 Released
+---
 # Unit 1.27.0 Released
 
 We are pleased to announce NGINX Unit 1.27. This release brings a new level of

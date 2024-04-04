@@ -1,0 +1,32 @@
+---
+let pages = await Astro.glob('../pages/*.md')
+pages = pages.filter(x => x.frontmatter.title).sort((a,b) => a.frontmatter.order - b.frontmatter.order)
+---
+<ul>
+    {
+        pages.map(page => {
+            let page_url = page.url == "" ? "/" : page.url
+            let parent_current = (page_url == "/" && Astro.url.pathname == page_url) 
+                            || (page_url != "/" && Astro.url.pathname.startsWith(page_url))
+            return <li class:list={["toctree-l1", {"current": parent_current}]}>
+                {page.frontmatter.pagename == "index" ? 
+                    <a href="/">About</a> : 
+                    <a href={page.url}>{page.frontmatter.title}</a>
+                }
+                {page.frontmatter.menu && <ul class:list={[{"hidden" : !parent_current}]}>
+                    {page.frontmatter.menu.map(item => 
+                            <li class:list={["toctree-l2", {"current": Astro.url.pathname == item.url}]}>
+                                <a href={item.url}>{item.name}</a>
+                                {item.menu && <ul>
+                                    {item.menu.map(subitem => 
+                                        <li class="toctree-l3"><a href={subitem.url}>{subitem.name}</a></li>
+                                    )}    
+                                </ul>}
+                            </li>
+                    )}
+                </ul>}
+            </li>
+        })
+    }
+
+</ul>

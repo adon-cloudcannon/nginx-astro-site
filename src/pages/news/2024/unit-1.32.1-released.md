@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.32.1 Released
+---
 # Unit 1.32.1 Released
 
 NGINX Unit 1.32.1 is a maintenance release that fixes bugs in the new WebAssembly Language Module and in our NJS implementation.

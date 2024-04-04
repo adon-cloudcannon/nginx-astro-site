@@ -1,6 +1,7 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: Key features
+order: 1
 ---
 # Key features
 

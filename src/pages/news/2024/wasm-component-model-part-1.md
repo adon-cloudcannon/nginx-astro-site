@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: The WebAssembly Component Model - The Why, How and What - Part 1
+---
 # The WebAssembly Component Model - The Why, How and What - Part 1
 
 Are you interested in getting started with the WebAssembly Component Model but feel overwhelmed by the ecosystem and unsure where to begin? If so, this blog post is for you!

@@ -1,0 +1,143 @@
+---
+// Includes
+import TOC from "@components/TOC.astro"
+
+const {
+  frontmatter
+} = Astro.props;
+
+// Theme/style imports
+import '../theme/style.css';
+import Logo_svg from '../theme/logo.svg'
+import Logo_png from '../theme/logo.png'
+import Icon from '../theme/icon.png'
+
+// Data
+import meta from '@data/meta.json';
+
+// Extension functions
+import { getGithubUrl } from '@utils/github'
+let edit_on_github_url = getGithubUrl(Astro);
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+<!-- TrustArc handles cookie consent and is a prerequisite for loading Tealium -->
+<script async="async" src="https://consent.trustarc.com/notice?domain=f5.com&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1" crossorigin=""></script>
+<!-- Tealium profile utag.sync.js script -->
+<script src="https://mktg.tags.f5.com/nginx-unit/prod/utag.sync.js"></script>
+<!-- End TrustArc/Tealium -->
+
+<meta charset="utf-8" />
+
+{ frontmatter.pagename == "index" && <meta name="go-import" content="unit.nginx.org hg https://hg.nginx.org/unit" /> }
+{ frontmatter.pagename == "index" ? <meta property="og:url" content="" /> : <meta property="og:url" content="" /> }
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+
+<meta property="og:title" content=`${ meta.project }: ${ frontmatter.title}`>
+{ frontmatter.metatags }
+<meta property="og:image" content={Logo_png.src}>
+<meta property="og:image:secure_url" content={Logo_png.src}>
+<meta property="og:image:width" content="988">
+<meta property="og:image:height" content="357">
+<meta property="og:image:alt" content="NGINX Unit logo" />
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+
+<style>
+/* open-sans-regular - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('OpenSans'), local('Open Sans'), local('Open Sans Regular'), local('OpenSans-Regular'),
+       url('../theme/open-sans-v40-latin_latin-ext-regular.woff2') format('woff2');
+}
+
+/* open-sans-italic - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('OpenSansItalic'), local('Open Sans Italic'), local('OpenSans Italic'), local('OpenSans-Italic'),
+       url('../theme/open-sans-v40-latin_latin-ext-italic.woff2') format('woff2');
+}
+
+/* open-sans-700 - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('OpenSansBold'), local('Open Sans Bold'), local('OpenSans Bold'), local('OpenSans-Bold'),
+       url('../theme/open-sans-v40-latin_latin-ext-700.woff2') format('woff2');
+}
+
+/* open-sans-700italic - latin_latin-ext */
+@font-face {
+  font-display: swap;
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('OpenSansBoldItalic'), local('Open Sans Bold Italic'), local('OpenSans Bold Italic'), local('OpenSans-BoldItalic'), local('OpenSans-Bold-Italic'),
+       url('../theme/open-sans-v40-latin_latin-ext-700italic.woff2') format('woff2');
+}
+
+</style>
+<link rel="icon" href={Icon.src} />
+<link rel="alternate" type="application/rss+xml" title="Subscribe to NGINX Unit News" href=`${ meta.nxt_baseurl } ${ meta.nxt_rss_file }` />
+<script src="../theme/script.js"></script>
+
+{ frontmatter.next && <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}" />}
+{(frontmatter.prev && frontmatter.pagename != "index") && <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />}
+
+<title>{ frontmatter.title } — { meta.project }</title>
+</head>
+<body>
+<!-- Tealium Universal Tag -->
+<script type="text/javascript">
+  (function(a,b,c,d) {
+      a='//mktg.tags.f5.com/nginx-unit/prod/utag.js';
+      b=document;c='script';d=b.createElement(c);d.src=a;
+      d.type='text/java'+c;d.async=true;
+      a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)})();
+</script>
+<!-- End Tealium Universal Tag -->
+
+<!-- Global banner goes here
+    <div id="rennab"><a href="BANNER LINK">BANNER TEXT</a></div>
+-->
+<div id="main">
+<div id="side">
+    <h1>
+        { frontmatter.pagename != "index" ? <a href="/"><img src={Logo_svg.src} alt={ meta.project } /></a> : <img src={Logo_svg.src} alt={meta.project} /> }
+                
+        <div title=`Released on ${ meta.release_date }`>v. { meta.version }</div>
+    </h1>
+    <TOC />
+</div>
+<div id="content">
+    <slot />
+    { edit_on_github_url && <div class="nxt_github_link"><a href={ edit_on_github_url }><div></div>Edit this page</a></div>}
+    <p id="footer">
+        © { meta.copyright } <a href="https://www.nginx.com/">{ meta.author }</a>
+    </p>
+    <p id="tecookie">
+        <!-- TrustArc cookie preferences link -->
+        <span id="teconsent"></span>
+        <!-- End TrustArc cookie preferences link -->
+    </p>
+</div>
+</div>
+<!-- TrustArc cookie consent -->
+<div id="consent_blackbar" style="position:fixed;top:0px;width:100%"></div>
+<!-- End TrustArc cookie consent -->
+</body>
+</html>

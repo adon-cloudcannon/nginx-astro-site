@@ -1,6 +1,24 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: News
+order: 2
+menu:
+  - name: "2024"
+    url: /news/2024
+  - name: "2023"
+    url: /news/2023
+  - name: "2022"
+    url: /news/2022
+  - name: "2021"
+    url: /news/2021
+  - name: "2020"
+    url: /news/2020
+  - name: "2019"
+    url: /news/2019
+  - name: "2018"
+    url: /news/2018
+  - name: "2017"
+    url: /news/2017
 ---
 # News
 

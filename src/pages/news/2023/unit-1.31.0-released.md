@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.31.0 Released
+---
 # Unit 1.31.0 Released
 
 We are delighted to announce Unit 1.31.0, which marks a significant milestone

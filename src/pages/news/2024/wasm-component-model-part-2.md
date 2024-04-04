@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: The WebAssembly Component Model - The Why, How and What - Part 2
+---
 # The WebAssembly Component Model - The Why, How and What - Part 2
 
 This is Part 2 of our blog series about the Wasm Component Model, it’s ecosytem and how to use Wasm Components with NGINX Unit.

@@ -130,6 +130,9 @@ iframe {
     overflow-y: hidden;
     transition: all .6s;
 }
+#side .toctree-l2 a{
+    text-transform: capitalize;
+}
 #side .toctree-l2 ul:after {
     content: '';
     display: block;
@@ -810,3 +813,5 @@ blockquote {
   font-style: italic;
   padding: .6em 0 .6em 1em;
 }
+
+.hidden{ display: none;}

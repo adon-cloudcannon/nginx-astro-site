@@ -1,14 +1,22 @@
 ---
-const { frontmatter } = Astro.props;
+// Includes
+import TOC from "@components/TOC.astro"
 
+const {
+  frontmatter
+} = Astro.props;
+
+// Theme/style imports
 import '../theme/style.css';
-import Logo from '../theme/logo.svg'
+import Logo_svg from '../theme/logo.svg'
+import Logo_png from '../theme/logo.png'
 import Icon from '../theme/icon.png'
 
-import meta from '../data/meta.json';
+// Data
+import meta from '@data/meta.json';
 
-import { getGithubUrl } from '../js/github'
-
+// Extension functions
+import { getGithubUrl } from '@utils/github'
 let edit_on_github_url = getGithubUrl(Astro);
 ---
 
@@ -31,10 +39,10 @@ let edit_on_github_url = getGithubUrl(Astro);
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 
-<meta property="og:title" content="{ meta.project }: { frontmatter.title}">
+<meta property="og:title" content=`${ meta.project }: ${ frontmatter.title}`>
 { frontmatter.metatags }
-<meta property="og:image" content="{{ 'http://unit.nginx.org/_static/logo.png' + '?' + md5('theme/static/logo.png') }}">
-<meta property="og:image:secure_url" content="{{ 'https://unit.nginx.org/_static/logo.png' + '?' + md5('theme/static/logo.png') }}">
+<meta property="og:image" content={Logo_png.src}>
+<meta property="og:image:secure_url" content={Logo_png.src}>
 <meta property="og:image:width" content="988">
 <meta property="og:image:height" content="357">
 <meta property="og:image:alt" content="NGINX Unit logo" />
@@ -84,8 +92,7 @@ let edit_on_github_url = getGithubUrl(Astro);
 
 </style>
 <link rel="icon" href={Icon.src} />
-<link rel="alternate" type="application/rss+xml" title="Subscribe to NGINX Unit News" href="{ meta.nxt_baseurl + nxt_rss_file }" />
-<script src="../theme/script.js"></script>
+<link rel="alternate" type="application/rss+xml" title="Subscribe to NGINX Unit News" href=`${ meta.nxt_baseurl } ${ meta.nxt_rss_file }` />
 
 { frontmatter.next && <link rel="next" title="{{ next.title|striptags|e }}" href="{{ next.link|e }}" />}
 {(frontmatter.prev && frontmatter.pagename != "index") && <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />}
@@ -109,13 +116,15 @@ let edit_on_github_url = getGithubUrl(Astro);
 <div id="main">
 <div id="side">
     <h1>
-        { frontmatter.pagename != "index" ? <a href="{{ pathto('index') }}"><img src={Logo.src} alt={ meta.project } /></a> : <img src={Logo.src} alt={meta.project} /> }
+        { frontmatter.pagename != "index" ? <a href="/"><img src={Logo_svg.src} alt={ meta.project } /></a> : <img src={Logo_svg.src} alt={meta.project} /> }
                 
-        <div title="Released on { meta.release_date }">v. { meta.version }</div>
+        <div title=`Released on ${ meta.release_date }`>v. { meta.version }</div>
     </h1>
+    <TOC menu={frontmatter.menu} />
 </div>
 <div id="content">
     <slot />
+    
     { edit_on_github_url && <div class="nxt_github_link"><a href={ edit_on_github_url }><div></div>Edit this page</a></div>}
     <p id="footer">
         © { meta.copyright } <a href="https://www.nginx.com/">{ meta.author }</a>
@@ -128,7 +137,9 @@ let edit_on_github_url = getGithubUrl(Astro);
 </div>
 </div>
 <!-- TrustArc cookie consent -->
-<div id="consent_blackbar" style="position:fixed;top:0px;width:100%">
+<div id="consent_blackbar" style="position:fixed;top:0px;width:100%"></div>
 <!-- End TrustArc cookie consent -->
+<script src="@theme/script.js"></script>
+
 </body>
 </html>

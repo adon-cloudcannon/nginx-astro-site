@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.29.0 Released
+---
 # Unit 1.29.0 Released
 
 We are happy to announce Unit 1.29.0! This release enhances the configuration

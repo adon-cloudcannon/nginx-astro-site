@@ -1,3 +1,7 @@
+---
+layout: "@layouts/BaseLayout.astro"
+title: NGINX Unit Community Call No.1
+---
 # NGINX Unit Community Call No.1
 
 #### NOTE

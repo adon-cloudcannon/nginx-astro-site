@@ -1,4 +1,8 @@
-# Unit 1.16.0 Released
+---
+layout: "@layouts/BaseLayout.astro"
+title: Unit 1.15.0 Released
+---
+# Unit 1.15.0 Released
 
 Hi,
 

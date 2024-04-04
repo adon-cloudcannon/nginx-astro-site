@@ -1,6 +1,7 @@
 ---
-layout: ../layouts/BaseLayout.astro
+layout: "@layouts/BaseLayout.astro"
 title: Control API
+order: 4
 ---
 <a id="configuration-api"></a>
 
@@ -157,7 +158,7 @@ you’ve copied to the state directory.
 > (only IP sockets are supported now)
 > on the page:
 
-> ![Unit's OpenAPI Image Page - Customizing Control Socket Address](images/openapi.png)
+> ![Unit's OpenAPI Image Page - Customizing Control Socket Address](/openapi.png)
 
 <a id="configuration-quickstart"></a>
 

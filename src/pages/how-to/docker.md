@@ -1,13 +1,13 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Unit in Docker
 ---
 # Unit in Docker
 
-To run your apps in a containerized Unit using the [images we provide](../installation.md#installation-docker), you need at least to:
+To run your apps in a containerized Unit using the [images we provide](../installation.md#installation-docker), you need at least to:<nxt_hint tooltip="Something">Display text</nxt_hint>
 
-- Mount your application files to a directory in your container.
-- Publish Unit’s listener port to the host machine.
+* Mount your application files to a directory in your container.
+* Publish Unit’s listener port to the host machine.
 
 For example:
 
@@ -18,10 +18,7 @@ $ export UNIT=$(                                             \
   )
 ```
 
-The command mounts the host’s current directory where your app files are stored
-to the container’s **/www/** directory and publishes the container’s port
-**8000** that the listener will use as port **8080** on the host,
-saving the container’s ID in the `UNIT` environment variable.
+The command mounts the host’s current directory where your app files are stored to the container’s **/www/** directory and publishes the container’s port **8000** that the listener will use as port **8080** on the host, saving the container’s ID in the `UNIT` environment variable.
 
 Next, upload a configuration to Unit via the control socket:
 
@@ -31,23 +28,19 @@ $ docker exec -ti $UNIT curl -X PUT --data-binary @/www/config.json  \
       http://localhost/config
 ```
 
-This command assumes your configuration is stored as **config.json** in the
-container-mounted directory on the host; if the file defines a listener on port
-**8000**, your app is now accessible on port **8080** of the host.  For
-details of the Unit configuration, see [Configuration](../controlapi.md#configuration-api).
+This command assumes your configuration is stored as **config.json** in the container-mounted directory on the host; if the file defines a listener on port **8000**, your app is now accessible on port **8080** of the host.  For details of the Unit configuration, see [Configuration](../controlapi.md#configuration-api).
 
 #### NOTE
-For app containerization examples, refer to our sample [`Go`](../downloads/Dockerfile.go.txt), [`Java`](../downloads/Dockerfile.java.txt), [`Node.js`](../downloads/Dockerfile.nodejs.txt), [`Perl`](../downloads/Dockerfile.perl.txt), [`PHP`](../downloads/Dockerfile.php.txt), [`Python`](../downloads/Dockerfile.python.txt), and [`Ruby`](../downloads/Dockerfile.ruby.txt) Dockerfiles; also, see a more
-elaborate discussion [below](#docker-apps).
+
+For app containerization examples, refer to our sample [`Go`](../downloads/Dockerfile.go.txt), [`Java`](../downloads/Dockerfile.java.txt), [`Node.js`](../downloads/Dockerfile.nodejs.txt), [`Perl`](../downloads/Dockerfile.perl.txt), [`PHP`](../downloads/Dockerfile.php.txt), [`Python`](../downloads/Dockerfile.python.txt), and [`Ruby`](../downloads/Dockerfile.ruby.txt) Dockerfiles; also, see a more elaborate discussion [below](#docker-apps).
 
 Now for a few detailed scenarios.
 
-<a id="docker-apps-containerized-unit"></a>
+&nbsp;
 
 ## Apps in a Containerized Unit
 
-Suppose we have a web app with a few dependencies, say [Flask’s](flask.md)
-official **hello, world** app:
+Suppose we have a web app with a few dependencies, say [Flask’s](flask.md) official **hello, world** app:
 
 ```bash
 $ cd :nxt_ph:`/path/to/app/ <Directory where all app-related files will be stored; use a real path in your configuration>`
@@ -63,8 +56,7 @@ def hello_world():
 EOF
 ```
 
-However basic it is, there’s already a dependency, so let’s list it in a file
-called **requirements.txt**:
+However basic it is, there’s already a dependency, so let’s list it in a file called **requirements.txt**:
 
 ```bash
 $ cat << EOF > requirements.txt
@@ -73,8 +65,7 @@ flask
 EOF
 ```
 
-Next, create a simple Unit [configuration](../configuration.md#configuration-python) for the
-app:
+Next, create a simple Unit [configuration](../configuration.md#configuration-python) for the app:
 
 ```bash
 $ mkdir config
@@ -99,8 +90,7 @@ $ cat << EOF > config/config.json
 EOF
 ```
 
-Finally, let’s create **log/** and **state/** directories to store Unit
-[log and state](source.md#source-startup) respectively:
+Finally, let’s create **log/** and **state/** directories to store Unit [log and state](source.md#source-startup) respectively:
 
 ```bash
 $ mkdir log
@@ -122,8 +112,7 @@ Our file structure so far:
     └── wsgi.py
 ```
 
-Everything is ready for a containerized Unit.  First, let’s create a
-**Dockerfile** to install app prerequisites:
+Everything is ready for a containerized Unit.  First, let’s create a **Dockerfile** to install app prerequisites:
 
 ```docker
 FROM unit:1.32.1-python3.11
@@ -149,14 +138,10 @@ $ export UNIT=$(                                                         \
 ```
 
 #### NOTE
-With this mapping, Unit stores its state and log in your file structure.  By
-default, our Docker images forward their log output to the [Docker log
-collector](https://docs.docker.com/config/containers/logging/).
 
-We’ve mapped the source **config/** to **/docker-entrypoint.d/** in the
-container; the official image [uploads](../installation.md#installation-docker-init) any
-**.json** files found there into Unit’s **config** section if the
-state is empty.  Now we can test the app:
+With this mapping, Unit stores its state and log in your file structure.  By default, our Docker images forward their log output to the [Docker log collector](https://docs.docker.com/config/containers/logging/).
+
+We’ve mapped the source **config/** to **/docker-entrypoint.d/** in the container; the official image [uploads](../installation.md#installation-docker-init) any **.json** files found there into Unit’s **config** section if the state is empty.  Now we can test the app:
 
 ```bash
 $ curl -X GET localhost:8080
@@ -164,15 +149,13 @@ $ curl -X GET localhost:8080
     Hello, World!
 ```
 
-To relocate the app in your file system, you only need to move the file
-structure:
+To relocate the app in your file system, you only need to move the file structure:
 
 ```bash
 $ mv :nxt_ph:`/path/to/app/ <Directory where all app-related files are stored>` :nxt_ph:`/new/path/to/app/ <New directory; use a real path in your configuration>`
 ```
 
-To switch your app to a different Unit image, prepare a corresponding
-**Dockerfile** first:
+To switch your app to a different Unit image, prepare a corresponding **Dockerfile** first:
 
 ```docker
 FROM unit:1.32.1-minimal
@@ -200,8 +183,7 @@ RUN apt update && apt install -y unit-python3.9 python3-pip                   \
 $ docker build --tag=unit-pruned-webapp .
 ```
 
-Run a container from the new image; Unit picks up the mapped state
-automatically:
+Run a container from the new image; Unit picks up the mapped state automatically:
 
 ```bash
 $ export UNIT=$(                                                         \
@@ -213,12 +195,11 @@ $ export UNIT=$(                                                         \
   )
 ```
 
-<a id="docker-apps"></a>
+&nbsp;
 
 ## Containerized Apps
 
-Suppose you have a Unit-ready [Express](express.md) app, stored in the
-**myapp/** directory as **app.js**:
+Suppose you have a Unit-ready [Express](express.md) app, stored in the **myapp/** directory as **app.js**:
 
 ```javascript
 #!/usr/bin/env node
@@ -269,11 +250,10 @@ myapp/
 ```
 
 #### NOTE
-Don’t forget to **chmod +x** the **app.js** file so Unit can run
-it.
 
-Let’s prepare a **Dockerfile** to install and configure the app in an
-image:
+Don’t forget to **chmod +x** the **app.js** file so Unit can run it.
+
+Let’s prepare a **Dockerfile** to install and configure the app in an image:
 
 ```docker
 # Keep our base image as specific as possible.
@@ -289,10 +269,7 @@ RUN cd /www && npm install express && npm link unit-http
 EXPOSE 8080
 ```
 
-When you start a container based on this image,
-mount the **config.json** file to
-[initialize](../installation.md#installation-docker-init)
-Unit’s state:
+When you start a container based on this image, mount the **config.json** file to [initialize](../installation.md#installation-docker-init) Unit’s state:
 
 ```bash
 $ docker build --tag=:nxt_hint:`unit-expressapp <Arbitrary image tag>` .
@@ -309,9 +286,8 @@ $ curl -X GET localhost:8080
 ```
 
 #### NOTE
-This mechanism allows to initialize Unit at container startup only if its
-state is empty; otherwise, the contents of **/docker-entrypoint.d/** is
-ignored.  Continuing the previous sample:
+
+This mechanism allows to initialize Unit at container startup only if its state is empty; otherwise, the contents of **/docker-entrypoint.d/** is ignored.  Continuing the previous sample:
 
 ```bash
 $ docker commit $UNIT unit-expressapp  # Store a non-empty Unit state in the image.
@@ -327,12 +303,9 @@ $ export UNIT=$(                                                                
   )
 ```
 
-Here, Unit *does not* pick up the **new-config.json** from the
-**/docker-entrypoint.d/** directory when we run a container from the
-updated image because Unit’s state was initialized and saved earlier.
+Here, Unit *does not* pick up the **new-config.json** from the **/docker-entrypoint.d/** directory when we run a container from the updated image because Unit’s state was initialized and saved earlier.
 
-To configure the app after startup, supply a file or an explicit snippet via
-the [control API](../controlapi.md#configuration-api):
+To configure the app after startup, supply a file or an explicit snippet via the [control API](../controlapi.md#configuration-api):
 
 ```bash
 $ cat << EOF > myapp/new-config.json
@@ -354,18 +327,13 @@ $ docker exec -ti $UNIT curl -X PUT -d '"/www/newapp/"'  \
          http://localhost/config/applications/express/working_directory
 ```
 
-This approach is applicable to any Unit-supported apps with external
-dependencies.
+This approach is applicable to any Unit-supported apps with external dependencies.
 
-<a id="docker-multi"></a>
+&nbsp;
 
 ## Multilanguage Images
 
-Earlier, Unit had a **-full** Docker image with modules for all supported
-languages, but it was discontinued with version 1.22.0.  If you still need a
-multilanguage image, use the following **Dockerfile** template that starts
-with the minimal Unit image based on [Debian 11](../installation.md#debian-11)
-and installs official language module packages:
+Earlier, Unit had a **\-full** Docker image with modules for all supported languages, but it was discontinued with version 1.22.0.  If you still need a multilanguage image, use the following **Dockerfile** template that starts with the minimal Unit image based on [Debian 11](../installation.md#debian-11) and installs official language module packages:
 
 ```docker
 FROM unit:1.32.1-minimal
@@ -389,12 +357,11 @@ RUN apt update && apt install -y                                              \
 
 Instead of packages, you can build custom [modules](source.md#source-modules); use these **Dockerfile.\*** [templates](https://github.com/nginx/unit/tree/master/pkg/docker) as reference.
 
-<a id="docker-startup"></a>
+&nbsp;
 
 ## Startup Customization
 
-Finally, you can customize the way Unit starts in a container by adding a new
-Dockerfile layer:
+Finally, you can customize the way Unit starts in a container by adding a new Dockerfile layer:
 
 ```docker
 FROM nginx/unit:1.32.1-minimal
@@ -402,8 +369,7 @@ FROM nginx/unit:1.32.1-minimal
 CMD ["unitd-debug","--no-daemon","--control","unix:/var/run/control.unit.sock"]
 ```
 
-The **CMD** instruction above replaces the default **unitd**
-executable with its debug version.  Use Unit’s [command-line options](source.md#source-startup) to alter its startup behavior, for example:
+The **CMD** instruction above replaces the default **unitd** executable with its debug version.  Use Unit’s [command-line options](source.md#source-startup) to alter its startup behavior, for example:
 
 ```docker
 FROM nginx/unit:1.32.1-minimal
@@ -411,5 +377,4 @@ FROM nginx/unit:1.32.1-minimal
 CMD ["unitd","--no-daemon","--control","0.0.0.0:8080"]
 ```
 
-This replaces Unit’s default UNIX domain control socket with an IP socket
-address.
+This replaces Unit’s default UNIX domain control socket with an IP socket address.

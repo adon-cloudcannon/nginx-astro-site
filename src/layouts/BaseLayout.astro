@@ -28,6 +28,8 @@ html_content = nxt_hint(html_content)
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="@theme/script.js"></script>
+
 <!-- TrustArc handles cookie consent and is a prerequisite for loading Tealium -->
 <script async="async" src="https://consent.trustarc.com/notice?domain=f5.com&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1" crossorigin=""></script>
 <!-- Tealium profile utag.sync.js script -->
@@ -103,7 +105,6 @@ html_content = nxt_hint(html_content)
 {(frontmatter.prev && frontmatter.pagename != "index") && <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />}
 
 <title>{ frontmatter.title } — { meta.project }</title>
-<script src="@theme/script.js"></script>
 
 </head>
 <body>

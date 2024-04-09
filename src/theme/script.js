@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 console.log("Script is alive!")
 /*
  * Adapted Font Awesome icons, CC BY 4.0 License:

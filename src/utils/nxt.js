@@ -38,7 +38,6 @@ function nxt_hint(content){
               let highlighted = prism.highlight(code, prism.languages[lang], lang);
               let replaced = highlighted.replace(/(?<nxt_tag>NXTREPLACE\d+)/g, function(match,...args) {
                 const groups = args.at(-1)
-                console.log(replaceArr)
                 let index = groups.nxt_tag.replace("NXTREPLACE","")
                 let filtered = replaceArr.filter(x => x.index === parseInt(index))[0]
                 let clazz = ""

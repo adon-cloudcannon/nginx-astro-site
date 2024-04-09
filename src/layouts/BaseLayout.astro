@@ -103,6 +103,8 @@ html_content = nxt_hint(html_content)
 {(frontmatter.prev && frontmatter.pagename != "index") && <link rel="prev" title="{{ prev.title|striptags|e }}" href="{{ prev.link|e }}" />}
 
 <title>{ frontmatter.title } — { meta.project }</title>
+<script src="@theme/script.js"></script>
+
 </head>
 <body>
 <!-- Tealium Universal Tag -->
@@ -114,6 +116,7 @@ html_content = nxt_hint(html_content)
       a=b.getElementsByTagName(c)[0];a.parentNode.insertBefore(d,a)})();
 </script>
 <!-- End Tealium Universal Tag -->
+
 
 <!-- Global banner goes here
     <div id="rennab"><a href="BANNER LINK">BANNER TEXT</a></div>
@@ -144,7 +147,6 @@ html_content = nxt_hint(html_content)
 <!-- TrustArc cookie consent -->
 <div id="consent_blackbar" style="position:fixed;top:0px;width:100%"></div>
 <!-- End TrustArc cookie consent -->
-<script src="@theme/script.js"></script>
 
 </body>
 </html>

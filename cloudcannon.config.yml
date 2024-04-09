@@ -68,7 +68,7 @@ _snippets:
     preview:
       text: Code Block
     definitions:
-      component: Code_Block
+      component_name: Code_Block
       named_args:
         - editor_key: content
           source_key: content

@@ -62,3 +62,18 @@ _snippets:
       display_text:
         type: text
         comment: What text you want to display in the text
+  code_block:
+    template: mdx_component
+    inline: false
+    preview:
+      text: Code Block
+    definitions:
+      component: Code_Block
+      named_args:
+        - editor_key: content
+          source_key: content
+          type: string
+    _inputs:
+      content:
+        type: markdown
+        comment: The content of this code block

@@ -7,7 +7,8 @@ export default defineConfig({
     integrations: [
         AutoImport({
             imports: [
-            '@components/NXT_Hint.astro',
+                '@components/NXT_Hint.astro',
+                '@components/Code_Block.astro'
             ],
         }),
         mdx()

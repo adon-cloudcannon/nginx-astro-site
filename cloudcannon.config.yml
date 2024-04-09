@@ -34,6 +34,8 @@ collections_config:
     schemas:
     schema_key:
 timezone: Etc/UTC
+_editables:
+  snippet: true
 _snippets_imports:
   mdx: true
 _snippets:

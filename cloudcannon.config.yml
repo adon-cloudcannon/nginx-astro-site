@@ -1,7 +1,7 @@
 source: src
 paths:
   uploads: uploads
-  static: ''
+  static: public
   collections: ''
   data: ''
   layouts:
@@ -32,7 +32,9 @@ collections_config:
     disable_file_actions: false
     new_preview_url:
     schemas:
-    schema_key:
+      default:
+        name: New Page
+        path: schemas/page.mdx
 timezone: Etc/UTC
 _editables:
   snippet: true
@@ -40,19 +42,23 @@ _snippets_imports:
   mdx: true
 _snippets:
   nxt_hint:
-    template: mdx_paired_component
+    template: mdx_component
     inline: true
     preview:
       text: NXT Hint
     definitions:
-      component_name: nxt_hint
-      content_key: hint_text
+      component_name: NXT_Hint
       named_args:
         - editor_key: tooltip
           source_key: tooltip
           type: string
+        - editor_key: display_text
+          source_key: display_text
+          type: string
     _inputs:
       tooltip:
         type: text
-      hint_text:
-        comment: A comment
+        comment: The tooltip text that should show on hover
+      display_text:
+        type: text
+        comment: What text you want to display in the text

@@ -36,3 +36,21 @@ collections_config:
 timezone: Etc/UTC
 _snippets_imports:
   mdx: true
+_snippets:
+  nxt_hint:
+    template: mdx_paired_component
+    inline: true
+    preview:
+      text: NXT Hint
+    definitions:
+      component_name: nxt_hint
+      content_key: hint_text
+      named_args:
+        - editor_key: tooltip
+          source_key: tooltip
+          type: string
+    _inputs:
+      tooltip:
+        type: text
+      hint_text:
+        comment: A comment

@@ -20,16 +20,16 @@ import meta from '@data/meta.json';
 import { getGithubUrl } from '@utils/github'
 let edit_on_github_url = getGithubUrl(Astro);
 
-import { nxt_hint } from '@utils/nxt'
+/*import { nxt_hint } from '@utils/nxt'
 let html_content = Astro.props.rawContent()
-html_content = nxt_hint(html_content)
+html_content = nxt_hint(html_content)*/
 ---
 
 <!DOCTYPE html>
 <html>
 <head>
     <script src="@theme/script.js"></script>
-
+<!-- TODO: comment these scripts back in when deploying... breaking CC scripts at the moment, so commented out -->
 <!-- TrustArc handles cookie consent and is a prerequisite for loading Tealium -->
 <!-- <script async="async" src="https://consent.trustarc.com/notice?domain=f5.com&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1" crossorigin=""></script>-->
 <!-- Tealium profile utag.sync.js script -->
@@ -132,7 +132,7 @@ html_content = nxt_hint(html_content)
     <TOC menu={frontmatter.menu} />
 </div>
 <div id="content">
-    <Fragment set:html={html_content} />
+    <slot />
     
     { edit_on_github_url && <div class="nxt_github_link"><a href={ edit_on_github_url }><div></div>Edit this page</a></div>}
     <p id="footer">

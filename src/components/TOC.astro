@@ -1,5 +1,5 @@
 ---
-let pages = await Astro.glob('../pages/*.md')
+let pages = await Astro.glob('../pages/*.mdx')
 pages = pages.filter(x => x.frontmatter.title).sort((a,b) => a.frontmatter.order - b.frontmatter.order)
 ---
 <ul>

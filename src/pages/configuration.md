@@ -106,7 +106,7 @@ The **tls** object provides the following options:
 | Option                     | Description                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **certificate** (required) | String or an array of strings;<br/>refers to one or more<br/>[certificate bundles](certificates.md#configuration-ssl)<br/>uploaded earlier,<br/>enabling secure communication via the listener.                                                                                                                                                                                                                                        |
-| **conf_commands**          | Object;<br/>defines the OpenSSL<br/>[configuration commands](https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html)<br/>to be set for the listener.<br/><br/>To have this option,<br/>Unit must be built and run with OpenSSL 1.0.2+:<br/><br/>```console<br/>$ openssl version<br/><br/>      OpenSSL 1.1.1d  10 Sep 2019<br/>```<br/><br/>Also, make sure your OpenSSL version supports the commands<br/>set by this option. |
+| **conf_commands**          | Object;<br/>defines the OpenSSL<br/>[configuration commands](https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html)<br/>to be set for the listener.<br/><br/>To have this option,<br/>Unit must be built and run with OpenSSL 1.0.2+:<br/><br/>```bash<br/>$ openssl version<br/><br/>      OpenSSL 1.1.1d  10 Sep 2019<br/>```<br/><br/>Also, make sure your OpenSSL version supports the commands<br/>set by this option. |
 | **session**                | Object; configures the TLS session cache and tickets<br/>for the listener.                                                                                                                                                                                                                                                                                                                                                             |
 
 To use a certificate bundle you
@@ -278,7 +278,7 @@ The **tickets** option works as follows:
 
   Unit supports AES256 (80-byte keys) or AES128 (48-byte keys);
   the bytes should be encoded in Base64:
-  ```console
+  ```bash
   $ openssl rand -base64 48
 
         LoYjFVxpUFFOj4TzGkr5MsSIRMjhuh8RCsVvtIJiQ12FGhn0nhvvQsEND1+OugQ7
@@ -976,7 +976,7 @@ decoding these as well:
 
 This condition matches the following percent-encoded request:
 
-```console
+```bash
 $ curl http://127.0.0.1/?~fuzzy:nxt_ph:`%20 <Space>`word:nxt_ph:`%20 <Space>`search -v
 
       > GET /?~fuzzy%20word%20search HTTP/1.1
@@ -1505,7 +1505,7 @@ The previous example targets an entire set of routes,
 picking individual ones by HTTP verbs
 from the incoming requests:
 
-```console
+```bash
 $ curl -i -X GET http://localhost
 
     HTTP/1.1 201 Created
@@ -1581,7 +1581,7 @@ to choose between applications:
 
 This way, requests are routed between applications by their target URIs:
 
-```console
+```bash
 $ curl http://localhost/blog     # Targets the 'blog' app
 $ curl http://localhost/sandbox  # Targets the 'sandbox' app
 ```
@@ -2014,7 +2014,7 @@ and share configuration:
 The following request returns **default.html**
 even though the file isn’t named explicitly:
 
-```console
+```bash
 $ curl http://localhost/ -v
 
  ...
@@ -2222,7 +2222,7 @@ Initial configuration:
 
 Create a symlink to **/www/localhost/static/index.html**:
 
-```console
+```bash
 $ mkdir -p /www/localhost/static/ && cd /www/localhost/static/
 $ cat > index.html << EOF
 
@@ -2236,7 +2236,7 @@ If symlink resolution is enabled
 (with or without **chroot**),
 a request that targets the symlink works:
 
-```console
+```bash
 $ curl http://localhost/index.html
 
       index.html
@@ -2261,7 +2261,7 @@ Now set **follow_symlinks** to **false**:
 The symlink request is forbidden,
 which is presumably the desired effect:
 
-```console
+```bash
 $ curl http://localhost/index.html
 
       index.html
@@ -2287,7 +2287,7 @@ Now, **“follow_symlinks”: false** affects the entire share,
 and **localhost** is a symlink,
 so it’s forbidden:
 
-```console
+```bash
 $ curl http://localhost/index.html
 
       <!DOCTYPE html><title>Error 403</title><p>Error 403.
@@ -2712,7 +2712,7 @@ Also, you can **GET**
 the **/control/applications/** section of the API
 to restart an app:
 
-```console
+```bash
 # curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
       http://localhost/control/applications/:nxt_ph:`app_name <Your application's name as defined in the /config/applications/ section>`/restart
 ```
@@ -2736,7 +2736,7 @@ and
 isolation for your apps
 if Unit’s underlying OS supports them:
 
-```console
+```bash
 $ ls /proc/self/ns/
 
     cgroup :nxt_hint:`mnt <The mount namespace>` :nxt_hint:`net <The network namespace>` pid ... :nxt_hint:`user <The credential namespace>` :nxt_hint:`uts <The uname namespace>`
@@ -2849,7 +2849,7 @@ would be to set a memory limit on a cgroup.
 First,
 find the cgroup mount point:
 
-```console
+```bash
 $ mount -l | grep cgroup
 
     cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
@@ -2858,7 +2858,7 @@ $ mount -l | grep cgroup
 Next, check the available controllers
 and set the **memory.high** limit:
 
-```console
+```bash
 # cat /sys/fs/cgroup/:nxt_hint:`/staging/app <cgroup's path set in Unit configuration>`/cgroup.controllers
 
     cpuset cpu io memory pids
@@ -3076,7 +3076,7 @@ to invoke C code from Go,
 so check the following prerequisites:
 
 - The `CGO_ENABLED` variable is set to **1**:
-  ```console
+  ```bash
   $ go env CGO_ENABLED
 
         0
@@ -3086,17 +3086,17 @@ so check the following prerequisites:
 - If you installed Unit from the
   [official packages](installation.md#installation-precomp-pkgs),
   install the development package:
-  ```console
+  ```bash
   # apt install unit-dev
   ```
 
-  ```console
+  ```bash
   # yum install unit-devel
   ```
 - If you installed Unit from
   [source](howto/source.md),
   install the include files and libraries:
-  ```console
+  ```bash
   # make libunit-install
   ```
 
@@ -3128,7 +3128,7 @@ func main() {
 If you haven’t done so yet,
 initialize the Go module for your app:
 
-```console
+```bash
 $ go mod init :nxt_ph:`example.com/app <Arbitrary module designation>`
 
       go: creating new go.mod: module example.com/app
@@ -3137,7 +3137,7 @@ $ go mod init :nxt_ph:`example.com/app <Arbitrary module designation>`
 Install the newly added dependency
 and build your application:
 
-```console
+```bash
 $ go get unit.nginx.org/go@1.32.1
 
       go: downloading unit.nginx.org
@@ -3251,7 +3251,7 @@ First, you need to have the **unit-http** module
 If it’s global,
 symlink it in your project directory:
 
-```console
+```bash
 # npm link unit-http
 ```
 
@@ -3606,7 +3606,7 @@ you have:
 |-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **module** (required) | String;<br/>app’s module name.<br/>This module is<br/>[imported](https://docs.python.org/3/reference/import.html)<br/>by Unit<br/>the usual Python way.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | **callable**          | String;<br/>name of the **module**-based callable<br/>that Unit runs as the app.<br/><br/>The default is **application**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **home**              | String;<br/>path to the app’s<br/>[virtual environment](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments).<br/>Absolute or relative to **working_directory**.<br/><br/>#### NOTE<br/>The Python version used to run the app<br/>is determined by **type**;<br/>for performance,<br/>Unit doesn’t use the command-line interpreter<br/>from the virtual environment.<br/><br/>Seeing this in Unit’s<br/>[log](troubleshooting.md#troubleshooting-log)<br/>after you set up **home** for your app?<br/>This usually occurs<br/>if the interpreter can’t use the virtual environment,<br/>possible reasons including:<br/><br/>- Version mismatch<br/>  between the **type** setting<br/>  and the virtual environment;<br/>  check the environment’s version:<br/>  ```console<br/>  $ source :nxt_ph:`/path/to/venv/ <Path to the virtual environment; use a real path in your commands>`bin/activate<br/>  (venv) $ python --version<br/>  ```<br/>- Unit’s unprivileged user<br/>  (usually **unit**)<br/>  having no access to the environment’s files;<br/>  assign the necessary rights:<br/>  ```console<br/>  # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/venv/ <Path to the virtual environment; use a real path in your commands>`<br/>  ``` |
+| **home**              | String;<br/>path to the app’s<br/>[virtual environment](https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments).<br/>Absolute or relative to **working_directory**.<br/><br/>#### NOTE<br/>The Python version used to run the app<br/>is determined by **type**;<br/>for performance,<br/>Unit doesn’t use the command-line interpreter<br/>from the virtual environment.<br/><br/>Seeing this in Unit’s<br/>[log](troubleshooting.md#troubleshooting-log)<br/>after you set up **home** for your app?<br/>This usually occurs<br/>if the interpreter can’t use the virtual environment,<br/>possible reasons including:<br/><br/>- Version mismatch<br/>  between the **type** setting<br/>  and the virtual environment;<br/>  check the environment’s version:<br/>  ```bash<br/>  $ source :nxt_ph:`/path/to/venv/ <Path to the virtual environment; use a real path in your commands>`bin/activate<br/>  (venv) $ python --version<br/>  ```<br/>- Unit’s unprivileged user<br/>  (usually **unit**)<br/>  having no access to the environment’s files;<br/>  assign the necessary rights:<br/>  ```bash<br/>  # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/venv/ <Path to the virtual environment; use a real path in your commands>`<br/>  ``` |
 | **path**              | String or an array of strings;<br/>additional Python module lookup paths.<br/>These values are prepended to **sys.path**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | **prefix**            | String;<br/>**SCRIPT_NAME** context value for WSGI<br/>or the **root_path** context value for ASGI.<br/>Should start with a slash<br/>(**/**).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **protocol**          | String;<br/>hints Unit that the app uses a certain interface.<br/>Can be **asgi** or **wsgi**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
@@ -3810,7 +3810,7 @@ interface
 to run Ruby scripts;
 you need to have it installed as well:
 
-```console
+```bash
 $ gem install rack
 ```
 
@@ -4023,7 +4023,7 @@ In turn, the **http** option exposes the following settings:
 | **max_body_size**         | Maximum number of bytes<br/>in the body of a client’s request.<br/>If the body size exceeds this value,<br/>Unit returns a 413 “Payload Too Large” response<br/>and closes the connection.<br/><br/>The default is 8388608 (8 MB).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | **send_timeout**          | Maximum number of seconds<br/>to transmit data<br/>as a response to the client.<br/>This is the interval<br/>between consecutive transmissions,<br/>not the time for the entire response.<br/>If no data<br/>is sent to the client<br/>within this interval,<br/>Unit closes the connection.<br/><br/>The default is 30.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | **server_version**        | Boolean;<br/>if set to **false**,<br/>Unit omits version information<br/>in its **Server** response<br/>[header fields](https://datatracker.ietf.org/doc/html/rfc9110.html#section-10.2.4).<br/><br/>The default is **true**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| **static**                | Object;<br/>configures static asset handling.<br/>Has a single object option named **mime_types**<br/>that defines specific<br/>[MIME types](https://www.iana.org/assignments/media-types/media-types.xhtml)<br/>as options.<br/>Their values<br/>can be strings or arrays of strings;<br/>each string must specify a filename extension<br/>or a specific filename<br/>that’s included in the MIME type.<br/>You can override default MIME types<br/>or add new types:<br/><br/>```console<br/># curl -X PUT -d '{"text/x-code": [".c", ".h"]}' :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \<br/>       http://localhost/config/settings/http/static/mime_types<br/>{<br/>       "success": "Reconfiguration done."<br/>}<br/>```<br/><br/><a id="configuration-mime"></a><br/><br/>Defaults:<br/>**.aac**, **.apng**, **.atom**,<br/>**.avi**, **.avif**, **avifs**, **.bin**, **.css**,<br/>**.deb**, **.dll**, **.exe**, **.flac**, **.gif**,<br/>**.htm**, **.html**, **.ico**, **.img**, **.iso**,<br/>**.jpeg**, **.jpg**, **.js**, **.json**, **.md**,<br/>**.mid**, **.midi**, **.mp3**, **.mp4**, **.mpeg**,<br/>**.mpg**, **.msi**, **.ogg**, **.otf**, **.pdf**,<br/>**.php**, **.png**, **.rpm**, **.rss**, **.rst**,<br/>**.svg**, **.ttf**, **.txt**, **.wav**, **.webm**,<br/>**.webp**, **.woff2**, **.woff**, **.xml**, and<br/>**.zip**. |
+| **static**                | Object;<br/>configures static asset handling.<br/>Has a single object option named **mime_types**<br/>that defines specific<br/>[MIME types](https://www.iana.org/assignments/media-types/media-types.xhtml)<br/>as options.<br/>Their values<br/>can be strings or arrays of strings;<br/>each string must specify a filename extension<br/>or a specific filename<br/>that’s included in the MIME type.<br/>You can override default MIME types<br/>or add new types:<br/><br/>```bash<br/># curl -X PUT -d '{"text/x-code": [".c", ".h"]}' :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \<br/>       http://localhost/config/settings/http/static/mime_types<br/>{<br/>       "success": "Reconfiguration done."<br/>}<br/>```<br/><br/><a id="configuration-mime"></a><br/><br/>Defaults:<br/>**.aac**, **.apng**, **.atom**,<br/>**.avi**, **.avif**, **avifs**, **.bin**, **.css**,<br/>**.deb**, **.dll**, **.exe**, **.flac**, **.gif**,<br/>**.htm**, **.html**, **.ico**, **.img**, **.iso**,<br/>**.jpeg**, **.jpg**, **.js**, **.json**, **.md**,<br/>**.mid**, **.midi**, **.mp3**, **.mp4**, **.mpeg**,<br/>**.mpg**, **.msi**, **.ogg**, **.otf**, **.pdf**,<br/>**.php**, **.png**, **.rpm**, **.rss**, **.rst**,<br/>**.svg**, **.ttf**, **.txt**, **.wav**, **.webm**,<br/>**.webp**, **.woff2**, **.woff**, **.xml**, and<br/>**.zip**. |
 
 <a id="configuration-access-log"></a>
 
@@ -4038,7 +4038,7 @@ In the example below,
 all requests will be logged
 to **/var/log/access.log**:
 
-```console
+```bash
 # curl -X PUT -d '"/var/log/access.log"' \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/config/access_log

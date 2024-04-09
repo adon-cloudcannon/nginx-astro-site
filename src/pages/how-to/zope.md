@@ -13,7 +13,7 @@ Unit:
 
    First, install Zope’s [core files](https://zope.readthedocs.io/en/latest/INSTALL.html#installing-zope-with-zc-buildout),
    for example:
-   ```console
+   ```bash
    $ pip install -U pip wheel zc.buildout
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ wget https://pypi.org/packages/source/Z/Zope/Zope-:nxt_ph:`A.B.C <Zope version>`.tar.gz
@@ -49,7 +49,7 @@ Unit:
    defines a WSGI entry point.
 
    Rerun Buildout, feeding it the new configuration file:
-   ```console
+   ```bash
    $ buildout -c wsgi.cfg
 
          ...
@@ -60,7 +60,7 @@ Unit:
    Thus created, the instance script can be used with Unit.
 
    Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -92,7 +92,7 @@ Unit:
    ```
 
    Create a virtual environment to install Zope’s [PIP package](https://pypi.org/project/Zope/):
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ :nxt_hint:`python3 --version <Make sure your virtual environment version matches the module version>`
          Python :nxt_hint:`3.Y.Z <Major version, minor version, and revision number>`
@@ -111,7 +111,7 @@ Unit:
    environment.
 
    After installation, create your Zope [instance](https://zope.readthedocs.io/en/latest/operation.html#creating-a-zope-instance):
-   ```console
+   ```bash
    $ :nxt_hint:`venv/bin/mkwsgiinstance <Zope's own script>` -d :nxt_ph:`instance <The Zope instance's home directory>`
    ```
 
@@ -128,7 +128,7 @@ Unit:
    (here, it’s **/path/to/app/instance/**).
 
    Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -161,7 +161,7 @@ Unit:
    ```
 3. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -172,7 +172,7 @@ Unit:
 
    After a successful update, your Zope instance should be available on the
    listener’s IP address and port:
-   ```console
+   ```bash
    $ curl http://localhost
 
          <!DOCTYPE html>

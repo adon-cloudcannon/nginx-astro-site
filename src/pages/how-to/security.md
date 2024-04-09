@@ -46,7 +46,7 @@ safe.
 If you use a UNIX control socket, ensure it is available to **root**
 only:
 
-```console
+```bash
 $ unitd -h
 
       ...
@@ -65,7 +65,7 @@ $ ps ax | grep unitd
 UNIX domain sockets aren’t network accessible; for remote access, use
 [NGINX](integration.md#nginx-secure-api) or a solution such as SSH:
 
-```console
+```bash
 $ ssh -N -L :nxt_hint:`./here.sock <Local socket>`::nxt_ph:`/path/to/control.unit.sock <Socket on the Unit server; use a real path in your command>` root@:nxt_hint:`unit.example.com <Unit server hostname>` &
 $ curl --unix-socket :nxt_hint:`./here.sock <Use the local socket to configure Unit>`
 
@@ -83,7 +83,7 @@ If you prefer an IP-based control socket, avoid public IPs; they expose the
 your Unit instance can be manipulated by whoever is physically able to
 connect:
 
-```console
+```bash
 # unitd --control 203.0.113.14:8080
 $ curl 203.0.113.14:8080
 
@@ -99,7 +99,7 @@ $ curl 203.0.113.14:8080
 Instead, opt for the loopback address to ensure all access is local to your
 server:
 
-```console
+```bash
 # unitd --control 127.0.0.1:8080
 $ curl 203.0.113.14:8080
 
@@ -117,7 +117,7 @@ Instead, use only the control API to manage Unit’s configuration.
 Also, the state directory should be available only to **root** (or the
 user that the **main** [process](#security-apps) runs as):
 
-```console
+```bash
 $ unitd -h
 
       ...
@@ -178,7 +178,7 @@ notorious **777**, instead assigning them on a need-to-know basis.
 To configure file permissions for your apps, check Unit’s build-time and
 run-time options first:
 
-```console
+```bash
 $ unitd -h
 
       ...
@@ -222,7 +222,7 @@ A detailed walkthrough to guide you through each requirement:
 1. If you have several independent apps, running them with a single user
    account poses a security risk.  Consider adding a separate system user
    and group per each app:
-   ```console
+   ```bash
    # :nxt_hint:`useradd <Add user account without home directory>` -M app_user
    # groupadd app_group
    # :nxt_hint:`usermod <Deny interactive login>` -L app_user
@@ -233,7 +233,7 @@ A detailed walkthrough to guide you through each requirement:
    decouple permissions later.
 2. It’s important to add Unit’s non-privileged user account to *each* app
    group:
-   ```console
+   ```bash
    # usermod -a -G app_group unit_user
    ```
 
@@ -242,7 +242,7 @@ A detailed walkthrough to guide you through each requirement:
 3. A frequent source of issues is the lack of permissions for directories
    inside a directory path needed to run the app, so check for that if in
    doubt.  Assuming your app code is stored at **/path/to/app/**:
-   ```console
+   ```bash
    # ls -l /
 
          :nxt_hint:`drwxr-xr-x <Permissions are OK>`  some_user some_group  path
@@ -255,18 +255,18 @@ A detailed walkthrough to guide you through each requirement:
    This may be a problem because the **to/** directory isn’t owned by
    **app_user:app_group** and denies all permissions to non-owners (as
    the **---** sequence tells us), so a fix can be warranted:
-   ```console
+   ```bash
    # :nxt_hint:`chmod <Add read/execute permissions for non-owners>` o+rx /path/to/
    ```
 
    Another solution is to add **app_user** to **some_group**
    (assuming this was not done before):
-   ```console
+   ```bash
    # usermod -a -G some_group app_user
    ```
 4. Having checked the directory tree, assign ownership and permissions for
    your app’s directories, making them reachable for Unit and the app:
-   ```console
+   ```bash
    # :nxt_hint:`chown <Assign ownership for the app code>` -R app_user:app_group :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your command>`
    # :nxt_hint:`chown <Assign ownership for the static files>` -R app_user:app_group :nxt_ph:`/path/to/static/app/files/ <Can be outside the app directory tree; use a real path in your command>`
    # find :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your command>` -type d -exec :nxt_hint:`chmod <Add read/execute permissions to app code directories for user and group>` u=rx,g=rx,o= {} \;
@@ -274,13 +274,13 @@ A detailed walkthrough to guide you through each requirement:
    ```
 5. If the app needs to update specific directories or files, make sure
    they’re writable for the app alone:
-   ```console
+   ```bash
    # :nxt_hint:`chmod <Add write permissions for the user only; the group shouldn't have them>` u+w :nxt_ph:`/path/to/writable/file/or/directory/ <Repeat for each file or directory that must be writable>`
    ```
 
    In case of a writable directory, you may also want to prevent non-owners
    from messing with its files:
-   ```console
+   ```bash
    # :nxt_hint:`chmod <Sticky bit prevents non-owners from deleting or renaming files>` +t :nxt_ph:`/path/to/writable/directory/ <Repeat for each directory that must be writable>`
    ```
 
@@ -292,13 +292,13 @@ A detailed walkthrough to guide you through each requirement:
    content, or writable data.
 6. For [embedded](modules.md#modules-emb) apps, it’s usually enough to make the
    app code and the static files readable:
-   ```console
+   ```bash
    # find :nxt_ph:`/path/to/app/code/ <Path to the application's code directory; use a real path in your command>` -type f -exec :nxt_hint:`chmod <Add read rights to app code for user and group>` u=r,g=r,o= {} \;
    # find :nxt_ph:`/path/to/static/app/files/ <Can be outside the app directory tree; use a real path in your command>` -type f -exec :nxt_hint:`chmod <Add read rights to static files for user and group>` u=r,g=r,o= {} \;
    ```
 7. For [external](modules.md#modules-emb) apps, additionally make the app code or
    binaries executable:
-   ```console
+   ```bash
    # find :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your command>` -type f -exec :nxt_hint:`chmod <Add read and execute rights to app code for user and group>` u=rx,g=rx,o= {} \;
    # find :nxt_ph:`/path/to/static/app/files/ <Can be outside the app directory tree; use a real path in your command>` -type f -exec :nxt_hint:`chmod <Add read rights to static files for user and group>` u=r,g=r,o= {} \;
    ```
@@ -477,7 +477,7 @@ synopsis of the different roles they have:
 
 You can check all of the above on your system when Unit is running:
 
-```console
+```bash
 $ ps aux | grep unit
 
       ...
@@ -534,7 +534,7 @@ such as **logrotate** to avoid overgrowth.  A sample
 
 To figure out the log and PID file paths:
 
-```console
+```bash
 $ unitd -h
 
       ...
@@ -558,7 +558,7 @@ Perhaps, the most straightforward way to achieve this is to assign log
 ownership to the consumer’s account.  Suppose you have a log utility running
 as **log_user:log_group**:
 
-```console
+```bash
 # :nxt_hint:`chown <Assign ownership to the log user>` log_user:log_group :nxt_ph:`/path/to/unit.log <If it's overridden, use the runtime setting>`
 
 # :nxt_hint:`curl <Enable access log in the Unit configuration at the given path>` -X PUT -d '":nxt_ph:`/path/to/access.log <Use a real path in your configuration>`"'  \

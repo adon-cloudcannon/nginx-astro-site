@@ -13,7 +13,7 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
    We’ll use Unit as the web server, so you can skip the corresponding step.
 3. Install the [core files](https://www.reviewboard.org/docs/manual/dev/admin/installation/linux/#installing-review-board) and create a [site](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/).
    Here, it’s **/path/to/app/**; use a real path in your configuration:
-   ```console
+   ```bash
    $ rb-site install :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
 
          * Welcome to the Review Board site installation wizard
@@ -28,12 +28,12 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
    ```
 4. Add the **.py** extension to the WSGI module’s name to make it
    discoverable by Unit, for example:
-   ```console
+   ```bash
    $ mv :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/reviewboard.wsgi   \
         :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/wsgi.py
    ```
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -45,7 +45,7 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
    For further details, including permissions, see the [security checklist](security.md#security-apps).
 
    Also, make sure the following directories are [writable](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/#changing-permissions):
-   ```console
+   ```bash
    $ chmod u+w :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/media/uploaded/
    $ chmod u+w :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`data/
    ```
@@ -91,7 +91,7 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
    ```
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

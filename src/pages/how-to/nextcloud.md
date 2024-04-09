@@ -24,7 +24,7 @@ platform using Unit:
    ),
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -170,7 +170,7 @@ platform using Unit:
      the target receives.
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -180,7 +180,7 @@ platform using Unit:
    **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
 7. Adjust Unit’s **max_body_size** [option](../configuration.md#configuration-stngs) to
    avoid potential issues with large file uploads, for example:
-   ```console
+   ```bash
    # curl -X PUT -d '{"http":{"max_body_size": 2147483648}}' --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/settings <Path to the 'config/settings' section in Unit's control API>`
    ```

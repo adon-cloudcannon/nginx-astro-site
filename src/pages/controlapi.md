@@ -84,7 +84,7 @@ and must not be edited by external means.
 On the machine where the *reference* Unit instance runs,
 find out where the state is stored:
 
-```console
+```bash
 $ unitd -h
 
       --state DIRECTORY    set state directory name
@@ -93,7 +93,7 @@ $ unitd -h
 
 Double-check that the state location isn’t overridden at startup:
 
-```console
+```bash
 $ ps ax | grep unitd
       ...
       unit: main v1.32.1 [unitd --state :nxt_ph:`/runtime/path/to/reference/unit/state <The runtime value overrides the default>` ... ]
@@ -104,7 +104,7 @@ to see where the target instance stores its state.
 
 Stop both Unit instances, for example:
 
-```console
+```bash
 # systemctl stop unit
 ```
 
@@ -120,7 +120,7 @@ by arbitrary means;
 make sure to include subdirectories and hidden files.
 Finally, restart both Unit instances:
 
-```console
+```bash
 # systemctl restart unit
 ```
 
@@ -145,7 +145,7 @@ you’ve copied to the state directory.
 > First, build the image
 > and run a container:
 
-> ```console
+> ```bash
 > $ docker build --tag=unit-openapi -f unit-openapi.Dockerfile .
 > $ docker run -d -p 8765:8765 -p 8080:8080 unit-openapi
 > ```
@@ -225,7 +225,7 @@ To configure Unit,
 Working with JSON in the command line can be cumbersome;
 instead, save and upload it as **snippet.json**:
 
-```console
+```bash
 # curl -X PUT --data-binary @snippet.json --unix-socket  \
       :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config
 
@@ -239,7 +239,7 @@ query the listener.
 Unit responds with the **index.html** file
 from the **share** directory:
 
-```console
+```bash
 $ curl -i 127.0.0.1:8080
 
       HTTP/1.1 200 OK
@@ -300,7 +300,7 @@ processes end smoothly.
 Any type of update can be done with different URIs,
 provided you supply the right JSON:
 
-```console
+```bash
 # curl -X PUT -d '{ "pass": "applications/blogs" }' --unix-socket \
        :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/listeners/127.0.0.1:8300
 
@@ -334,7 +334,7 @@ For instance, save your application object as **wiki.json**:
 
 Use it to set up an application called **wiki-prod**:
 
-```console
+```bash
 # curl -X PUT --data-binary @wiki.json \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/applications/wiki-prod
 ```
@@ -342,14 +342,14 @@ Use it to set up an application called **wiki-prod**:
 Use it again to set up a development version of the same app
 called **wiki-dev**:
 
-```console
+```bash
 # curl -X PUT --data-binary @wiki.json \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/applications/wiki-dev
 ```
 
 Toggle the **wiki-dev** app to another source code directory:
 
-```console
+```bash
 # curl -X PUT -d '"/www/wiki-dev/"' \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/applications/wiki-dev/path
 ```
@@ -357,7 +357,7 @@ Toggle the **wiki-dev** app to another source code directory:
 Next, boost the process count for the production app
 to warm it up a bit:
 
-```console
+```bash
 # curl -X PUT -d '5' \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/applications/wiki-prod/processes
 ```
@@ -365,14 +365,14 @@ to warm it up a bit:
 Add a listener for the **wiki-prod** app
 to accept requests at all host IPs:
 
-```console
+```bash
 # curl -X PUT -d '{ "pass": "applications/wiki-prod" }' \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` 'http://localhost/config/listeners/*:8400'
 ```
 
 Plug the **wiki-dev** app into the listener to test it:
 
-```console
+```bash
 # curl -X PUT -d '"applications/wiki-dev"' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        'http://localhost/config/listeners/*:8400/pass'
 ```
@@ -380,7 +380,7 @@ Plug the **wiki-dev** app into the listener to test it:
 Then rewire the listener,
 adding a URI-based route to the development version of the app:
 
-```console
+```bash
 $ cat << EOF > config.json
 
     [
@@ -407,7 +407,7 @@ Next, change the **wiki-dev**’s URI prefix
 in the **routes** array,
 using its index (0):
 
-```console
+```bash
 # curl -X PUT -d '"/development/*"' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/config/routes/0/match/uri
 ```
@@ -416,7 +416,7 @@ Append a route to the prod app:
 **POST** always adds to the array end,
 so there’s no need for an index:
 
-```console
+```bash
 # curl -X POST -d '{"match": {"uri": "/production/*"}, \
        "action": {"pass": "applications/wiki-prod"}}'  \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`        \
@@ -428,7 +428,7 @@ Otherwise, use **PUT** with the array’s last index
 *plus one*
 to add the new item at the end:
 
-```console
+```bash
 # curl -X PUT -d '{"match": {"uri": "/production/*"}, \
        "action": {"pass": "applications/wiki-prod"}}' \
        --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`       \
@@ -437,7 +437,7 @@ to add the new item at the end:
 
 To get the complete **/config** section:
 
-```console
+```bash
 # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
 
     {
@@ -487,7 +487,7 @@ To get the complete **/config** section:
 
 To obtain the **wiki-dev** application object:
 
-```console
+```bash
 # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/config/applications/wiki-dev
 
@@ -503,14 +503,14 @@ To obtain the **wiki-dev** application object:
 You can save JSON returned by such requests
 as **.json** files for update or review:
 
-```console
+```bash
 # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/config/ > config.json
 ```
 
 To drop the listener on **\*:8400**:
 
-```console
+```bash
 # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        'http://localhost/config/listeners/*:8400'
 ```
@@ -518,7 +518,7 @@ To drop the listener on **\*:8400**:
 Mind that you can’t delete objects that other objects rely on,
 such as a route still referenced by a listener:
 
-```console
+```bash
 # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
         http://localhost/config/routes
 

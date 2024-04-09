@@ -11,14 +11,14 @@ using Unit:
 2. Install and configure DokuWiki’s [prerequisites](https://www.dokuwiki.org/requirements).
 3. Install DokuWiki’s [core files](https://www.dokuwiki.org/install).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
-   ```console
+   ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>` && cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ wget https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
    $ tar xvzf dokuwiki-stable.tgz :nxt_hint:`--strip-components <Avoids creating a redundant subdirectory>`=1
    $ rm dokuwiki-stable.tgz
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -85,7 +85,7 @@ using Unit:
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

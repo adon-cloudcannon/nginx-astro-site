@@ -8,7 +8,7 @@ To run apps built with the [Flask](https://flask.palletsprojects.com/en/1.1.x/) 
 
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 3 language module.
 2. Create a virtual environment to install Flask’s [PIP package](https://flask.palletsprojects.com/en/1.1.x/installation/#install-flask):
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ :nxt_hint:`python3 --version <Make sure your virtual environment version matches the module version>`
          Python :nxt_hint:`3.Y.Z <Major version, minor version, and revision number>`
@@ -34,7 +34,7 @@ To run apps built with the [Flask](https://flask.palletsprojects.com/en/1.1.x/) 
        return "Hello, World!"
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -67,7 +67,7 @@ To run apps built with the [Flask](https://flask.palletsprojects.com/en/1.1.x/) 
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -78,7 +78,7 @@ To run apps built with the [Flask](https://flask.palletsprojects.com/en/1.1.x/) 
 
    After a successful update, your app should be available on the listener’s IP
    address and port:
-   ```console
+   ```bash
    $ curl http://localhost
 
          Hello, World!

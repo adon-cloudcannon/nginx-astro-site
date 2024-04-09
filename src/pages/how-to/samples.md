@@ -33,7 +33,7 @@ func main() {
 First, create a [Go module](https://go.dev/blog/using-go-modules), `go
 get` Unit’s package, and build your application:
 
-```console
+```bash
 $ go mod init :nxt_ph:`example.com/app <Your Go module designation>`
 $ go get unit.nginx.org/go@1.32.1
 $ go build -o /www/app /www/app.go
@@ -41,7 +41,7 @@ $ go build -o /www/app /www/app.go
 
 Upload the [app config](../configuration.md#configuration-go) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -126,7 +126,7 @@ Let’s configure the following basic app, saved as **/www/index.jsp**:
 
 Upload the [app config](../configuration.md#configuration-java) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -209,7 +209,7 @@ require(":nxt_hint:`unit-http <It's important to use unit-http instead of the re
 
 Make it executable and link the Node.js language package you’ve [installed](../installation.md#installation-nodejs-package) earlier:
 
-```console
+```bash
 $ cd /www
 $ chmod +x app.js
 $ npm link unit-http
@@ -217,7 +217,7 @@ $ npm link unit-http
 
 Upload the [app config](../configuration.md#configuration-nodejs) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -285,7 +285,7 @@ my $app = sub {
 
 Upload the [app config](../configuration.md#configuration-perl) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -349,7 +349,7 @@ Let’s configure the following basic app, saved as **/www/index.php**:
 
 Upload the [app config](../configuration.md#configuration-php) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -407,7 +407,7 @@ def application(environ, start_response):
 
 Upload the [app config](../configuration.md#configuration-python) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -471,7 +471,7 @@ run app
 
 Upload the [app config](../configuration.md#configuration-ruby) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
@@ -531,14 +531,14 @@ This example was built with **rustc** version 1.76.0.
 
 Start by adding the wasm32-wasi support as a compilation target for **rustc**
 
-```console
+```bash
 $ rustup target add wasm32-wasi
 ```
 
 Next, install cargo component. This simplifies building a WebAssembly
 component from Rust Code, making it the recommended method.
 
-```console
+```bash
 $ cargo install cargo-component
 ```
 
@@ -547,7 +547,7 @@ Currently, the fastest way to get started with WebAssembly components using WASI
 Dan Gohman. Clone the repository and build the component running
 the following command:
 
-```console
+```bash
 $ git clone https://github.com/sunfishcode/hello-wasi-http
 $ cd hello-wasi-http
 $ cargo component build
@@ -555,7 +555,7 @@ $ cargo component build
 
 The output of the build command should be similar to this:
 
-```console
+```bash
 $ cargo component build
 Compiling hello-wasi-http v0.0.0 (/home/unit-build/hello-wasi-http)
 Finished dev [unoptimized + debuginfo] target(s) in 0.17s
@@ -586,20 +586,20 @@ to the WebAssembly component you have just created. Create a
 
 Apply the Unit configuration by using the CLI:
 
-```console
+```bash
 $ unitc /config < config.json
 ```
 
 Or by sending it manually to Units control API:
 
-```console
+```bash
 $ cat config.json | curl -X PUT -d @- --unix-socket /path/to/control.unit.sock http://localhost/config/
 ```
 
 Congratulations! You have created your very first WebAssembly component
 on Unit! Send a GET Request to your configured listener.
 
-```console
+```bash
 $ curl http://localhost:8080
 ```
 
@@ -622,7 +622,7 @@ on GitHub.
 
 First, install the WebAssembly-specific Rust tooling:
 
-```console
+```bash
 $ rustup target add wasm32-wasi
 ```
 
@@ -631,7 +631,7 @@ Next, initialize a new Rust project with a library target
 Then, add our **unit-wasm** crate
 to enable the **libunit-wasm** library:
 
-```console
+```bash
 $ cargo init --lib wasm_on_unit
 $ cd wasm_on_unit/
 $ cargo add unit-wasm
@@ -646,13 +646,13 @@ crate-type = ["cdylib"]
 
 Save some sample code from our **unit-wasm** repo as **src/lib.rs**:
 
-```console
+```bash
 wget -O src/lib.rs https://raw.githubusercontent.com/nginx/unit-wasm/main/examples/rust/echo-request/src/lib.rs
 ```
 
 Build the Rust module with WebAssembly as the target:
 
-```console
+```bash
 $ cargo build --target wasm32-wasi
 ```
 
@@ -662,7 +662,7 @@ This yields the
 
 Upload the [app config](../configuration.md#configuration-wasm) to Unit and test it:
 
-```console
+```bash
 # curl -X PUT --data-binary '{
       "listeners": {
          "127.0.0.1:8080": {
@@ -709,7 +709,7 @@ Clone the **unit-wasm** repository
 and build the examples in C and Rust
 (may require **clang** and **lld**):
 
-```console
+```bash
 $ git clone https://github.com/nginx/unit-wasm/
 $ cd unit-wasm
 $ make help                                               # Explore your options first
@@ -720,14 +720,14 @@ $ make WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot/ <wasi-sysroot directory>` ex
 #### NOTE
 If the above commands fail like this:
 
-```console
+```bash
 wasm-ld: error: cannot open .../lib/wasi/libclang_rt.builtins-wasm32.a: No such file or directory
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 ```
 
 Download and install the library to **clang**’s run-time dependency directory:
 
-```console
+```bash
 $ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/libclang_rt.builtins-wasm32-wasi-20.0.tar.gz \
       | tar zxf -                  # Unpacks to lib/wasi/ in the current directory
 $ clang -print-runtime-dir         # Double-check the run-time directory, which is OS-dependent

@@ -15,13 +15,13 @@ To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
    a real path in your configuration.
 
    For example:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ curl https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.19.1.tar.gz -O -C -
    $ tar xzf atlassian-jira-core-8.19.1.tar.gz --strip-components 1
    ```
 3. Download Jira’s third-party dependencies to the **lib** subdirectory:
-   ```console
+   ```bash
    $ cd lib/
    $ curl https://github.com/mar0x/unit-transaction-init/releases/download/2.0/transaction-init-2.0.jar -O -C -
    $ curl https://repo1.maven.org/maven2/com/atomikos/atomikos-util/5.0.8/atomikos-util-5.0.8.jar -O -C -
@@ -40,13 +40,13 @@ To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
 4. Patch your Jira configuration, dropping **env** from the
    **comp/env/UserTransaction** object path.  This ensures the
    **UserTransaction** object will be found by your installation:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ sed -i 's#comp/env/UserTransaction#comp/UserTransaction#g'  \
          atlassian-jira/WEB-INF/classes/entityengine.xml
    ```
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -108,7 +108,7 @@ To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
    own restrictions.
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

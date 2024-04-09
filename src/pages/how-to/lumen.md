@@ -11,12 +11,12 @@ Unit:
 2. Install and configure Lumen’s [prerequisites](https://lumen.laravel.com/docs/8.x#server-requirements).
 3. Create a Lumen [project](https://lumen.laravel.com/docs/8.x#installing-lumen).
    For our purposes, the path is **/path/to/app/**:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/ <Path where the application directory will be created; use a real path in your configuration>`
    $ composer create-project laravel/lumen :nxt_ph:`app <Arbitrary app name; becomes the application directory name>`
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -61,7 +61,7 @@ Unit:
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

@@ -11,7 +11,7 @@ documentation platform using Unit:
 2. Install MediaWiki’s [core files](https://www.mediawiki.org/wiki/Download).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -124,7 +124,7 @@ documentation platform using Unit:
      for *any* URIs the target receives.
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -138,14 +138,14 @@ documentation platform using Unit:
 
    Download the newly generated **LocalSettings.php** file and place it
    [appropriately](https://www.mediawiki.org/wiki/Manual:Config_script):
-   ```console
+   ```bash
    $ chmod 600 LocalSettings.php
    # chown :nxt_ph:`unit:unit <Values from Step 3>` LocalSettings.php
    # mv LocalSettings.php :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    ```
 7. After installation, add a match condition to the first step to disable
    access to the **mw-config/** directory:
-   ```console
+   ```bash
    # curl -X POST -d '"/mw-config/*"'  \
           --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
           http://localhost:nxt_hint:`/config/routes/mediawiki/0/match/uri/ <Path to the route's first step condition and the 'uri' value in it>`

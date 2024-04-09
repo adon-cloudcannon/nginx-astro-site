@@ -11,7 +11,7 @@ To run your apps in a containerized Unit using the [images we provide](../instal
 
 For example:
 
-```console
+```bash
 $ export UNIT=$(                                             \
       docker run -d --mount type=bind,src="$(pwd)",dst=/www  \
       -p 8080:8000 unit:1.32.1-python3.11                 \
@@ -25,9 +25,9 @@ saving the container’s ID in the `UNIT` environment variable.
 
 Next, upload a configuration to Unit via the control socket:
 
-```console
+```bash
 $ docker exec -ti $UNIT curl -X PUT --data-binary @/www/config.json  \
-      --unix-socket :nxt_hint:`/var/run/control.unit.sock <Socket path inside the container>`  \
+      --unix-socket :nxt_hint: `/var/run/control.unit.sock <Socket path inside the container>`  \
       http://localhost/config
 ```
 
@@ -49,7 +49,7 @@ Now for a few detailed scenarios.
 Suppose we have a web app with a few dependencies, say [Flask’s](flask.md)
 official **hello, world** app:
 
-```console
+```bash
 $ cd :nxt_ph:`/path/to/app/ <Directory where all app-related files will be stored; use a real path in your configuration>`
 $ mkdir webapp
 $ cat << EOF > webapp/wsgi.py
@@ -66,7 +66,7 @@ EOF
 However basic it is, there’s already a dependency, so let’s list it in a file
 called **requirements.txt**:
 
-```console
+```bash
 $ cat << EOF > requirements.txt
 
 flask
@@ -76,7 +76,7 @@ EOF
 Next, create a simple Unit [configuration](../configuration.md#configuration-python) for the
 app:
 
-```console
+```bash
 $ mkdir config
 $ cat << EOF > config/config.json
 
@@ -102,7 +102,7 @@ EOF
 Finally, let’s create **log/** and **state/** directories to store Unit
 [log and state](source.md#source-startup) respectively:
 
-```console
+```bash
 $ mkdir log
 $ touch log/unit.log
 $ mkdir state
@@ -131,13 +131,13 @@ COPY requirements.txt /config/requirements.txt
 RUN python3 -m pip install -r /config/requirements.txt
 ```
 
-```console
+```bash
 $ docker build --tag=:nxt_hint:`unit-webapp <Arbitrary image tag>` .
 ```
 
 Next, we start a container and map it to our directory structure:
 
-```console
+```bash
 $ export UNIT=$(                                                         \
       docker run -d                                                      \
       --mount type=bind,src="$(pwd)/config/",dst=/docker-entrypoint.d/   \
@@ -158,7 +158,7 @@ container; the official image [uploads](../installation.md#installation-docker-i
 **.json** files found there into Unit’s **config** section if the
 state is empty.  Now we can test the app:
 
-```console
+```bash
 $ curl -X GET localhost:8080
 
     Hello, World!
@@ -167,7 +167,7 @@ $ curl -X GET localhost:8080
 To relocate the app in your file system, you only need to move the file
 structure:
 
-```console
+```bash
 $ mv :nxt_ph:`/path/to/app/ <Directory where all app-related files are stored>` :nxt_ph:`/new/path/to/app/ <New directory; use a real path in your configuration>`
 ```
 
@@ -196,14 +196,14 @@ RUN apt update && apt install -y unit-python3.9 python3-pip                   \
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
 ```
 
-```console
+```bash
 $ docker build --tag=unit-pruned-webapp .
 ```
 
 Run a container from the new image; Unit picks up the mapped state
 automatically:
 
-```console
+```bash
 $ export UNIT=$(                                                         \
       docker run -d                                                      \
       --mount type=bind,src="$(pwd)/log/unit.log",dst=/var/log/unit.log  \
@@ -220,45 +220,45 @@ $ export UNIT=$(                                                         \
 Suppose you have a Unit-ready [Express](express.md) app, stored in the
 **myapp/** directory as **app.js**:
 
-> ```javascript
-> #!/usr/bin/env node
+```javascript
+#!/usr/bin/env node
 
-> const http = require('http')
-> const express = require('express')
-> const app = express()
+const http = require('http')
+const express = require('express')
+const app = express()
 
-> app.get('/', (req, res) => res.send('Hello, Unit!'))
+app.get('/', (req, res) => res.send('Hello, Unit!'))
 
-> http.createServer(app).listen()
-> ```
+http.createServer(app).listen()
+```
 
 Its Unit configuration, stored as **config.json** in the same directory:
 
-> ```json
-> {
->     "listeners": {
->         "*:8080": {
->             "pass": "applications/express"
->         }
->     },
+```json
+{
+    "listeners": {
+        "*:8080": {
+            "pass": "applications/express"
+        }
+    },
 
->     "applications": {
->         "express": {
->             "type": "external",
->             "working_directory": ":nxt_hint:`/www/ <Directory inside the container where the app files will be stored>`",
->             "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
->             ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
->                 "node",
->                 "--loader",
->                 "unit-http/loader.mjs",
->                 "--require",
->                 "unit-http/loader",
->                 ":nxt_ph:`app.js <Basename of the application file; be sure to make it executable>`"
->             ]
->         }
->     }
-> }
-> ```
+    "applications": {
+        "express": {
+            "type": "external",
+            "working_directory": ":nxt_hint:`/www/ <Directory inside the container where the app files will be stored>`",
+            "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
+            ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
+                "node",
+                "--loader",
+                "unit-http/loader.mjs",
+                "--require",
+                "unit-http/loader",
+                ":nxt_ph:`app.js <Basename of the application file; be sure to make it executable>`"
+            ]
+        }
+    }
+}
+```
 
 The resulting file structure:
 
@@ -294,7 +294,7 @@ mount the **config.json** file to
 [initialize](../installation.md#installation-docker-init)
 Unit’s state:
 
-```console
+```bash
 $ docker build --tag=:nxt_hint:`unit-expressapp <Arbitrary image tag>` .
 
 $ export UNIT=$(                                                                             \
@@ -313,7 +313,7 @@ This mechanism allows to initialize Unit at container startup only if its
 state is empty; otherwise, the contents of **/docker-entrypoint.d/** is
 ignored.  Continuing the previous sample:
 
-```console
+```bash
 $ docker commit $UNIT unit-expressapp  # Store a non-empty Unit state in the image.
 
 # cat << EOF > myapp/new-config.json   # Let's attempt re-initialization.
@@ -334,7 +334,7 @@ updated image because Unit’s state was initialized and saved earlier.
 To configure the app after startup, supply a file or an explicit snippet via
 the [control API](../controlapi.md#configuration-api):
 
-```console
+```bash
 $ cat << EOF > myapp/new-config.json
   ...
   EOF

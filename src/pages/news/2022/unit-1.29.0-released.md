@@ -33,7 +33,7 @@ uses.  With Unit 1.29.0, JavaScript template literals may be used in
 configuration strings to execute JavaScript expressions.  A simple example is
 to use the ternary operator to make a routing decision.
 
-```console
+```bash
 # curl --unix-socket /var/run/control.unit.sock http://localhost/config/routes
 ```
 
@@ -61,7 +61,7 @@ Also, this embedded JavaScript code can access various HTTP request properties:
 Let’s use these properties to redirect clients to the HTTPS login page if there
 is no `session` cookie:
 
-```console
+```bash
 # curl --unix-socket /var/run/control.unit.sock http://localhost/config/routes/0
 ```
 
@@ -85,7 +85,7 @@ comprising multiple statements and local variables.  This defines a simple
 key-value log format that parses a JSON Web Token (JWT) to extract the sub
 claim:
 
-```console
+```bash
 # curl --unix-socket /var/run/control.unit.sock http://localhost/config/access_log
 ```
 
@@ -116,7 +116,7 @@ and serving a “welcome” web page.  This takes some of the guesswork out of t
 installation process for first-time users and guides them to their next steps.
 Installing and running Unit on a typical Linux system is now as simple as this:
 
-```console
+```bash
 $ wget https://unit.nginx.org/_downloads/setup-unit && chmod +x setup-unit
 # ./setup-unit repo-config
 # apt install unit || yum install unit
@@ -139,7 +139,7 @@ HTTP method is used; several extra options cover advanced configuration and
 remote instance management.  Here is a simple **unitc** example that
 reads and updates the entire configuration:
 
-```console
+```bash
 $ unitc /config
 $ cat conf.json | unitc /config
 ```

@@ -100,7 +100,7 @@ export default http
 To upload it to Unit’s JavaScript module storage
 as **http**:
 
-```console
+```bash
 # curl -X PUT --data-binary @http.js --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to the remote control socket>` \
       http://localhost/js_modules/:nxt_ph:`http <Module name in Unit's configuration>`
 ```
@@ -108,7 +108,7 @@ as **http**:
 Unit doesn’t enable the uploaded modules by default,
 so add the module’s name to **settings/js_module**:
 
-```console
+```bash
 # curl -X PUT -d '":nxt_ph:`http <Module name to be enabled>`"' :nxt_ph:`/path/to/control.unit.sock <Path to the remote control socket>` \
       http://localhost/config/settings/js_module
 ```

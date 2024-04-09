@@ -41,7 +41,7 @@ a [source build](source.md#source-wasm).
 Embedded modules are shared libraries that Unit loads at startup.  Query Unit
 to find them in your system:
 
-```console
+```bash
 $ unitd -h
 
        ...
@@ -64,7 +64,7 @@ $ ls :nxt_ph:`/path/to/modules <Use runtime value if the default was overridden>
 To clarify the module versions, check the [Unit log](../troubleshooting.md#troubleshooting-log)
 to see which modules were loaded at startup:
 
-```console
+```bash
 # less :nxt_ph:`/path/to/unit.log <Path to log can be determined in the same manner as above>`
       ...
       discovery started
@@ -111,7 +111,7 @@ Unit package installed:
 
 1. Make sure to install the [prerequisites](source.md#source-prereq-build) for the package.  In our example,
    it’s PHP 7.3 on Debian 10:
-   ```console
+   ```bash
    # apt update
    # apt install :nxt_hint:`ca-certificates apt-transport-https debian-archive-keyring <Needed to install the php7.3 package from the PHP repo>`
    # curl --output /usr/share/keyrings/php-keyring.gpg  \
@@ -123,7 +123,7 @@ Unit package installed:
    # apt install :nxt_hint:`php-dev libphp-embed <Needed to build the module and the package>`
    ```
 2. Create a staging directory for your package:
-   ```console
+   ```bash
    $ export UNITTMP=$(mktemp -d -p /tmp -t unit.XXXXXX)
    $ mkdir -p $UNITTMP/unit-php7.3/DEBIAN
    $ cd $UNITTMP
@@ -134,7 +134,7 @@ Unit package installed:
 3. Run **unitd --version** and note the **./configure**
    [flags](source.md#source-config-src) for later use, omitting
    `--ld-opt` and `--njs`:
-   ```console
+   ```bash
    $ unitd --version
 
        unit version: 1.32.1
@@ -142,7 +142,7 @@ Unit package installed:
    ```
 4. Download Unit’s sources, [configure](source.md#source-modules)
    and build your custom module, then put it where Unit will find it:
-   ```console
+   ```bash
    $ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz
    $ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory
    $ cd unit-1.32.1
@@ -170,7 +170,7 @@ Unit package installed:
 
    Save and close the file.
 6. Build and install the package:
-   ```console
+   ```bash
    $ dpkg-deb -b $UNITTMP/unit-php7.3
    # dpkg -i $UNITTMP/unit-php7.3.deb
    ```
@@ -180,25 +180,25 @@ Unit package installed:
 
 1. Make sure to install the [prerequisites](source.md#source-prereq-build) for the package.  In our example,
    it’s PHP 7.3 on Fedora 30:
-   ```console
+   ```bash
    # yum install -y php-7.3.8
    # yum install php-devel php-embedded
    ```
 2. Install RPM development tools and prepare the directory structure:
-   ```console
+   ```bash
    # yum install -y rpmdevtools
    $ rpmdev-setuptree
    ```
 3. Create a **.spec** [file](https://rpm-packaging-guide.github.io/#what-is-a-spec-file)
    to store build commands for your custom package:
-   ```console
+   ```bash
    $ cd ~/rpmbuild/SPECS
    $ rpmdev-newspec unit-php7.3
    ```
 4. Run **unitd --version** and note the **./configure**
    [flags](source.md#source-config-src) for later use, omitting
    `--ld-opt` and `--njs`:
-   ```console
+   ```bash
    $ unitd --version
 
        unit version: 1.32.1
@@ -258,7 +258,7 @@ Unit package installed:
 
    Save and close the file.
 6. Build and install the package:
-   ```console
+   ```bash
    $ rpmbuild -bb unit-php7.3.spec
 
        ...

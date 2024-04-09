@@ -20,7 +20,7 @@ Unit:
    is officially deprecated.
 2. Prepare and activate a [virtual environment](https://virtualenv.pypa.io/en/latest/) to contain your installation
    (assuming **virtualenv** is installed):
-   ```console
+   ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ virtualenv venv
@@ -28,7 +28,7 @@ Unit:
    ```
 3. Next, [install Trac](https://trac.edgewall.org/wiki/TracInstall) and its
    optional dependencies, then initialize a [Trac environment](https://trac.edgewall.org/wiki/TracEnvironment) and deploy static files:
-   ```console
+   ```bash
    $ pip install Trac
    $ pip install babel docutils genshi \
                  pygments pytz textile             # optional dependencies
@@ -53,7 +53,7 @@ Unit:
    >     return trac.web.main.dispatch_request(environ, start_response)
    > ```
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -110,7 +110,7 @@ Unit:
    **static/** directory.
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

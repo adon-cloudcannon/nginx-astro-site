@@ -16,7 +16,7 @@ for diagnostics and troubleshooting
 [access log](configuration.md#configuration-access-log)).
 To find out its default location in your installation:
 
-```console
+```bash
 $ unitd -h
 
     unit options:
@@ -29,7 +29,7 @@ The **--log** option overrides the default value;
 if Unit is already running,
 check whether this option is set:
 
-```console
+```bash
 $ ps ax | grep unitd
     ...
     unit: main v1.32.1 [/path/to/unitd ... --log /path/to/unit.log ...]
@@ -89,7 +89,7 @@ that can be queried via the
 [control API](controlapi.md)
 for details:
 
-```console
+```bash
 # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/:nxt_ph:`routes/2 <The step listed in the log>`
 ```
 
@@ -111,14 +111,14 @@ Our
 provide a debug version of **unitd** called **unitd-debug**
 within the **unit** package:
 
-```console
+```bash
 # unitd-debug <command line options>
 ```
 
 To enable debug-level logging when using our
 [Docker images](installation.md#installation-docker):
 
-```console
+```bash
 $ docker run -d unit:1.32.1-minimal unitd-debug --no-daemon  \
       --control unix:/var/run/control.unit.sock
 ```
@@ -139,7 +139,7 @@ To enable debug-level logging when
 [installing from source](installation.md#source),
 use the **--debug** option:
 
-```console
+```bash
 $ ./configure --debug <other options>
 ```
 
@@ -194,7 +194,7 @@ reload the service configuration
 and restart Unit
 to reproduce the crash condition:
 
-```console
+```bash
 # systemctl daemon-reload
 # systemctl restart unit.service
 ```
@@ -202,7 +202,7 @@ to reproduce the crash condition:
 After a crash,
 locate the core dump file:
 
-```console
+```bash
 # coredumpctl -1                     # optional
 
       TIME                            PID   UID   GID SIG COREFILE  EXE
@@ -229,7 +229,7 @@ Next, raise the core dump size limit with
 then restart Unit
 to reproduce the crash condition:
 
-```console
+```bash
 # ulimit -c unlimited
 # cd :nxt_ph:`/path/to/unit/ <Unit's installation directory>`
 # sbin/unitd           # or sbin/unitd-debug
@@ -238,7 +238,7 @@ to reproduce the crash condition:
 After a crash,
 locate the core dump file:
 
-```console
+```bash
 # ls -al :nxt_ph:`/path/to/unit/working/directory/ <Unit's working directory>`  # default location, see /proc/sys/kernel/core_pattern
 
       ...
@@ -260,7 +260,7 @@ kern.corefile=/path/to/core/files/%N.core
 Alternatively,
 update the settings in runtime:
 
-```console
+```bash
 # sysctl kern.coredump=1
 # sysctl kern.corefile=/path/to/core/files/%N.core
 ```
@@ -269,13 +269,13 @@ Next, restart Unit
 to reproduce the crash condition.
 If Unit is installed as a service:
 
-```console
+```bash
 # service unitd restart
 ```
 
 If it’s installed manually:
 
-```console
+```bash
 # cd :nxt_ph:`/path/to/unit/ <Unit's installation directory>`
 # sbin/unitd
 ```
@@ -283,7 +283,7 @@ If it’s installed manually:
 After a crash,
 locate the core dump file:
 
-```console
+```bash
 # ls -al :nxt_ph:`/path/to/core/files/ <Core dump directory>`
 
       ...

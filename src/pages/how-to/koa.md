@@ -8,12 +8,12 @@ To run apps built with the [Koa](https://koajs.com) web framework using Unit:
 
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with the
    **unit-dev/unit-devel** package.  Next, [install](../installation.md#installation-nodejs-package) Unit’s **unit-http** package:
-   ```console
+   ```bash
    # npm install -g --unsafe-perm unit-http
    ```
 2. Create your app directory, [install](https://koajs.com/#introduction)
    Koa, and link **unit-http**:
-   ```console
+   ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ npm install koa
@@ -52,11 +52,11 @@ To run apps built with the [Koa](https://koajs.com) web framework using Unit:
    ```
 
    The file should be made executable so the application can run on Unit:
-   ```console
+   ```bash
    $ chmod +x :nxt_ph:`app.js <Application file; use a real path in your configuration>`
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -95,7 +95,7 @@ To run apps built with the [Koa](https://koajs.com) web framework using Unit:
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -106,7 +106,7 @@ To run apps built with the [Koa](https://koajs.com) web framework using Unit:
 
    After a successful update, your app should be available on the listener’s IP
    address and port:
-   ```console
+   ```bash
    $ curl http://localhost -v
 
          *   Trying 127.0.0.1:80...

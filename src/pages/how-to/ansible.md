@@ -18,7 +18,7 @@ blog post is [here](https://steampunk.si/blog/why-and-how-of-the-nginx-unit-ansi
 
 First, install the collection:
 
-```console
+```bash
 $ ansible-galaxy collection install steampunk.unit
 ```
 
@@ -81,7 +81,7 @@ all:
 
 With everything in place, start the playbook:
 
-```console
+```bash
 $ ansible-playbook -i :nxt_hint:`inventory.yaml <Inventory filename>` :nxt_hint:`playbook.yaml <Playbook filename>`
 
       PLAY [Install and run NGINX Unit] ***
@@ -98,7 +98,7 @@ $ ansible-playbook -i :nxt_hint:`inventory.yaml <Inventory filename>` :nxt_hint:
 If it’s OK, try the app at the host address from the inventory and the port
 number set in the playbook:
 
-```console
+```bash
 $ curl 203.0.113.1:3000
 
       Hello, Python on Unit!

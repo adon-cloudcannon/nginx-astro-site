@@ -9,12 +9,12 @@ using Unit:
 
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with the
    **unit-dev/unit-devel** package.  Next, [install](../installation.md#installation-nodejs-package) Unit’s **unit-http** package:
-   ```console
+   ```bash
    # npm install -g --unsafe-perm unit-http
    ```
 2. Create your app directory, [install](https://expressjs.com/en/starter/installing.html) Express, and link
    **unit-http**:
-   ```console
+   ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ npm install express --save
@@ -22,7 +22,7 @@ using Unit:
    ```
 3. Create your Express [app](https://expressjs.com/en/starter/hello-world.html); let’s store it as
    **/path/to/app/app.js**.  First, initialize the directory:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ npm init
    ```
@@ -41,11 +41,11 @@ using Unit:
    ```
 
    The file should be made executable so the application can run on Unit:
-   ```console
+   ```bash
    $ chmod +x :nxt_ph:`app.js <Application file; use a real path in your configuration>`
    ```
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -84,7 +84,7 @@ using Unit:
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

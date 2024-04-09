@@ -13,7 +13,7 @@ versions 1.1 or 2.0 using Unit:
 
    Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#installing-from-composer)
    and Composer:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/ <Partial path to the application directory; use a real path in your configuration>`
    $ composer create-project --prefer-dist yiisoft/yii2-app-basic :nxt_ph:`app <Arbitrary app name>`
    ```
@@ -23,7 +23,7 @@ versions 1.1 or 2.0 using Unit:
    **index.php** and the static files; if your app requires
    additional **.php** scripts, also store them here.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -98,7 +98,7 @@ versions 1.1 or 2.0 using Unit:
      runs for *any* URIs the target receives.
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -117,7 +117,7 @@ versions 1.1 or 2.0 using Unit:
 
    Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app)
    and **yiic**:
-   ```console
+   ```bash
    $ git clone git@github.com:yiisoft/yii.git :nxt_ph:`/path/to/yii1.1/ <Arbitrary framework path>`
    $ :nxt_ph:`/path/to/yii1.1/ <Arbitrary framework path>`framework/yiic webapp :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    ```
@@ -187,7 +187,7 @@ versions 1.1 or 2.0 using Unit:
      runs for *any* URIs the target receives.
 4. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

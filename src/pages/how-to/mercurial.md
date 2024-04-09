@@ -27,7 +27,7 @@ control system using Unit:
    This is a very basic script; to elaborate on it, see the
    Mercurial repo publishing [guide](https://www.mercurial-scm.org/wiki/PublishingRepositories#hgweb).
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -57,7 +57,7 @@ control system using Unit:
    ```
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -68,7 +68,7 @@ control system using Unit:
 
    After a successful update, you can proceed to work with your Mercurial
    repository as usual:
-   ```console
+   ```bash
    $ hg config --edit
    $ hg clone http://localhost/ project/
    $ cd project/

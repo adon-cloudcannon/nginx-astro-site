@@ -9,7 +9,7 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP 7.2.5+ language module.
 2. Next, [install](https://symfony.com/doc/current/setup.html) Symfony and
    create or deploy your app.  Here, we use Symfony’s [reference app](https://symfony.com/doc/current/setup.html#the-symfony-demo-application):
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/ <Path where the application directory will be created; use a real path in your configuration>`
    $ symfony new --demo :nxt_ph:`app <Arbitrary app name>`
    ```
@@ -19,7 +19,7 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
    the static files; if your app requires additional **.php** scripts, also
    store them here.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -92,7 +92,7 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
    Symfony docs.
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

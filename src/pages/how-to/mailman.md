@@ -19,7 +19,7 @@ To install and run the web UI for the [Mailman 3](https://docs.list.org/en/lates
 
    These are needed to configure Unit.
 3. Run the following command so Unit can access Mailman’s static files:
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_hint:`/opt/mailman/web/static/ <Mailman's static file path>`
    ```
 
@@ -30,7 +30,7 @@ To install and run the web UI for the [Mailman 3](https://docs.list.org/en/lates
 
    Alternatively, add Unit’s unprivileged user account to Mailman’s group so Unit
    can access the static files:
-   ```console
+   ```bash
    # usermod -a -G :nxt_hint:`mailman <Mailman's user group noted in Step 2>` :nxt_hint:`unit <User that Unit's router runs as by default>`
    ```
 4. Next, prepare the Mailman [configuration](../configuration.md#configuration-python) for Unit
@@ -76,7 +76,7 @@ To install and run the web UI for the [Mailman 3](https://docs.list.org/en/lates
    ```
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

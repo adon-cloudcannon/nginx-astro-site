@@ -11,7 +11,7 @@ To run the [Roundcube](https://roundcube.net) webmail platform using Unit:
 3. Install Roundcube’s [core files](https://roundcube.net/download/).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -60,7 +60,7 @@ To run the [Roundcube](https://roundcube.net) webmail platform using Unit:
    ```
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -75,7 +75,7 @@ To run the [Roundcube](https://roundcube.net) webmail platform using Unit:
 7. After installation, switch **share** and **root** to the
    **public_html/** subdirectory to [protect](https://github.com/roundcube/roundcubemail/wiki/Installation#protect-your-installation)
    sensitive data:
-   ```console
+   ```bash
    # curl -X PUT -d ':nxt_ph:`"/path/to/app/ <Path to the application directory; use a real path in your configuration>`public_html$uri"' --unix-socket \
          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/routes/1/action/share <Path to the app's document root in our configuration; mind that route steps are zero-indexed>`
    # curl -X PUT -d '":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`public_html/"' --unix-socket \

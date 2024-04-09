@@ -164,7 +164,7 @@ Here, quoted route identifiers are URIs to the `/config` object in Unit’s
 control API, allowing direct access to more information about the route and its
 corresponding action:
 
-```console
+```bash
 $ unitc /config/routes/1
 
       {
@@ -276,7 +276,7 @@ platforms.
 
 Getting started with Unit on Docker is now as simple as:
 
-```console
+```bash
 $ docker pull unit
 ```
 

@@ -120,7 +120,7 @@ see [here](howto/modules.md#modules-pkg).
 We provide a [script](https://github.com/nginx/unit/tree/master/tools)
 that adds our official repos on the systems we support:
 
-```console
+```bash
 $ wget https://raw.githubusercontent.com/nginx/unit/master/tools/setup-unit && chmod +x setup-unit
 # ./setup-unit repo-config
 ```
@@ -147,7 +147,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc17 unit-perl  \
          unit-php unit-python39 unit-python311 unit-wasm
@@ -175,7 +175,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-perl  \
          unit-php unit-python27 unit-python37 unit-wasm
@@ -208,7 +208,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-perl unit-php  \
          unit-python27 unit-python34 unit-python35 unit-python36
@@ -229,7 +229,7 @@ Runtime details:
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -247,7 +247,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc17 unit-perl  \
@@ -265,7 +265,7 @@ Runtime details:
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -283,7 +283,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-perl  \
@@ -306,7 +306,7 @@ please update.
 Supported architectures: i386, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -324,7 +324,7 @@ Supported architectures: i386, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-perl  \
@@ -347,7 +347,7 @@ please update.
 Supported architectures: i386, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -365,7 +365,7 @@ Supported architectures: i386, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc8 unit-perl  \
@@ -398,7 +398,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python311 unit-ruby
@@ -426,7 +426,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python311 unit-ruby unit-wasm
@@ -459,7 +459,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python39 unit-python310 unit-ruby unit-wasm
@@ -492,7 +492,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python39 unit-ruby
@@ -525,7 +525,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python38 unit-ruby
@@ -559,7 +559,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
          unit-php unit-python27 unit-python37 unit-ruby
@@ -592,7 +592,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-perl  \
          unit-php unit-python27 unit-python37 unit-ruby
@@ -626,7 +626,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module and build Go apps>` unit-go unit-jsc8 unit-jsc11  \
          unit-perl unit-php unit-python39 unit-wasm
@@ -654,7 +654,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11  \
          unit-perl unit-php unit-python27 unit-python36 unit-python38 unit-python39 unit-wasm
@@ -685,7 +685,7 @@ Supported architecture: x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-jsc11  \
          unit-perl unit-php unit-python27 unit-python36
@@ -718,7 +718,7 @@ Supported architectures: i386, x86-64.
    ```
 2. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # yum install unit
    # yum install :nxt_hint:`unit-devel <Required to install the Node.js module>` unit-jsc8 unit-perl  \
          unit-php unit-python
@@ -747,7 +747,7 @@ or Rocky Linux.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -765,7 +765,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module and build Go apps>` unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19 unit-jsc20  \
@@ -788,7 +788,7 @@ please update.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -806,7 +806,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module and build Go apps>` unit-go unit-jsc11 unit-jsc17 unit-jsc18 unit-jsc19  \
@@ -824,7 +824,7 @@ Runtime details:
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -842,7 +842,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module and build Go apps>` unit-go unit-jsc11 unit-jsc16 unit-jsc17 unit-jsc18  \
@@ -865,7 +865,7 @@ please update.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -883,7 +883,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-jsc16 unit-jsc17 unit-jsc18  \
@@ -906,7 +906,7 @@ please update.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -924,7 +924,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-jsc15 unit-jsc16 unit-jsc17  \
@@ -947,7 +947,7 @@ please update.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -965,7 +965,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-jsc13 unit-jsc14 unit-jsc15  \
@@ -983,7 +983,7 @@ Runtime details:
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -1001,7 +1001,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-perl  \
@@ -1024,7 +1024,7 @@ please update.
 Supported architecture: x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -1042,7 +1042,7 @@ Supported architecture: x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc11 unit-perl  \
@@ -1065,7 +1065,7 @@ please update.
 Supported architectures: arm64, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -1083,7 +1083,7 @@ Supported architectures: arm64, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc8 unit-jsc11 unit-perl  \
@@ -1106,7 +1106,7 @@ please update.
 Supported architectures: arm64, i386, x86-64.
 
 1. Download and save NGINX’s signing key:
-   ```console
+   ```bash
    # curl --output /usr/share/keyrings/nginx-keyring.gpg  \
          https://unit.nginx.org/keys/nginx-keyring.gpg
    ```
@@ -1124,7 +1124,7 @@ Supported architectures: arm64, i386, x86-64.
    ```
 3. Install the core package
    and other packages you need:
-   ```console
+   ```bash
    # apt update
    # apt install unit
    # apt install :nxt_hint:`unit-dev <Required to install the Node.js module>` unit-jsc8 unit-perl unit-php  \
@@ -1149,7 +1149,7 @@ To install Unit on macOS,
 use the official Homebrew
 [tap](https://github.com/nginx/homebrew-unit):
 
-```console
+```bash
 $ brew install nginx/unit/unit
 ```
 
@@ -1161,7 +1161,7 @@ language module.
 To install the Java, Perl, Python, and Ruby language modules
 from Homebrew:
 
-```console
+```bash
 $ brew install unit-java unit-perl unit-php unit-python unit-python3 unit-ruby
 # pkill unitd  # Stop Unit
 # unitd        # Start Unit to pick up any changes in language module setup
@@ -1177,7 +1177,7 @@ Runtime details:
 #### NOTE
 To run Unit as **root** on macOS:
 
-```console
+```bash
 $ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 $ sudo --preserve-env=OBJC_DISABLE_INITIALIZE_FORK_SAFETY :nxt_ph:`/path/to/unitd <Unit's executable pathname>` ...
 ```
@@ -1198,7 +1198,7 @@ to run Node.js apps on Unit:
    it’s needed to build **unit-http**.
 2. Next, build and install **unit-http** globally
    (this requires **npm** and **node-gyp**):
-   > ```console
+   > ```bash
    > # npm install -g --unsafe-perm unit-http
    > ```
 
@@ -1223,7 +1223,7 @@ to run Node.js apps on Unit:
 If you update Unit later,
 make sure to update the module as well:
 
-```console
+```bash
 # npm update -g --unsafe-perm unit-http
 ```
 
@@ -1238,14 +1238,14 @@ To use Unit with multiple Node.js versions side by side,
 we recommend
 [Node Version Manager](https://github.com/nvm-sh/nvm):
 
-```console
+```bash
 $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/:nxt_ph:`x.y.z <nvm version>`/install.sh | bash
 ```
 
 Install the versions you need
 and select the one you want to use with Unit:
 
-```console
+```bash
 $ nvm install 18
 $ nvm install 16
 $ nvm use 18
@@ -1255,7 +1255,7 @@ $ nvm use 18
 Having selected the specific version,
 install the **node-gyp** module:
 
-```console
+```bash
 $ npm install -g node-gyp
 ```
 
@@ -1263,7 +1263,7 @@ Next, clone the Unit source code
 to build a **unit-http** module
 for the selected Node.js version:
 
-```console
+```bash
 $ hg clone https://hg.nginx.org/unit
 $ cd unit
 $ pwd
@@ -1284,7 +1284,7 @@ $ ./configure nodejs
 Point to Unit’s header files and libraries in the source code directory
 to build the module:
 
-```console
+```bash
 $ CPPFLAGS="-I/home/user/unit/include/" LDFLAGS="-L/home/user/unit/lib/"  \
       make node-install
 
@@ -1308,37 +1308,37 @@ on Unit as usual.
 
 Enable Unit to launch automatically at system startup:
 
-```console
+```bash
 # systemctl enable unit
 ```
 
 Start or restart Unit:
 
-```console
+```bash
 # systemctl restart unit
 ```
 
 Stop a running Unit:
 
-```console
+```bash
 # systemctl stop unit
 ```
 
 Disable Unit’s automatic startup:
 
-```console
+```bash
 # systemctl disable unit
 ```
 
 Start Unit as a daemon:
 
-```console
+```bash
 # unitd
 ```
 
 Stop all Unit’s processes:
 
-```console
+```bash
 # pkill unitd
 ```
 
@@ -1379,7 +1379,7 @@ To install Unit’s core executables
 from the Alpine Linux
 [packages](https://pkgs.alpinelinux.org/packages?name=unit*):
 
-```console
+```bash
 # apk update
 # apk upgrade
 # apk add unit
@@ -1388,7 +1388,7 @@ from the Alpine Linux
 To install service manager files
 and specific language modules:
 
-```console
+```bash
 # apk add unit-openrc unit-perl unit-php7 unit-python3 unit-ruby
 # service unit restart  # Necessary for Unit to pick up any changes in language module setup
 ```
@@ -1399,14 +1399,14 @@ Runtime details:
 |------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit.log**                                                                                                                                                                                                                                                                                                                                 |
 | Non-privileged [user and group](howto/security.md#security-apps) | **unit**                                                                                                                                                                                                                                                                                                                                              |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`service unit enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unit disable <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`service unit enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unit disable <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit’s core executables
 and specific language modules
 from the Sisyphus
 [packages](https://packages.altlinux.org/en/sisyphus/srpms/unit):
 
-```console
+```bash
 # apt-get update
 # apt-get install unit
 # apt-get install unit-perl unit-php unit-python3 unit-ruby
@@ -1424,13 +1424,13 @@ Runtime details:
 |------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                            |
 | Non-privileged [user and group](howto/security.md#security-apps) | **\_unit** (mind the **\_** prefix)                                                                                                                                                                                                                                                                                                                   |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`service unit enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unit disable <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`service unit enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unit disable <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit’s core executables and all language modules,
 clone the
 [Arch User Repository (AUR)](https://aur.archlinux.org/pkgbase/nginx-unit/):
 
-```console
+```bash
 $ git clone https://aur.archlinux.org/nginx-unit.git
 $ cd nginx-unit
 ```
@@ -1443,7 +1443,7 @@ use them at your own risk.
 
 Next, build the package:
 
-```console
+```bash
 $ makepkg -si
 ```
 
@@ -1453,13 +1453,13 @@ Runtime details:
 |------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/nginx-unit.log**                                                                                                                                                                                                                                                                                                                                   |
 | Non-privileged [user and group](howto/security.md#security-apps) | **nobody**                                                                                                                                                                                                                                                                                                                                                    |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit from
 [FreeBSD packages](https://docs.freebsd.org/en/books/handbook/ports/#pkgng-intro),
 get the core package and other packages you need:
 
-```console
+```bash
 # pkg install -y unit
 # pkg install -y :nxt_hint:`libunit <Required to install the Node.js module>`
 # pkg install -y unit-java8  \
@@ -1477,20 +1477,20 @@ start by updating your port collection.
 
 With **portsnap**:
 
-```console
+```bash
 # portsnap fetch update
 ```
 
 With **git**:
 
-```console
+```bash
 # cd /usr/ports && git pull
 ```
 
 Next, browse to the port path
 to build and install the core Unit port:
 
-```console
+```bash
 # cd /usr/ports/www/unit/
 # make
 # make install
@@ -1511,7 +1511,7 @@ or
 [unit-wasm](https://www.freshports.org/www/unit-wasm/).
 After that, restart Unit:
 
-```console
+```bash
 # service unitd restart  # Necessary for Unit to pick up any changes in language module setup
 ```
 
@@ -1521,7 +1521,7 @@ Runtime details:
 |------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                                |
 | Non-privileged [user and group](howto/security.md#security-apps) | **www**                                                                                                                                                                                                                                                                                                                                                   |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`service unitd enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unitd restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unitd stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unitd disable <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`service unitd enable <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`service unitd restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unitd stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`service unitd disable <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit using
 [Portage](https://wiki.gentoo.org/wiki/Handbook:X86/Full/Portage),
@@ -1529,7 +1529,7 @@ update the repository
 and install the
 [package](https://packages.gentoo.org/packages/www-servers/nginx-unit):
 
-```console
+```bash
 # emerge --sync
 # emerge www-servers/nginx-unit
 ```
@@ -1544,14 +1544,14 @@ Runtime details:
 |------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/nginx-unit**                                                                                                                                                                                                                                                                                                                                                          |
 | Non-privileged [user and group](howto/security.md#security-apps) | **nobody**                                                                                                                                                                                                                                                                                                                                                                       |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`rc-update add nginx-unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`rc-service nginx-unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`rc-service nginx-unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`rc-update del nginx-unit <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`rc-update add nginx-unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`rc-service nginx-unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`rc-service nginx-unit stop <Stop a running Unit; one-time action>`<br/># :nxt_hint:`rc-update del nginx-unit <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit’s core package
 and the other packages you need
 from the
 [NetBSD Packages Collection](https://cdn.netbsd.org/pub/pkgsrc/current/pkgsrc/www/unit/index.html):
 
-```console
+```bash
 # pkg_add unit
 # pkg_add :nxt_hint:`libunit <Required to install the Node.js module>`
 # pkg_add unit-perl  \
@@ -1564,14 +1564,14 @@ from the
 To build Unit manually,
 start by updating the package collection:
 
-```console
+```bash
 # cd /usr/pkgsrc && cvs update -dP
 ```
 
 Next, browse to the package path
 to build and install the core Unit binaries:
 
-```console
+```bash
 # cd /usr/pkgsrc/www/unit/
 # make build install
 ```
@@ -1592,13 +1592,13 @@ Note that **unit-php** packages require the PHP package
 to be built with the **php-embed** option.
 To enable the option for **lang/php82**:
 
-```console
+```bash
 # echo "PKG_OPTIONS.php82=php-embed" >> /etc/mk.conf
 ```
 
 After that, restart Unit:
 
-```console
+```bash
 # service unit restart  # Necessary for Unit to pick up any changes in language module setup
 ```
 
@@ -1608,7 +1608,7 @@ Runtime details:
 |------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | Non-privileged [user and group](howto/security.md#security-apps) | **unit**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Startup and shutdown                                             | First, add Unit’s startup script<br/>to the **/etc/rc.d/** directory:<br/><br/>```console<br/># cp /usr/pkg/share/examples/rc.d/unit /etc/rc.d/<br/>```<br/><br/>After that, you can start and stop Unit as follows:<br/><br/>```console<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/>```<br/><br/>To enable or disable Unit’s automatic startup,<br/>edit **/etc/rc.conf**:<br/><br/>```ini<br/># Enable service:<br/>unit=YES<br/><br/># Disable service:<br/>unit=NO<br/>``` |
+| Startup and shutdown                                             | First, add Unit’s startup script<br/>to the **/etc/rc.d/** directory:<br/><br/>```bash<br/># cp /usr/pkg/share/examples/rc.d/unit /etc/rc.d/<br/>```<br/><br/>After that, you can start and stop Unit as follows:<br/><br/>```bash<br/># :nxt_hint:`service unit restart <Start or restart Unit; one-time action>`<br/># :nxt_hint:`service unit stop <Stop a running Unit; one-time action>`<br/>```<br/><br/>To enable or disable Unit’s automatic startup,<br/>edit **/etc/rc.conf**:<br/><br/>```ini<br/># Enable service:<br/>unit=YES<br/><br/># Disable service:<br/>unit=NO<br/>``` |
 
 To install Unit’s core executables and all language modules
 using the
@@ -1619,7 +1619,7 @@ check if Unit’s available,
 and install the
 [package](https://github.com/NixOS/nixpkgs/tree/master/pkgs/servers/http/unit):
 
-```console
+```bash
 $ nix-channel --update
 $ nix-env -qa 'unit'
 $ nix-env -i unit
@@ -1640,13 +1640,13 @@ Runtime details:
 |------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | Non-privileged [user and group](howto/security.md#security-apps) | **unit**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| Startup and shutdown                                             | Add **services.unit.enable = true;** to<br/>**/etc/nixos/configuration.nix**<br/>and rebuild the system configuration:<br/><br/>```console<br/># nixos-rebuild switch<br/>```<br/><br/>After that, use **systemctl**:<br/><br/>```console<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | Add **services.unit.enable = true;** to<br/>**/etc/nixos/configuration.nix**<br/>and rebuild the system configuration:<br/><br/>```bash<br/># nixos-rebuild switch<br/>```<br/><br/>After that, use **systemctl**:<br/><br/>```bash<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
 
 To install Unit from
 [OpenBSD packages](https://www.openbsd.org/faq/faq15.html),
 get the core package and other packages you need:
 
-```console
+```bash
 # pkg_add unit
 # pkg_add unit-perl
 # pkg_add unit-php74
@@ -1664,14 +1664,14 @@ To install Unit from
 start by updating your port collection,
 for example:
 
-```console
+```bash
 $ cd /usr/
 $ cvs -d anoncvs@anoncvs.spacehopper.org:/cvs checkout -P ports
 ```
 
 Next, browse to the port path to build and install Unit:
 
-```console
+```bash
 $ cd /usr/ports/www/unit/
 $ make
 # make install
@@ -1682,7 +1682,7 @@ other modules can be built and installed from
 [source](#source).
 After that, restart Unit:
 
-```console
+```bash
 # rcctl restart unit  # Necessary for Unit to pick up any changes in language module setup
 ```
 
@@ -1692,7 +1692,7 @@ Runtime details:
 |------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                    |
 | Non-privileged [user and group](howto/security.md#security-apps) | **\_unit**                                                                                                                                                                                                                                                                                                                                    |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`rcctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`rcctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`rcctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`rcctl disable unit <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`rcctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`rcctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`rcctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`rcctl disable unit <Disable Unit's automatic startup>`<br/>``` |
 
 [Remi’s RPM repository](https://blog.remirepo.net/post/2019/01/14/PHP-with-the-NGINX-unit-application-server),
 which hosts the latest versions of the PHP stack
@@ -1710,7 +1710,7 @@ repository](#installation-precomp-pkgs).
 
 Next, install Unit and the PHP modules you want:
 
-```console
+```bash
 # yum install --enablerepo=remi unit  \
       php54-unit-php php55-unit-php php56-unit-php  \
       php70-unit-php php71-unit-php php72-unit-php php73-unit-php php74-unit-php  \
@@ -1724,7 +1724,7 @@ Runtime details:
 |------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Log [file](troubleshooting.md#troubleshooting-log)               | **/var/log/unit/unit.log**                                                                                                                                                                                                                                                                                                                                    |
 | Non-privileged [user and group](howto/security.md#security-apps) | **nobody**                                                                                                                                                                                                                                                                                                                                                    |
-| Startup and shutdown                                             | ```console<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
+| Startup and shutdown                                             | ```bash<br/># :nxt_hint:`systemctl enable unit <Enable Unit to launch automatically at system startup>`<br/># :nxt_hint:`systemctl restart unit <Start or restart Unit; one-time action>`<br/># :nxt_hint:`systemctl stop unit <Stop a running Unit; one-time action>`<br/># :nxt_hint:`systemctl disable unit <Disable Unit's automatic startup>`<br/>``` |
 
 <a id="installation-docker"></a>
 
@@ -1749,7 +1749,7 @@ To build a custom language version image,
 clone and rebuild the sources locally
 with Docker installed:
 
-```console
+```bash
 $ make build-<language name><language version> VERSIONS_<language name>=<language version>
 ```
 
@@ -1778,7 +1778,7 @@ that take only major version numbers
 Thus, to create an image with Python 3.10
 and tag it as **unit:|version|-python3.10**:
 
-```console
+```bash
 $ git clone https://github.com/nginx/unit
 $ cd unit
 $ git checkout 1.32.1  # Optional; use to choose a specific Unit version
@@ -1812,7 +1812,7 @@ To install and run Unit from
 [official builds](https://hub.docker.com/_/unit)
 at Docker Hub:
 
-```console
+```bash
 $ docker pull unit::nxt_ph:`TAG <Specific image tag; see above for a complete list>`
 $ docker run -d unit::nxt_ph:`TAG <Specific image tag; see above for a complete list>`
 ```
@@ -1821,7 +1821,7 @@ To install and run Unit from NGINX’s
 [repository](https://gallery.ecr.aws/nginx/unit)
 at Amazon ECR Public Gallery:
 
-```console
+```bash
 $ docker pull public.ecr.aws/nginx/unit::nxt_ph:`TAG <Specific image tag; see above for a complete list>`
 $ docker run -d public.ecr.aws/nginx/unit::nxt_ph:`TAG <Specific image tag; see above for a complete list>`
 ```
@@ -1834,7 +1834,7 @@ To install and run Unit
 from the tarballs stored on our
 [website](https://packages.nginx.org/unit/docker/):
 
-```console
+```bash
 $ curl -O https://packages.nginx.org/unit/docker/1.29.1/nginx-unit-:nxt_ph:`TAG <Specific image tag; see above for a complete list>`.tar.gz
 $ curl -O https://packages.nginx.org/unit/docker/1.29.1/nginx-unit-:nxt_ph:`TAG <Specific image tag; see above for a complete list>`.tar.gz.sha512
 $ sha512sum -c nginx-unit-:nxt_ph:`TAG <Specific image tag; see above for a complete list>`.tar.gz.sha512
@@ -1911,7 +1911,7 @@ For ad-hoc initialization,
 you can mount a directory with configuration files
 to a container at startup:
 
-```console
+```bash
 $ docker run -d --mount  \
          type=bind,src=:nxt_ph:`/path/to/config/files/ <Use a real path instead>`,dst=/docker-entrypoint.d/  \
          unit:1.32.1-minimal)
@@ -1925,14 +1925,14 @@ You can get Unit’s source code
 from our official GitHub repository
 or as a tarball.
 
-```console
+```bash
 $ git clone https://github.com/nginx/unit            # Latest updates to the repository
 $ # -- or --
 $ git clone -b 1.32.1 https://github.com/nginx/unit  # Specific version tag; see https://github.com/nginx/unit/tags
 $ cd unit
 ```
 
-```console
+```bash
 $ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz
 $ tar xzf unit-1.32.1.tar.gz
 $ cd unit-1.32.1

@@ -12,7 +12,7 @@ Besides improving the request routing abilities, this release simplifies
 operations concerning the Go module.  Now it can also be installed with the
 **go get** command:
 
-```console
+```bash
 $ go get unit.nginx.org/go
 ```
 

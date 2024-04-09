@@ -10,7 +10,7 @@ To run the [Plone](https://plone.org) content management system using Unit:
 2. Install and configure Plone’s [prerequisites](https://docs.plone.org/manage/installing/requirements.html).
 3. Install Plone’s [core files](https://docs.plone.org/manage/installing/installation.html).  Here, we install it at **/path/to/app/**;
    use a real path in your configuration:
-   ```console
+   ```bash
    $ mkdir /tmp/plone && cd /tmp/plone/
    $ wget https://launchpad.net/plone/:nxt_ph:`A.B <Plone version>`/:nxt_ph:`A.B.C <Plone version>`/+download/Plone-:nxt_ph:`A.B.C <Plone version>`-UnifiedInstaller-1.0.tgz
    $ tar xzvf Plone-:nxt_ph:`A.B.C <Plone version>`-UnifiedInstaller-1.0.tgz  \
@@ -55,7 +55,7 @@ To run the [Plone](https://plone.org) content management system using Unit:
    part in **buildout.cfg**.
 
    Rerun Buildout, feeding it the new configuration file:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`zinstance/
    $ bin/buildout -c wsgi.cfg
 
@@ -66,7 +66,7 @@ To run the [Plone](https://plone.org) content management system using Unit:
 
    Thus created, the instance script can be used with Unit.
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -98,7 +98,7 @@ To run the [Plone](https://plone.org) content management system using Unit:
    ```
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

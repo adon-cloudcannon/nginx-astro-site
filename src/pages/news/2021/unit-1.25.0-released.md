@@ -63,7 +63,7 @@ specific application, and the only good way to do that was to intentionally
 introduce a change to the application’s configuration.  Usually, a dummy
 `environment` option was used for this:
 
-```console
+```bash
 curl -X PUT -d '"$RANDOM"' --unix-socket /var/run/control.unit.sock \
      /config/applications/<name>/environment/gen
 ```
@@ -72,7 +72,7 @@ While it worked well, the solution can’t be called elegant; it was more like a
 workaround.  But now, Unit has a special section in the control API that allows
 restarting any configured application with a basic GET request:
 
-```console
+```bash
 curl --unix-socket /var/run/control.unit.sock \
      /control/applications/<name>/restart
 ```

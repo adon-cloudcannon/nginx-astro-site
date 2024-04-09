@@ -27,7 +27,7 @@ With 1.28, the Unit API has a new endpoint available; the `/status`
 endpoint is exposed at the root level, as with the `/config` and
 `/certificates` endpoints:
 
-```console
+```bash
 curl --unix-socket /var/run/control.unit.sock http://localhost
 ```
 
@@ -278,7 +278,7 @@ with UNIX domain sockets:
 The `source` can include `unix` to trigger replacement if the
 request was made via a socket, like this:
 
-```console
+```bash
 curl -H "X-Forwarded-For: 192.168.10.100" --abtract-unix-socket socket http://localhost
 ```
 

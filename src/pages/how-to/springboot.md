@@ -15,7 +15,7 @@ To run apps based on the [Spring Boot](https://spring.io/projects/spring-boot) f
    Choose the same Java version that your Unit language module has.
 
    Download and extract the project files where you need them:
-   ```console
+   ```bash
    $ unzip :nxt_hint:`demo.zip <Downloaded project archive>` -d :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    ```
 
@@ -50,13 +50,13 @@ To run apps based on the [Spring Boot](https://spring.io/projects/spring-boot) f
    Finally, assemble a **.war** file.
 
    If you chose [Gradle](https://gradle.org) as the build tool:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`demo/
    $ ./gradlew bootWar
    ```
 
    If you chose [Maven](https://maven.apache.org):
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`demo/
    $ ./mvnw package
    ```
@@ -66,7 +66,7 @@ To run apps based on the [Spring Boot](https://spring.io/projects/spring-boot) f
    subdirectory, while Maven uses **target/**; note your path for later
    use in Unit configuration.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -97,7 +97,7 @@ To run apps based on the [Spring Boot](https://spring.io/projects/spring-boot) f
    ```
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```
@@ -108,7 +108,7 @@ To run apps based on the [Spring Boot](https://spring.io/projects/spring-boot) f
 
    After a successful update, your app should be available on the listener’s IP
    address and port:
-   ```console
+   ```bash
    $ curl http://localhost/hello?name=Unit
 
          Hello, Unit!

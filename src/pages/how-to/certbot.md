@@ -52,13 +52,13 @@ Encrypt](https://letsencrypt.org), a non-profit CA.
 
    Next, run **certbot**, supplying the **share** directory as the
    webroot path:
-   ```console
+   ```bash
    # certbot certonly --webroot -w :nxt_ph:`/var/www/www.example.com/ <Path where the file should be stored>` -d :nxt_ph:`www.example.com <Your domain name>`
    ```
 
    If you can’t employ the previous method for some reason, try using DNS
    records to validate your domain:
-   ```console
+   ```bash
    # certbot certonly --manual --preferred-challenges dns -d :nxt_ph:`www.example.com <Your domain name>`
    ```
 
@@ -82,7 +82,7 @@ Encrypt](https://letsencrypt.org), a non-profit CA.
    as well, but they’re omitted here for brevity.
 4. Create a certificate bundle fit for Unit and upload it to the
    **certificates** section of Unit’s [control API](../controlapi.md#configuration-api):
-   ```console
+   ```bash
    # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \
          /etc/letsencrypt/live/www.example.com/privkey.pem > :nxt_ph:`bundle1.pem <Arbitrary certificate bundle's filename>`
 
@@ -96,14 +96,14 @@ Encrypt](https://letsencrypt.org), a non-profit CA.
    ```
 5. Create or update a [listener](../configuration.md#configuration-listeners) to use the
    uploaded bundle in Unit:
-   ```console
+   ```bash
    # curl -X PUT --data-binary  \
          '{"pass": "applications/ssl_app", "tls": {"certificate": ":nxt_ph:`certbot1 <Certificate bundle name in Unit's configuration>`"}}'  \
          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
          'http://localhost/config/listeners/:nxt_hint:`*:443 <Listener's name in Unit's configuration>`'
    ```
 6. Try accessing your website via HTTPS:
-   ```console
+   ```bash
    $ curl https://www.example.com -v
 
          ...
@@ -137,7 +137,7 @@ For manual renewal and rollover:
 
 1. Repeat the preceding steps to renew the certificates and upload the new
    bundle under a different name:
-   ```console
+   ```bash
    # certbot certonly --standalone
 
          What would you like to do?
@@ -161,13 +161,13 @@ For manual renewal and rollover:
    **certbot1** and **certbot2**.  Optionally, query the
    **certificates** section to review common details such as expiry dates,
    subjects, or issuers:
-   ```console
+   ```bash
    # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
           http://localhost/certificates
    ```
 2. Update the [listener](../configuration.md#configuration-listeners), switching it to the
    renewed certificate bundle:
-   ```console
+   ```bash
    # curl -X PUT --data-binary ':nxt_ph:`certbot2 <New certificate bundle name in Unit's configuration>`'  \
          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
          'http://localhost/config/listeners/:nxt_hint:`*:443 <Listener's name in Unit's configuration>`/tls/certificate'
@@ -177,7 +177,7 @@ For manual renewal and rollover:
    There’s no need to shut Unit down; your server can stay online during the
    rollover.
 3. Delete the expired bundle:
-   ```console
+   ```bash
    # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
          'http://localhost/certificates/:nxt_ph:`certbot1 <Old certificate bundle name in Unit's configuration>`'
 
@@ -192,7 +192,7 @@ For manual renewal and rollover:
    certificates for two domains, **www.example.com** and
    **cdn.example.com**.  First, upload them to Unit using the same steps as
    earlier:
-   ```console
+   ```bash
    # cat /etc/letsencrypt/live/cdn.example.com/fullchain.pem  \
          /etc/letsencrypt/live/cdn.example.com/privkey.pem > :nxt_hint:`cdn.example.com.pem <Arbitrary certificate bundle's filename>`
 
@@ -219,7 +219,7 @@ For manual renewal and rollover:
 
    Next, configure the listener, supplying both bundles as an array value for
    the **tls/certificate** option:
-   ```console
+   ```bash
    # curl -X PUT --data-binary '{"certificate": :nxt_hint:`["cdn.example.com", "www.example.com"] <Certificate bundle names in Unit's configuration>`}'  \
          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
          'http://localhost/config/listeners/:nxt_hint:`*:443 <Listener's name in Unit's configuration>`/tls'

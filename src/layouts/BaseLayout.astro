@@ -7,10 +7,11 @@ const {
 } = Astro.props;
 
 // Theme/style imports
-import '../theme/style.css';
-import Logo_svg from '../theme/logo.svg'
-import Logo_png from '../theme/logo.png'
-import Icon from '../theme/icon.png'
+import '@theme/style.css';
+import '@theme/prism-theme.css'
+import Logo_svg from '@theme/logo.svg'
+import Logo_png from '@theme/logo.png'
+import Icon from '@theme/icon.png'
 
 // Data
 import meta from '@data/meta.json';
@@ -18,6 +19,10 @@ import meta from '@data/meta.json';
 // Extension functions
 import { getGithubUrl } from '@utils/github'
 let edit_on_github_url = getGithubUrl(Astro);
+
+import { nxt_hint } from '@utils/nxt'
+let html_content = Astro.props.rawContent()
+html_content = nxt_hint(html_content)
 ---
 
 <!DOCTYPE html>
@@ -123,7 +128,7 @@ let edit_on_github_url = getGithubUrl(Astro);
     <TOC menu={frontmatter.menu} />
 </div>
 <div id="content">
-    <slot />
+    <Fragment set:html={html_content} />
     
     { edit_on_github_url && <div class="nxt_github_link"><a href={ edit_on_github_url }><div></div>Edit this page</a></div>}
     <p id="footer">

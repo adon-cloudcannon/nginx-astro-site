@@ -196,7 +196,7 @@ change its value.
 In 1.29, we introduced a wrapper script for curl to simplify interaction with
 the Unit API. In 1.31, we added an interactive edit mode to this script:
 
-```console
+```bash
 $ unitc EDIT /config
 ```
 
@@ -204,7 +204,7 @@ This opens the given endpoint’s JSON configuration in the editor currently
 defined in `$EDITOR`. In most cases this will default to
 **nano**. If you want to use something else, like **vim**:
 
-```console
+```bash
 $ EDITOR=vim unitc EDIT /config
 ```
 

@@ -21,13 +21,13 @@ To run the [MoinMoin](https://moinmo.in/MoinMoinWiki) wiki engine using Unit:
    a real path in your configuration.
 
    For example:
-   ```console
+   ```bash
    $ tar xzf moin-:nxt_ph:`X.Y.Z <MoinMoin version>`.tar.gz --strip-components 1 -C :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    ```
 4. Configure your wiki instances:
 
    See the ‘Single Wiki’ section [here](https://master.moinmo.in/InstallDocs/ServerInstall) for an explanation of these commands:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ mkdir single/
    $ cp :nxt_hint:`wiki/config/wikiconfig.py <Wiki instance configuration>` single/
@@ -41,7 +41,7 @@ To run the [MoinMoin](https://moinmo.in/MoinMoinWiki) wiki engine using Unit:
    appropriate.
 
    See the ‘Multiple Wikis’ section [here](https://master.moinmo.in/InstallDocs/ServerInstall) for an explanation of these commands:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ mkdir multi/ multi/wiki1/ multi/wiki2/
    $ cp wiki/config/wikifarm/* multi/
@@ -59,7 +59,7 @@ To run the [MoinMoin](https://moinmo.in/MoinMoinWiki) wiki engine using Unit:
    configurations, shown here as **wiki1.py** and **wiki2.py**,
    as appropriate.
 5. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -94,7 +94,7 @@ To run the [MoinMoin](https://moinmo.in/MoinMoinWiki) wiki engine using Unit:
    ```
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

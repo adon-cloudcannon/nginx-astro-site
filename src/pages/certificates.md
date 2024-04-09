@@ -24,7 +24,7 @@ see an example in [TLS with Certbot](howto/certbot.md).
 
 First, create a **.pem** file with your certificate chain and private key:
 
-```console
+```bash
 $ cat :nxt_ph:`cert.pem <Leaf certificate file>` :nxt_ph:`ca.pem <CA certificate file>` :nxt_ph:`key.pem <Private key file>` > :nxt_ph:`bundle.pem <Arbitrary certificate bundle's filename>`
 ```
 
@@ -38,7 +38,7 @@ Upload the resulting bundle file to Unit’s certificate storage
 under a suitable name
 (in this case, **bundle**):
 
-```console
+```bash
 # curl -X PUT --data-binary @:nxt_ph:`bundle.pem <Certificate bundle's filename>` --unix-socket \
        :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/certificates/:nxt_ph:`bundle <Certificate bundle name in Unit's configuration>`
 
@@ -124,7 +124,7 @@ Access array items,
 such as individual certificates in a chain,
 and their properties by indexing:
 
-```console
+```bash
 # curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`/chain/0/
 # curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
@@ -170,7 +170,7 @@ the resulting control API configuration may look like this:
 All done;
 the application is now accessible via SSL/TLS:
 
-```console
+```bash
 $ curl -v :nxt_hint:`https://127.0.0.1 <Port 443 is conventionally used for HTTPS connections>`
     ...
     * TLSv1.2 (OUT), TLS handshake, Client hello (1):
@@ -190,7 +190,7 @@ Finally, you can delete a certificate bundle
 that you don’t need anymore
 from the storage:
 
-```console
+```bash
 # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
        http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`
 

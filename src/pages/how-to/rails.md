@@ -10,7 +10,7 @@ using Unit:
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Ruby language module.
 2. [Install](https://guides.rubyonrails.org/getting_started.html#creating-a-new-rails-project-installing-rails)
    Ruby on Rails and create or deploy your app.  Here, we use Ruby on Rails’s [basic template](https://guides.rubyonrails.org/getting_started.html#creating-the-blog-application):
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/ <Path where the application directory will be created; use a real path in your configuration>`
    $ rails new :nxt_ph:`app <Arbitrary app name; becomes the application directory name>`
    ```
@@ -19,7 +19,7 @@ using Unit:
    **public/** subdirectory contains the static files, while the entry
    point is **/path/to/app/config.ru**.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -61,7 +61,7 @@ using Unit:
    ```
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

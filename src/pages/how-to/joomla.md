@@ -12,7 +12,7 @@ Unit:
 3. Install Joomla’s [core files](https://docs.joomla.org/Special:MyLanguage/J3.x:Installing_Joomla).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
 4. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -84,7 +84,7 @@ Unit:
    script at Joomla’s directory root.
 6. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

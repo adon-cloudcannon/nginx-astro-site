@@ -19,7 +19,7 @@ The commands below assume you are configuring Unit with all supported languages
 and features (**X**, **Y**, and **Z** denote major, minor, and
 revision numbers, respectively); omit the packages you won’t use.
 
-```console
+```bash
 # apt install build-essential
 # apt install golang
 # apt install curl && \
@@ -35,7 +35,7 @@ revision numbers, respectively); omit the packages you won’t use.
 # apt install libpcre2-dev
 ```
 
-```console
+```bash
 # yum install gcc make
 # yum install golang
 # yum install curl && \
@@ -53,7 +53,7 @@ revision numbers, respectively); omit the packages you won’t use.
 
 Ports:
 
-```console
+```bash
 # cd /usr/ports/lang/go/ && make install clean
 # cd /usr/ports/www/node/ && make install clean
 # cd /usr/ports/www/npm/ && make install clean && npm i -g node-gyp
@@ -68,7 +68,7 @@ Ports:
 
 Packages:
 
-```console
+```bash
 # pkg install go
 # pkg install node && pkg install npm && npm i -g node-gyp
 # pkg install php:nxt_ph:`XY <PHP versions 5, 7, and 8 are supported>`
@@ -80,7 +80,7 @@ Packages:
 # pkg install pcre2
 ```
 
-```console
+```bash
 # pkg install gcc
 # pkg install golang
 # pkg install php-:nxt_ph:`XY <PHP versions 5, 7, and 8 are supported>`
@@ -100,21 +100,21 @@ as the Unit code.
 
 If you’d like to use [Mercurial](https://www.mercurial-scm.org/downloads):
 
-```console
+```bash
 $ cd ..
 $ hg clone https://hg.nginx.org/njs
 ```
 
 If you prefer [Git](https://git-scm.com/downloads):
 
-```console
+```bash
 $ cd ..
 $ git clone https://github.com/nginx/njs
 ```
 
 Next, configure and build the **njs** binaries:
 
-```console
+```bash
 $ cd njs
 $ ./configure :nxt_hint:`--no-zlib --no-libxml2 <Ensures Unit can link against the resulting library>` && make
 ```
@@ -148,7 +148,7 @@ to the same parent directory
 as the Unit code,
 for example:
 
-```console
+```bash
 $ cd ..
 $ wget -O- https://github.com/bytecodealliance/wasmtime/releases/download/v12.0.0/wasmtime-v12.0.0-x86_64-linux-c-api.tar.xz \
       | tar Jxf -  # Unpacks to the current directory
@@ -160,13 +160,13 @@ Point to the resulting **include** and **lib** directories when
 To build WebAssembly apps that run on Unit, you need
 the [wasi-sysroot](https://github.com/WebAssembly/wasi-sdk) SDK:
 
-```console
+```bash
 $ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sysroot-20.0.tar.gz | tar zxf -
 ```
 
 When building the apps, add the following environment variable:
 
-```console
+```bash
 WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot-dir/ <wasi-sysroot directory>`
 ```
 
@@ -177,7 +177,7 @@ WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot-dir/ <wasi-sysroot directory>`
 To run system compatibility checks and generate a **Makefile** with core
 build instructions for Unit:
 
-```console
+```bash
 $ ./configure :nxt_ph:`COMPILE-TIME OPTIONS <See the table below>`
 ```
 
@@ -219,7 +219,7 @@ When `--njs` is enabled, the `--cc-opt` and
 and **build/** subdirectories of the **njs** source code.
 For example, if you cloned the **njs** repo beside the Unit repo:
 
-```console
+```bash
 $ ./configure --njs --openssl \
               --cc-opt="-I../njs/src/ -I../njs/build/"  \
               --ld-opt="-L../njs/build/"  \
@@ -241,7 +241,7 @@ structure](#source-dir):
 | **--logdir=LOGDIR**, **--log=LOGFILE**             | Directory path and filename for Unit’s [log](../troubleshooting.md#troubleshooting-log).<br/><br/>The defaults are **LOCALSTATEDIR/log/unit** and<br/>**LOGDIR/unit.log**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | **--runstatedir=RUNSTATEDIR**                      | Directory path where Unit stores its PID file and control socket.<br/><br/>The default is **LOCALSTATEDIR/run/unit**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **--pid=pathname**                                 | Pathname for the PID file of Unit’s **main** [process](security.md#security-apps).<br/><br/>The default is **RUNSTATEDIR/unit.pid**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| **--control=SOCKET**                               | [Control API](../controlapi.md#configuration-mgmt) socket address in IPv4, IPv6,<br/>or UNIX domain format:<br/><br/>```console<br/>$ ./configure --control=127.0.0.1:8080<br/>$ ./configure --control=[::1]:8080<br/>$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix<br/>```<br/><br/>#### WARNING<br/>Avoid exposing an unprotected control socket in public networks.  Use<br/>[NGINX](integration.md#nginx-secure-api) or a different solution such as SSH<br/>for security and authentication.<br/><br/>The default is **unix:RUNSTATEDIR/control.unit.sock**, created as<br/>**root** with **600** permissions. |
+| **--control=SOCKET**                               | [Control API](../controlapi.md#configuration-mgmt) socket address in IPv4, IPv6,<br/>or UNIX domain format:<br/><br/>```bash<br/>$ ./configure --control=127.0.0.1:8080<br/>$ ./configure --control=[::1]:8080<br/>$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix<br/>```<br/><br/>#### WARNING<br/>Avoid exposing an unprotected control socket in public networks.  Use<br/>[NGINX](integration.md#nginx-secure-api) or a different solution such as SSH<br/>for security and authentication.<br/><br/>The default is **unix:RUNSTATEDIR/control.unit.sock**, created as<br/>**root** with **600** permissions. |
 | **--tmpdir=TMPDIR**                                | Defines the temporary file storage location (used to dump large request<br/>bodies).<br/><br/>The default value is **/tmp**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 <a id="source-dir"></a>
@@ -294,7 +294,7 @@ Running **./configure go** doesn’t alter the `GOPATH`
 configure-time `--go-path` and compile-time `$GOPATH`
 must be coherent for Go to find the resulting package.
 
-```console
+```bash
 $ GOPATH=<Go package installation path> GO111MODULE=auto go build -o :nxt_ph:`app <Executable name>` :nxt_ph:`app.go <Application source code>`
 ```
 
@@ -312,7 +312,7 @@ on Unit.  Available command options:
 
 To configure a module called **java11.unit.so** with OpenJDK 11.0.1:
 
-```console
+```bash
 $ ./configure java --module=java11  \
                    --home=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home
 ```
@@ -336,7 +336,7 @@ command options:
 
 To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
 
-```console
+```bash
 $ ./configure perl --module=perl-5.20  \
                    --perl=perl5.20.2
 ```
@@ -347,13 +347,13 @@ PHP applications on Unit.  Available command options:
 
 | **--config=pathname**    | Pathname of the **php-config** script used to set up<br/>the resulting module.<br/><br/>The default is **php-config**.                                                                                                                                |
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--lib-path=directory** | Directory path of the **libphp** library file<br/>(**libphp\*.so** or **libphp\*.a**), usually available with<br/>an `--enable-embed` PHP build:<br/><br/>```console<br/>$ php-config --php-sapis<br/><br/>      ... embed ...<br/>```                |
+| **--lib-path=directory** | Directory path of the **libphp** library file<br/>(**libphp\*.so** or **libphp\*.a**), usually available with<br/>an `--enable-embed` PHP build:<br/><br/>```bash<br/>$ php-config --php-sapis<br/><br/>      ... embed ...<br/>```                |
 | **--lib-static**         | Links the static **libphp** library (**libphp\*.a**)<br/>instead of the dynamic one (**libphp\*.so**); requires<br/>`--lib-path`.                                                                                                                     |
 | **--module=basename**    | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **--config=/path/php7-config** yields<br/>**php7.unit.so**. |
 
 To configure a module called **php70.unit.so** for PHP 7.0:
 
-```console
+```bash
 $ ./configure php --module=php70  \
                   --config=/usr/lib64/php7.0/bin/php-config  \
                   --lib-path=/usr/lib64/php7.0/lib64
@@ -374,7 +374,7 @@ compiled with the `--enable-shared` [option](https://docs.python.org/3/using/con
 
 To configure a module called **py33.unit.so** for Python 3.3:
 
-```console
+```bash
 $ ./configure python --module=py33  \
                      --config=python-config-3.3
 ```
@@ -389,7 +389,7 @@ command options:
 
 To configure a module called **ru23.unit.so** for Ruby 2.3:
 
-```console
+```bash
 $ ./configure ruby --module=ru23  \
                    --ruby=ruby23
 ```
@@ -421,7 +421,7 @@ Available command options:
 
 To configure a module called **wasm.unit.so**:
 
-```console
+```bash
 $ ./configure wasm --include-path=:nxt_ph:`/path/to/wasmtime <Runtime's header directory>`/include  \
                    --lib-path=:nxt_ph:`/path/to/wasmtime <Runtime's library directory>`/lib \
                    --rpath
@@ -434,7 +434,7 @@ $ ./configure wasm --include-path=:nxt_ph:`/path/to/wasmtime <Runtime's header d
 To build and install Unit’s executables and language modules that you have
 **./configure**’d earlier:
 
-```console
+```bash
 $ make
 # make install
 ```
@@ -444,7 +444,7 @@ structure](#source-dir) with **./configure** first.
 
 To run Unit from the build directory tree without installing:
 
-```console
+```bash
 $ ./configure --prefix=./build
 $ make
 $ ./build/sbin/unitd
@@ -465,7 +465,7 @@ To build and install the modules for Java, PHP, Perl, Python, or Ruby after
 configuration, run **make <module basename>** and **make
 <module basename>-install**, for example:
 
-```console
+```bash
 $ make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`
 # make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`-install
 ```
@@ -478,7 +478,7 @@ To build and install the modules for Go and Node.js globally after
 configuration, run **make <go>-install** and **make
 <node>-install**, for example:
 
-```console
+```bash
 # make :nxt_hint:`go <This is the --go option value from ./configure go>`-install
 # make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-install
 ```
@@ -487,14 +487,14 @@ configuration, run **make <go>-install** and **make
 To install the Node.js module locally, run **make
 <node>-local-install**:
 
-```console
+```bash
 # make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-local-install
 ```
 
 If you haven’t specified the `--local` [directory](#modules-nodejs) with **./configure nodejs**
 earlier, provide it here:
 
-```console
+```bash
 # DESTDIR=/your/project/directory/ make node-local-install
 ```
 
@@ -506,7 +506,7 @@ Finally, mind that global installation is preferable for the Node.js module.
 If you customized the executable pathname with `--go` or
 `--node`, use the following pattern:
 
-```console
+```bash
 $ ./configure nodejs --node=:nxt_hint:`/usr/local/bin/node8.12 <Executable pathname>`
 # make :nxt_hint:`/usr/local/bin/node8.12 <Executable pathname becomes a part of the target>`-install
 
@@ -530,7 +530,7 @@ The startup command depends on the directories you set with
 **./configure**, but their default values place the **unitd**
 binary in a well-known place, so:
 
-```console
+```bash
 # :nxt_hint:`unitd <Your PATH environment variable should list a path to unitd>` :nxt_ph:`RUNTIME OPTIONS <See the table below>`
 ```
 
@@ -543,7 +543,7 @@ counterparts, see [here](#source-config-src).
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--version**                     | Displays Unit’s version and the **./configure** settings it was<br/>built with.                                                                                                                                                                              |
 | **--no-daemon**                   | Runs Unit in non-daemon mode.                                                                                                                                                                                                                                |
-| **--control socket**              | Control API socket address in IPv4, IPv6, or UNIX domain format:<br/><br/>```console<br/># unitd --control 127.0.0.1:8080<br/># unitd --control [::1]:8080<br/># unitd --control :nxt_hint:`unix:/path/to/control.unit.sock <Note the unix: prefix>`<br/>``` |
+| **--control socket**              | Control API socket address in IPv4, IPv6, or UNIX domain format:<br/><br/>```bash<br/># unitd --control 127.0.0.1:8080<br/># unitd --control [::1]:8080<br/># unitd --control :nxt_hint:`unix:/path/to/control.unit.sock <Note the unix: prefix>`<br/>``` |
 | **--control-mode**                | Sets the permission of the UNIX domain control socket. Default: 0600                                                                                                                                                                                         |
 | **--control-user**                | Sets the owner of the UNIX domain control socket.                                                                                                                                                                                                            |
 | **--control-group**               | Sets the group of the UNIX domain control socket.                                                                                                                                                                                                            |
@@ -556,7 +556,7 @@ counterparts, see [here](#source-config-src).
 
 Finally, to stop a running Unit:
 
-```console
+```bash
 # pkill unitd
 ```
 

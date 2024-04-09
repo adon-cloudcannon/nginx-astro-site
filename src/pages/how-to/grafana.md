@@ -11,12 +11,12 @@ so we can [configure it](../configuration.md#configuration-go) to run on Unit.
 
    Also, make sure Unit’s Go module is available at **$GOPATH**.
 2. Download Grafana’s source files:
-   ```console
+   ```bash
    $ go get github.com/grafana/grafana
    ```
 3. Update the code, adding Unit to Grafana’s protocol list.  You can either
    apply a patch ([`grafana.patch`](../downloads/grafana.patch)):
-   ```console
+   ```bash
    $ cd :nxt_hint:`$GOPATH/src/github.com/grafana/grafana <The path where the previous step saves the application's files>`
    $ curl -O https://unit.nginx.org/_downloads/grafana.patch
    $ patch -p1 < grafana.patch
@@ -101,7 +101,7 @@ so we can [configure it](../configuration.md#configuration-go) to run on Unit.
     }
    ```
 4. Build Grafana:
-   ```console
+   ```bash
    $ cd :nxt_hint:`$GOPATH/src/github.com/grafana/grafana <The path where the previous step saves the application's files>`
    $ :nxt_hint:`go get ./... <Installs dependencies>`
    $ go run build.go setup
@@ -114,7 +114,7 @@ so we can [configure it](../configuration.md#configuration-go) to run on Unit.
    usually **$GOPATH/bin/**; it’s used for the **executable** option in
    the Unit configuration.
 5. Run the following commands so Unit can access Grafana’s files:
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_hint:`$GOPATH/src/github.com/grafana/grafana <Path to the application's files>`
    # chown :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_hint:`$GOPATH/bin/grafana-server <Path to the application's executable>`
    ```
@@ -150,7 +150,7 @@ so we can [configure it](../configuration.md#configuration-go) to run on Unit.
    for details.
 7. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

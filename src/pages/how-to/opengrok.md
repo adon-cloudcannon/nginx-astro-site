@@ -9,21 +9,21 @@ To run the [OpenGrok](https://github.com/oracle/opengrok) code search engine usi
 1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Java 11+ language module.
 2. Follow the official OpenGrok [installation guide](https://github.com/oracle/opengrok/wiki/How-to-setup-OpenGrok).  Here,
    we’ll place the files at **/path/to/app/**:
-   ```console
+   ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`{src,data,dist,etc,log}
    $ tar -C :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`dist --strip-components=1 -xzf opengrok-:nxt_ph:`X.Y.Z <Specific OpenGrok version>`.tar.gz
    ```
 
    Our servlet container is Unit so we can repackage the **source.war**
    file to an arbitrary directory at [Step 2](https://github.com/oracle/opengrok/wiki/How-to-setup-OpenGrok#step2---deploy-the-web-application):
-   ```console
+   ```bash
    $ opengrok-deploy -c :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`etc/configuration.xml  \
          :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`dist/lib/source.war :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    ```
 
    The resulting pathname is **/path/to/app/source.war**.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -56,7 +56,7 @@ To run the [OpenGrok](https://github.com/oracle/opengrok) code search engine usi
    ```
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

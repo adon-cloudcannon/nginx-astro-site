@@ -10,7 +10,7 @@ To run apps based on the [CakePHP](https://cakephp.org) framework using Unit:
 2. [Install](https://book.cakephp.org/4/en/installation.html) CakePHP and
    create or deploy your app.  Here, we use CakePHP’s [basic template](https://book.cakephp.org/4/en/installation.html#create-a-cakephp-project)
    and Composer:
-   ```console
+   ```bash
    $ cd :nxt_ph:`/path/to/ <Path where the application directory will be created; use a real path in your configuration>`
    $ composer create-project --prefer-dist cakephp/app:4.* :nxt_ph:`app <Arbitrary app name; becomes the application directory name>`
    ```
@@ -20,7 +20,7 @@ To run apps based on the [CakePHP](https://cakephp.org) framework using Unit:
    the static files; if your app requires additional **.php** scripts, also
    store them here.
 3. Run the following command so Unit can access :
-   ```console
+   ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
    ```
 
@@ -93,7 +93,7 @@ To run apps based on the [CakePHP](https://cakephp.org) framework using Unit:
    docs.
 5. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```console
+   ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
    ```

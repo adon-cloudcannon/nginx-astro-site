@@ -93,5 +93,19 @@ _snippets:
         type: markdown
         comment: The content of this code block
   test_component:
-    snippet: ":nxt_hint: `arg1 <arg2>`"
+    snippet: ":nxt_hint: `[[arg1]] <arg2>`"
     inline: true
+    params: 
+      lang:
+        parser: argument
+        options:
+          editor_key: arg1
+          style: 
+            output: inline
+          model:
+            editor_key: arg1
+            optional: false
+    _inputs:
+      arg1:
+        type: text
+        label: Display text

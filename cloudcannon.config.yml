@@ -94,7 +94,7 @@ _snippets:
   test_component:
     template: mdx_paired_component
     inline: false
-     preview:
+    preview:
       text:
         - key: content
         - 'Code Block'

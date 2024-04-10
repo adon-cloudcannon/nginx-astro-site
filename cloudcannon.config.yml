@@ -78,7 +78,7 @@ _snippets:
         type: text
         comment: What text you want to display in the text
   code_block:
-    snippt: mdx_component
+    template: mdx_component
     inline: false
     preview:
       text: Code Block

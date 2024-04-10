@@ -37,8 +37,9 @@ collections_config:
         path: schemas/page.mdx
 timezone: Etc/UTC
 _editables:
-  snippet: true
-  code: true
+  content:
+    code: true
+    snippet: true
 _snippets_imports:
   mdx: true
 _snippets:

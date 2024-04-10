@@ -1,5 +1,4 @@
 'use strict';
-console.log("Script is alive!")
 /*
  * Adapted Font Awesome icons, CC BY 4.0 License:
  * https://fontawesome.com
@@ -36,7 +35,6 @@ function nxt_tab_init() {
 
 
 function nxt_nav_init() {
-    console.log("and yes, I am here")
     const observer = new IntersectionObserver((entries, observer) => {
         for (const entry of entries) {
             const toc_id = (entry.target.classList.contains('section'))

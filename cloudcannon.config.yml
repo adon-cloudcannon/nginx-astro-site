@@ -78,7 +78,7 @@ _snippets:
         type: text
         comment: What text you want to display in the text
   code_block:
-    template: mdx_component
+    snippt: mdx_component
     inline: false
     preview:
       text: Code Block
@@ -92,3 +92,6 @@ _snippets:
       content:
         type: markdown
         comment: The content of this code block
+  test_component:
+    snippet: ":nxt_hint: `arg1 <arg2>`"
+    inline: true

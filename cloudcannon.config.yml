@@ -63,13 +63,16 @@ _snippets:
         type: text
         comment: What text you want to display in the text
   code_block:
-    template: mdx_paired_component
+    template: mdx_component
     inline: false
     preview:
       text: Code Block
     definitions:
       component_name: Code_Block
-      content_key: content
+      named_args:
+        - editor_key: content
+          source_key: content
+          type: string
     _inputs:
       content:
         type: markdown

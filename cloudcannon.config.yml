@@ -77,26 +77,25 @@ _snippets:
       display_text:
         type: text
         comment: What text you want to display in the text
+  
   code_block:
-    template: mdx_component
+    template: mdx_paired_component
     inline: false
     preview:
       text: Code Block
     definitions:
       component_name: Code_Block
-      named_args:
-        - editor_key: content
-          source_key: content
-          type: string
+      content_key: content
     _inputs:
       content:
         type: markdown
         comment: The content of this code block
+  
   test_component:
     snippet: ":nxt_hint: `[[arg1]] <arg2>`"
     inline: true
     params: 
-      arg1:
+      lang:
         parser: argument
         options:
           editor_key: arg1

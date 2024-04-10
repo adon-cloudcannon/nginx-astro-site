@@ -1,1 +1,7 @@
-TEST
+
+---
+const props = Astro.props;
+let content_string = `:nxt_hint: \`${props.display_text} <${props.tooltip}>\``;
+---
+
+{ content_string }

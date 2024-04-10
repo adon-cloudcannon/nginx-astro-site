@@ -106,14 +106,5 @@ _snippets:
     _inputs:
       content:
         type: code
-      hints:
-        options:
-          structures: _structures.hint_structure
-
-_structures:
-  hint_structure:
-    values:
-      - label: Add Hint
-        value: 
-          display_text:
-          tooltip:
+      hints[*]:
+        type: text

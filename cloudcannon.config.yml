@@ -106,5 +106,7 @@ _snippets:
     _inputs:
       content:
         type: code
+      hints:
+        type: array
       hints[*]:
         type: text

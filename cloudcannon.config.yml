@@ -107,5 +107,13 @@ _snippets:
       content:
         type: code
       hints:
-        - display_text: ""
-          tooltip: ""
+        options:
+          structures: _structures.hint_structure
+
+_structures:
+  hint_structure:
+    values:
+      - label: Add Hint
+        value: 
+          display_text:
+          tooltip:

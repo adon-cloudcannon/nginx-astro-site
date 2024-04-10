@@ -95,6 +95,7 @@ _snippets:
     template: mdx_paired_component
     inline: false
     preview:
+      icon: code
       text:
         - key: content
         - 'Code Block'
@@ -111,4 +112,9 @@ _snippets:
       hints:
         type: array
       hints[*]:
-        type: text
+        type: object
+        options:
+          values: 
+            - value: 
+                display_text: ""
+                tooltip: ""

@@ -1,9 +1,8 @@
 ---
 import { nxt_hint } from "@utils/nxt";
 let content = await Astro.slots.render('default')
-console.log("here",content)
 content = content?.replaceAll("&lt;","<")?.replaceAll("&gt;",">")
 content = nxt_hint(`\`\`\`bash\n${content}\n\`\`\``)
 ---
 
-<Fragment set:html={content} />
+<div set:html={content} />

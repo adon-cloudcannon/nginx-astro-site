@@ -1,6 +1,6 @@
 ---
 import { nxt_hint } from "@utils/nxt";
-let content = await Astro.slots.render('default')
+let content = await Astro.props.content
 content = content?.replaceAll("&lt;","<")?.replaceAll("&gt;",">")
 content = nxt_hint(`\`\`\`bash\n${content}\n\`\`\``)
 ---

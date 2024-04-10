@@ -38,6 +38,7 @@ collections_config:
 timezone: Etc/UTC
 _editables:
   snippet: true
+  code: true
 _snippets_imports:
   mdx: true
 _snippets:

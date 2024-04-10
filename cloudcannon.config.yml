@@ -96,7 +96,7 @@ _snippets:
     snippet: ":nxt_hint: `[[arg1]] <arg2>`"
     inline: true
     params: 
-      lang:
+      arg1:
         parser: argument
         options:
           editor_key: arg1

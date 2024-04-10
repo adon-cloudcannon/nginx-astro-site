@@ -108,3 +108,6 @@ _snippets:
         type: code
       hints:
         type: array
+      hints[*]:
+        - display_text: ""
+          tooltip: ""

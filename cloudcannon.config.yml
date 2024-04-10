@@ -92,19 +92,19 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: ":nxt_hint: `[[arg1]] <arg2>`"
-    inline: true
-    params: 
-      lang:
-        parser: argument
-        options:
-          editor_key: arg1
-          style: 
-            output: inline
-          model:
-            editor_key: arg1
-            optional: false
+    template: mdx_paired_component
+    inline: false
+    preview:
+      text: Code Block
+    definitions:
+      component_name: Test_Component
+      content_key: content
+      named_args:
+        - editor_key: hints
+          source_key: hints
+          type: array
     _inputs:
-      arg1:
-        type: text
-        label: Display text
+      content:
+        type: code
+      hints:
+        type: array

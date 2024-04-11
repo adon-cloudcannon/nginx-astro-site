@@ -8,7 +8,8 @@ export default defineConfig({
         AutoImport({
             imports: [
                 '@components/NXT_Hint.astro',
-                '@components/Code_Block.astro'
+                '@components/Code_Block.astro',
+                '@components/Test_Component.astro'
             ],
         }),
         mdx()

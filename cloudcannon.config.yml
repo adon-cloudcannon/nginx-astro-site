@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Test_Component>{`\n[[inner]]\n`}</Test_Component>"
+    snippet: "<Test_Component>{`[[inner]]`}</Test_Component>"
     params:
       inner:
         parser: content

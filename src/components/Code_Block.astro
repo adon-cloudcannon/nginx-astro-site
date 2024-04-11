@@ -1,6 +1,8 @@
 ---
 import { nxt_hint } from "@utils/nxt";
-let content = await Astro.props.content
+let content = Astro.props.content
+let hints = Astro.props.hints
+console.log(hints)
 content = content?.replaceAll("&lt;","<")?.replaceAll("&gt;",">")
 content = nxt_hint(`\`\`\`bash\n${content}\n\`\`\``)
 ---

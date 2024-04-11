@@ -102,6 +102,10 @@ _snippets:
             output: block
             block:
               indent: ""
+      hints:
+        parser: content
+        options:
+          editor_key: hints
     inline: false
     preview:
       icon: code

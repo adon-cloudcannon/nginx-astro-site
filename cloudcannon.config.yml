@@ -112,9 +112,10 @@ _snippets:
       hints:
         type: array
         options:
-          structures: _structures.example
+          structures: _structures.hint
     _structures:
-      example:
+      hint:
         values:
           - value:
-              name: ""
+              display_text: ""
+              tooltip: ""

@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Test_Component hints={[[hints]]}>{`[[inner]]`}</Test_Component>"
+    snippet: "<Test_Component hints={`[[hints]]`}>{`[[inner]]`}</Test_Component>"
     params:
       inner:
         parser: content
@@ -103,7 +103,7 @@ _snippets:
             block:
               indent: ""
       hints:
-        parser: content
+        parser: argument
         options:
           editor_key: hints
           style: 

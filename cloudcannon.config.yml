@@ -95,7 +95,7 @@ _snippets:
     snippet: "<Code_Block content={`[[inner]]`} />"
     params:
       inner:
-        parser: content
+        parser: literal
         options:  
           editor_key: inner_code
           style:

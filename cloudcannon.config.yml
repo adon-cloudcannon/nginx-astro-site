@@ -111,10 +111,13 @@ _snippets:
         type: code
       hints:
         type: array
-      hints[*]:
-        type: object
         options:
-          values: 
-            - value: 
-                display_text: ""
-                tooltip: ""
+          structures: _structures.example
+
+_structures:
+  example:
+    values:
+      - value:
+          name: 
+          description: 
+          image: 

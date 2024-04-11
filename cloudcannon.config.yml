@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Code_Block content={`[[inner]]`} hints={`[[hints]]`} />"
+    snippet: "<Code_Block content={`[[inner]]`}  />"
     params:
       inner:
         parser: content

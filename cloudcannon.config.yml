@@ -92,32 +92,36 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Code_Block content={``} />"
+    snippet: "<Code_Block content={`[[inner]]`} />"
+    params:
+      inner:
+        parser: content
+        options:  
+          editor_key: inner_code
+          style:
+            output: block
+            block:
+              indent: ""
     inline: false
     preview:
       icon: code
       text:
         - key: content
         - 'Code Block'
-    definitions:
-      component_name: Test_Component
-      named_args:
-        - editor_key: content
-          source_key: content
-          type: string
-        - editor_key: hints
-          source_key: hints
-          type: array
+    
+        #- editor_key: hints
+        #  source_key: hints
+        #  type: array
     _inputs:
-      content:
+      inner:
         type: code
-      hints:
-        type: array
-        options:
-          structures: _structures.hint
-    _structures:
-      hint:
-        values:
-          - value:
-              display_text: ""
-              tooltip: ""
+      #hints:
+      #  type: array
+      #  options:
+      #    structures: _structures.hint
+    #_structures:
+    #  hint:
+    #    values:
+    #      - value:
+    #          display_text: ""
+    #          tooltip: ""

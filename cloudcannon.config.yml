@@ -114,7 +114,7 @@ _snippets:
       hints:
         type: array
         options:
-          structures: _structures.example
+          structures: "_structures.example"
 
 _structures:
   example:

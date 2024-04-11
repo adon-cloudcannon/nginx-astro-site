@@ -1,3 +1,6 @@
+const snip = (name) =>
+  path.join(__dirname, `.cloudcannon/snippets/${name}.json`);
+
 module.exports = {
   source: "src",
   paths: {
@@ -50,7 +53,4 @@ module.exports = {
     test_component: require(snip("test_component"))
   }
 }
-
-const snip = (name) =>
-  path.join(__dirname, `.cloudcannon/snippets/${name}.json`);
 

@@ -103,9 +103,15 @@ _snippets:
             block:
               indent: ""
       hints:
-        parser: argument_list
+        parser: argument
         options:
           editor_key: hints
+          forbidden_tokens: ["```"]
+          style: 
+            output: inline
+          model:
+            editor_key: hints
+            optional: true
     inline: false
     preview:
       icon: code

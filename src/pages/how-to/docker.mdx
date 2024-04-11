@@ -9,6 +9,8 @@ _inputs:
   order:
     type: number
 ---
+import { Code } from 'astro/components';
+
 # Unit in Docker
 
 To run your apps in a containerized Unit using the [images we provide](../installation.md#installation-docker), you need at least to:
@@ -18,10 +20,18 @@ To run your apps in a containerized Unit using the [images we provide](../instal
 
 For example:
 
-<Test_Component content="This is some code
-export = ${}
-<div>
-    just demonstrating it" hints={[]}/>
+<Code_Block content={`$ export UNIT=$(                                             \\
+      docker run -d --mount type=bind,src="$(pwd)",dst=/www  \\
+      -p 8080:8000 unit:1.32.1-python3.11                 \\
+  )`} />
+
+<Code code={`<div>
+New line
+   indented`} />
+
+<Test_Component code={`Something
+New line
+     indented`} />   
 
 ```bash
 $ export UNIT=$(                                             \

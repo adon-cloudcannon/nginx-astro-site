@@ -4,6 +4,7 @@ import AutoImport from 'astro-auto-import';
 
 // https://astro.build/config
 export default defineConfig({
+    compressHTML: false,
     integrations: [
         AutoImport({
             imports: [

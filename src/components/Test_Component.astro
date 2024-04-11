@@ -1,15 +1,26 @@
 ---
-const props = Astro.props;
-const hints = props.hints;
-let content = await Astro.slots.render('default')
-console.log(content)
-if(hints)
-{
-    hints.forEach(hint => {
-        let content_string = `:nxt_hint: \`${hint.display_text} <${hint.tooltip}>\``;
-        console.log(content_string)
-    })
+
+interface Props {
+	/** The code to highlight. Required. */
+	code: string;
+	/**
+	 * The language of your code.
+	 * Supports all languages listed here: https://shiki.style/languages
+	 * Instructions for loading a custom language: https://shiki.style/guide/load-lang
+	 *
+	 * @default "plaintext"
+	 */
 }
+
+const {
+	code,
+	...rest
+} = Astro.props;
+
+console.log(code)
+
+
+const html = `<pre><code>${code}</code></pre>`
 ---
 
-Hello world.
+<Fragment set:html={html} />

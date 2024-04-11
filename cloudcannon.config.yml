@@ -101,7 +101,7 @@ _snippets:
           style:
             output: inline
       hints:
-        parser: argument
+        parser: content
         options:
           editor_key: hints
           style: 

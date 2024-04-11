@@ -120,11 +120,13 @@ _snippets:
         type: code
       hints:
         type: array
-        options:
-          structures: _structures.hint
-    _structures:
-      hint:
-        values:
-          - value:
-              display_text: ""
-              tooltip: ""
+      hints[*]:
+        type: text
+  #      options:
+  #        structures: _structures.hint
+  #  _structures:
+  #    hint:
+  #      values:
+  #        - value:
+  #            display_text: ""
+  #            tooltip: ""

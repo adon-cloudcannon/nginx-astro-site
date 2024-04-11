@@ -117,9 +117,5 @@ _snippets:
 _structures:
   example:
     values:
-      - label: Name
-        _inputs:
-          name:
-            type: text
-        value:
+      - value:
           name: ""

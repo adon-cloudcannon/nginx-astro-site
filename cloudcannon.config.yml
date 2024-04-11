@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Code_Block content={`[[inner]]`} hints={[[hints]]} />"
+    snippet: "<Code_Block content={`[[inner]]`} hints={`[[hints]]`} />"
     params:
       inner:
         parser: content
@@ -120,7 +120,7 @@ _snippets:
         - 'Code Block'
     _inputs:
       inner_code:
-        type: html
+        type: code
       hints:
         type: array
         options:

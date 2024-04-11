@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    template: mdx_paired_component
+    template: mdx_component
     inline: false
     preview:
       icon: code

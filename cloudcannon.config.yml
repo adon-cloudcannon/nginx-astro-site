@@ -107,6 +107,8 @@ _snippets:
           source_key: hints
           type: array
     _inputs:
+      name:
+        type: text
       content:
         type: code
       hints:
@@ -119,5 +121,3 @@ _structures:
     values:
       - value:
           name: 
-          description: 
-          image: 

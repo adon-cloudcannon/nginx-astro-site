@@ -108,12 +108,8 @@ _snippets:
       text:
         - key: content
         - 'Code Block'
-    
-        #- editor_key: hints
-        #  source_key: hints
-        #  type: array
     _inputs:
-      inner:
+      inner_code:
         type: code
       #hints:
       #  type: array
@@ -125,3 +121,8 @@ _snippets:
     #      - value:
     #          display_text: ""
     #          tooltip: ""
+
+        
+        #- editor_key: hints
+        #  source_key: hints
+        #  type: array

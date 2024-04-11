@@ -1,5 +1,4 @@
 {
-    "code_block": {
       "snippet": "<Test_Component [[args]]>\n```\n[[inner]]\n```\n[[annotations]]</Test_Component>",
       "inline": false,
       "preview": {
@@ -129,5 +128,5 @@
           }
         }
       }
-    }
+    
   }

@@ -101,8 +101,10 @@ _snippets:
         - 'Code Block'
     definitions:
       component_name: Test_Component
-      content_key: content
       named_args:
+        - editor_key: content
+          source_key: content
+          type: code
         - editor_key: hints
           source_key: hints
           type: array

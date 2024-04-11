@@ -1,7 +1,15 @@
 ---
 const props = Astro.props;
-console.log(props)
-//let content_string = `:nxt_hint: \`${props.display_text} <${props.tooltip}>\``;
+const hints = props.hints;
+let content = await Astro.slots.render('default')
+console.log(content)
+if(hints)
+{
+    hints.forEach(hint => {
+        let content_string = `:nxt_hint: \`${hint.display_text} <${hint.tooltip}>\``;
+        console.log(content_string)
+    })
+}
 ---
 
 Hello world.

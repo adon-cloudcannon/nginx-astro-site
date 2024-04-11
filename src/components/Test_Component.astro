@@ -13,7 +13,7 @@ const {
 const innerContent = await Astro.slots.render("default")
 import { parse_marked } from "@utils/nxt";
 
-const parsed = parse_marked(innerContent)
+const parsed = parse_marked("```bash\n"+innerContent+"\n```")
 console.log(innerContent)
 console.log(parsed)
 //console.log(code)

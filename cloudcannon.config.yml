@@ -106,9 +106,6 @@ _snippets:
           editor_key: hints
           style: 
             output: inline
-          model:
-            editor_key: hints
-            optional: true
     inline: false
     preview:
       icon: code

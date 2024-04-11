@@ -1,3 +1,5 @@
+const path = require("path");
+
 const snip = (name) =>
   path.join(__dirname, `.cloudcannon/snippets/${name}.json`);
 

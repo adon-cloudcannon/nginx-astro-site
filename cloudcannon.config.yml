@@ -113,9 +113,8 @@ _snippets:
         type: array
         options:
           structures: _structures.example
-
-_structures:
-  example:
-    values:
-      - value:
-          name: ""
+    _structures:
+      example:
+        values:
+          - value:
+              name: ""

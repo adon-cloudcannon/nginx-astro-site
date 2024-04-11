@@ -3,13 +3,6 @@
 interface Props {
 	/** The code to highlight. Required. */
 	code: string;
-	/**
-	 * The language of your code.
-	 * Supports all languages listed here: https://shiki.style/languages
-	 * Instructions for loading a custom language: https://shiki.style/guide/load-lang
-	 *
-	 * @default "plaintext"
-	 */
 }
 
 const {
@@ -17,10 +10,16 @@ const {
 	...rest
 } = Astro.props;
 
-console.log(code)
+const innerContent = await Astro.slots.render("default")
+import { parse_marked } from "@utils/nxt";
+
+const parsed = parse_marked(innerContent)
+console.log(innerContent)
+console.log(parsed)
+//console.log(code)
 
 
 const html = `<pre><code>${code}</code></pre>`
 ---
 
-<Fragment set:html={html} />
+<Fragment set:html={parsed} />

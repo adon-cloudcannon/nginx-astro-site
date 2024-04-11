@@ -61,4 +61,12 @@ function nxt_hint(content){
     return compiledContent;
 }
 
-export { nxt_hint }
+function parse_marked(content){
+    const marked = new Marked();
+    return marked.parse(content)
+}
+
+export { 
+    nxt_hint,
+    parse_marked
+}

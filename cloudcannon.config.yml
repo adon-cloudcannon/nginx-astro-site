@@ -103,7 +103,7 @@ _snippets:
             block:
               indent: ""
       hints:
-        parser: key_values
+        parser: argument
         options:
           editor_key: hints
     inline: false

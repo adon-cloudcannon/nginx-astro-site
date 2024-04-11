@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    snippet: "<Test_Component>{`[[inner]]`}</Test_Component>"
+    snippet: "<Test_Component hints={[[hints]]}>{`[[inner]]`}</Test_Component>"
     params:
       inner:
         parser: content
@@ -106,7 +106,6 @@ _snippets:
         parser: argument
         options:
           editor_key: hints
-          forbidden_tokens: ["```"]
           style: 
             output: inline
           model:

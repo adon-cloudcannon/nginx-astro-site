@@ -115,7 +115,7 @@ _snippets:
     preview:
       icon: code
       text:
-        - key: content
+        - key: inner_code
         - 'Code Block'
     _inputs:
       inner_code:

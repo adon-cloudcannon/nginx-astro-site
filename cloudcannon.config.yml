@@ -92,7 +92,7 @@ _snippets:
         comment: The content of this code block
   
   test_component:
-    template: mdx_component
+    snippet: "<Code_Block content={``} />"
     inline: false
     preview:
       icon: code
@@ -104,7 +104,7 @@ _snippets:
       named_args:
         - editor_key: content
           source_key: content
-          type: code
+          type: string
         - editor_key: hints
           source_key: hints
           type: array

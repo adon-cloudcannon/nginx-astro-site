@@ -5,7 +5,10 @@ const hints = Astro.props.hints;
 console.log(hints)
 
 let innerContent = await Astro.slots.render("default")
-innerContent = innerContent.replaceAll("&quot;",`"`).replaceAll("&#39;","'")
+innerContent = innerContent.replaceAll("&quot;",`"`)
+							.replaceAll("&#39;","'")
+							.replaceAll("&lt;","<")
+							.replaceAll("&gt;",">")
 const html = nxt_hint("```bash\n"+innerContent+"\n```")
 
 ---

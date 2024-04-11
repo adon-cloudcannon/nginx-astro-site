@@ -1,25 +1,13 @@
 ---
+import { nxt_hint } from "@utils/nxt";
 
-interface Props {
-	/** The code to highlight. Required. */
-	code: string;
-}
+const hints = Astro.props.hints;
+console.log(hints)
 
-const {
-	code,
-	...rest
-} = Astro.props;
+let innerContent = await Astro.slots.render("default")
+innerContent = innerContent.replaceAll("&quot;",`"`).replaceAll("&#39;","'")
+const html = nxt_hint("```bash\n"+innerContent+"\n```")
 
-const innerContent = await Astro.slots.render("default")
-import { parse_marked } from "@utils/nxt";
-
-const parsed = parse_marked("```bash\n"+innerContent+"\n```")
-console.log(innerContent)
-console.log(parsed)
-//console.log(code)
-
-
-const html = `<pre><code>${code}</code></pre>`
 ---
 
-<Fragment set:html={parsed} />
+<Fragment set:html={html} />

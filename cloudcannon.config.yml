@@ -99,7 +99,7 @@ _snippets:
         options:  
           editor_key: inner_code
           style:
-            output: block
+            output: inline
             block:
               indent: ""
       hints:

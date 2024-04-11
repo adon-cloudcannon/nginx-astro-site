@@ -107,17 +107,19 @@ _snippets:
           source_key: hints
           type: array
     _inputs:
-      name:
-        type: text
       content:
         type: code
       hints:
         type: array
         options:
-          structures: "_structures.example"
+          structures: _structures.example
 
 _structures:
   example:
     values:
-      - value:
-          name: 
+      - label: Name
+        _inputs:
+          name:
+            type: text
+        value:
+          name: ""

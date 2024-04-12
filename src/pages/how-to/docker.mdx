@@ -18,10 +18,6 @@ To run your apps in a containerized Unit using the [images we provide](../instal
 
 For example:
 
-<Test_Component language="bash" hints={[{ number: "1", display_text: "display", tooltip: "tooltip" }]}>{`$ docker exec -ti $UNIT curl -X PUT --data-binary @/www/config.json  \\
-      --unix-socket NXT1  \\
-      http://localhost/config`}</Test_Component>
-
 ```bash
 $ export UNIT=$(                                             \
       docker run -d --mount type=bind,src="$(pwd)",dst=/www  \

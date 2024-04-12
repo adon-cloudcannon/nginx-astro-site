@@ -66,9 +66,6 @@
                 "editor_key": "language",
                 "type": "string",
                 "default": ""
-            },
-            "format": {
-              "ref": "mdx_format"
             }
           }
         },

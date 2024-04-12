@@ -87,6 +87,10 @@
         "hints": {
           "parser": "optional",
           "options": {
+            "model" : {
+                "editor_key" : "hints",
+                "type" : "array"
+            },
             "snippet": "[[annotation_repeat]]"
           }
         },

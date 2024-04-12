@@ -109,18 +109,6 @@ Our file structure so far:
 └── webapp
     └── wsgi.py`}</Code_Block>
 
-```none
-:nxt_ph:`/path/to/app <Directory where all app-related files are stored; use a real path in your configuration>`
-├── config
-│   └── config.json
-├── log
-│   └── unit.log
-├── requirements.txt
-├── state
-└── webapp
-    └── wsgi.py
-```
-
 Everything is ready for a containerized Unit.  First, let’s create a **Dockerfile** to install app prerequisites:
 
 ```docker

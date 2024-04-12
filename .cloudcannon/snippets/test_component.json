@@ -1,5 +1,5 @@
 {
-      "snippet": "<Test_Component language=[[language]]>{`[[inner]]`}\n<div>[[hints]]</div></Test_Component>",
+      "snippet": "<Test_Component language=[[language]] hints=[[hints]]>{`[[inner]]`}</Test_Component>",
       "inline": false,
       "preview": {
         "text": [          

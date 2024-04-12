@@ -27,7 +27,7 @@ The command mounts the host’s current directory where your app files are store
 
 Next, upload a configuration to Unit via the control socket:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/var/run/control.unit.sock", tooltip: "Socket path inside the container" }]}>{`$ docker exec -ti $UNIT curl -X PUT --data-binary @/www/config.json  \\
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/var/run/control.unit.sock", tooltip: "Socket path inside the container", nxt_type: "nxt_hint" }]}>{`$ docker exec -ti $UNIT curl -X PUT --data-binary @/www/config.json  \\
       --unix-socket NXT1  \\
       http://localhost/config`}</Code_Block>
 
@@ -82,7 +82,7 @@ EOF
 
 Next, create a simple Unit [configuration](../configuration.md#configuration-python) for the app:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/www/", tooltip: "Directory inside the container where the app files will be stored" }, { number: "2", display_text: "wsgi", tooltip: "WSGI module basename with extension omitted" }, { number: "3", display_text: "app", tooltip: "Name of the callable in the module to run" }]}>{`$ mkdir config
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/www/", tooltip: "Directory inside the container where the app files will be stored", nxt_type: "nxt_hint" }, { number: "2", display_text: "wsgi", tooltip: "WSGI module basename with extension omitted", nxt_type: "nxt_hint" }, { number: "3", display_text: "app", tooltip: "Name of the callable in the module to run", nxt_type: "nxt_hint" }]}>{`$ mkdir config
 $ cat << EOF > config/config.json
 
 {
@@ -133,7 +133,7 @@ COPY requirements.txt /config/requirements.txt
 RUN python3 -m pip install -r /config/requirements.txt
 ```
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "unit-webapp", tooltip: "Arbitrary image tag" }]}>{`$ docker build --tag=NXT1 .`}</Code_Block>
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit-webapp", tooltip: "Arbitrary image tag", nxt_type: "nxt_hint" }]}>{`$ docker build --tag=NXT1 .`}</Code_Block>
 
 Next, we start a container and map it to our directory structure:
 

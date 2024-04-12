@@ -9,7 +9,6 @@ export default defineConfig({
         AutoImport({
             imports: [
                 '@components/Code_Block.astro',
-                '@components/Test_Component.astro'
             ],
         }),
         mdx()

@@ -33,6 +33,15 @@
                     "number": {
                       "comment": "Match to text of NXT1, NXT2 etc in the code block",
                       "type": "text"
+                    },
+                    "nxt_type":{
+                      "type": "select",
+                      "options":{
+                        "values": [
+                          "nxt_hint",
+                          "nxt_ph"
+                        ]
+                      }
                     }
                   },
                   "preview": {
@@ -53,7 +62,8 @@
                   "value": {
                     "number": "1",
                     "display_text": "",
-                    "tooltip": ""
+                    "tooltip": "",
+                    "nxt_type":"nxt_hint"
                   }
                 }
               ]
@@ -101,5 +111,4 @@
           }
         }
       }
-    
-  }
+}

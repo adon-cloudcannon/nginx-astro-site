@@ -1,5 +1,5 @@
 {
-      "snippet": "<Test_Component language=[[language]] hints=[[hints]]>{`[[inner]]`}</Test_Component>",
+      "snippet": "<Test_Component language=[[language]] hints={[[hints]]}>{`[[inner]]`}</Test_Component>",
       "inline": false,
       "preview": {
         "text": [          
@@ -91,6 +91,7 @@
                 "editor_key" : "hints",
                 "type" : "array"
             },
+            
             "snippet": "[[annotation_repeat]]"
           }
         },

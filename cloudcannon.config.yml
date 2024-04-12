@@ -101,7 +101,7 @@ _snippets:
           style:
             output: inline
       hints:
-        parser: value
+        parser: argument
         options:
           editor_key: hints
           style: 
@@ -109,6 +109,7 @@ _snippets:
           model:
             editor_key: hints
             optional: true
+            type: array
     inline: false
     preview:
       icon: code

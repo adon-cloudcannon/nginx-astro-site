@@ -1,11 +1,8 @@
 {
-      "snippet": "<Test_Component [[args]]>\n```\n[[inner]]\n```\n[[annotations]]</Test_Component>",
+      "snippet": "<Test_Component>\n```[[language]]\n[[inner]]\n```\n[[hints]]</Test_Component>",
       "inline": false,
       "preview": {
-        "text": [
-          {
-            "key": "source"
-          },
+        "text": [          
           "Code Block"
         ],
         "subtext": [
@@ -19,7 +16,7 @@
         "content": {
           "type": "code"
         },
-        "annotations": {
+        "hints": {
           "type": "array",
           "comment": "Optional annotations to show below the code block. Link them with a comment like `/*1*/`, `//1`, `#1`, or `<!--1-->`",
           "options": {
@@ -61,21 +58,15 @@
         }
       },
       "params": {
-        "args": {
-          "parser": "key_values",
+        "language": {
+          "parser": "argument",
           "options": {
-            "models": [
-              {
+            "model": 
+            {
                 "editor_key": "language",
                 "type": "string",
                 "default": ""
-              },
-              {
-                "editor_key": "source",
-                "type": "string",
-                "default": ""
-              }
-            ],
+            },
             "format": {
               "ref": "mdx_format"
             }
@@ -91,7 +82,7 @@
             ]
           }
         },
-        "annotations": {
+        "hints": {
           "parser": "optional",
           "options": {
             "snippet": "[[annotation_repeat]]"
@@ -101,7 +92,7 @@
           "parser": "repeating",
           "options": {
             "default_length": 0,
-            "editor_key": "annotations",
+            "editor_key": "hints",
             "snippet": "<NXT_Hint [[annotation_args]]>\n[[annotation_content]]\n</NXT_Hint>"
           }
         },

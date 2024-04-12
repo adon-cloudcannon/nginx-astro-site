@@ -45,18 +45,6 @@ Now for a few detailed scenarios.
 
 Suppose we have a web app with a few dependencies, say [Flask’s](flask.md) official **hello, world** app:
 
-<Code_Block language="bash" hints={[]}>{`$ cd :nxt_ph:`/path/to/app/ <Directory where all app-related files will be stored; use a real path in your configuration>`
-$ mkdir webapp
-$ cat << EOF > webapp/wsgi.py
-
-from flask import Flask
-app = Flask(__name__)
-
-@app.route('/')
-def hello_world():
-    return 'Hello, World!'
-EOF`}</Code_Block>
-
 ```bash
 $ cd :nxt_ph:`/path/to/app/ <Directory where all app-related files will be stored; use a real path in your configuration>`
 $ mkdir webapp

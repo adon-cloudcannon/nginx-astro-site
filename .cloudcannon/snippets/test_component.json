@@ -24,8 +24,11 @@
               "values": [
                 {
                   "_inputs": {
-                    "annotation_content": {
-                      "type": "markdown"
+                    "display_text": {
+                      "type": "text"
+                    },
+                    "tooltip": {
+                      "type": "text"
                     },
                     "number": {
                       "comment": "Match to a comment of `/*1*/`, `//1`, `#1`, or `<!--1-->` in the code block",
@@ -42,14 +45,15 @@
                     ],
                     "subtext": [
                       {
-                        "key": "annotation_content"
+                        "key": "display_text"
                       },
                       "Empty"
                     ]
                   },
                   "value": {
                     "number": "1",
-                    "annotation_content": ""
+                    "display_text": "",
+                    "tooltip": ""
                   }
                 }
               ]
@@ -91,38 +95,9 @@
                 "editor_key" : "hints",
                 "type" : "array"
             },
-            
-            "snippet": "[[annotation_repeat]]"
-          }
-        },
-        "annotation_repeat": {
-          "parser": "repeating",
-          "options": {
-            "default_length": 0,
-            "editor_key": "hints",
-            "snippet": "<NXT_Hint [[annotation_args]]>\n[[annotation_content]]\n</NXT_Hint>"
-          }
-        },
-        "annotation_args": {
-          "parser": "key_values",
-          "options": {
-            "models": [
-              {
-                "editor_key": "number",
-                "type": "string"
-              }
-            ],
             "format": {
-              "ref": "mdx_format"
-            }
-          }
-        },
-        "annotation_content": {
-          "parser": "content",
-          "options": {
-            "editor_key": "annotation_content",
-            "allow_nested": false,
-            "indented_by": "  "
+                "ref": "mdx_format"
+              }
           }
         }
       }

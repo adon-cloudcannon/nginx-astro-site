@@ -64,8 +64,13 @@
             "model": 
             {
                 "editor_key": "language",
-                "type": "string",
-                "default": ""
+                "type": "string"
+            },
+            "format": {
+              "ref": "mdx_format"
+            },
+            "style": { 
+                "output": "inline"
             }
           }
         },

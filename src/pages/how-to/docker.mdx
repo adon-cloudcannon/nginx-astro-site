@@ -208,6 +208,30 @@ http.createServer(app).listen()
 
 Its Unit configuration, stored as **config.json** in the same directory:
 
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/", tooltip: "Directory inside the container where the app files will be stored", nxt_type: "nxt_hint" }, { number: "2", display_text: "/usr/bin/env", tooltip: "The external app type allows to run arbitrary executables, provided they establish communication with Unit", nxt_type: "nxt_hint" }, { number: "3", display_text: "arguments", tooltip: "The env executable runs Node.js, supplying Unit's loader module and your app code as arguments", nxt_type: "nxt_hint" }, { number: "4", display_text: "app.js", tooltip: "Basename of the application file; be sure to make it executable", nxt_type: "nxt_ph" }]}>{`{
+    "listeners": {
+        "*:8080": {
+            "pass": "applications/express"
+        }
+    },
+
+    "applications": {
+        "express": {
+            "type": "external",
+            "working_directory": "NXT1",
+            "executable": "NXT2",
+            "NXT3": [
+                "node",
+                "--loader",
+                "unit-http/loader.mjs",
+                "--require",
+                "unit-http/loader",
+                "NXT4"
+            ]
+        }
+    }
+}`}</Code_Block>
+
 ```json
 {
     "listeners": {

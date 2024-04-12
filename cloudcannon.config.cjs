@@ -52,7 +52,7 @@ module.exports = {
     mdx : true
   },
   _snippets: {
-    test_component: require(snip("test_component"))
+    code_block: require(snip("code_block"))
   }
 }
 

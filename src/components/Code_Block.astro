@@ -1,10 +1,17 @@
 ---
 import { nxt_hint } from "@utils/nxt";
-let content = Astro.props.content
-let hints = Astro.props.hints
-console.log(hints)
-content = content?.replaceAll("&lt;","<")?.replaceAll("&gt;",">")
-content = nxt_hint(`\`\`\`bash\n${content}\n\`\`\``)
+const { hints, language } = Astro.props
+let innerContent = await Astro.slots.render("default")
+
+innerContent = innerContent.replaceAll("&quot;",`"`)
+							.replaceAll("&#39;","'")
+							.replaceAll("&lt;","<")
+							.replaceAll("&gt;",">")
+
+hints.forEach(hint => {
+	innerContent = innerContent.replaceAll(`NXT${hint.number}`,`:nxt_hint: \`${hint.display_text} <${hint.tooltip}>\``)
+})
+const html = nxt_hint("```"+language+"\n"+innerContent+"\n```")
 ---
 
-<div set:html={content} />
+<Fragment set:html={html} />

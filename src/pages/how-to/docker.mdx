@@ -232,32 +232,6 @@ Its Unit configuration, stored as **config.json** in the same directory:
     }
 }`}</Code_Block>
 
-```json
-{
-    "listeners": {
-        "*:8080": {
-            "pass": "applications/express"
-        }
-    },
-
-    "applications": {
-        "express": {
-            "type": "external",
-            "working_directory": ":nxt_hint:`/www/ <Directory inside the container where the app files will be stored>`",
-            "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
-            ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
-                "node",
-                "--loader",
-                "unit-http/loader.mjs",
-                "--require",
-                "unit-http/loader",
-                ":nxt_ph:`app.js <Basename of the application file; be sure to make it executable>`"
-            ]
-        }
-    }
-}
-```
-
 The resulting file structure:
 
 ```none

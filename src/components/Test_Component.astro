@@ -1,15 +1,16 @@
 ---
 import { nxt_hint } from "@utils/nxt";
 
-const hints = Astro.props.hints;
-console.log(hints)
-
+console.log(Astro.props)
 let innerContent = await Astro.slots.render("default")
+
+console.log(innerContent)
+
 innerContent = innerContent.replaceAll("&quot;",`"`)
 							.replaceAll("&#39;","'")
 							.replaceAll("&lt;","<")
 							.replaceAll("&gt;",">")
-const html = nxt_hint("```bash\n"+innerContent+"\n```")
+const html = nxt_hint(innerContent)
 
 ---
 

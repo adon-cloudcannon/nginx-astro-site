@@ -61,11 +61,6 @@ EOF
 
 However basic it is, there’s already a dependency, so let’s list it in a file called **requirements.txt**:
 
-<Code_Block language="bash" hints={[]}>{`$ cat << EOF > requirements.txt
-
-flask
-EOF`}</Code_Block>
-
 ```bash
 $ cat << EOF > requirements.txt
 
@@ -96,29 +91,6 @@ $ cat << EOF > config/config.json
 }
 EOF`}</Code_Block>
 
-```bash
-$ mkdir config
-$ cat << EOF > config/config.json
-
-{
-    "listeners":{
-        "*:8000":{
-            "pass":"applications/webapp"
-        }
-    },
-
-    "applications":{
-        "webapp":{
-            "type":"python 3",
-            "path":":nxt_hint:`/www/ <Directory inside the container where the app files will be stored>`",
-            "module": ":nxt_hint:`wsgi <WSGI module basename with extension omitted>`",
-             "callable": ":nxt_hint:`app <Name of the callable in the module to run>`"
-        }
-    }
-}
-EOF
-```
-
 Finally, let’s create **log/** and **state/** directories to store Unit [log and state](source.md#source-startup) respectively:
 
 ```bash
@@ -147,10 +119,6 @@ Everything is ready for a containerized Unit.  First, let’s create a **Dockerf
 FROM unit:1.32.1-python3.11
 COPY requirements.txt /config/requirements.txt
 RUN python3 -m pip install -r /config/requirements.txt
-```
-
-```bash
-$ docker build --tag=:nxt_hint:`unit-webapp <Arbitrary image tag>` .
 ```
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "unit-webapp", tooltip: "Arbitrary image tag" }]}>{`$ docker build --tag=NXT1 .`}</Code_Block>

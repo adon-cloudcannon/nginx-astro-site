@@ -89,7 +89,7 @@
           }
         },
         "hints": {
-          "parser": "content",
+          "parser": "argument",
           "options": {
             "model" : {
                 "editor_key" : "hints",

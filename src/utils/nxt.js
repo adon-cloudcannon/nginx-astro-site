@@ -3,7 +3,7 @@ import { markedHighlight } from "marked-highlight";
 import prism from 'prismjs';
 import loadLanguages from 'prismjs/components/';
 
-loadLanguages(['javascript', 'jsx', 'css', 'markup', 'bash', 'json', 'tree']);
+loadLanguages(['javascript', 'jsx', 'css', 'markup', 'bash', 'json', 'tree', 'yaml']);
 
 let replaceIndex = 0;
 let replaceArr = []

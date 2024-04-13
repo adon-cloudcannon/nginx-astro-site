@@ -1,20 +1,16 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Unit in Ansible
 ---
 # Unit in Ansible
 
-The [Ansible collection](https://galaxy.ansible.com/steampunk/unit) by [XLAB
-Steampunk](https://steampunk.si) provides a number of Unit-related tasks
-that you can use with Ansible; some of them simplify installation and setup,
-while others provide common configuration steps.
+The [Ansible collection](https://galaxy.ansible.com/steampunk/unit) by [XLAB Steampunk](https://steampunk.si) provides a number of Unit-related tasks that you can use with Ansible; some of them simplify installation and setup, while others provide common configuration steps.
 
 #### NOTE
-Ansible 2.9+ required; the collection relies on official packages and
-supports Debian only.
 
-A brief intro by the collection’s authors can be found [here](https://docs.steampunk.si/unit/quickstart.html); a behind-the-scenes
-blog post is [here](https://steampunk.si/blog/why-and-how-of-the-nginx-unit-ansible-collection/).
+Ansible 2.9+ required; the collection relies on official packages and supports Debian only.
+
+A brief intro by the collection’s authors can be found [here](https://docs.steampunk.si/unit/quickstart.html); a behind-the-scenes blog post is [here](https://steampunk.si/blog/why-and-how-of-the-nginx-unit-ansible-collection/).
 
 First, install the collection:
 
@@ -30,9 +26,39 @@ def application(environ, start_response):
     return (b"Hello, Python on Unit!")
 ```
 
-This [playbook](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html)
-installs Unit with the Python language module, copies the app’s file, and runs
-the app:
+This [playbook](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_intro.html) installs Unit with the Python language module, copies the app’s file, and runs the app:
+
+<Code_Block language="yaml" hints={[{ number: "1", display_text: "/var/www", tooltip: "Directory where the app will be stored on the host", nxt_type: "nxt_hint" }, { number: "2", display_text: "files/wsgi.py", tooltip: "Note that the application's code is copied from a subdirectory", nxt_type: "nxt_hint" }, { number: "3", display_text: "/var/www/wsgi.py", tooltip: "Filename on the host", nxt_type: "nxt_hint" }, { number: "4", display_text: "steampunk.unit.python_app", tooltip: "Task that configures a Python app in Unit", nxt_type: "nxt_hint" }, { number: "5", display_text: "sample", tooltip: "Becomes the application's name in the configuration", nxt_type: "nxt_hint" }, { number: "6", display_text: "wsgi", tooltip: "Goes straight to 'module' in the application's configuration", nxt_type: "nxt_hint" }, { number: "7", display_text: "/var/www", tooltip: "Again, goes straight to the application's configuration", nxt_type: "nxt_hint" }, { number: "8", display_text: "steampunk.unit.listener", tooltip: "This task configures a listener in Unit", nxt_type: "nxt_hint" }, { number: "9", display_text: "*:3000", tooltip: "The listener's name in the configuration", nxt_type: "nxt_hint" }, { number: "10", display_text: "applications/sample", tooltip: "Goes straight to 'pass' in the listener's configuration", nxt_type: "nxt_hint" }]}>{`---
+- name: Install and run NGINX Unit
+  hosts: unit_hosts
+  become: true
+
+  tasks:
+    - name: Install Unit
+      include_role:
+        name: steampunk.unit.install
+
+    - name: Create a directory for our application
+      file:
+        path: NXT1
+        state: directory
+
+    - name: Copy application
+      copy:
+        src: NXT2
+        dest: NXT3
+        mode: "644"
+
+    - name: Add application config to Unit
+      NXT4:
+        name: NXT5
+        module: NXT6
+        path: NXT7
+
+    - name: Expose application via port 3000
+      NXT8:
+        pattern: "NXT9"
+        pass: NXT10`}</Code_Block>
 
 ```yaml
 ---
@@ -68,8 +94,7 @@ the app:
         pass: :nxt_hint:`applications/sample <Goes straight to 'pass' in the listener's configuration>`
 ```
 
-The final preparation step is the [host inventory](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html)
-that lists your managed hosts’ addresses:
+The final preparation step is the [host inventory](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html) that lists your managed hosts’ addresses:
 
 ```yaml
 all:
@@ -95,8 +120,7 @@ $ ansible-playbook -i :nxt_hint:`inventory.yaml <Inventory filename>` :nxt_hint:
       203.0.113.1                  : ok=15   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 ```
 
-If it’s OK, try the app at the host address from the inventory and the port
-number set in the playbook:
+If it’s OK, try the app at the host address from the inventory and the port number set in the playbook:
 
 ```bash
 $ curl 203.0.113.1:3000

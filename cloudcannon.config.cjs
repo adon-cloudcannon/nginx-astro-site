@@ -9,7 +9,7 @@ module.exports = {
     uploads: "uploads",
     static: "public",
     collections: "",
-    data: "",
+    data: "data",
     layouts: ""
   },
   collections_config: {

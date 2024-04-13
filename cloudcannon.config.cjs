@@ -16,7 +16,7 @@ module.exports = {
     pages: {
       path: "pages",
       output: false,
-      icon: "notes",
+      icon: "description",
       disable_add: false,
       disable_add_folder: false,
       disable_file_actions: false,

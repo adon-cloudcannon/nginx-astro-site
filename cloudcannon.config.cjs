@@ -34,6 +34,14 @@ module.exports = {
       disable_add: false,
       disable_add_folder: false,
       disable_file_actions: false
+    },
+    news: {
+      path: "pages/news",
+      output: false,
+      icon: "newspaper",
+      disable_add: false,
+      disable_add_folder: false,
+      disable_file_actions: false
     }
   },
   timezone: "Etc/UTC",

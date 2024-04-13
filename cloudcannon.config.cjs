@@ -26,6 +26,14 @@ module.exports = {
           path: "schemas/page.mdx"
         }
       }
+    },
+    "how-to": {
+      path: "pages/how-to",
+      output: false,
+      icon: "psychology_alt",
+      disable_add: false,
+      disable_add_folder: false,
+      disable_file_actions: false
     }
   },
   timezone: "Etc/UTC",

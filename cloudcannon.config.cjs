@@ -12,7 +12,22 @@ module.exports = {
     data: "data",
     layouts: ""
   },
+  collection_groups:[
+    { 
+      heading: "Collections",
+      collections: [
+        "pages",
+        "how-to",
+        "news"
+      ]
+    }
+  ],
   collections_config: {
+    data: {
+      path: 'data',
+      disable_add: true,
+      disable_add_folder: true
+    },
     pages: {
       path: "pages",
       output: false,

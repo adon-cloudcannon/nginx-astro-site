@@ -50,15 +50,13 @@ Certbot will provide instructions on updating the DNS entries to prove domain ow
 
 Any such **certbot** command stores the resulting **.pem** files as follows:
 
-```none
-   :nxt_hint:`/etc/letsencrypt/ <Location can be configured, see Certbot help>`
+<Code_Block language="none" hints={[{ number: "1", display_text: "/etc/letsencrypt/", tooltip: "Location can be configured, see Certbot help", nxt_type: "nxt_hint" }, { number: "2", display_text: "www.example.com", tooltip: "Your website name", nxt_type: "nxt_hint" }, { number: "3", display_text: "cert.pem", tooltip: "Leaf website certificate", nxt_type: "nxt_hint" }, { number: "4", display_text: "chain.pem", tooltip: "Root CA certificate chain", nxt_type: "nxt_hint" }, { number: "5", display_text: "fullchain.pem", tooltip: "Concatenation of the two PEMs above", nxt_type: "nxt_hint" }, { number: "6", display_text: "privkey.pem", tooltip: "Your private key, must be kept secret", nxt_type: "nxt_hint" }]}>{`   NXT1
    └── live/
-       └── :nxt_hint:`www.example.com <Your website name>`
-           ├── :nxt_hint:`cert.pem <Leaf website certificate>`
-           ├── :nxt_hint:`chain.pem <Root CA certificate chain>`
-           ├── :nxt_hint:`fullchain.pem <Concatenation of the two PEMs above>`
-           └── :nxt_hint:`privkey.pem <Your private key, must be kept secret>`
-```
+       └── NXT2
+           ├── NXT3
+           ├── NXT4
+           ├── NXT5
+           └── NXT6`}</Code_Block>
 
 #### NOTE
 

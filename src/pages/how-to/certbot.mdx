@@ -40,9 +40,7 @@ Make sure the **share** directory is accessible for Unit’s [router process](se
 
 Next, run **certbot**, supplying the **share** directory as the webroot path:
 
-```bash
-   # certbot certonly --webroot -w :nxt_ph:`/var/www/www.example.com/ <Path where the file should be stored>` -d :nxt_ph:`www.example.com <Your domain name>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/var/www/www.example.com/", tooltip: "Path where the file should be stored", nxt_type: "nxt_ph" }, { number: "2", display_text: "www.example.com", tooltip: "Your domain name", nxt_type: "nxt_ph" }]}>{`   # certbot certonly --webroot -w NXT1 -d NXT2`}</Code_Block>
 
 If you can’t employ the previous method for some reason, try using DNS records to validate your domain:
 

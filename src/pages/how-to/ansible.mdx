@@ -69,15 +69,19 @@ The final preparation step is the [host inventory](https://docs.ansible.com/ansi
       hosts:
         NXT1:`}</Code_Block>
 
-```yaml
-all:
-  children:
-    unit_hosts:
-      hosts:
-        :nxt_hint:`203.0.113.1 <Arbitrary host address>`:
-```
-
 With everything in place, start the playbook:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "inventory.yaml", tooltip: "Inventory filename", nxt_type: "nxt_hint" }, { number: "2", display_text: "playbook.yaml", tooltip: "Playbook filename", nxt_type: "nxt_hint" }]}>{`$ ansible-playbook -i NXT1 NXT2
+
+      PLAY [Install and run NGINX Unit] ***
+
+      ...
+
+      TASK [Expose application via port 3000] ***
+      ok: [203.0.113.1]
+
+      PLAY RECAP ********************************
+      203.0.113.1                  : ok=15   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0`}</Code_Block>
 
 ```bash
 $ ansible-playbook -i :nxt_hint:`inventory.yaml <Inventory filename>` :nxt_hint:`playbook.yaml <Playbook filename>`

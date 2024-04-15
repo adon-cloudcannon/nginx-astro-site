@@ -24,7 +24,7 @@ Create your virtual environment with a Python version that matches the language 
 
 3\. Let’s try an updated version of the [quickstart app](https://bottlepy.org/docs/dev/tutorial.html#the-default-application), saving it as **/path/to/app/wsgi.py**:
 
-<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable name used in Unit's configuration", nxt_type: "nxt_hint" }]}>{`{% raw %}   from bottle import Bottle, template
+<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable name used in Unit's configuration", nxt_type: "nxt_hint" }]}>{`from bottle import Bottle, template
 
    NXT1 = Bottle()
 
@@ -32,7 +32,7 @@ Create your virtual environment with a Python version that matches the language 
    def hello(name):
        return template('Hello, {{name}}!', name=name)
 
-   # run(app, host='localhost', port=8080){% endraw %}`}</Code_Block>
+   # run(app, host='localhost', port=8080)`}</Code_Block>
 
 ```
 {% raw %}   from bottle import Bottle, template

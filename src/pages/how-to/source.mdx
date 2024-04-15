@@ -187,7 +187,7 @@ modules](#source-modules) you need before proceeding further.
 General options and settings that control compilation, runtime privileges,
 or support for certain features:
 
-| **--help**                                 | Displays a summary of common **./configure** options.<br/><br/>For language-specific details, run **./configure <language><br/>--help** or see [below](#source-modules).                                                                                                                                                                                                                      |
+| **--help**                                 | Displays a summary of common **./configure** options.<br/><br/>For language-specific details, run **./configure \<language\><br/>--help** or see [below](#source-modules).                                                                                                                                                                                                                      |
 |--------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--cc=pathname**                          | Custom C compiler pathname.<br/><br/>The default is **cc**.                                                                                                                                                                                                                                                                                                                                   |
 | **--cc-opt=options**, **--ld-opt=options** | Extra options for the C compiler and linker.                                                                                                                                                                                                                                                                                                                                                  |
@@ -272,7 +272,7 @@ set the `--prefix` and its related options during [configuration](#source-config
 ## Configuring Modules
 
 Next, configure a module for each language you want to use with Unit.  The
-**./configure <language>** commands set up individual language modules
+**./configure \<language\>** commands set up individual language modules
 and place module-specific instructions in the **Makefile**.
 
 #### NOTE
@@ -308,7 +308,7 @@ on Unit.  Available command options:
 | **--lib-path=directory**   | Directory path for the **libjvm.so** library.<br/><br/>The default is based on JDK settings.                                              |
 | **--local-repo=directory** | Directory path for the local **.jar** repository.<br/><br/>The default is **$HOME/.m2/repository/**.                                      |
 | **--repo=directory**       | URL path for the remote Maven repository.<br/><br/>The default is **http://central.maven.org/maven2/**.                                   |
-| **--module=basename**      | Resulting module’s name (**<basename>.unit.so**), also used<br/>in [make](#source-bld-src-emb) targets.<br/><br/>The default is **java**. |
+| **--module=basename**      | Resulting module’s name (**\<basename\>.unit.so**), also used<br/>in [make](#source-bld-src-emb) targets.<br/><br/>The default is **java**. |
 
 To configure a module called **java11.unit.so** with OpenJDK 11.0.1:
 
@@ -332,7 +332,7 @@ command options:
 
 | **--perl=pathname**   | Specific Perl executable pathname.<br/><br/>The default is **perl**.                                                                                                     |
 |-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--module=basename** | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--perl` executable. |
+| **--module=basename** | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--perl` executable. |
 
 To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
 
@@ -349,7 +349,7 @@ PHP applications on Unit.  Available command options:
 |--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--lib-path=directory** | Directory path of the **libphp** library file<br/>(**libphp\*.so** or **libphp\*.a**), usually available with<br/>an `--enable-embed` PHP build:<br/><br/>```bash<br/>$ php-config --php-sapis<br/><br/>      ... embed ...<br/>```                |
 | **--lib-static**         | Links the static **libphp** library (**libphp\*.a**)<br/>instead of the dynamic one (**libphp\*.so**); requires<br/>`--lib-path`.                                                                                                                     |
-| **--module=basename**    | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **--config=/path/php7-config** yields<br/>**php7.unit.so**. |
+| **--module=basename**    | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **--config=/path/php7-config** yields<br/>**php7.unit.so**. |
 
 To configure a module called **php70.unit.so** for PHP 7.0:
 
@@ -366,7 +366,7 @@ Available command options:
 | **--config=pathname**    | Pathname of the **python-config** script used to<br/>set up the resulting module.<br/><br/>The default is **python-config**.                                                                                                                   |
 |--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--lib-path=directory** | Custom directory path of the Python runtime library to use with<br/>Unit.                                                                                                                                                                      |
-| **--module=basename**    | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **/path/python3-config** turns into<br/>**python3**. |
+| **--module=basename**    | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **/path/python3-config** turns into<br/>**python3**. |
 
 #### NOTE
 The Python interpreter set by **python-config** must be
@@ -383,7 +383,7 @@ When you run **./configure ruby**, the script configures a module
 to support running Ruby scripts as applications on Unit.  Available
 command options:
 
-| **--module=basename**   | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--ruby` executable.   |
+| **--module=basename**   | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--ruby` executable.   |
 |-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--ruby=pathname**     | Specific Ruby executable pathname.<br/><br/>The default is **ruby**.                                                                                                       |
 
@@ -412,12 +412,12 @@ When you run **./configure wasm**, the script configures a module
 to support running WebAssembly applications on Unit.
 Available command options:
 
-| **--module=basename**   | Resulting module’s name (**<basename>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.                                               |
+| **--module=basename**   | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.                                               |
 |-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **--runtime=basename**  | The WebAssembly runtime to use.<br/><br/>The default is **wasmtime**.                                                                                 |
 | **--include-path=path** | The directory path to the runtime’s header files.                                                                                                     |
 | **--lib-path=path**     | The directory path to the runtime’s library files.                                                                                                    |
-| **--rpath=<path>**      | The directory path that designates the run-time library search<br/>path.<br/><br/>If specified without a value,<br/>assumes the **--lib-path** value. |
+| **--rpath=\<path\>**      | The directory path that designates the run-time library search<br/>path.<br/><br/>If specified without a value,<br/>assumes the **--lib-path** value. |
 
 To configure a module called **wasm.unit.so**:
 
@@ -462,8 +462,8 @@ For further details about Unit’s language modules, see [Working With Language 
 ### Embedded Language Modules
 
 To build and install the modules for Java, PHP, Perl, Python, or Ruby after
-configuration, run **make <module basename>** and **make
-<module basename>-install**, for example:
+configuration, run **make \<module basename\>** and **make
+\<module basename\>-install**, for example:
 
 ```bash
 $ make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`
@@ -475,8 +475,8 @@ $ make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure 
 ### External Language Modules
 
 To build and install the modules for Go and Node.js globally after
-configuration, run **make <go>-install** and **make
-<node>-install**, for example:
+configuration, run **make \<go\>-install** and **make
+\<node\>-install**, for example:
 
 ```bash
 # make :nxt_hint:`go <This is the --go option value from ./configure go>`-install
@@ -485,7 +485,7 @@ configuration, run **make <go>-install** and **make
 
 #### NOTE
 To install the Node.js module locally, run **make
-<node>-local-install**:
+\<node\>-local-install**:
 
 ```bash
 # make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-local-install

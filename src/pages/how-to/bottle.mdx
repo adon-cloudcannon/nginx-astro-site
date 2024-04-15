@@ -34,25 +34,11 @@ Create your virtual environment with a Python version that matches the language 
 
    # run(app, host='localhost', port=8080)`}</Code_Block>
 
-```
-{% raw %}   from bottle import Bottle, template
-
-   :nxt_hint:`app <Callable name used in Unit's configuration>` = Bottle()
-
-   @app.route('/hello/<name>')
-   def hello(name):
-       return template('Hello, {{name}}!', name=name)
-
-   # run(app, host='localhost', port=8080){% endraw %}
-```
-
 Note that we’ve dropped the server code.
 
 4\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
 #### NOTE
 

@@ -4,7 +4,7 @@
       "preview": {
         "text": [   
           {
-            "template": "NXT Code Block {language}"
+            "template": "NXT Code Block ({language})"
           }       
         ],
         "subtext": [
@@ -50,13 +50,13 @@
                     "icon": "campaign",
                     "text": [
                       {
-                        "key": "number"
+                        "template" : "NXT{number} {nxt_type}"
                       },
                       "Unconfigured"
                     ],
                     "subtext": [
                       {
-                        "key": "display_text"
+                        "template" : "{display_text} : {tooltip}"
                       },
                       "Empty"
                     ]

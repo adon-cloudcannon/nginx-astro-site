@@ -48,8 +48,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-python) the Bottle configuration for Unit (use real values for **type**, **home**, and **path**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "X.Y", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the WSGI module; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app/venv/", tooltip: "Path to the virtual environment, if any; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "wsgi", tooltip: "WSGI module basename with extension omitted", nxt_type: "nxt_hint" }, { number: "5", display_text: "app", tooltip: "Name of the callable in the module to run", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/bottle"
@@ -58,15 +57,14 @@ For further details, including permissions, see the [security checklist](securit
 
        "applications": {
            "bottle": {
-               "type": "python :nxt_ph:`X.Y <Must match language module version and virtual environment version>`",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the WSGI module; use a real path in your configuration>`",
-               "home": ":nxt_ph:`/path/to/app/venv/ <Path to the virtual environment, if any; use a real path in your configuration>`",
-               "module": ":nxt_hint:`wsgi <WSGI module basename with extension omitted>`",
-               "callable": ":nxt_hint:`app <Name of the callable in the module to run>`"
+               "type": "python NXT1",
+               "path": "NXT2",
+               "home": "NXT3",
+               "module": "NXT4",
+               "callable": "NXT5"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

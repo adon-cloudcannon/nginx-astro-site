@@ -44,9 +44,7 @@ Next, run **certbot**, supplying the **share** directory as the webroot path:
 
 If you can’t employ the previous method for some reason, try using DNS records to validate your domain:
 
-```bash
-   # certbot certonly --manual --preferred-challenges dns -d :nxt_ph:`www.example.com <Your domain name>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "www.example.com", tooltip: "Your domain name", nxt_type: "nxt_ph" }]}>{`   # certbot certonly --manual --preferred-challenges dns -d NXT1`}</Code_Block>
 
 Certbot will provide instructions on updating the DNS entries to prove domain ownership.
 

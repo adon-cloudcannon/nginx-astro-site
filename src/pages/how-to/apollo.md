@@ -21,7 +21,7 @@ To run the [Apollo](https://www.apollographql.com) GraphQL server using Unit:
 
 3\. Create the [middleware](https://www.apollographql.com/docs/apollo-server/api/express-middleware/) module; let’s store it as **/path/to/app/apollo.js**. First, initialize the directory:
 
-<Code_Block language="bash" hints={[]}>{`   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
    $ npm init`}</Code_Block>
 
 ```bash

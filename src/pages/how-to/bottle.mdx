@@ -1,35 +1,31 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Bottle
 ---
 # Bottle
 
-To run apps built with the [Bottle](https://bottlepy.org/docs/dev/) web
-framework using Unit:
+To run apps built with the [Bottle](https://bottlepy.org/docs/dev/) web framework using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 2.7+ language module.
-2. Create a virtual environment to install Bottle’s [PIP package](https://bottlepy.org/docs/dev/tutorial.html#installation), for
-   instance:
-   ```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   $ :nxt_hint:`python --version <Make sure your virtual environment version matches the module version>`
-         Python :nxt_hint:`X.Y.Z <Major version, minor version, and revision number>`
-   $ python -m venv :nxt_hint:`venv <Arbitrary name of the virtual environment>`
-   $ source :nxt_hint:`venv <Name of the virtual environment from the previous command>`/bin/activate
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 2.7+ language module.
+
+2\. Create a virtual environment to install Bottle’s [PIP package](https://bottlepy.org/docs/dev/tutorial.html#installation), for instance:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "python --version", tooltip: "Make sure your virtual environment version matches the module version", nxt_type: "nxt_hint" }, { number: "3", display_text: "X.Y.Z", tooltip: "Major version, minor version, and revision number", nxt_type: "nxt_hint" }, { number: "4", display_text: "venv", tooltip: "Arbitrary name of the virtual environment", nxt_type: "nxt_hint" }, { number: "5", display_text: "venv", tooltip: "Name of the virtual environment from the previous command", nxt_type: "nxt_hint" }]}>{`   $ cd NXT1
+   $ NXT2
+         Python NXT3
+   $ python -m venv NXT4
+   $ source NXT5/bin/activate
    $ pip install bottle
-   $ deactivate
-   ```
+   $ deactivate`}</Code_Block>
 
-   #### WARNING
-   Create your virtual environment with a Python version that matches the
-   language module from Step 1 up to the minor number (**X.Y** in
-   this example).  Also, the app **type** in Step 5 must
-   [resolve](../configuration.md#configuration-apps-common) to a similarly matching
-   version; Unit doesn’t infer it from the environment.
-3. Let’s try an updated version of the [quickstart app](https://bottlepy.org/docs/dev/tutorial.html#the-default-application),
-   saving it as **/path/to/app/wsgi.py**:
-   ```python
-   from bottle import Bottle, template
+#### WARNING
+
+Create your virtual environment with a Python version that matches the language module from Step&nbsp;1 up to the minor number (**X.Y** in this example).  Also, the app **type** in Step&nbsp;5 must [resolve](../configuration.md#configuration-apps-common) to a similarly matching version; Unit doesn’t infer it from the environment.
+
+3\. Let’s try an updated version of the [quickstart app](https://bottlepy.org/docs/dev/tutorial.html#the-default-application), saving it as **/path/to/app/wsgi.py**:
+
+```
+{% raw %}   from bottle import Bottle, template
 
    :nxt_hint:`app <Callable name used in Unit's configuration>` = Bottle()
 
@@ -37,24 +33,26 @@ framework using Unit:
    def hello(name):
        return template('Hello, {{name}}!', name=name)
 
-   # run(app, host='localhost', port=8080)
-   ```
+   # run(app, host='localhost', port=8080){% endraw %}
+```
 
-   Note that we’ve dropped the server code.
-4. Run the following command so Unit can access :
-   ```bash
+Note that we’ve dropped the server code.
+
+4\. Run the following command so Unit can access :
+
+```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+```
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+#### NOTE
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
-5. Next, [prepare](../configuration.md#configuration-python) the Bottle configuration for
-   Unit (use real values for **type**, **home**, and **path**):
-   ```json
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+
+For further details, including permissions, see the [security checklist](security.md#security-apps).
+
+5\. Next, [prepare](../configuration.md#configuration-python) the Bottle configuration for Unit (use real values for **type**, **home**, and **path**):
+
+```json
    {
        "listeners": {
            "*:80": {
@@ -72,22 +70,23 @@ framework using Unit:
            }
        }
    }
-   ```
-6. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   ```bash
+```
+
+6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+
+```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+```
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+#### NOTE
 
-   After a successful update, your app should be available on the listener’s IP
-   address and port:
-   ```bash
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+
+After a successful update, your app should be available on the listener’s IP address and port:
+
+```bash
    $ curl http://localhost/hello/Unit
 
          Hello, Unit!
-   ```
+```

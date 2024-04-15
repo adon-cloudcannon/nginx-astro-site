@@ -9,7 +9,8 @@ innerContent = innerContent.replaceAll("&quot;",`"`)
 							.replaceAll("&gt;",">")
 
 hints.forEach(hint => {
-	innerContent = innerContent.replaceAll(`NXT${hint.number}`,`:${hint.nxt_type}: \`${hint.display_text} <${hint.tooltip}>\``)
+	let regex = new RegExp('\\bNXT' + hint.number + '\\b','g');
+	innerContent = innerContent.replaceAll(regex,`:${hint.nxt_type}: \`${hint.display_text} <${hint.tooltip}>\``)
 })
 const html = nxt_hint("```"+language+"\n"+innerContent+"\n```")
 ---

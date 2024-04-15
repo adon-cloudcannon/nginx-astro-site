@@ -36,8 +36,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-perl) the Catalyst configuration for Unit (use real values for **script** and **working\_directory**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Needed to use modules from the local lib directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/catalyst"
@@ -47,12 +46,11 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "catalyst": {
                "type": "perl",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Needed to use modules from the local lib directory; use a real path in your configuration>`",
-               "script": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`app.psgi"
+               "working_directory": "NXT1",
+               "script": "NXT2/app.psgi"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

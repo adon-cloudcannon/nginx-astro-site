@@ -146,33 +146,10 @@ For further details, including permissions, see the [security checklist](securit
        }
    }`}</Code_Block>
 
-```json
-   {
-       "listeners": {
-           "*:80": {
-               "pass": "applications/apollo"
-           }
-       },
-
-       "applications": {
-           "apollo": {
-               "type": "external",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Needed to use the installed NPM modules; use a real path in your configuration>`",
-               "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
-               ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
-                   "node",
-                   "--loader",
-                   "unit-http/loader.mjs",
-                   "--require",
-                   "unit-http/loader",
-                   ":nxt_ph:`apollo.js <Basename of the application file; be sure to make it executable>`"
-               ]
-           }
-       }
-   }
-```
-
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \
+          NXT1 NXT2`}</Code_Block>
 
 ```bash
    # curl -X PUT --data-binary @config.json --unix-socket \

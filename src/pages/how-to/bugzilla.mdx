@@ -28,8 +28,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-perl) the Bugzilla configuration for Unit.  The default **.htaccess** scheme roughly translates into the following (use real values for **share**, **script**, and **working\_directory**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "match", tooltip: "Restricts access to .dot files to the public webdot server at research.att.com", nxt_type: "nxt_hint" }, { number: "2", display_text: "192.20.225.0/24", tooltip: "Well-known IP range", nxt_type: "nxt_hint" }, { number: "3", display_text: "share", tooltip: "Serves static files that match the conditions above", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "share", tooltip: "Unconditionally serves remaining requests that target static files", nxt_type: "nxt_hint" }, { number: "6", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "types", tooltip: "Enables sharing only for certain file types", nxt_type: "nxt_hint" }, { number: "8", display_text: "pass", tooltip: "Serves any requests not served with the 'share' immediately above", nxt_type: "nxt_hint" }, { number: "9", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "10", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -38,26 +37,26 @@ For further details, including permissions, see the [security checklist](securit
 
        "routes": [
            {
-               ":nxt_hint:`match <Restricts access to .dot files to the public webdot server at research.att.com>`": {
-                   "source": ":nxt_hint:`192.20.225.0/24 <Well-known IP range>`",
+               "NXT1": {
+                   "source": "NXT2",
                    "uri": "/data/webdot/*.dot"
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves static files that match the conditions above>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri"
+                   "NXT3": "NXT4$uri"
                }
            },
            {
                "action": {
-                   ":nxt_hint:`share <Unconditionally serves remaining requests that target static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri",
-                   ":nxt_hint:`types <Enables sharing only for certain file types>`": [
+                   "NXT5": "NXT6$uri",
+                   "NXT7": [
                        "text/css",
                        "image/*",
                        "application/javascript"
                    ],
 
                    "fallback": {
-                       ":nxt_hint:`pass <Serves any requests not served with the 'share' immediately above>`": "applications/bugzilla"
+                       "NXT8": "applications/bugzilla"
                    }
                }
            }
@@ -66,12 +65,11 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "bugzilla": {
                "type": "perl",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-               "script": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`app.psgi"
+               "working_directory": "NXT9",
+               "script": "NXT10app.psgi"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

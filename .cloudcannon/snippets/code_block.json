@@ -2,8 +2,10 @@
       "snippet": "<Code_Block language=[[language]] hints=[[hints]]>{`[[inner]]`}</Code_Block>",
       "inline": false,
       "preview": {
-        "text": [          
-          "NXT Code Block {language}"
+        "text": [   
+          {
+            "template": "NXT Code Block {language}"
+          }       
         ],
         "subtext": [
           {

@@ -17,17 +17,12 @@ To run the [Apollo](https://www.apollographql.com) GraphQL server using Unit:
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ mkdir -p NXT1
    $ cd NXT2
    $ npm install @apollo/server graphql
-   \# npm link unit-http`}</Code_Block>
+   # npm link unit-http`}</Code_Block>
 
 3\. Create the [middleware](https://www.apollographql.com/docs/apollo-server/api/express-middleware/) module; let’s store it as **/path/to/app/apollo.js**. First, initialize the directory:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
    $ npm init`}</Code_Block>
-
-```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   $ npm init
-```
 
 Next, add the following code:
 
@@ -117,9 +112,7 @@ Make sure your **package.json** resembles this (mind **“type”: “module”*
 
 4\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
 #### NOTE
 
@@ -129,8 +122,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-nodejs) the Apollo configuration for Unit:
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Needed to use the installed NPM modules; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/usr/bin/env", tooltip: "The external app type allows to run arbitrary executables, provided they establish communication with Unit", nxt_type: "nxt_hint" }, { number: "3", display_text: "arguments", tooltip: "The env executable runs Node.js, supplying Unit's loader module and your app code as arguments", nxt_type: "nxt_hint" }, { number: "4", display_text: "apollo.js", tooltip: "Basename of the application file; be sure to make it executable", nxt_type: "nxt_ph" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/apollo"
@@ -140,27 +132,24 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "apollo": {
                "type": "external",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Needed to use the installed NPM modules; use a real path in your configuration>`",
-               "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
-               ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
+               "working_directory": "NXT1",
+               "executable": "NXT2",
+               "NXT3": [
                    "node",
                    "--loader",
                    "unit-http/loader.mjs",
                    "--require",
                    "unit-http/loader",
-                   ":nxt_ph:`apollo.js <Basename of the application file; be sure to make it executable>`"
+                   "NXT4"
                ]
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 #### NOTE
 

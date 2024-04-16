@@ -1,91 +1,70 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: NGINX Integration
 ---
 # NGINX Integration
 
-Unit is a potent and versatile server in its own right.  However, if you’re
-used to NGINX’s rich feature set, you can deploy it in front of Unit; one
-notable use case for NGINX here is securing the Unit control socket.
+Unit is a potent and versatile server in its own right.  However, if you’re used to NGINX’s rich feature set, you can deploy it in front of Unit; one notable use case for NGINX here is securing the Unit control socket.
 
 ## Fronting Unit with NGINX
 
 Configure a [listener](../configuration.md#configuration-listeners) in Unit:
 
-> ```json
-> {
->     ":nxt_ph:`127.0.0.1:8080 <Socket address where NGINX proxies requests>`": {
->         "pass": ":nxt_ph:`... <Unit's internal request destination>`",
->         "forwarded": {
->             "client_ip": ":nxt_hint:`X-Forwarded-For <The header field set by NGINX>`",
->             "source": [
->                 ":nxt_ph:`127.0.0.1 <The IP address where NGINX runs>`"
->             ]
->         }
->     }
-> }
-> ```
+<Code_Block language="json" hints={[{ number: "1", display_text: "127.0.0.1:8080", tooltip: "Socket address where NGINX proxies requests", nxt_type: "nxt_ph" }, { number: "2", display_text: "...", tooltip: "Unit's internal request destination", nxt_type: "nxt_ph" }, { number: "3", display_text: "X-Forwarded-For", tooltip: "The header field set by NGINX", nxt_type: "nxt_hint" }, { number: "4", display_text: "127.0.0.1", tooltip: "The IP address where NGINX runs", nxt_type: "nxt_ph" }]}>{`{
+    "NXT1": {
+        "pass": "NXT2",
+        "forwarded": {
+            "client_ip": "NXT3",
+            "source": [
+                "NXT4"
+            ]
+        }
+    }
+}`}</Code_Block>
 
-Here, **forwarded** is optional; it enables identifying the
-[originating IPs](../configuration.md#configuration-listeners-xff) of requests proxied from
-**source**.
+Here, **forwarded** is optional; it enables identifying the [originating IPs](../configuration.md#configuration-listeners-xff) of requests proxied from **source**.
 
-In NGINX configuration, create an upstream in the **http** context, adding
-the listener’s socket as a **server**:
+In NGINX configuration, create an upstream in the **http** context, adding the listener’s socket as a **server**:
 
-```nginx
-http {
+<Code_Block language="nginx" hints={[{ number: "1", display_text: "127.0.0.1:8080", tooltip: "Unit's listener socket address", nxt_type: "nxt_ph" }, { number: "2", display_text: "/unit/", tooltip: "Arbitrary location", nxt_type: "nxt_hint" }, { number: "3", display_text: "X-Forwarded-For", tooltip: "Unit's listener must list the same name in client_ip/header", nxt_type: "nxt_hint" }]}>{`http {
     upstream unit_backend {
-        server :nxt_ph:`127.0.0.1:8080 <Unit's listener socket address>`;
+        server NXT1;
     }
 
     server {
-        location :nxt_hint:`/unit/ <Arbitrary location>` {
+        location NXT2 {
             proxy_pass http://unit_backend;
             proxy_set_header Host $host;
-            proxy_set_header :nxt_hint:`X-Forwarded-For <Unit's listener must list the same name in client_ip/header>` $proxy_add_x_forwarded_for;
+            proxy_set_header NXT3 $proxy_add_x_forwarded_for;
         }
     }
-}
-```
+}`}</Code_Block>
 
-A more compact alternative would be a direct **proxy_pass** in your
-**location**:
+A more compact alternative would be a direct **proxy\_pass** in your **location**:
 
-```nginx
-http {
+<Code_Block language="nginx" hints={[{ number: "1", display_text: "/unit/", tooltip: "Arbitrary location", nxt_type: "nxt_hint" }, { number: "2", display_text: "127.0.0.1:8080", tooltip: "Unit's listener socket address", nxt_type: "nxt_ph" }, { number: "3", display_text: "X-Forwarded-For", tooltip: "Unit's listener must list the same name in client_ip/header", nxt_type: "nxt_hint" }]}>{`http {
     server {
-        location :nxt_hint:`/unit/ <Arbitrary location>` {
-            proxy_pass http://:nxt_ph:`127.0.0.1:8080 <Unit's listener socket address>`;
+        location NXT1 {
+            proxy_pass http://NXT2;
             proxy_set_header Host $host;
-            proxy_set_header :nxt_hint:`X-Forwarded-For <Unit's listener must list the same name in client_ip/header>` $proxy_add_x_forwarded_for;
+            proxy_set_header NXT3 $proxy_add_x_forwarded_for;
         }
     }
-}
-```
+}`}</Code_Block>
 
-The **proxy_set_header X-Forwarded-For** directives work together with the
-listener’s **client_ip** option.
+The **proxy\_set\_header X-Forwarded-For** directives work together with the listener’s **client\_ip** option.
 
-For details, see the [NGINX documentation](https://nginx.org).  Commercial
-support and advanced features are [also available](https://www.nginx.com).
-
-<a id="nginx-secure-api"></a>
+For details, see the [NGINX documentation](https://nginx.org).  Commercial support and advanced features are [also available](https://www.nginx.com).
 
 ## Securely Proxying Unit’s Control API
 
-By default, Unit exposes its [control API](../controlapi.md#configuration-mgmt) via a UNIX
-domain socket.  These sockets aren’t network accessible, so the API is local
-only.  To enable secure remote access, you can use NGINX as a reverse proxy.
+By default, Unit exposes its [control API](../controlapi.md#configuration-mgmt) via a UNIX domain socket.  These sockets aren’t network accessible, so the API is local only.  To enable secure remote access, you can use NGINX as a reverse proxy.
 
-#### WARNING
-Avoid exposing an unprotected control socket to public networks.  Use NGINX
-or a different solution such as SSH for security and authentication.
+<Note type="warning">
+Avoid exposing an unprotected control socket to public networks. Use NGINX or a different solution such as SSH for security and authentication.
+</Note>
 
-Use this configuration template for NGINX (replace placeholders in
-**ssl_certificate**, **ssl_certificate_key**,
-**ssl_client_certificate**, **allow**, **auth_basic_user_file**,
-and **proxy_pass** with real values):
+Use this configuration template for NGINX (replace placeholders in **ssl\_certificate**, **ssl\_certificate\_key**, **ssl\_client\_certificate**, **allow**, **auth\_basic\_user\_file**, and **proxy\_pass** with real values):
 
 ```nginx
 server {

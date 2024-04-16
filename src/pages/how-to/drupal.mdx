@@ -24,8 +24,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-php) the Drupal configuration for Unit. The default **.htaccess** [scheme](https://github.com/drupal/drupal) in a Drupal installation roughly translates into the following (use real values for **share** and **root**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Denies access to certain types of files and directories best kept hidden, allows access to well-known locations according to RFC 5785", nxt_type: "nxt_hint" }, { number: "2", display_text: "uri", tooltip: "Allows direct access to core PHP scripts", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -35,7 +34,7 @@ For further details, including permissions, see the [security checklist](securit
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Denies access to certain types of files and directories best kept hidden, allows access to well-known locations according to RFC 5785>`": [
+                   "NXT1": [
                        "!*/.well-known/*",
                        "/vendor/*",
                        "/core/profiles/demo_umami/modules/demo_umami_content/default_content/*",
@@ -77,7 +76,7 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Allows direct access to core PHP scripts>`": [
+                   "NXT2": [
                        "/core/authorize.php",
                        "/core/core.api.php",
                        "/core/globals.api.php",
@@ -131,15 +130,14 @@ For further details, including permissions, see the [security checklist](securit
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
 
 * The **direct** target runs the **.php** script from the URI or **index.php** if the URI omits it.
 * The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
+</Note>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

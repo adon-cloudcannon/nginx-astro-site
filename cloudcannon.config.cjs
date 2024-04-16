@@ -83,7 +83,8 @@ module.exports = {
     mdx : true
   },
   _snippets: {
-    code_block: require(snip("code_block"))
+    code_block: require(snip("code_block")),
+    note: require(snip("note"))
   }
 }
 

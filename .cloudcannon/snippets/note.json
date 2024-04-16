@@ -1,0 +1,48 @@
+{
+      "snippet": "<Note title=[[title]]>{`[[body]]`}</Note>",
+      "inline": false,
+      "preview": {
+        "text": [   
+          {
+            "template": "{title}"
+          },
+          "Note"
+        ],
+        "subtext": [
+          {
+            "key": "body"
+          }
+        ],
+        "icon": "note"
+      },
+      "_inputs": {
+        "body": {
+          "type": "markdown"
+        }
+      },
+      "params": {
+        "title": {
+          "parser": "argument",
+          "options": {
+            "model": 
+            {
+                "editor_key": "title",
+                "type": "string"
+            },
+            "format": {
+              "ref": "mdx_format"
+            },
+            "style": { 
+                "output": "inline"
+            }
+          }
+        },
+        "body": {
+          "parser": "content",
+          "options": {
+            "editor_key": "body",
+            "allow_nested": false
+          }
+        }
+      }
+}

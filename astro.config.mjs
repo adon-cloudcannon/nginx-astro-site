@@ -9,6 +9,7 @@ export default defineConfig({
         AutoImport({
             imports: [
                 '@components/Code_Block.astro',
+                '@components/Note.astro'
             ],
         }),
         mdx()

@@ -4,6 +4,7 @@ const { hints, language } = Astro.props
 let innerContent = await Astro.slots.render("default")
 
 innerContent = innerContent.replaceAll("&quot;",`"`)
+							.replaceAll("&amp;","&")
 							.replaceAll("&#39;","'")
 							.replaceAll("&lt;","<")
 							.replaceAll("&gt;",">")

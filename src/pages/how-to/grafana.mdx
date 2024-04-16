@@ -128,8 +128,7 @@ For further details, including permissions, see the [security checklist](securit
 
 6\. Next, [prepare](../configuration.md#configuration-php) the configuration (replace **$GOPATH** with its value in **executable** and **working\_directory**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "$GOPATH", tooltip: "Replace with the environment variable's value", nxt_type: "nxt_ph" }, { number: "2", display_text: "bin/grafana-server", tooltip: "Path to the application's executable", nxt_type: "nxt_hint" }, { number: "3", display_text: "$GOPATH", tooltip: "Replace with the environment variable's value", nxt_type: "nxt_ph" }, { number: "4", display_text: "src/github.com/grafana/grafana/", tooltip: "Path to the application's files", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:3000": {
                "pass": "applications/grafana"
@@ -138,25 +137,22 @@ For further details, including permissions, see the [security checklist](securit
 
        "applications": {
            "grafana": {
-               "executable": ":nxt_ph:`$GOPATH <Replace with the environment variable's value>`:nxt_hint:`/bin/grafana-server <Path to the application's executable>`",
+               "executable": NXT1/NXT2",
                "type": "external",
-               "working_directory": ":nxt_ph:`$GOPATH <Replace with the environment variable's value>`:nxt_hint:`/src/github.com/grafana/grafana/ <Path to the application's files>`"
+               "working_directory": "NXT3/NXT4"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 See [Go application options](../configuration.md#configuration-go) and the Grafana [docs](https://grafana.com/docs/grafana/latest/administration/configuration/#static_root_path) for details.
 
 7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
 After a successful update, Grafana should be available on the listener’s IP and port: ![Grafana on Unit - Setup Screen](/grafana.png)

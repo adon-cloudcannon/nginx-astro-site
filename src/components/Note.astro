@@ -1,9 +1,8 @@
 ---
-const { title } = Astro.props
+const { type } = Astro.props
 const body = await Astro.slots.render('default')
-console.log(body)
 ---
-<div class="admonition note">
-    { title && <p class="first admonition-title">{title}</p>}
+<div class=`admonition ${type}`>
+    { type && <p class="first admonition-title">{type}</p>}
     <Fragment set:html={body}>
 </div>

@@ -282,11 +282,12 @@ iframe {
 #content div.admonition p.first {
     margin-top: 0;
 }
-#content div.admonition p.last {
+#content div.admonition > *:last-of-type {
     margin-bottom: 0;
 }
 #content div.admonition p.admonition-title {
     font-weight: bold;
+    text-transform: capitalize;
 }
 #content details {
     border-color: #ddd;
@@ -427,6 +428,7 @@ iframe {
 .highlight-json .nxt_var {
     color: #fada5e;
 }
+
 
 /* Tabs */
 

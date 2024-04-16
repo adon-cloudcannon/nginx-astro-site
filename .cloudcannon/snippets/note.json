@@ -1,5 +1,5 @@
 {
-      "snippet": "<Note title=[[type]]>[[body]]</Note>",
+      "snippet": "<Note title=[[type]]>\n[[body]]</Note>",
       "inline": false,
       "preview": {
         "text": [   
@@ -36,7 +36,8 @@
             "model": 
             {
                 "editor_key": "type",
-                "type": "string"
+                "type": "string",
+                "default": "note"
             },
             "format": {
               "ref": "mdx_format"

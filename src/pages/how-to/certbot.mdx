@@ -141,11 +141,9 @@ Now you have two certificate bundles uploaded; Unit knows them as **certbot1** a
 
 2\. Update the [listener](../configuration.md#configuration-listeners), switching it to the renewed certificate bundle:
 
-```bash
-   # curl -X PUT --data-binary ':nxt_ph:`certbot2 <New certificate bundle name in Unit's configuration>`'  \
-         --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-         'http://localhost/config/listeners/:nxt_hint:`*:443 <Listener's name in Unit's configuration>`/tls/certificate'
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "certbot2", tooltip: "New certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "*:443", tooltip: "Listener's name in Unit's configuration", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary 'NXT1'  \\
+         --unix-socket NXT2  \\
+         'http://localhost/config/listeners/NXT3/tls/certificate'`}</Code_Block>
 
 #### NOTE
 

@@ -1,33 +1,30 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Falcon
 ---
 # Falcon
 
-To run apps built with the [Falcon](https://falcon.readthedocs.io/en/stable/)
-web framework using Unit:
+To run apps built with the [Falcon](https://falcon.readthedocs.io/en/stable/) web framework using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 3.5+ language module.
-2. Create a virtual environment to install Falcon’s [PIP package](https://falcon.readthedocs.io/en/stable/user/install.html), for
-   instance:
-   ```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   $ :nxt_hint:`python --version <Make sure your virtual environment version matches the module version>`
-         Python :nxt_hint:`X.Y.Z <Major version, minor version, and revision number>`
-   $ python -m venv :nxt_hint:`venv <Arbitrary name of the virtual environment>`
-   $ source :nxt_hint:`venv <Name of the virtual environment from the previous command>`/bin/activate
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 3.5+ language module.
+
+2\. Create a virtual environment to install Falcon’s [PIP package](https://falcon.readthedocs.io/en/stable/user/install.html), for instance:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "python --version", tooltip: "Make sure your virtual environment version matches the module version", nxt_type: "nxt_hint" }, { number: "3", display_text: "X.Y.Z", tooltip: "Major version, minor version, and revision number", nxt_type: "nxt_hint" }, { number: "4", display_text: "venv", tooltip: "Arbitrary name of the virtual environment", nxt_type: "nxt_hint" }, { number: "5", display_text: "venv", tooltip: "Name of the virtual environment from the previous command", nxt_type: "nxt_hint" }]}>{`   $ cd NXT1
+   $ NXT2
+         Python NXT3
+   $ python -m venv NXT4
+   $ source NXT5/bin/activate
    $ pip install falcon
-   $ deactivate
-   ```
+   $ deactivate`}</Code_Block>
 
-   #### WARNING
-   Create your virtual environment with a Python version that matches the
-   language module from Step 1 up to the minor number (**X.Y** in
-   this example).  Also, the app **type** in Step 5 must
-   [resolve](../configuration.md#configuration-apps-common) to a similarly matching
-   version; Unit doesn’t infer it from the environment.
-3. Let’s try an updated version of the [quickstart app](https://falcon.readthedocs.io/en/stable/user/quickstart.html):
-   ```python
+<Note type="warning">
+Create your virtual environment with a Python version that matches the language module from Step 1 up to the minor number (**X.Y** in this example). Also, the app **type** in Step 5 must [resolve](../configuration.md#configuration-apps-common) to a similarly matching version; Unit doesn’t infer it from the environment.
+</Note>
+
+3\. Let’s try an updated version of the [quickstart app](https://falcon.readthedocs.io/en/stable/user/quickstart.html):
+
+```python
    import falcon
 
 
@@ -50,11 +47,11 @@ web framework using Unit:
 
    # hellounit will handle all requests to the '/unit' URL path
    app.add_route('/unit', hellounit)
-   ```
+```
 
-   Note that we’ve dropped the server code; save the file as
-   **/path/to/app/wsgi.py**.
-   ```python
+Note that we’ve dropped the server code; save the file as **/path/to/app/wsgi.py**.
+
+```python
    import falcon
    import falcon.asgi
 
@@ -78,25 +75,25 @@ web framework using Unit:
 
    # hellounit will handle all requests to the '/unit' URL path
    app.add_route('/unit', hellounit)
-   ```
+```
 
-   Save the file as **/path/to/app/asgi.py**.
+Save the file as **/path/to/app/asgi.py**.
 
-1. Run the following command so Unit can access :
-   ```bash
+1\. Run the following command so Unit can access :
+
+```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+```
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+#### NOTE
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
-2. Next, [prepare](../configuration.md#configuration-python) the configuration for Unit (use
-   real values for **type**, **home**, **module**,
-   **protocol**, and **path**):
-   ```json
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+
+For further details, including permissions, see the [security checklist](security.md#security-apps).
+
+2\. Next, [prepare](../configuration.md#configuration-python) the configuration for Unit (use real values for **type**, **home**, **module**, **protocol**, and **path**):
+
+```json
    {
        "listeners": {
            "*:80": {
@@ -115,22 +112,23 @@ web framework using Unit:
            }
        }
    }
-   ```
-3. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   ```bash
+```
+
+3\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+
+```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+```
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+#### NOTE
 
-   After a successful update, your app should be available on the listener’s IP
-   address and port:
-   ```bash
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+
+After a successful update, your app should be available on the listener’s IP address and port:
+
+```bash
    $ curl http://localhost/unit
 
          Hello, Unit!
-   ```
+```

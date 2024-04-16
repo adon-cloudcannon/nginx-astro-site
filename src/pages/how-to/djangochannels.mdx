@@ -19,16 +19,14 @@ To run Django apps using the Django Channels [framework](https://channels.readth
 
 4\. Create a Django project.  Here, we’ll use the [tutorial chat app](https://channels.readthedocs.io/en/stable/tutorial/part_1.html#tutorial-part-1-basic-setup), installing it at **/path/to/app/**; use a real path in your configuration.  The following steps assume your project uses [basic directory structure](https://docs.djangoproject.com/en/stable/ref/django-admin/#django-admin-startproject):
 
-```none
-   :nxt_ph:`/path/to/app/ <Project directory>`
+<Code_Block language="none" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Project directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "chat/", tooltip: "Individual app directory", nxt_type: "nxt_hint" }, { number: "3", display_text: "mysite/", tooltip: "Project subdirectory", nxt_type: "nxt_hint" }, { number: "4", display_text: "asgi.py", tooltip: "ASGI application module", nxt_type: "nxt_hint" }, { number: "5", display_text: "static/", tooltip: "Static files subdirectory", nxt_type: "nxt_hint" }]}>{`   NXT1
    |-- manage.py
-   |-- :nxt_hint:`chat/ <Individual app directory>`
+   |-- NXT2
    |   |-- ...
-   |-- :nxt_hint:`mysite/ <Project subdirectory>`
+   |-- NXT3
    |   |-- ...
-   |   `-- :nxt_hint:`asgi.py <ASGI application module>`
-   `-- :nxt_hint:`static/ <Static files subdirectory>`
-```
+   |   \`-- NXT4
+   \`-- NXT5`}</Code_Block>
 
 5\. Run the following command so Unit can access :
 

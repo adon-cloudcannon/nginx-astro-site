@@ -162,30 +162,28 @@ There’s no need to shut Unit down; your server can stay online during the roll
 
 Suppose you’ve successfully used Certbot to obtain Let’s Encrypt certificates for two domains, **www.example.com** and **cdn.example.com**.  First, upload them to Unit using the same steps as earlier:
 
-```bash
-   # cat /etc/letsencrypt/live/cdn.example.com/fullchain.pem  \
-         /etc/letsencrypt/live/cdn.example.com/privkey.pem > :nxt_hint:`cdn.example.com.pem <Arbitrary certificate bundle's filename>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "cdn.example.com.pem", tooltip: "Arbitrary certificate bundle's filename", nxt_type: "nxt_hint" }, { number: "2", display_text: "www.example.com.pem", tooltip: "Arbitrary certificate bundle's filename", nxt_type: "nxt_hint" }, { number: "3", display_text: "cdn.example.com.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "5", display_text: "cdn.example.com", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_hint" }, { number: "6", display_text: "www.example.com.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_hint" }, { number: "7", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "8", display_text: "www.example.com", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_hint" }]}>{`   # cat /etc/letsencrypt/live/cdn.example.com/fullchain.pem  \\
+         /etc/letsencrypt/live/cdn.example.com/privkey.pem > NXT1
 
-   # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \
-         /etc/letsencrypt/live/www.example.com/privkey.pem > :nxt_hint:`www.example.com.pem <Arbitrary certificate bundle's filename>`
+   # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \\
+         /etc/letsencrypt/live/www.example.com/privkey.pem > NXT2
 
 
-   # curl -X PUT --data-binary @:nxt_hint:`cdn.example.com.pem <Certificate bundle's filename>`  \
-          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost/certificates/:nxt_hint:`cdn.example.com <Certificate bundle name in Unit's configuration>`
-
-          {
-              "success": "Certificate chain uploaded."
-          }
-
-   # curl -X PUT --data-binary @:nxt_hint:`www.example.com.pem <Certificate bundle's filename>`  \
-          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost/certificates/:nxt_hint:`www.example.com <Certificate bundle name in Unit's configuration>`
+   # curl -X PUT --data-binary @NXT3  \\
+          --unix-socket NXT4  \\
+          http://localhost/certificates/NXT5
 
           {
               "success": "Certificate chain uploaded."
           }
-```
+
+   # curl -X PUT --data-binary @NXT6  \\
+          --unix-socket NXT7  \\
+          http://localhost/certificates/NXT8
+
+          {
+              "success": "Certificate chain uploaded."
+          }`}</Code_Block>
 
 Next, configure the listener, supplying both bundles as an array value for the **tls/certificate** option:
 

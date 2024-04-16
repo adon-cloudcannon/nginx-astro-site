@@ -35,9 +35,9 @@ Next, upload a configuration to Unit via the control socket:
 
 This command assumes your configuration is stored as **config.json** in the container-mounted directory on the host; if the file defines a listener on port **8000**, your app is now accessible on port **8080** of the host.  For details of the Unit configuration, see [Configuration](../controlapi.md#configuration-api).
 
-#### NOTE
-
+<Note type="note">
 For app containerization examples, refer to our sample [`Go`](../downloads/Dockerfile.go.txt), [`Java`](../downloads/Dockerfile.java.txt), [`Node.js`](../downloads/Dockerfile.nodejs.txt), [`Perl`](../downloads/Dockerfile.perl.txt), [`PHP`](../downloads/Dockerfile.php.txt), [`Python`](../downloads/Dockerfile.python.txt), and [`Ruby`](../downloads/Dockerfile.ruby.txt) Dockerfiles; also, see a more elaborate discussion [below](#docker-apps).
+</Note>
 
 Now for a few detailed scenarios.
 
@@ -132,9 +132,9 @@ $ export UNIT=$(                                                         \
   )
 ```
 
-#### NOTE
-
-With this mapping, Unit stores its state and log in your file structure.  By default, our Docker images forward their log output to the [Docker log collector](https://docs.docker.com/config/containers/logging/).
+<Note type="note">
+With this mapping, Unit stores its state and log in your file structure. By default, our Docker images forward their log output to the [Docker log collector](https://docs.docker.com/config/containers/logging/).
+</Note>
 
 We’ve mapped the source **config/** to **/docker-entrypoint.d/** in the container; the official image [uploads](../installation.md#installation-docker-init) any **.json** files found there into Unit’s **config** section if the state is empty.  Now we can test the app:
 
@@ -240,9 +240,9 @@ myapp/
 └── config.json
 ```
 
-#### NOTE
-
+<Note type="note">
 Don’t forget to **chmod +x** the **app.js** file so Unit can run it.
+</Note>
 
 Let’s prepare a **Dockerfile** to install and configure the app in an image:
 
@@ -274,9 +274,8 @@ $ curl -X GET localhost:8080
 
      Hello, Unit!`}</Code_Block>
 
-#### NOTE
-
-This mechanism allows to initialize Unit at container startup only if its state is empty; otherwise, the contents of **/docker-entrypoint.d/** is ignored.  Continuing the previous sample:
+<Note type="note">
+This mechanism allows to initialize Unit at container startup only if its state is empty; otherwise, the contents of **/docker-entrypoint.d/** is ignored. Continuing the previous sample:
 
 ```bash
 $ docker commit $UNIT unit-expressapp  # Store a non-empty Unit state in the image.
@@ -293,6 +292,7 @@ $ export UNIT=$(                                                                
 ```
 
 Here, Unit *does not* pick up the **new-config.json** from the **/docker-entrypoint.d/** directory when we run a container from the updated image because Unit’s state was initialized and saved earlier.
+</Note>
 
 To configure the app after startup, supply a file or an explicit snippet via the [control API](../controlapi.md#configuration-api):
 
@@ -318,31 +318,27 @@ $ docker exec -ti $UNIT curl -X PUT -d '"/www/newapp/"'  \
 
 This approach is applicable to any Unit-supported apps with external dependencies.
 
-&nbsp;
-
 ## Multilanguage Images
 
 Earlier, Unit had a **\-full** Docker image with modules for all supported languages, but it was discontinued with version 1.22.0.  If you still need a multilanguage image, use the following **Dockerfile** template that starts with the minimal Unit image based on [Debian 11](../installation.md#debian-11) and installs official language module packages:
 
-```docker
-FROM unit:1.32.1-minimal
+<Code_Block language="docker" hints={[{ number: "1", display_text: "unit-jsc11 unit-perl unit-php unit-python2.7 unit-python3.9 unit-ruby", tooltip: "Leave only packages for the language you need, removing the rest", nxt_type: "nxt_hint" }]}>{`FROM unit:1.32.1-minimal
 # We take a minimal Unit image and install language-specific modules.
 
 # First, we install the required tooling and add Unit's repo.
-RUN apt update && apt install -y curl apt-transport-https gnupg2 lsb-release  \
-    &&  curl -o /usr/share/keyrings/nginx-keyring.gpg                         \
-           https://unit.nginx.org/keys/nginx-keyring.gpg                      \
-    && echo "deb [signed-by=/usr/share/keyrings/nginx-keyring.gpg]            \
-           https://packages.nginx.org/unit/debian/ `lsb_release -cs` unit"    \
+RUN apt update && apt install -y curl apt-transport-https gnupg2 lsb-release  \\
+    &&  curl -o /usr/share/keyrings/nginx-keyring.gpg                         \\
+           https://unit.nginx.org/keys/nginx-keyring.gpg                      \\
+    && echo "deb [signed-by=/usr/share/keyrings/nginx-keyring.gpg]            \\
+           https://packages.nginx.org/unit/debian/ `lsb_release -cs` unit"    \\
            > /etc/apt/sources.list.d/unit.list
 
 # Next, we install the necessary language module packages and perform cleanup.
-RUN apt update && apt install -y                                              \
-        :nxt_hint:`unit-jsc11 unit-perl unit-php unit-python2.7 unit-python3.9 unit-ruby <Leave only packages for the language you need, removing the rest>` \
-    && apt remove -y curl apt-transport-https gnupg2 lsb-release              \
-    && apt autoremove --purge -y                                              \
-    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list
-```
+RUN apt update && apt install -y                                              \\
+        NXT1 \\
+    && apt remove -y curl apt-transport-https gnupg2 lsb-release              \\
+    && apt autoremove --purge -y                                              \\
+    && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list`}</Code_Block>
 
 Instead of packages, you can build custom [modules](source.md#source-modules); use these **Dockerfile.\*** [templates](https://github.com/nginx/unit/tree/master/pkg/docker) as reference.
 

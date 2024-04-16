@@ -116,25 +116,23 @@ Certbot enables renewing the certificates [manually](https://eff-certbot.readthe
 
 1\. Repeat the preceding steps to renew the certificates and upload the new bundle under a different name:
 
-```bash
-   # certbot certonly --standalone
+<Code_Block language="" hints={[{ number: "1", display_text: "bundle2.pem", tooltip: "Arbitrary certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle2.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "4", display_text: "certbot2", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }]}>{`# certbot certonly --standalone
 
-         What would you like to do?
-         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-         1: Keep the existing certificate for now
-         2: Renew & replace the cert (may be subject to CA rate limits)
+      What would you like to do?
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      1: Keep the existing certificate for now
+      2: Renew & replace the cert (may be subject to CA rate limits)
 
-   # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \
-         /etc/letsencrypt/live/www.example.com/privkey.pem > :nxt_ph:`bundle2.pem <Arbitrary certificate bundle's filename>`
+# cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \\
+      /etc/letsencrypt/live/www.example.com/privkey.pem > NXT1
 
-   # curl -X PUT --data-binary @:nxt_ph:`bundle2.pem <Certificate bundle's filename>`  \
-          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost/certificates/:nxt_ph:`certbot2 <Certificate bundle name in Unit's configuration>`
+# curl -X PUT --data-binary @NXT2  \\
+      --unix-socket NXT3  \\
+      http://localhost/certificates/NXT4
 
-          {
-              "success": "Certificate chain uploaded."
-          }
-```
+      {
+          "success": "Certificate chain uploaded."
+      }`}</Code_Block>
 
 Now you have two certificate bundles uploaded; Unit knows them as **certbot1** and **certbot2**.  Optionally, query the **certificates** section to review common details such as expiry dates, subjects, or issuers:
 

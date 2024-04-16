@@ -11,7 +11,6 @@ let replaceArr = []
 prism.languages['none'] = { };
 
 function nxt_hint(content){
-    console.log(content)
     let result = content.replace(/(?<hint_marker>:nxt_hint:|:nxt_ph:)\s*\`((?<hint_display>[^`]*) (\<(?<hint_text>.*?)\>))\`/g,function(match,...args) {
         const groups = args.at(-1)
         let hint_marker = ""

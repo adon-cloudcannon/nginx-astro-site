@@ -1,10 +1,10 @@
 {
-      "snippet": "<Note title=[[title]]>{`[[body]]`}</Note>",
+      "snippet": "<Note title=[[type]]>[[body]]</Note>",
       "inline": false,
       "preview": {
         "text": [   
           {
-            "template": "{title}"
+            "template": "{type}"
           },
           "Note"
         ],
@@ -18,15 +18,24 @@
       "_inputs": {
         "body": {
           "type": "markdown"
+        },
+        "type": {
+          "type": "select",
+          "options": {
+            "values": [
+              "note",
+              "warning"
+            ]
+          }
         }
       },
       "params": {
-        "title": {
+        "type": {
           "parser": "argument",
           "options": {
             "model": 
             {
-                "editor_key": "title",
+                "editor_key": "type",
                 "type": "string"
             },
             "format": {

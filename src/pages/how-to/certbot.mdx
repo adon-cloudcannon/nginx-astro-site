@@ -136,10 +136,8 @@ Certbot enables renewing the certificates [manually](https://eff-certbot.readthe
 
 Now you have two certificate bundles uploaded; Unit knows them as **certbot1** and **certbot2**.  Optionally, query the **certificates** section to review common details such as expiry dates, subjects, or issuers:
 
-```bash
-   # curl --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost/certificates
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`   # curl --unix-socket NXT1  \\
+          http://localhost/certificates`}</Code_Block>
 
 2\. Update the [listener](../configuration.md#configuration-listeners), switching it to the renewed certificate bundle:
 

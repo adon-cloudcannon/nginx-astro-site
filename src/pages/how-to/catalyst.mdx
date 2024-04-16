@@ -28,9 +28,9 @@ Make sure the app’s **.psgi** file includes the **lib/** directory:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
-The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
 For further details, including permissions, see the [security checklist](security.md#security-apps).
 
@@ -57,8 +57,8 @@ For further details, including permissions, see the [security checklist](securit
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
           NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
 After a successful update, your app should be available on the listener’s IP address and port: ![Catalyst Basic Template App on Unit](/catalyst.png)

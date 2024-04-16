@@ -7,14 +7,18 @@ title: Drupal
 To run the [Drupal](https://www.drupal.org) content management system using
 Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
-2. Install and configure Drupal’s [prerequisites](https://www.drupal.org/docs/system-requirements).
-3. Install Drupal’s [core files](https://www.drupal.org/docs/develop/using-composer/manage-dependencies#download-core).  Here, we install it at **/path/to/app/**; use
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
+
+2\. Install and configure Drupal’s [prerequisites](https://www.drupal.org/docs/system-requirements).
+
+3\. Install Drupal’s [core files](https://www.drupal.org/docs/develop/using-composer/manage-dependencies#download-core).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
-4. Run the following command so Unit can access :
-   ```bash
+
+4\. Run the following command so Unit can access :
+   
+```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+```
 
    #### NOTE
    The **unit:unit** user-group pair is available only with [official
@@ -22,11 +26,13 @@ Unit:
    the **ps aux | grep unitd** command to be sure.
 
    For further details, including permissions, see the [security checklist](security.md#security-apps).
-5. Next, [prepare](../configuration.md#configuration-php) the Drupal configuration for Unit.
+
+5\. Next, [prepare](../configuration.md#configuration-php) the Drupal configuration for Unit.
    The default **.htaccess** [scheme](https://github.com/drupal/drupal)
    in a Drupal installation roughly translates into the following (use real
    values for **share** and **root**):
-   ```json
+   
+```json
    {
        "listeners": {
            "*:80": {
@@ -134,7 +140,7 @@ Unit:
            }
        }
    }
-   ```
+```
 
    #### NOTE
    The difference between the **pass** targets is their usage of
@@ -143,12 +149,14 @@ Unit:
      URI or **index.php** if the URI omits it.
    - The **index** target specifies the **script** that Unit
      runs for *any* URIs the target receives.
-6. Upload the updated configuration.  Assuming the JSON above was added to
+
+6\. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```bash
+   
+```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+```
 
    #### NOTE
    The [control socket](../controlapi.md#configuration-socket) path may vary; run

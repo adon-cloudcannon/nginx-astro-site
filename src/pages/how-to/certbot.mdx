@@ -77,12 +77,10 @@ Certbot offers other validation methods ([authenticators](https://eff-certbot.re
 
 5\. Create or update a [listener](../configuration.md#configuration-listeners) to use the uploaded bundle in Unit:
 
-```bash
-   # curl -X PUT --data-binary  \
-         '{"pass": "applications/ssl_app", "tls": {"certificate": ":nxt_ph:`certbot1 <Certificate bundle name in Unit's configuration>`"}}'  \
-         --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-         'http://localhost/config/listeners/:nxt_hint:`*:443 <Listener's name in Unit's configuration>`'
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "certbot1", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "*:443", tooltip: "Listener's name in Unit's configuration", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary  \\
+         '{"pass": "applications/ssl_app", "tls": {"certificate": "NXT1"}}'  \\
+         --unix-socket NXT2  \\
+         'http://localhost/config/listeners/NXT3'`}</Code_Block>
 
 6\. Try accessing your website via HTTPS:
 

@@ -187,7 +187,7 @@ Suppose you’ve successfully used Certbot to obtain Let’s Encrypt certificate
 
 Next, configure the listener, supplying both bundles as an array value for the **tls/certificate** option:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "[\"cdn.example.com\", \"www.example.com\"]", tooltip: "Certificate bundle names in Unit's configuration", nxt_type: "nxt_hint" }, { number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "*:443", tooltip: "Listener's name in Unit's configuration", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary '{"certificate": NXT1}'  \\
+<Code_Block language="bash" hints={[{ number: "1", display_text: "[\"cdn.example.com\", \"www.example.com\"]", tooltip: "Certificate bundle names in Unit's configuration", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "*:443", tooltip: "Listener's name in Unit's configuration", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary '{"certificate": NXT1}'  \\
          --unix-socket NXT2  \\
          'http://localhost/config/listeners/NXT3/tls'`}</Code_Block>
 

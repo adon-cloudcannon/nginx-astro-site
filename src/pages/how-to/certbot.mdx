@@ -64,18 +64,16 @@ Certbot offers other validation methods ([authenticators](https://eff-certbot.re
 
 4\. Create a certificate bundle fit for Unit and upload it to the **certificates** section of Unit’s [control API](../controlapi.md#configuration-api):
 
-```bash
-   # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \
-         /etc/letsencrypt/live/www.example.com/privkey.pem > :nxt_ph:`bundle1.pem <Arbitrary certificate bundle's filename>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "bundle1.pem", tooltip: "Arbitrary certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle1.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "4", display_text: "certbot1", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }]}>{`   # cat /etc/letsencrypt/live/www.example.com/fullchain.pem  \\
+         /etc/letsencrypt/live/www.example.com/privkey.pem > NXT1
 
-   # curl -X PUT --data-binary @:nxt_ph:`bundle1.pem <Certificate bundle's filename>`  \
-          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost/certificates/:nxt_ph:`certbot1 <Certificate bundle name in Unit's configuration>`
+   # curl -X PUT --data-binary @NXT2  \\
+          --unix-socket NXT3  \\
+          http://localhost/certificates/NXT4
 
           {
               "success": "Certificate chain uploaded."
-          }
-```
+          }`}</Code_Block>
 
 5\. Create or update a [listener](../configuration.md#configuration-listeners) to use the uploaded bundle in Unit:
 

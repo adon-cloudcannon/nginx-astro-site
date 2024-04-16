@@ -24,14 +24,12 @@ Create your virtual environment with a Python version that matches the language 
 
 3\. Let’s try a basic version of the [quickstart app](https://flask.palletsprojects.com/en/1.1.x/quickstart/), saving it as **/path/to/app/wsgi.py**:
 
-```python
-   from flask import Flask
-   :nxt_hint:`app <Callable name used in Unit's condfiguration>` = Flask(__name__)
+<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable name used in Unit's condfiguration", nxt_type: "nxt_hint" }]}>{`   from flask import Flask
+   NXT1 = Flask(__name__)
 
    @app.route("/")
    def hello_world():
-       return "Hello, World!"
-```
+       return "Hello, World!"`}</Code_Block>
 
 4\. Run the following command so Unit can access :
 

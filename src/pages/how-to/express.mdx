@@ -54,8 +54,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-nodejs) the Express configuration for Unit:
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Needed to use the installed NPM modules; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/usr/bin/env", tooltip: "The external app type allows to run arbitrary executables, provided they establish communication with Unit", nxt_type: "nxt_hint" }, { number: "3", display_text: "arguments", tooltip: "The env executable runs Node.js, supplying Unit's loader module and your app code as arguments", nxt_type: "nxt_hint" }, { number: "4", display_text: "app.js", tooltip: "Basename of the application file; be sure to make it executable", nxt_type: "nxt_ph" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/express"
@@ -65,20 +64,19 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "express": {
                "type": "external",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Needed to use the installed NPM modules; use a real path in your configuration>`",
-               "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
-               ":nxt_hint:`arguments <The env executable runs Node.js, supplying Unit's loader module and your app code as arguments>`": [
+               "working_directory": "NXT1",
+               "executable": "NXT2",
+               "NXT3": [
                    "node",
                    "--loader",
                    "unit-http/loader.mjs",
                    "--require",
                    "unit-http/loader",
-                   ":nxt_ph:`app.js <Basename of the application file; be sure to make it executable>`"
+                   "NXT4"
                ]
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

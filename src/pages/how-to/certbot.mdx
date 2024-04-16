@@ -151,14 +151,12 @@ There’s no need to shut Unit down; your server can stay online during the roll
 
 3\. Delete the expired bundle:
 
-```bash
-   # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-         'http://localhost/certificates/:nxt_ph:`certbot1 <Old certificate bundle name in Unit's configuration>`'
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "certbot1", tooltip: "Old certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }]}>{`   # curl -X DELETE --unix-socket NXT1  \\
+         'http://localhost/certificates/NXT2'
 
          {
              "success": "Certificate deleted."
-         }
-```
+         }`}</Code_Block>
 
 4\. You can also make use of Unit’s [SNI](../configuration.md#configuration-listeners) support by configuring several certificate bundles for a listener.
 

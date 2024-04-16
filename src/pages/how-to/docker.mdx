@@ -262,10 +262,10 @@ When you start a container based on this image, mount the **config.json** file t
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "unit-expressapp", tooltip: "Arbitrary image tag", nxt_type: "nxt_hint" }]}>{`$ docker build --tag= .
 
-$ export UNIT=$(                                                                             \
-      docker run -d                                                                          \
-      --mount type=bind,src="$(pwd)/myapp/config.json",dst=/docker-entrypoint.d/config.json  \
-      -p 8080:8080 unit-expressapp                                                           \
+$ export UNIT=$(                                                                             \\
+      docker run -d                                                                          \\
+      --mount type=bind,src="$(pwd)/myapp/config.json",dst=/docker-entrypoint.d/config.json  \\
+      -p 8080:8080 unit-expressapp                                                           \\
   )
 
 $ curl -X GET localhost:8080

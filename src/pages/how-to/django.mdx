@@ -26,13 +26,11 @@ To run apps based on the Django [framework](https://www.djangoproject.com) using
 
 4\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
-The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
 For further details, including permissions, see the [security checklist](security.md#security-apps).
 
@@ -42,8 +40,7 @@ You can also set up some environment variables that your project relies on, usin
 
 Here’s an example (use real values for **share**, **path**, **environment**, **module**, and **home**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.wsgi", tooltip: "Note the qualified name of the WSGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -57,7 +54,7 @@ Here’s an example (use real values for **share**, **path**, **environment**, *
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_ph:`/path/to/app <Thus, URIs starting with /static/ are served from /path/to/app/static/>`$uri"
+                   "NXT1": "NXT2$uri"
                }
            },
            {
@@ -69,11 +66,11 @@ Here’s an example (use real values for **share**, **path**, **environment**, *
 
        "applications": {
            "django": {
-               "type": "python :nxt_ph:`3.X <Must match language module version and virtual environment version>`",
-               "path": ":nxt_ph:`/path/to/app/ <Project directory; use a real path in your configuration>`",
-               "home": ":nxt_ph:`/path/to/venv/ <Virtual environment directory; use a real path in your configuration>`",
-               "module": ":nxt_ph:`project.wsgi <Note the qualified name of the WSGI module; use a real project directory name in your configuration>`",
-               ":nxt_hint:`environment <App-specific environment variables>`": {
+               "type": "python NXT3",
+               "path": "NXT4",
+               "home": "NXT5",
+               "module": "NXT6",
+               "NXT7": {
                    "DJANGO_SETTINGS_MODULE": "project.settings",
                    "DB_ENGINE": "django.db.backends.postgresql",
                    "DB_NAME": "project",
@@ -82,15 +79,13 @@ Here’s an example (use real values for **share**, **path**, **environment**, *
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 ASGI requires Python 3.5+ and Django 3.0+.
+</Note>
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.asgi", tooltip: "Note the qualified name of the ASGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -104,7 +99,7 @@ ASGI requires Python 3.5+ and Django 3.0+.
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_ph:`/path/to/app <Thus, URIs starting with /static/ are served from /path/to/app/static/>`$uri"
+                   "NXT1": "NXT2$uri"
                }
            },
            {
@@ -116,11 +111,11 @@ ASGI requires Python 3.5+ and Django 3.0+.
 
        "applications": {
            "django": {
-               "type": "python :nxt_ph:`3.X <Must match language module version and virtual environment version>`",
-               "path": ":nxt_ph:`/path/to/app/ <Project directory; use a real path in your configuration>`",
-               "home": ":nxt_ph:`/path/to/venv/ <Virtual environment directory; use a real path in your configuration>`",
-               "module": ":nxt_ph:`project.asgi <Note the qualified name of the ASGI module; use a real project directory name in your configuration>`",
-               ":nxt_hint:`environment <App-specific environment variables>`": {
+               "type": "python NXT3",
+               "path": "NXT4",
+               "home": "NXT5",
+               "module": "NXT6",
+               "NXT7": {
                    "DJANGO_SETTINGS_MODULE": "project.settings",
                    "DB_ENGINE": "django.db.backends.postgresql",
                    "DB_NAME": "project",
@@ -129,18 +124,15 @@ ASGI requires Python 3.5+ and Django 3.0+.
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
 After a successful update, your project and apps should be available on the listener’s IP address and port: ![Django on Unit - Admin Login Screen](/django.png)

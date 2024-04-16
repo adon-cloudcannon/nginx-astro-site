@@ -188,8 +188,6 @@ $ export UNIT=$(                                                         \
   )
 ```
 
-&nbsp;
-
 ## Containerized Apps
 
 Suppose you have a Unit-ready [Express](express.md) app, stored in the **myapp/** directory as **app.js**:
@@ -330,7 +328,7 @@ RUN apt update && apt install -y curl apt-transport-https gnupg2 lsb-release  \\
     &&  curl -o /usr/share/keyrings/nginx-keyring.gpg                         \\
            https://unit.nginx.org/keys/nginx-keyring.gpg                      \\
     && echo "deb [signed-by=/usr/share/keyrings/nginx-keyring.gpg]            \\
-           https://packages.nginx.org/unit/debian/ `lsb_release -cs` unit"    \\
+           https://packages.nginx.org/unit/debian/ \`lsb_release -cs\` unit"    \\
            > /etc/apt/sources.list.d/unit.list
 
 # Next, we install the necessary language module packages and perform cleanup.
@@ -341,8 +339,6 @@ RUN apt update && apt install -y                                              \\
     && rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/*.list`}</Code_Block>
 
 Instead of packages, you can build custom [modules](source.md#source-modules); use these **Dockerfile.\*** [templates](https://github.com/nginx/unit/tree/master/pkg/docker) as reference.
-
-&nbsp;
 
 ## Startup Customization
 

@@ -47,15 +47,11 @@ $ ls NXT6
 
 To clarify the module versions, check the [Unit log](../troubleshooting.md#troubleshooting-log) to see which modules were loaded at startup:
 
-&nbsp;
-
-```bash
-# less :nxt_ph:`/path/to/unit.log <Path to log can be determined in the same manner as above>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/unit.log", tooltip: "Path to log can be determined in the same manner as above", nxt_type: "nxt_ph" }]}>{`# less NXT1
       ...
       discovery started
       module: <language> <version> "/path/to/modules/<module name>.unit.so"
-      ...
-```
+      ...`}</Code_Block>
 
 If a language version is not listed, Unit can’t run apps that rely on it; however, you can add new modules:
 
@@ -71,15 +67,9 @@ There’s always a chance that you need to run a language version that isn’t y
 
 Here, we are packaging a custom PHP&nbsp;7.3 [module](source.md#modules-php) to be installed next to the official Unit package; adjust the command samples as needed to fit your scenario.
 
-#### NOTE
-
-For details of building Unit language modules, see the source code [howto](source.md#source-modules); it also describes building [Unit](source.md) itself.  For more packaging examples, see our package [sources](https://hg.nginx.org/unit/file/tip/pkg/).
-
-`{* Legacy anchors to preserve existing external links. *}`
-
-&nbsp;
-
-&nbsp;
+<Note type="note">
+For details of building Unit language modules, see the source code [howto](source.md#source-modules); it also describes building [Unit](source.md) itself. For more packaging examples, see our package [sources](https://hg.nginx.org/unit/file/tip/pkg/).
+</Note>
 
 Assuming you are packaging for the current system and have the official Unit package installed:
 

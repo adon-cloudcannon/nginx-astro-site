@@ -46,20 +46,16 @@ Note that we’ve dropped the server code; also, mind that Unit imports the modu
 
 To load the [configuration](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/ini.html), we place a **wsgi.py** file next to **development.ini** in **/path/to/app/**:
 
-```python
-   from pyramid.paster import get_app, setup_logging
+<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.paster import get_app, setup_logging
 
-   :nxt_hint:`app <Callable's name is used in Unit configuration>` = get_app('development.ini')
-   setup_logging('development.ini')
-```
+   NXT1 = get_app('development.ini')
+   setup_logging('development.ini')`}</Code_Block>
 
 This [sets up](https://docs.pylonsproject.org/projects/pyramid/en/latest/api/paster.html) the WSGI application for Unit; if the **.ini**’s pathname is relative, provide the appropriate **working\_directory** in Unit configuration.
 
 4\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
@@ -69,8 +65,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-python) the Pyramid configuration for Unit (use real values for **type**, **home**, and **path**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "Y", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/venv/", tooltip: "Path to the virtual environment, if any", nxt_type: "nxt_hint" }, { number: "5", display_text: "wsgi", tooltip: "WSGI module filename with extension omitted", nxt_type: "nxt_hint" }, { number: "6", display_text: "app", tooltip: "Name of the callable in the module to run", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/pyramid"
@@ -79,23 +74,20 @@ For further details, including permissions, see the [security checklist](securit
 
        "applications": {
            "pyramid": {
-               "type": "python 3.:nxt_ph:`Y <Must match language module version and virtual environment version>`",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-               "home": ":nxt_ph:`/path/to/app/venv/ <Path to the virtual environment, if any>`",
-               "module": ":nxt_hint:`wsgi <WSGI module filename with extension omitted>`",
-               "callable": ":nxt_hint:`app <Name of the callable in the module to run>`"
+               "type": "python 3.NXT1",
+               "working_directory": "NXT2",
+               "path": "NXT3",
+               "home": "NXT4",
+               "module": "NXT5",
+               "callable": "NXT6"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.

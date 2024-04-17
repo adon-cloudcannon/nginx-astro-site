@@ -93,8 +93,6 @@ Use this configuration template for NGINX (replace placeholders in **ssl\_certif
 
 The same approach works for an IP-based control socket:
 
-```nginx
-location / {
-    proxy_pass http://:nxt_ph:`127.0.0.1:8080 <Unit's control socket address>`;
-}
-```
+<Code_Block language="nginx" hints={[{ number: "1", display_text: "127.0.0.1:8080", tooltip: "Unit's control socket address", nxt_type: "nxt_ph" }]}>{`location / {
+    proxy_pass http://NXT1;
+}`}</Code_Block>

@@ -27,25 +27,27 @@ For WebAssembly, Unit delegates bytecode execution to the [Wasmtime](https://was
 
 Embedded modules are shared libraries that Unit loads at startup.  Query Unit to find them in your system:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/default/modules/path/", tooltip: "This is the default modules path which can be overridden at runtime", nxt_type: "nxt_ph" }, { number: "2", display_text: "ps ax | grep unitd", tooltip: "Check whether the defaults were overridden at launch", nxt_type: "nxt_hint" }, { number: "3", display_text: "/runtime/path/to/unit.log", tooltip: "If this option is set, its value is used at runtime", nxt_type: "nxt_ph" }, { number: "4", display_text: "/runtime/modules/path/", tooltip: "If this option is set, its value is used at runtime", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/modules", tooltip: "Use runtime value if the default was overridden", nxt_type: "nxt_ph" }]}>{`$ unitd -h
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/default/path/to/unit.log", tooltip: "This is the default log path which can be overridden at runtime", nxt_type: "nxt_ph" }, { number: "2", display_text: "/default/modules/path/", tooltip: "This is the default modules path which can be overridden at runtime", nxt_type: "nxt_ph" }, { number: "3", display_text: "ps ax | grep unitd", tooltip: "Check whether the defaults were overridden at launch", nxt_type: "nxt_hint" }, { number: "4", display_text: "/runtime/path/to/unit.log", tooltip: "If this option is set, its value is used at runtime", nxt_type: "nxt_ph" }, { number: "5", display_text: "/runtime/modules/path/", tooltip: "If this option is set, its value is used at runtime", nxt_type: "nxt_ph" }, { number: "6", display_text: "/path/to/modules", tooltip: "Use runtime value if the default was overridden", nxt_type: "nxt_ph" }]}>{`$ unitd -h
 
        ...
       --log FILE           set log filename
-                           default: ":nxt_ph:`/default/path/to/unit.log <This is the default log path which can be overridden at runtime>`"
-
-      --modules DIRECTORY  set modules directory name
                            default: "NXT1"
 
-$ NXT2
-      ...
-      unit: main v1.32.1 [unitd --log NXT3 --modules NXT4 ... ]
+      --modules DIRECTORY  set modules directory name
+                           default: "NXT2"
 
-$ ls NXT5
+$ NXT3
+      ...
+      unit: main v1.32.1 [unitd --log NXT4 --modules NXT5 ... ]
+
+$ ls NXT6
 
       java.unit.so  php.unit.so     ruby.unit.so  wasm_wasi_component.unit.so
       perl.unit.so  python.unit.so  wasm.unit.so`}</Code_Block>
 
 To clarify the module versions, check the [Unit log](../troubleshooting.md#troubleshooting-log) to see which modules were loaded at startup:
+
+&nbsp;
 
 ```bash
 # less :nxt_ph:`/path/to/unit.log <Path to log can be determined in the same manner as above>`
@@ -83,7 +85,7 @@ Assuming you are packaging for the current system and have the official Unit pac
 
 1. Make sure to install the [prerequisites](source.md#source-prereq-build) for the package.  In our example, it’s PHP&nbsp;7.3 on Debian&nbsp;10:
 
-   <code># apt update # apt install :nxt_hint:`ca-certificates apt-transport-https debian-archive-keyring &lt;Needed to install the php7.3 package from the PHP repo&gt;` # curl --output /usr/share/keyrings/php-keyring.gpg  \       :nxt_hint:`https://packages.sury.org/php/apt.gpg &lt;Adding the repo key to make it usable&gt;` # echo "deb [signed-by=/usr/share/keyrings/php-keyring.gpg]  \       https://packages.sury.org/php/ buster main" &gt; /etc/apt/sources.list.d/php.list # apt update # apt install php7.3 # apt install :nxt_hint:`php-dev libphp-embed &lt;Needed to build the module and the package&gt;` </code>
+   `# apt update # apt install :nxt_hint:ca-certificates apt-transport-https debian-archive-keyring &lt;Needed to install the php7.3 package from the PHP repo&gt; # curl --output /usr/share/keyrings/php-keyring.gpg  \       :nxt_hint:https://packages.sury.org/php/apt.gpg &lt;Adding the repo key to make it usable&gt; # echo "deb [signed-by=/usr/share/keyrings/php-keyring.gpg]  \       https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list # apt update # apt install php7.3 # apt install :nxt_hint:php-dev libphp-embed &lt;Needed to build the module and the package&gt; `
 
 2. Create a staging directory for your package:
 
@@ -93,11 +95,11 @@ Assuming you are packaging for the current system and have the official Unit pac
 
 3. Run **unitd --version** and note the **./configure** [flags](source.md#source-config-src) for later use, omitting `--ld-opt` and `--njs`:
 
-   <code>$ unitd --version      unit version: 1.32.1     configured as ./configure :nxt_ph:`FLAGS &lt;Note the flags, omitting --ld-opt and --njs&gt;` </code>
+   `$ unitd --version      unit version: 1.32.1     configured as ./configure :nxt_ph:FLAGS &lt;Note the flags, omitting --ld-opt and --njs&gt; `
 
 4. Download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
 
-   <code>$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz $ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory $ cd unit-1.32.1 $ ./configure :nxt_ph:`FLAGS W/O --LD-OPT &amp; --NJS &lt;The ./configure flags, except for --ld-opt and --njs&gt;`                     # Use the ./configure flags noted in the previous step $ ./configure php --module=php7.3 --config=php-config        # Configures the module itself $ make php7.3                                                # Builds the module in the build/ subdirectory $ mkdir -p $UNITTMP/unit-php7.3/:nxt_ph:`MODULESPATH &lt;Path to Unit's language modules&gt;`                  # Use the module path set by ./configure or by default $ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/:nxt_ph:`MODULESPATH &lt;Path to Unit's language modules&gt;`   # Adds the module to the package </code>
+   `$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz $ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory $ cd unit-1.32.1 $ ./configure :nxt_ph:FLAGS W/O --LD-OPT &amp; --NJS &lt;The ./configure flags, except for --ld-opt and --njs&gt;                     # Use the ./configure flags noted in the previous step $ ./configure php --module=php7.3 --config=php-config        # Configures the module itself $ make php7.3                                                # Builds the module in the build/ subdirectory $ mkdir -p $UNITTMP/unit-php7.3/:nxt_ph:MODULESPATH &lt;Path to Unit's language modules&gt;                  # Use the module path set by ./configure or by default $ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/:nxt_ph:MODULESPATH &lt;Path to Unit's language modules&gt;   # Adds the module to the package `
 
 5. Create a **$UNITTMP/unit-php7.3/DEBIAN/control** [file](https://www.debian.org/doc/debian-policy/ch-controlfields.html), listing **unit** with other dependencies:
 
@@ -125,11 +127,11 @@ Assuming you are packaging for the current system and have the official Unit pac
 
 4. Run **unitd --version** and note the **./configure** [flags](source.md#source-config-src) for later use, omitting `--ld-opt` and `--njs`:
 
-   <code>$ unitd --version      unit version: 1.32.1     configured as ./configure :nxt_ph:`FLAGS &lt;Note the flags, omitting --ld-opt and --njs&gt;` </code>
+   `$ unitd --version      unit version: 1.32.1     configured as ./configure :nxt_ph:FLAGS &lt;Note the flags, omitting --ld-opt and --njs&gt; `
 
 5. Edit the **unit-php7.3.spec** file, adding the commands that download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
 
-   <code>Name:           unit-php7.3 Version:        1.32.1 # Use Unit's package version for consistency: 'yum info unit | grep Version' Release:        1%{?dist} Summary:        Custom language module for NGINX Unit  License:        ASL 2.0 # Unit uses ASL 2.0; your license depends on the language you are packaging URL:            https://example.com BuildRequires:  gcc BuildRequires:  make BuildRequires:  php-devel BuildRequires:  php-embedded Requires:       unit = 1.32.1 # Specify Unit's package version to avoid issues when Unit updates # Again, run 'yum info unit | grep Version' to get this value Requires:       php &gt;= 7.3 Requires:       php-embedded  %description Custom language module for NGINX Unit 1.32.1 (https://unit.nginx.org).  Maintainer: Jane Doe &lt;j.doe@example.com&gt;  %prep curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz # Downloads Unit's sources tar --strip-components=1 -xzf unit-1.32.1.tar.gz # Extracts them locally for compilation steps in the %build section  %build ./configure :nxt_ph:`FLAGS W/O --LD-OPT &amp; --NJS &lt;The ./configure flags, except for --ld-opt and --njs&gt;` # Configures the build; use the ./configure flags noted in the previous step ./configure php --module=php7.3 --config=php-config # Configures the module itself make php7.3 # Builds the module  %install DESTDIR=%{buildroot} make php7.3-install # Adds the module to the package  %files %attr(0755, root, root) ":nxt_ph:`MODULESPATH &lt;Path to Unit's language modules&gt;`/php7.3.unit.so" # Lists the module as package contents to include it in the package build # Use the module path set by ./configure or by default </code>
+   `Name:           unit-php7.3 Version:        1.32.1 # Use Unit's package version for consistency: 'yum info unit | grep Version' Release:        1%{?dist} Summary:        Custom language module for NGINX Unit  License:        ASL 2.0 # Unit uses ASL 2.0; your license depends on the language you are packaging URL:            https://example.com BuildRequires:  gcc BuildRequires:  make BuildRequires:  php-devel BuildRequires:  php-embedded Requires:       unit = 1.32.1 # Specify Unit's package version to avoid issues when Unit updates # Again, run 'yum info unit | grep Version' to get this value Requires:       php >= 7.3 Requires:       php-embedded  %description Custom language module for NGINX Unit 1.32.1 (https://unit.nginx.org).  Maintainer: Jane Doe <j.doe@example.com>  %prep curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz # Downloads Unit's sources tar --strip-components=1 -xzf unit-1.32.1.tar.gz # Extracts them locally for compilation steps in the %build section  %build ./configure :nxt_ph:FLAGS W/O --LD-OPT &amp; --NJS &lt;The ./configure flags, except for --ld-opt and --njs&gt; # Configures the build; use the ./configure flags noted in the previous step ./configure php --module=php7.3 --config=php-config # Configures the module itself make php7.3 # Builds the module  %install DESTDIR=%{buildroot} make php7.3-install # Adds the module to the package  %files %attr(0755, root, root) ":nxt_ph:MODULESPATH &lt;Path to Unit's language modules&gt;/php7.3.unit.so" # Lists the module as package contents to include it in the package build # Use the module path set by ./configure or by default `
 
    Save and close the file.
 

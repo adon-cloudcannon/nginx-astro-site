@@ -12,9 +12,9 @@ To run the [MoinMoin](https://moinmo.in/MoinMoinWiki) wiki engine using Unit:
 
 1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 2 language module.
 
-NOTE
-
-As of now, MoinMoin [doesn’t fully support](https://moinmo.in/Python3) Python 3.  Mind that Python 2 is officially deprecated.
+<Note type="note">
+As of now, MoinMoin [doesn’t fully support](https://moinmo.in/Python3) Python 3. Mind that Python 2 is officially deprecated.
+</Note>
 
 2\. Install and configure MoinMoin’s [prerequisites](https://moinmo.in/MoinMoinDependencies).
 
@@ -54,6 +54,8 @@ For further details, including permissions, see the [security checklist](securit
 
 `# curl -X PUT --data-binary @config.json --unix-socket \        :nxt_ph:/path/to/control.unit.sock &lt;Path to Unit's control socket in your installation&gt; :nxt_hint:http://localhost/config/ &lt;Path to the config section in Unit's control API&gt; ` NOTE
 
+<Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
 After a successful update, MoinMoin should be available on the listener’s IP address and port: ![Moin on Unit - Welcome Screen](/moin.png)

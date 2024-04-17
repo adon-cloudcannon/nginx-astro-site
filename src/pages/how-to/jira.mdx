@@ -1,27 +1,28 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Jira
 ---
 # Jira
 
 #### NOTE
-This howto uses the 8.19.1 version; other versions may have different
-dependencies and options.
+
+This howto uses the 8.19.1 version; other versions may have different dependencies and options.
 
 To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Java language module.
-2. Install Jira’s [core files](https://www.atlassian.com/software/jira/update).  Here, we install it at **/path/to/app/**; use
-   a real path in your configuration.
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Java language module.
 
-   For example:
-   ```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
+2\. Install Jira’s [core files](https://www.atlassian.com/software/jira/update).  Here, we install it at **/path/to/app/**; use a real path in your configuration.
+
+For example:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
    $ curl https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-8.19.1.tar.gz -O -C -
-   $ tar xzf atlassian-jira-core-8.19.1.tar.gz --strip-components 1
-   ```
-3. Download Jira’s third-party dependencies to the **lib** subdirectory:
-   ```bash
+   $ tar xzf atlassian-jira-core-8.19.1.tar.gz --strip-components 1`}</Code_Block>
+
+3\. Download Jira’s third-party dependencies to the **lib** subdirectory:
+
+```bash
    $ cd lib/
    $ curl https://github.com/mar0x/unit-transaction-init/releases/download/2.0/transaction-init-2.0.jar -O -C -
    $ curl https://repo1.maven.org/maven2/com/atomikos/atomikos-util/5.0.8/atomikos-util-5.0.8.jar -O -C -
@@ -33,32 +34,29 @@ To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
    $ curl https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-jndi/11.0.6/jetty-jndi-10.0.6.jar -O -C -
    $ curl https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-plus/11.0.6/jetty-plus-10.0.6.jar -O -C -
    $ curl https://repo1.maven.org/maven2/org/eclipse/jetty/jetty-util/11.0.6/jetty-util-10.0.6.jar -O -C -
-   ```
+```
 
-   Later, these **.jar** files will be listed in the **classpath**
-   option of the Unit configuration.
-4. Patch your Jira configuration, dropping **env** from the
-   **comp/env/UserTransaction** object path.  This ensures the
-   **UserTransaction** object will be found by your installation:
-   ```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
+Later, these **.jar** files will be listed in the **classpath** option of the Unit configuration.
+
+4\. Patch your Jira configuration, dropping **env** from the **comp/env/UserTransaction** object path.  This ensures the **UserTransaction** object will be found by your installation:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
    $ sed -i 's#comp/env/UserTransaction#comp/UserTransaction#g'  \
-         atlassian-jira/WEB-INF/classes/entityengine.xml
-   ```
-5. Run the following command so Unit can access :
-   ```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+         atlassian-jira/WEB-INF/classes/entityengine.xml`}</Code_Block>
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+5\. Run the following command so Unit can access :
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
-6. Next, [put together](../configuration.md#configuration-java) the Jira configuration (use
-   real values for **working_directory** and **jira.home**):
-   ```json
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
+
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
+
+For further details, including permissions, see the [security checklist](security.md#security-apps).
+
+6\. Next, [put together](../configuration.md#configuration-java) the Jira configuration (use real values for **working\_directory** and **jira.home**):
+
+```json
    {
        "listeners": {
            "*:80": {
@@ -99,25 +97,21 @@ To run [Atlassian Jira](https://www.atlassian.com/software/jira) using Unit:
            }
        }
    }
-   ```
+```
 
-   See [Java application options](../configuration.md#configuration-java) for details.
+See [Java application options](../configuration.md#configuration-java) for details.
 
-   #### NOTE
-   You can’t update the configuration in Unit after startup due to Jira’s
-   own restrictions.
-7. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   ```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+#### NOTE
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+You can’t update the configuration in Unit after startup due to Jira’s own restrictions.
 
-   After a successful update, Jira should be available on the listener’s IP
-   address and port.  Browse to [http://localhost/jira](http://localhost/jira) to continue the setup in
-   your browser:
-   ![Jira on Unit - Setup Screen](/jira.png)
+7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
+
+<Note type="note">
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
+
+After a successful update, Jira should be available on the listener’s IP address and port.  Browse to [http://localhost/jira](http://localhost/jira) to continue the setup in your browser: ![Jira on Unit - Setup Screen](/jira.png)

@@ -36,8 +36,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [put together](../configuration.md#configuration-php) the NextCloud configuration for Unit (use real values for **share** and **root**).  The following is based on NextCloud’s own [guide](https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Denies access to files and directories best kept private", nxt_type: "nxt_hint" }, { number: "2", display_text: "uri", tooltip: "Serves direct URIs with dedicated scripts", nxt_type: "nxt_hint" }, { number: "3", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }, { number: "8", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "9", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }, { number: "10", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "11", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }, { number: "12", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "13", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -47,7 +46,7 @@ For further details, including permissions, see the [security checklist](securit
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Denies access to files and directories best kept private>`": [
+                   "NXT1": [
                        "/build/*",
                        "/tests/*",
                        "/config/*",
@@ -71,7 +70,7 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Serves direct URIs with dedicated scripts>`": [
+                   "NXT2": [
                        "/core/ajax/update.php*",
                        "/cron.php*",
                        "/index.php*",
@@ -119,7 +118,7 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri",
+                   "NXT3": "NXT4$uri",
                    "fallback": {
                        "pass": "applications/nextcloud/index"
                    }
@@ -132,33 +131,32 @@ For further details, including permissions, see the [security checklist](securit
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`"
+                       "root": "NXT5"
                    },
 
                    "index": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT6",
+                       "script": "NXT7"
                    },
 
                    "ocm": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`ocm-provider/",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT8/ocm-provider/",
+                       "script": "NXT9"
                    },
 
                    "ocs": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`ocs-provider/",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT10/ocs-provider/",
+                       "script": "NXT11"
                    },
 
                    "updater": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`nextcloud/updater/",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT12/nextcloud/updater/",
+                       "script": "NXT13"
                    }
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 <Note type="note">
 The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
@@ -169,10 +167,8 @@ The difference between the **pass** targets is their usage of the **script** [se
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
@@ -180,9 +176,7 @@ The [control socket](../controlapi.md#configuration-socket) path may vary; run *
 
 7\. Adjust Unit’s **max\_body\_size** [option](../configuration.md#configuration-stngs) to avoid potential issues with large file uploads, for example:
 
-```bash
-   # curl -X PUT -d '{"http":{"max_body_size": 2147483648}}' --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/settings <Path to the 'config/settings' section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/settings", tooltip: "Path to the 'config/settings' section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT -d '{"http":{"max_body_size": 2147483648}}' --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 After a successful update, browse to [http://localhost](http://localhost) and [set up](https://docs.nextcloud.com/server/latest/admin_manual/installation/installation_wizard.html) your NextCloud installation: ![NextCloud on Unit - Home Screen](/nextcloud.png)

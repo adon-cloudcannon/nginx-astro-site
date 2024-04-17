@@ -24,8 +24,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-php) the Matomo configuration for Unit (use real values for **share** and **root**).  The default **.htaccess** scheme in a Matomo installation roughly translates into the following:
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Handles all PHP scripts that should be public", nxt_type: "nxt_hint" }, { number: "2", display_text: "uri", tooltip: "Denies access to files and directories best kept private, including internal PHP scripts", nxt_type: "nxt_hint" }, { number: "3", display_text: "~\\\\.(css|gif|html?|ico|jpg|js(on)?|png|svg|ttf|woff2?)$", tooltip: "Enables access to static content only", nxt_type: "nxt_hint" }, { number: "4", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "5", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "uri", tooltip: "Disables access to certain directories that may nonetheless contain public-facing static content served by the previous rule; forwards all unhandled requests to index.php in the root directory", nxt_type: "nxt_hint" }, { number: "7", display_text: "share", tooltip: "Serves remaining static files", nxt_type: "nxt_hint" }, { number: "8", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "9", display_text: "applications/matomo/index", tooltip: "A catch-all destination for the remaining requests", nxt_type: "nxt_hint" }, { number: "10", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "11", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "12", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -35,7 +34,7 @@ For further details, including permissions, see the [security checklist](securit
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Handles all PHP scripts that should be public>`": [
+                   "NXT1": [
                        "/index.php",
                        "/js/index.php",
                        "/matomo.php",
@@ -51,7 +50,7 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Denies access to files and directories best kept private, including internal PHP scripts>`": [
+                   "NXT2": [
                        "*.php",
                        "*/.htaccess",
                        "/config/*",
@@ -67,16 +66,16 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "match": {
-                   "uri": ":nxt_hint:`~\\.(css|gif|html?|ico|jpg|js(on)?|png|svg|ttf|woff2?)$ <Enables access to static content only>`"
+                   "uri": "NXT3"
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri"
+                   "NXT4": "NXT5$uri"
                }
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Disables access to certain directories that may nonetheless contain public-facing static content served by the previous rule; forwards all unhandled requests to index.php in the root directory>`": [
+                   "NXT6": [
                        "!/libs/*",
                        "!/node_modules/*",
                        "!/plugins/*",
@@ -87,9 +86,9 @@ For further details, including permissions, see the [security checklist](securit
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves remaining static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri",
+                   "NXT7": "NXT8$uri",
                    "fallback": {
-                       "pass": ":nxt_hint:`applications/matomo/index <A catch-all destination for the remaining requests>`"
+                       "pass": "NXT9"
                    }
                }
            }
@@ -100,18 +99,17 @@ For further details, including permissions, see the [security checklist](securit
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`"
+                       "root": "NXT10"
                    },
 
                    "index": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT11",
+                       "script": "NXT12"
                    }
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

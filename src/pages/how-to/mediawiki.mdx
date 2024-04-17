@@ -1,35 +1,28 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: MediaWiki
 ---
 # MediaWiki
 
-To run the [MediaWiki](https://www.mediawiki.org) collaboration and
-documentation platform using Unit:
+To run the [MediaWiki](https://www.mediawiki.org) collaboration and documentation platform using Unit:
 
 1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
 
-2\. Install MediaWiki’s [core files](https://www.mediawiki.org/wiki/Download).  Here, we install it at **/path/to/app/**; use
-   a real path in your configuration.
+2\. Install MediaWiki’s [core files](https://www.mediawiki.org/wiki/Download).  Here, we install it at **/path/to/app/**; use a real path in your configuration.
 
 3\. Run the following command so Unit can access :
-   
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
-4\. Next, [prepare](../configuration.md#configuration-php) the MediaWiki configuration for Unit
-   (use real values for **share** and **root**):
-   
-```json
-   {
+For further details, including permissions, see the [security checklist](security.md#security-apps).
+
+4\. Next, [prepare](../configuration.md#configuration-php) the MediaWiki configuration for Unit (use real values for **share** and **root**):
+
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Controls access to directories best kept private", nxt_type: "nxt_hint" }, { number: "2", display_text: "uri", tooltip: "Enables access to application entry points", nxt_type: "nxt_hint" }, { number: "3", display_text: "uri", tooltip: "Enables static access to specific content locations", nxt_type: "nxt_hint" }, { number: "4", display_text: "!*.htaccess", tooltip: "The negations deny access to the file types listed here", nxt_type: "nxt_hint" }, { number: "5", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "6", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "8", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "9", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -40,7 +33,7 @@ documentation platform using Unit:
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Controls access to directories best kept private>`": [
+                   "NXT1": [
                        "!/tests/qunit/*",
                        "/cache/*",
                        "/includes/*",
@@ -57,7 +50,7 @@ documentation platform using Unit:
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Enables access to application entry points>`": [
+                   "NXT2": [
                        "/api.php*",
                        "/img_auth.php*",
                        "/index.php*",
@@ -78,10 +71,10 @@ documentation platform using Unit:
            },
            {
                "match": {
-                   ":nxt_hint:`uri <Enables static access to specific content locations>`": [
+                   "NXT3": [
                        "!*.php",
                        "!*.json",
-                       ":nxt_hint:`!*.htaccess <The negations deny access to the file types listed here>`",
+                       "NXT4",
                        "/extensions/*",
                        "/images/*",
                        "/resources/assets/*",
@@ -92,7 +85,7 @@ documentation platform using Unit:
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri"
+                   "NXT5": "NXT6$uri"
                }
            },
            {
@@ -107,65 +100,50 @@ documentation platform using Unit:
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`"
+                       "root": "NXT7"
                    },
 
                    "index": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT8",
+                       "script": "NXT9"
                    }
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
-   #### NOTE
-   The difference between the **pass** targets is their usage of the
-   **script** [setting](../configuration.md#configuration-php):
-   - The **direct** target runs the **.php** script from the URI or
-     defaults to **index.php** if the w omits it.
-   - The **index** target specifies the **script** that Unit runs
-     for *any* URIs the target receives.
+<Note type="note">
+The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
 
-5\. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+* The **direct** target runs the **.php** script from the URI or defaults to **index.php** if the w omits it.
+* The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
+</Note>
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+5\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-6\. Browse to [http://localhost/mw-config/index.php](http://localhost/mw-config/index.php) and set MediaWiki up using
-   the settings noted earlier:
-   ![MediaWiki on Unit](/mw_install.png)
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-   Download the newly generated **LocalSettings.php** file and place it
-   [appropriately](https://www.mediawiki.org/wiki/Manual:Config_script):
-   
-```bash
-   $ chmod 600 LocalSettings.php
-   # chown :nxt_ph:`unit:unit <Values from Step 3>` LocalSettings.php
-   # mv LocalSettings.php :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-```
+<Note type="note">
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
-7\. After installation, add a match condition to the first step to disable
-   access to the **mw-config/** directory:
-   
-```bash
-   # curl -X POST -d '"/mw-config/*"'  \
-          --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-          http://localhost:nxt_hint:`/config/routes/mediawiki/0/match/uri/ <Path to the route's first step condition and the 'uri' value in it>`
+6\. Browse to [http://localhost/mw-config/index.php](http://localhost/mw-config/index.php) and set MediaWiki up using the settings noted earlier: ![MediaWiki on Unit](/mw_install.png)
+
+Download the newly generated **LocalSettings.php** file and place it [appropriately](https://www.mediawiki.org/wiki/Manual:Config_script):
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "Values from Step 3", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ chmod 600 LocalSettings.php
+   # chown NXT1 LocalSettings.php
+   # mv LocalSettings.php NXT2`}</Code_Block>
+
+7\. After installation, add a match condition to the first step to disable access to the **mw-config/** directory:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "config/routes/mediawiki/0/match/uri/", tooltip: "Path to the route's first step condition and the 'uri' value in it", nxt_type: "nxt_hint" }]}>{`   # curl -X POST -d '"/mw-config/*"'  \\
+          --unix-socket NXT1  \\
+          http://localhost/NXT2
 
          {
              "success": "Reconfiguration done."
-         }
-```
+         }`}</Code_Block>
 
-   After a successful update, MediaWiki should be available on the listener’s IP
-   address and port:
-   ![MediaWiki on Unit](/mw_ready.png)
+After a successful update, MediaWiki should be available on the listener’s IP address and port: ![MediaWiki on Unit](/mw_ready.png)

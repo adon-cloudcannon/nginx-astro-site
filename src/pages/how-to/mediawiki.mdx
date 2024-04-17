@@ -7,13 +7,16 @@ title: MediaWiki
 To run the [MediaWiki](https://www.mediawiki.org) collaboration and
 documentation platform using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
-2. Install MediaWiki’s [core files](https://www.mediawiki.org/wiki/Download).  Here, we install it at **/path/to/app/**; use
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
+
+2\. Install MediaWiki’s [core files](https://www.mediawiki.org/wiki/Download).  Here, we install it at **/path/to/app/**; use
    a real path in your configuration.
-3. Run the following command so Unit can access :
-   ```bash
+
+3\. Run the following command so Unit can access :
+   
+```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+```
 
    #### NOTE
    The **unit:unit** user-group pair is available only with [official
@@ -21,9 +24,11 @@ documentation platform using Unit:
    the **ps aux | grep unitd** command to be sure.
 
    For further details, including permissions, see the [security checklist](security.md#security-apps).
-4. Next, [prepare](../configuration.md#configuration-php) the MediaWiki configuration for Unit
+
+4\. Next, [prepare](../configuration.md#configuration-php) the MediaWiki configuration for Unit
    (use real values for **share** and **root**):
-   ```json
+   
+```json
    {
        "listeners": {
            "*:80": {
@@ -113,7 +118,7 @@ documentation platform using Unit:
            }
        }
    }
-   ```
+```
 
    #### NOTE
    The difference between the **pass** targets is their usage of the
@@ -122,30 +127,36 @@ documentation platform using Unit:
      defaults to **index.php** if the w omits it.
    - The **index** target specifies the **script** that Unit runs
      for *any* URIs the target receives.
-5. Upload the updated configuration.  Assuming the JSON above was added to
+
+5\. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```bash
+   
+```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+```
 
    #### NOTE
    The [control socket](../controlapi.md#configuration-socket) path may vary; run
    **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
-6. Browse to [http://localhost/mw-config/index.php](http://localhost/mw-config/index.php) and set MediaWiki up using
+
+6\. Browse to [http://localhost/mw-config/index.php](http://localhost/mw-config/index.php) and set MediaWiki up using
    the settings noted earlier:
    ![MediaWiki on Unit](/mw_install.png)
 
    Download the newly generated **LocalSettings.php** file and place it
    [appropriately](https://www.mediawiki.org/wiki/Manual:Config_script):
-   ```bash
+   
+```bash
    $ chmod 600 LocalSettings.php
    # chown :nxt_ph:`unit:unit <Values from Step 3>` LocalSettings.php
    # mv LocalSettings.php :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   ```
-7. After installation, add a match condition to the first step to disable
+```
+
+7\. After installation, add a match condition to the first step to disable
    access to the **mw-config/** directory:
-   ```bash
+   
+```bash
    # curl -X POST -d '"/mw-config/*"'  \
           --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
           http://localhost:nxt_hint:`/config/routes/mediawiki/0/match/uri/ <Path to the route's first step condition and the 'uri' value in it>`
@@ -153,7 +164,7 @@ documentation platform using Unit:
          {
              "success": "Reconfiguration done."
          }
-   ```
+```
 
    After a successful update, MediaWiki should be available on the listener’s IP
    address and port:

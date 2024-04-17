@@ -41,7 +41,7 @@ Later, these **.jar** files will be listed in the **classpath** option of the Un
 4\. Patch your Jira configuration, dropping **env** from the **comp/env/UserTransaction** object path.  This ensures the **UserTransaction** object will be found by your installation:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
-   $ sed -i 's#comp/env/UserTransaction#comp/UserTransaction#g'  \
+   $ sed -i 's#comp/env/UserTransaction#comp/UserTransaction#g'  \\
          atlassian-jira/WEB-INF/classes/entityengine.xml`}</Code_Block>
 
 5\. Run the following command so Unit can access :

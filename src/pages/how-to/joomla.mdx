@@ -24,7 +24,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-php) the Joomla configuration for Unit (use real values for **share** and **root**):
 
-<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Matches direct URLs and the administrative section of the site", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "applications/joomla/index", tooltip: "Unconditionally matches all remaining URLs, including rewritten ones", nxt_type: "nxt_hint" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -34,7 +34,7 @@ For further details, including permissions, see the [security checklist](securit
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Matches direct URLs and the administrative section of the site>`": [
+                   "NXT1": [
                        "*.php",
                        "*.php/*",
                        "/administrator/"
@@ -47,9 +47,9 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri",
+                   "NXT2": "NXT3$uri",
                    "fallback": {
-                       "pass": ":nxt_hint:`applications/joomla/index <Unconditionally matches all remaining URLs, including rewritten ones>`"
+                       "pass": "NXT4"
                    }
                }
            }
@@ -60,12 +60,12 @@ For further details, including permissions, see the [security checklist](securit
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": "NXT1"
+                       "root": "NXT5"
                    },
 
                    "index": {
-                       "root": "NXT2",
-                       "script": "NXT3"
+                       "root": "NXT6",
+                       "script": "NXT7"
                    }
                }
            }

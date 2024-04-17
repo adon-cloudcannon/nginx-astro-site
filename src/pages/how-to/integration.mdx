@@ -66,32 +66,30 @@ Avoid exposing an unprotected control socket to public networks. Use NGINX or a 
 
 Use this configuration template for NGINX (replace placeholders in **ssl\_certificate**, **ssl\_certificate\_key**, **ssl\_client\_certificate**, **allow**, **auth\_basic\_user\_file**, and **proxy\_pass** with real values):
 
-```nginx
-server {
+<Code_Block language="nginx" hints={[{ number: "1", display_text: "/path/to/ssl/cert.pem", tooltip: "Path to your PEM file; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/ssl/cert.key", tooltip: "Path to your key file; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/ca.pem", tooltip: "Path to certification authority PEM file; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "1.2.3.4", tooltip: "Replicate and update as needed with allowed IPs and network CIDRs", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/htpasswd", tooltip: "Path to your htpasswd file", nxt_type: "nxt_ph" }, { number: "6", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket", nxt_type: "nxt_ph" }]}>{`server {
 
     # Configure SSL encryption
     listen 443 ssl;
 
-    ssl_certificate :nxt_ph:`/path/to/ssl/cert.pem <Path to your PEM file; use a real path in your configuration>`;
-    ssl_certificate_key :nxt_ph:`/path/to/ssl/cert.key <Path to your key file; use a real path in your configuration>`;
+    ssl_certificate NXT1;
+    ssl_certificate_key NXT2;
 
     # SSL client certificate validation
-    ssl_client_certificate :nxt_ph:`/path/to/ca.pem <Path to certification authority PEM file; use a real path in your configuration>`;
+    ssl_client_certificate NXT3;
     ssl_verify_client on;
 
     # Network ACLs
-    allow :nxt_ph:`1.2.3.4 <Replicate and update as needed with allowed IPs and network CIDRs>`;
+    allow NXT4;
     deny all;
 
     # HTTP Basic authentication
     auth_basic on;
-    auth_basic_user_file :nxt_ph:`/path/to/htpasswd <Path to your htpasswd file>`;
+    auth_basic_user_file NXT5;
 
     location / {
-        proxy_pass http://unix::nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket>`;
+        proxy_pass http://unix:NXT6;
     }
-}
-```
+}`}</Code_Block>
 
 The same approach works for an IP-based control socket:
 

@@ -33,8 +33,7 @@ For further details, including permissions, see the [security checklist](securit
 
 6\. Next, prepare the Mercurial [configuration](../configuration.md#configuration-python) for Unit (use a real value for **path**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the WSGI file referenced by the module option; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "hgweb", tooltip: "WSGI module basename with extension omitted", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/hg"
@@ -44,23 +43,20 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "hg": {
                "type": "python",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the WSGI file referenced by the module option; use a real path in your configuration>`",
-               "module": ":nxt_hint:`hgweb <WSGI module basename with extension omitted>`"
+               "path": "NXT1",
+               "module": "NXT2"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
 
 After a successful update, you can proceed to work with your Mercurial repository as usual:
 

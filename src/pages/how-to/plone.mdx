@@ -12,15 +12,13 @@ To run the [Plone](https://plone.org) content management system using Unit:
 
 3\. Install Plone’s [core files](https://docs.plone.org/manage/installing/installation.html).  Here, we install it at **/path/to/app/**; use a real path in your configuration:
 
-```bash
-   $ mkdir /tmp/plone && cd /tmp/plone/
-   $ wget https://launchpad.net/plone/:nxt_ph:`A.B <Plone version>`/:nxt_ph:`A.B.C <Plone version>`/+download/Plone-:nxt_ph:`A.B.C <Plone version>`-UnifiedInstaller-1.0.tgz
-   $ tar xzvf Plone-:nxt_ph:`A.B.C <Plone version>`-UnifiedInstaller-1.0.tgz  \
-         :nxt_hint:`--strip-components <Avoids creating a redundant subdirectory>`=1
-   $ ./install.sh --target=:nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`  \
-                  --with-python=:nxt_ph:`/full/path/to/python <Full pathname of the Python executable used to create Plone's virtual environment>`  \
-                  standalone
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "A.B", tooltip: "Plone version", nxt_type: "nxt_ph" }, { number: "2", display_text: "A.B.C", tooltip: "Plone version", nxt_type: "nxt_ph" }, { number: "3", display_text: "A.B.C", tooltip: "Plone version", nxt_type: "nxt_ph" }, { number: "4", display_text: "A.B.C", tooltip: "Plone version", nxt_type: "nxt_ph" }, { number: "5", display_text: "--strip-components", tooltip: "Avoids creating a redundant subdirectory", nxt_type: "nxt_hint" }, { number: "6", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "/full/path/to/python", tooltip: "Full pathname of the Python executable used to create Plone's virtual environment", nxt_type: "nxt_ph" }]}>{`   $ mkdir /tmp/plone && cd /tmp/plone/
+   $ wget https://launchpad.net/plone/NXT1/NXT2/+download/Plone-NXT3-UnifiedInstaller-1.0.tgz
+   $ tar xzvf Plone-NXT4-UnifiedInstaller-1.0.tgz  \\
+         NXT5=1
+   $ ./install.sh --target=NXT6  \\
+                  --with-python=NXT7  \\
+                  standalone`}</Code_Block>
 
 <Note type="note">
 Plone’s [Zope](https://plone.org/what-is-plone/zope) instance and virtual environment are created in the **zinstance/** subdirectory; later, the resulting path is used to configure Unit, so take care to note it in your setup. Also, make sure the Python version specified with `--with-python` matches the module version from Step 1.
@@ -28,46 +26,40 @@ Plone’s [Zope](https://plone.org/what-is-plone/zope) instance and virtual envi
 
 4\. To run Plone on Unit, add a new configuration file named **/path/to/app/zinstance/wsgi.cfg**:
 
-```cfg
-   [buildout]
+<Code_Block language="cfg" hints={[{ number: "1", display_text: "wsgi.py", tooltip: "The basename is arbitrary; the extension is required to make the resulting Python module discoverable", nxt_type: "nxt_ph" }, { number: "2", display_text: "admin:admin", tooltip: "Instance credentials; omit this line to configure them interactively", nxt_type: "nxt_ph" }, { number: "3", display_text: "/instance/etc/zope.conf", tooltip: "Path to the Zope instance's configuration", nxt_type: "nxt_hint" }]}>{`   [buildout]
    extends =
        buildout.cfg
 
    parts +=
-       :nxt_ph:`wsgi.py <The basename is arbitrary; the extension is required to make the resulting Python module discoverable>`
+       NXT1
 
    [wsgi.py]
    recipe = plone.recipe.zope2instance
-   user = :nxt_ph:`admin:admin <Instance credentials; omit this line to configure them interactively>`
+   user = NXT2
    eggs =
        ${instance:eggs}
    scripts =
    initialization =
        from Zope2.Startup.run import make_wsgi_app
-       wsgiapp = make_wsgi_app({}, '${buildout:parts-directory}:nxt_hint:`/instance/etc/zope.conf <Path to the Zope instance's configuration>`')
-       def application(*args, **kwargs):return wsgiapp(*args, **kwargs)
-```
+       wsgiapp = make_wsgi_app({}, '${buildout:parts-directory}NXT3')
+       def application(*args, **kwargs):return wsgiapp(*args, **kwargs)`}</Code_Block>
 
 It creates a new Zope instance.  The part’s name must end with **.py** for the resulting instance script to be recognized as a Python module; the **initialization** [option](https://pypi.org/project/plone.recipe.zope2instance/#common-options) defines a WSGI entry point using **zope.conf** from the **instance** part in **buildout.cfg**.
 
 Rerun Buildout, feeding it the new configuration file:
 
-```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`zinstance/
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1/zinstance/
    $ bin/buildout -c wsgi.cfg
 
          ...
          Installing wsgi.py.
-         Generated script '/path/to/app/zinstance/bin/wsgi.py'.
-```
+         Generated script '/path/to/app/zinstance/bin/wsgi.py'.`}</Code_Block>
 
 Thus created, the instance script can be used with Unit.
 
 5\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
@@ -77,8 +69,7 @@ For further details, including permissions, see the [security checklist](securit
 
 6\. Next, [prepare](../configuration.md#configuration-python) the Plone configuration for Unit (use real values for **path** and **home**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "3.Y", tooltip: "Python executable version used to install Plone", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "bin.wsgi", tooltip: "WSGI module's qualified name with extension omitted", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/plone"
@@ -87,21 +78,18 @@ For further details, including permissions, see the [security checklist](securit
 
        "applications": {
            "plone": {
-               "type": "python :nxt_ph:`3.Y <Python executable version used to install Plone>`",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`zinstance/",
-               "home": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`zinstance/",
-               "module": ":nxt_hint:`bin.wsgi <WSGI module's qualified name with extension omitted>`"
+               "type": "python NXT1",
+               "path": "NXT2/zinstance/",
+               "home": "NXT3/zinstance/",
+               "module": "NXT4"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.

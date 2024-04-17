@@ -1,42 +1,37 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Mailman Web
 ---
 # Mailman Web
 
 To install and run the web UI for the [Mailman 3](https://docs.list.org/en/latest/index.html)  suite using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 3.7+ language module.
-2. Follow Mailman’s [guide](https://docs.list.org/en/latest/install/virtualenv.html#virtualenv-install)
-   to install its prerequisites and core files, but stop at [setting up a WSGI
-   server](https://docs.list.org/en/latest/install/virtualenv.html#setting-up-a-wsgi-server);
-   we’ll use Unit instead.  Also, note the following settings (values from the
-   guide are given after the colon):
-   - Virtual environment path: **/opt/mailman/venv/**
-   - Installation path: **/etc/mailman3/**
-   - Static file path: **/opt/mailman/web/static/**
-   - User and group: **mailman:mailman**
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 3.7+ language module.
 
-   These are needed to configure Unit.
-3. Run the following command so Unit can access Mailman’s static files:
-   ```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_hint:`/opt/mailman/web/static/ <Mailman's static file path>`
-   ```
+2\. Follow Mailman’s [guide](https://docs.list.org/en/latest/install/virtualenv.html#virtualenv-install) to install its prerequisites and core files, but stop at [setting up a WSGI server](https://docs.list.org/en/latest/install/virtualenv.html#setting-up-a-wsgi-server); we’ll use Unit instead.  Also, note the following settings (values from the guide are given after the colon):
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with
-   [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ;
-   run the **ps aux | grep unitd** command to be sure.
+* Virtual environment path: **/opt/mailman/venv/**
+* Installation path: **/etc/mailman3/**
+* Static file path: **/opt/mailman/web/static/**
+* User and group: **mailman:mailman**
 
-   Alternatively, add Unit’s unprivileged user account to Mailman’s group so Unit
-   can access the static files:
-   ```bash
-   # usermod -a -G :nxt_hint:`mailman <Mailman's user group noted in Step 2>` :nxt_hint:`unit <User that Unit's router runs as by default>`
-   ```
-4. Next, prepare the Mailman [configuration](../configuration.md#configuration-python) for Unit
-   (use values from Step 2 for **share**, **path**, and **home**):
-   ```json
-   {
+These are needed to configure Unit.
+
+3\. Run the following command so Unit can access Mailman’s static files:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/opt/mailman/web/static/", tooltip: "Mailman's static file path", nxt_type: "nxt_hint" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
+
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
+
+Alternatively, add Unit’s unprivileged user account to Mailman’s group so Unit can access the static files:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "mailman", tooltip: "Mailman's user group noted in Step 2", nxt_type: "nxt_hint" }, { number: "2", display_text: "unit", tooltip: "User that Unit's router runs as by default", nxt_type: "nxt_hint" }]}>{`   # usermod -a -G NXT1 NXT2`}</Code_Block>
+
+4\. Next, prepare the Mailman [configuration](../configuration.md#configuration-python) for Unit (use values from Step 2 for **share**, **path**, and **home**):
+
+<Code_Block language="json" hints={[{ number: "1", display_text: "/static/*", tooltip: "Matches requests for web UI's static content", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/opt/mailman/web/", tooltip: "Mailman's static file path without the 'static/' part; URIs starting with /static/ are thus served from /opt/mailman/web/static/", nxt_type: "nxt_hint" }, { number: "4", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "5", display_text: "/etc/mailman3/", tooltip: "Mailman's installation path you noted in Step 2", nxt_type: "nxt_hint" }, { number: "6", display_text: "/opt/mailman/venv/", tooltip: "Mailman's virtual environment path you noted in Step 2", nxt_type: "nxt_hint" }, { number: "7", display_text: "mailman_web.wsgi", tooltip: "Qualified name of the WSGI module, relative to installation path", nxt_type: "nxt_hint" }, { number: "8", display_text: "mailman", tooltip: "Mailman's user group noted in Step 2", nxt_type: "nxt_hint" }, { number: "9", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }, { number: "10", display_text: "settings", tooltip: "Web configuration module name, relative to installation path", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -46,11 +41,11 @@ To install and run the web UI for the [Mailman 3](https://docs.list.org/en/lates
        "routes": [
            {
                "match": {
-                   "uri": ":nxt_hint:`/static/* <Matches requests for web UI's static content>`"
+                   "uri": "NXT1"
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_hint:`/opt/mailman/web/ <Mailman's static file path without the 'static/' part; URIs starting with /static/ are thus served from /opt/mailman/web/static/>`$uri"
+                   "NXT2": "NXT3$uri"
                }
            },
            {
@@ -62,29 +57,25 @@ To install and run the web UI for the [Mailman 3](https://docs.list.org/en/lates
 
        "applications": {
            "mailman_web": {
-               "type": "python :nxt_ph:`3.X <Must match language module version and virtual environment version>`",
-               "path": ":nxt_hint:`/etc/mailman3/ <Mailman's installation path you noted in Step 2>`",
-               "home": ":nxt_hint:`/opt/mailman/venv/ <Mailman's virtual environment path you noted in Step 2>`",
-               "module": ":nxt_hint:`mailman_web.wsgi <Qualified name of the WSGI module, relative to installation path>`",
-               "user": ":nxt_hint:`mailman <Mailman's user group noted in Step 2>`",
-               ":nxt_hint:`environment <App-specific environment variables>`": {
-                   "DJANGO_SETTINGS_MODULE": ":nxt_hint:`settings <Web configuration module name, relative to installation path>`"
+               "type": "python NXT4",
+               "path": "NXT5",
+               "home": "NXT6",
+               "module": "NXT7",
+               "user": "NXT8",
+               "NXT9": {
+                   "DJANGO_SETTINGS_MODULE": "NXT10"
                }
            }
        }
-   }
-   ```
-5. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   ```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+   }`}</Code_Block>
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+5\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-   After a successful update, Mailman’s web UI should be available on the
-   listener’s IP address and port:
-   ![Mailman on Unit - Lists Screen](/mailman.png)
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
+
+<Note type="note">
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
+
+After a successful update, Mailman’s web UI should be available on the listener’s IP address and port: ![Mailman on Unit - Lists Screen](/mailman.png)

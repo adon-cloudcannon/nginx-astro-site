@@ -30,8 +30,7 @@ Here, **$VENV** isn’t set because Unit picks up the virtual environment from *
 
 We modify the [tutorial app](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/hello_world.html#steps), saving it as **/path/to/app/wsgi.py**:
 
-```python
-   from pyramid.config import Configurator
+<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.config import Configurator
    from pyramid.response import Response
 
    def hello_world(request):
@@ -40,9 +39,8 @@ We modify the [tutorial app](https://docs.pylonsproject.org/projects/pyramid/en/
    with Configurator() as config:
        config.add_route('hello', '/')
        config.add_view(hello_world, route_name='hello')
-       :nxt_hint:`app <Callable's name is used in Unit configuration>` = config.make_wsgi_app()
-   # serve(app, host='0.0.0.0', port=6543)
-```
+       NXT1 = config.make_wsgi_app()
+   # serve(app, host='0.0.0.0', port=6543)`}</Code_Block>
 
 Note that we’ve dropped the server code; also, mind that Unit imports the module, so the **if \_\_name\_\_ == ‘*****\_main*****\_’** idiom would be irrelevant.
 

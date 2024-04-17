@@ -37,11 +37,11 @@ Plone’s [Zope](https://plone.org/what-is-plone/zope) instance and virtual envi
    recipe = plone.recipe.zope2instance
    user = NXT2
    eggs =
-       ${instance:eggs}
+       $\{instance:eggs\}
    scripts =
    initialization =
        from Zope2.Startup.run import make_wsgi_app
-       wsgiapp = make_wsgi_app({}, '${buildout:parts-directory}NXT3')
+       wsgiapp = make_wsgi_app({}, '$\{buildout:parts-directory\}NXT3')
        def application(*args, **kwargs):return wsgiapp(*args, **kwargs)`}</Code_Block>
 
 It creates a new Zope instance.  The part’s name must end with **.py** for the resulting instance script to be recognized as a Python module; the **initialization** [option](https://pypi.org/project/plone.recipe.zope2instance/#common-options) defines a WSGI entry point using **zope.conf** from the **instance** part in **buildout.cfg**.

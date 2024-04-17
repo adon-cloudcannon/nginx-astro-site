@@ -48,7 +48,23 @@ For further details, including permissions, see the [security checklist](securit
 
 6\. Next, [prepare](../configuration.md#configuration-python) the MoinMoin configuration for Unit (use real values for **path**):
 
-<code>{     "listeners": {         "*:80": {             "pass": "applications/moin"         }     },      "applications": {         "moin": {             "type": "python 2",             "path": [                 ":nxt_ph:`/path/to/app/wsgi/module/ &lt;Path where the WSGI module was stored at Step 4&gt;`",                 ":nxt_ph:`/path/to/app/ &lt;Path where the MoinMoin directory was extracted at Step 3&gt;`",             ],              "module": ":nxt_hint:`moin &lt;WSGI file basename&gt;`"         }     } } </code>
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/wsgi/module/", tooltip: "Path where the WSGI module was stored at Step 4", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path where the MoinMoin directory was extracted at Step 3", nxt_type: "nxt_ph" }, { number: "3", display_text: "moin", tooltip: "WSGI file basename", nxt_type: "nxt_hint" }]}>{`{
+    "listeners": {
+        "*:80": {
+            "pass": "applications/moin"
+        }
+    },
+    "applications": {
+        "moin": {
+            "type": "python 2",
+            "path": [
+                "NXT1",
+                "NXT2",
+            ],
+            "module": "NXT3"
+        }
+    }
+} `}</Code_Block>
 
 7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

@@ -3,12 +3,13 @@ import { markedHighlight } from "marked-highlight";
 import prism from 'prismjs';
 import loadLanguages from 'prismjs/components/';
 
-loadLanguages(['javascript', 'jsx', 'css', 'markup', 'bash', 'json', 'yaml', 'go', 'python', 'ini', 'cfg']);
+loadLanguages(['javascript', 'jsx', 'css', 'markup', 'bash', 'json', 'yaml', 'go', 'python', 'ini']);
 
 let replaceIndex = 0;
 let replaceArr = []
 
 prism.languages['none'] = { };
+prism.languages['cfg'] = { };
 
 function nxt_hint(content){
     let result = content.replace(/(?<hint_marker>:nxt_hint:|:nxt_ph:)\s*\`((?<hint_display>[^`]*) (\<(?<hint_text>.*?)\>))\`/g,function(match,...args) {

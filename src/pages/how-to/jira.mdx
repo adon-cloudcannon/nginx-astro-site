@@ -56,8 +56,7 @@ For further details, including permissions, see the [security checklist](securit
 
 6\. Next, [put together](../configuration.md#configuration-java) the Jira configuration (use real values for **working\_directory** and **jira.home**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "options", tooltip: "Jira-specific startup options", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/jira/home/", tooltip: "Path to your Jira home directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "classpath", tooltip: "Required third-party dependencies from Step 3", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/jira"
@@ -67,17 +66,17 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "jira": {
                "type": "java",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
+               "working_directory": "NXT1",
                "webapp": "atlassian-jira",
-               ":nxt_hint:`options <Jira-specific startup options>`": [
+               "NXT2": [
                    "-Djava.awt.headless=true",
                    "-Djavax.accessibility.assistive_technologies= ",
-                   "-Djira.home=:nxt_ph:`/path/to/jira/home/ <Path to your Jira home directory; use a real path in your configuration>`",
+                   "-Djira.home=NXT3",
                    "-Dnginx.unit.context.listener=nginx.unit.TransactionInit",
                    "-Xms1024m",
                    "-Xmx1024m"
                ],
-               ":nxt_hint:`classpath <Required third-party dependencies from Step 3>`": [
+               "NXT4": [
                    "lib/atomikos-util-5.0.8.jar",
                    "lib/hsqldb-1.8.0.10.jar",
                    "lib/jcl-over-slf4j-1.7.30.jar",
@@ -96,14 +95,13 @@ For further details, including permissions, see the [security checklist](securit
                ]
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 See [Java application options](../configuration.md#configuration-java) for details.
 
-#### NOTE
-
+<Note type="note">
 You can’t update the configuration in Unit after startup due to Jira’s own restrictions.
+</Note>
 
 7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

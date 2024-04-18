@@ -73,7 +73,7 @@ After a successful update, browse to [http://localhost/installer/](http://localh
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "http://localhost/config/routes/1/action/share", tooltip: "Path to the app's document root in our configuration; mind that route steps are zero-indexed", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "6", display_text: "http://localhost/config/applications/roundcube/root", tooltip: "Path to the app's root option in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT -d 'NXT1/public_html$uri"' --unix-socket \\
          NXT2 NXT3
-   # curl -X PUT -d '"NXT4/public_html/"' --unix-socket \
+   # curl -X PUT -d '"NXT4/public_html/"' --unix-socket \\
          NXT5 NXT6`}</Code_Block>
 
 Thus, Roundcube should be available on the listener’s IP address and port: ![Roundcube on Unit - Login Screen](/roundcube.png)

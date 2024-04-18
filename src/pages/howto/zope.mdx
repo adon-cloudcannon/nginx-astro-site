@@ -82,15 +82,13 @@ Last, [prepare](../configuration.md#configuration-python) the Zope configuration
 
 Create a virtual environment to install Zope’s [PIP package](https://pypi.org/project/Zope/):
 
-```bash
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   $ :nxt_hint:`python3 --version <Make sure your virtual environment version matches the module version>`
-         Python :nxt_hint:`3.Y.Z <Major version, minor version, and revision number>`
-   $ python3 -m venv :nxt_hint:`venv <This is the virtual environment directory>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "python3 --version", tooltip: "Make sure your virtual environment version matches the module version", nxt_type: "nxt_hint" }, { number: "3", display_text: "3.Y.Z", tooltip: "Major version, minor version, and revision number", nxt_type: "nxt_hint" }, { number: "4", display_text: "venv", tooltip: "This is the virtual environment directory", nxt_type: "nxt_hint" }]}>{`   $ cd NXT1
+   $ NXT2
+         Python NXT3
+   $ python3 -m venv NXT4
    $ source venv/bin/activate
    $ pip install 'zope[wsgi]'
-   $ deactivate
-```
+   $ deactivate`}</Code_Block>
 
 <Note type="warning">
 Create your virtual environment with a Python version that matches the language module from Step 1 up to the minor number (**3\.Y** in this example). Also, the app **type** in Unit configuration must [resolve](../configuration.md#configuration-apps-common) to a similarly matching version; Unit doesn’t infer it from the environment.
@@ -98,31 +96,25 @@ Create your virtual environment with a Python version that matches the language 
 
 After installation, create your Zope [instance](https://zope.readthedocs.io/en/latest/operation.html#creating-a-zope-instance):
 
-```bash
-   $ :nxt_hint:`venv/bin/mkwsgiinstance <Zope's own script>` -d :nxt_ph:`instance <The Zope instance's home directory>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "venv/bin/mkwsgiinstance", tooltip: "Zope's own script", nxt_type: "nxt_hint" }, { number: "2", display_text: "instance", tooltip: "The Zope instance's home directory", nxt_type: "nxt_hint" }]}>{`   $ NXT1 -d NXT2`}</Code_Block>
 
 To run the instance on Unit, create a WSGI entry point:
 
-```python
-   from pathlib import Path
+<Code_Block language="python" hints={[{ number: "1", display_text: "str(Path(__file__).parent / 'etc/zope.conf'", tooltip: "Path to the instance's configuration file", nxt_type: "nxt_hint" }]}>{`   from pathlib import Path
    from Zope2.Startup.run import make_wsgi_app
 
-   wsgiapp = make_wsgi_app({}, :nxt_hint:`str(Path(__file__).parent / 'etc/zope.conf' <Path to the instance's configuration file>`))
-   def application(*args, **kwargs):return wsgiapp(*args, **kwargs)
-```
+   wsgiapp = make_wsgi_app({}, NXT1))
+   def application(*args, **kwargs):return wsgiapp(*args, **kwargs)`}</Code_Block>
 
 Save the script as **wsgi.py** in the instance home directory (here, it’s **/path/to/app/instance/**).
 
 Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-#### NOTE
-
-The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
 For further details, including permissions, see the [security checklist](security.md#security-apps).
 
@@ -147,10 +139,8 @@ Last, [prepare](../configuration.md#configuration-python) the Zope configuration
 
 3\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.

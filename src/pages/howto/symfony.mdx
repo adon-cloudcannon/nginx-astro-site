@@ -6,22 +6,26 @@ title: Symfony
 
 To run apps built with the [Symfony](https://symfony.com) framework using Unit:
 
-1. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP 7.2.5+ language module.
-2. Next, [install](https://symfony.com/doc/current/setup.html) Symfony and
+1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP 7.2.5+ language module.
+
+2\. Next, [install](https://symfony.com/doc/current/setup.html) Symfony and
    create or deploy your app.  Here, we use Symfony’s [reference app](https://symfony.com/doc/current/setup.html#the-symfony-demo-application):
-   ```bash
+   
+```bash
    $ cd :nxt_ph:`/path/to/ <Path where the application directory will be created; use a real path in your configuration>`
    $ symfony new --demo :nxt_ph:`app <Arbitrary app name>`
-   ```
+```
 
    This creates the app’s directory tree at **/path/to/app/**.  Its
    **public/** subdirectory contains both the root **index.php** and
    the static files; if your app requires additional **.php** scripts, also
    store them here.
-3. Run the following command so Unit can access :
-   ```bash
+
+3\. Run the following command so Unit can access :
+   
+```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-   ```
+```
 
    #### NOTE
    The **unit:unit** user-group pair is available only with [official
@@ -29,9 +33,11 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
    the **ps aux | grep unitd** command to be sure.
 
    For further details, including permissions, see the [security checklist](security.md#security-apps).
-4. Next, [prepare](../configuration.md#configuration-php) the Symfony configuration for Unit
+
+4\. Next, [prepare](../configuration.md#configuration-php) the Symfony configuration for Unit
    (use real values for **share** and **root**):
-   ```json
+   
+```json
    {
        "listeners": {
            "*:80": {
@@ -78,7 +84,7 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
            }
        }
    }
-   ```
+```
 
    #### NOTE
    The difference between the **pass** targets is their usage of the
@@ -90,12 +96,14 @@ To run apps built with the [Symfony](https://symfony.com) framework using Unit:
 
    For a detailed discussion, see [Configuring a Web Server](https://symfony.com/doc/current/setup/web_server_configuration.html) in
    Symfony docs.
-5. Upload the updated configuration.  Assuming the JSON above was added to
+
+5\. Upload the updated configuration.  Assuming the JSON above was added to
    `config.json`:
-   ```bash
+   
+```bash
    # curl -X PUT --data-binary @config.json --unix-socket \
           :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-   ```
+```
 
    #### NOTE
    The [control socket](../controlapi.md#configuration-socket) path may vary; run

@@ -1,27 +1,23 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Trac
 ---
 # Trac
 
-#### WARNING
-So far, Unit doesn’t support handling the **REMOTE_USER** headers
-directly, so authentication should be implemented via external means.  For
-example, consider using [trac-oidc](https://pypi.org/project/trac-oidc/) or
-[OAuth2Plugin](https://trac-hacks.org/wiki/OAuth2Plugin).
+<Note type="warning">
+So far, Unit doesn’t support handling the **REMOTE\_USER** headers directly, so authentication should be implemented via external means. For example, consider using [trac-oidc](https://pypi.org/project/trac-oidc/) or [OAuth2Plugin](https://trac-hacks.org/wiki/OAuth2Plugin).
+</Note>
 
-To run the [Trac](https://trac.edgewall.org) issue tracking system using
-Unit:
+To run the [Trac](https://trac.edgewall.org) issue tracking system using Unit:
 
 1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a Python 2 language module.
 
-   #### NOTE
-   As of now, Trac [doesn’t fully support](https://trac.edgewall.org/ticket/12130) Python 3.  Mind that Python 2
-   is officially deprecated.
+<Note type="note">
+As of now, Trac [doesn’t fully support](https://trac.edgewall.org/ticket/12130) Python 3. Mind that Python 2 is officially deprecated.
+</Note>
 
-2\. Prepare and activate a [virtual environment](https://virtualenv.pypa.io/en/latest/) to contain your installation
-   (assuming **virtualenv** is installed):
-   
+2\. Prepare and activate a [virtual environment](https://virtualenv.pypa.io/en/latest/) to contain your installation (assuming **virtualenv** is installed):
+
 ```bash
    $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
    $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
@@ -29,9 +25,8 @@ Unit:
    $ source venv/bin/activate
 ```
 
-3\. Next, [install Trac](https://trac.edgewall.org/wiki/TracInstall) and its
-   optional dependencies, then initialize a [Trac environment](https://trac.edgewall.org/wiki/TracEnvironment) and deploy static files:
-   
+3\. Next, [install Trac](https://trac.edgewall.org/wiki/TracInstall) and its optional dependencies, then initialize a [Trac environment](https://trac.edgewall.org/wiki/TracEnvironment) and deploy static files:
+
 ```bash
    $ pip install Trac
    $ pip install babel docutils genshi \
@@ -45,11 +40,7 @@ Unit:
    $ deactivate
 ```
 
-4\. Unit [uses WSGI](../configuration.md#configuration-python) to run Python apps, so a
-   [wrapper](https://trac.edgewall.org/wiki/1.3/TracModWSGI#Averybasicscript)
-   script is required to run Trac as a Unit app; let’s save it as
-   **/path/to/app/trac_wsgi.py**.  Here, the **application** callable
-   serves as the entry point for the app:
+4\. Unit [uses WSGI](../configuration.md#configuration-python) to run Python apps, so a [wrapper](https://trac.edgewall.org/wiki/1.3/TracModWSGI#Averybasicscript) script is required to run Trac as a Unit app; let’s save it as **/path/to/app/trac\_wsgi.py**.  Here, the **application** callable serves as the entry point for the app:
 
 ```python
    import trac.web.main
@@ -60,24 +51,20 @@ Unit:
 ```
 
 5\. Run the following command so Unit can access :
-   
+
 ```bash
    # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
 ```
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
+For further details, including permissions, see the [security checklist](security.md#security-apps).
 
-6\. Next, [prepare](../configuration.md#configuration-python) the Trac configuration for Unit
-   (use real values for **share**, **path**, **home**,
-   **module**, **TRAC_ENV**, and **PYTHON_EGG_CACHE**):
-   
-```json
-   {
+6\. Next, [prepare](../configuration.md#configuration-python) the Trac configuration for Unit (use real values for **share**, **path**, **home**, **module**, **TRAC\_ENV**, and **PYTHON\_EGG\_CACHE**):
+
+<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/static", tooltip: "Path to the static files; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_hint" }, { number: "5", display_text: "trac_wsgi", tooltip: "WSGI module basename from Step 4 with extension omitted", nxt_type: "nxt_hint" }, { number: "6", display_text: "/path/to/app/trac_env/", tooltip: "Path to the Trac environment; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "/path/to/app/trac_env", tooltip: "Path to the Python egg cache for Trac; use a real path in your configuration", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -90,7 +77,7 @@ Unit:
                    "uri": "/chrome/*"
                },
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app/static <Path to the static files; use a real path in your configuration>`$uri"
+                   "NXT1": "NXT2$uri"
                }
            },
            {
@@ -103,34 +90,26 @@ Unit:
        "applications": {
            "trac": {
                "type": "python 2",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-               "home": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`venv/",
-               "module": ":nxt_hint:`trac_wsgi <WSGI module basename from Step 4 with extension omitted>`",
+               "path": "NXT3",
+               "home": "NXT4/venv/",
+               "module": "NXT5",
                "environment": {
-                   "TRAC_ENV": ":nxt_ph:`/path/to/app/trac_env/ <Path to the Trac environment; use a real path in your configuration>`",
-                   "PYTHON_EGG_CACHE": ":nxt_ph:`/path/to/app/trac_env/ <Path to the Python egg cache for Trac; use a real path in your configuration>`eggs/"
+                   "TRAC_ENV": "NXT6",
+                   "PYTHON_EGG_CACHE": "NXT7/eggs/"
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
-   The route serves requests for static files in Trac’s **/chrome/**
-   [hierarchy](https://trac.edgewall.org/wiki/TracDev/TracURLs) from the
-   **static/** directory.
+The route serves requests for static files in Trac’s **/chrome/** [hierarchy](https://trac.edgewall.org/wiki/TracDev/TracURLs) from the **static/** directory.
 
-7\. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-   After a successful update, Trac should be available on the listener’s IP
-   address and port:
-   ![Trac on Unit - New Ticket Screen](/trac.png)
+<Note type="note">
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
+
+After a successful update, Trac should be available on the listener’s IP address and port: ![Trac on Unit - New Ticket Screen](/trac.png)

@@ -76,8 +76,7 @@ For further details, including permissions, see the [security checklist](securit
 
 5\. Next, [prepare](../configuration.md#configuration-python) the Starlette configuration for Unit (use real values for **type**, **home**, and **path**), adding a [route](../configuration.md#configuration-routes) to serve static content:
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "Y", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Path to the ASGI module", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/venv/", tooltip: "Path to the virtual environment, if any", nxt_type: "nxt_ph" }, { number: "6", display_text: "asgi", tooltip: "ASGI module filename with extension omitted", nxt_type: "nxt_hint" }, { number: "7", display_text: "app", tooltip: "Name of the callable in the module to run", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -91,7 +90,7 @@ For further details, including permissions, see the [security checklist](securit
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_ph:`/path/to/app <Thus, URIs starting with /static/ are served from /path/to/app/static/; use a real path in your configuration>`$uri"
+                   "NXT1": "NXT2$uri"
                }
            },
 
@@ -104,15 +103,14 @@ For further details, including permissions, see the [security checklist](securit
 
        "applications": {
            "starlette": {
-               "type": "python 3.:nxt_ph:`Y <Must match language module version and virtual environment version>`",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the ASGI module>`",
-               "home": ":nxt_ph:`/path/to/app/venv/ <Path to the virtual environment, if any>`",
-               "module": ":nxt_hint:`asgi <ASGI module filename with extension omitted>`",
-               "callable": ":nxt_hint:`app <Name of the callable in the module to run>`"
+               "type": "python 3.NXT3",
+               "path": "NXT4",
+               "home": "NXT5",
+               "module": "NXT6",
+               "callable": "NXT7"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

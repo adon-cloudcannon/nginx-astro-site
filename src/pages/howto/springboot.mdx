@@ -72,8 +72,7 @@ For further details, including permissions, see the [security checklist](securit
 
 4\. Next, [put together](../configuration.md#configuration-java) the Spring Boot configuration (use a real value for **working\_directory**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "gradle-or-maven-build-dir/demo.war", tooltip: "Relative pathname of your .war file", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "applications/bootdemo"
@@ -83,12 +82,11 @@ For further details, including permissions, see the [security checklist](securit
        "applications": {
            "bootdemo": {
                "type": "java",
-               "webapp": ":nxt_ph:`gradle-or-maven-build-dir/demo.war <Relative pathname of your .war file>`",
-               "working_directory": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`demo/"
+               "webapp": "NXT1",
+               "working_directory": "NXT2/demo/"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 5\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

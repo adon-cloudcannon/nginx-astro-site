@@ -331,33 +331,29 @@ Finally, mind that global installation is preferable for the Node.js module.
 
 If you customized the executable pathname with `--go` or `--node`, use the following pattern:
 
-```bash
-$ ./configure nodejs --node=:nxt_hint:`/usr/local/bin/node8.12 <Executable pathname>`
-# make :nxt_hint:`/usr/local/bin/node8.12 <Executable pathname becomes a part of the target>`-install
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/usr/local/bin/node8.12", tooltip: "Executable pathname", nxt_type: "nxt_hint" }, { number: "2", display_text: "/usr/local/bin/node8.12", tooltip: "Executable pathname becomes a part of the target", nxt_type: "nxt_hint" }, { number: "3", display_text: "/usr/local/bin/go1.7", tooltip: "Executable pathname", nxt_type: "nxt_hint" }, { number: "4", display_text: "/usr/local/bin/go1.7", tooltip: "Executable pathname becomes a part of the target", nxt_type: "nxt_hint" }]}>{`$ ./configure nodejs --node=NXT1
+# make NXT2-install
 
-$ ./configure go --go=:nxt_hint:`/usr/local/bin/go1.7 <Executable pathname>`
-# make :nxt_hint:`/usr/local/bin/go1.7 <Executable pathname becomes a part of the target>`-install
-```
-
-&nbsp;
+$ ./configure go --go=NXT3
+# make NXT4-install`}</Code_Block>
 
 ## Startup and Shutdown
 
-#### WARNING
-
+<Note type="warning">
 We advise installing Unit from [precompiled packages](../installation.md#installation-precomp-pkgs); in this case, startup is [configured](../installation.md#installation-precomp-startup) automatically.
 
-Even if you install Unit otherwise, avoid manual startup.  Instead, configure a service manager (**OpenRC**, **systemd**, and so on) or create an **rc.d** script to launch the Unit daemon using the options below.
+Even if you install Unit otherwise, avoid manual startup. Instead, configure a service manager (**OpenRC**, **systemd**, and so on) or create an **rc.d** script to launch the Unit daemon using the options below.
+</Note>
 
 The startup command depends on the directories you set with **./configure**, but their default values place the **unitd** binary in a well-known place, so:
 
-```bash
-# :nxt_hint:`unitd <Your PATH environment variable should list a path to unitd>` :nxt_ph:`RUNTIME OPTIONS <See the table below>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unitd", tooltip: "Your PATH environment variable should list a path to unitd", nxt_type: "nxt_hint" }, { number: "2", display_text: "RUNTIME OPTIONS", tooltip: "See the table below", nxt_type: "nxt_ph" }]}>{`# NXT1 NXT2`}</Code_Block>
 
 Run **unitd -h** or **unitd --version** to list Unit’s compile-time settings.  Usually, the defaults don’t require overrides; still, the following runtime options are available.  For their compile-time counterparts, see [here](#source-config-src).
 
-<table><thead><tr><th><p><strong>--help</strong>, <strong>-h</strong></p></th><th><p>Displays a summary of the command-line options and their defaults.</p></th></tr></thead><tbody><tr><td><p><strong>--version</strong></p></td><td><p>Displays Unit’s version and the <strong>./configure</strong> settings it was<br />built with.</p></td></tr><tr><td><p><strong>--no-daemon</strong></p></td><td><p>Runs Unit in non-daemon mode.</p></td></tr><tr><td><p><strong>--control socket</strong></p></td><td><p>Control API socket address in IPv4, IPv6, or UNIX domain format:<br /><br /><code>bash&lt;br/&gt;# unitd --control 127.0.0.1:8080&lt;br/&gt;# unitd --control [::1]:8080&lt;br/&gt;# unitd --control :nxt_hint:`unix:/path/to/control.unit.sock &lt;Note the unix: prefix&gt;`&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>--control-mode</strong></p></td><td><p>Sets the permission of the UNIX domain control socket. Default: 0600</p></td></tr><tr><td><p><strong>--control-user</strong></p></td><td><p>Sets the owner of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--control-group</strong></p></td><td><p>Sets the group of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--group name</strong>, <strong>--user name</strong></p></td><td><p>Group name and user name used to run Unit’s non-privileged<br /><a href="security.md#security-apps">processes</a>.</p></td></tr><tr><td><p><strong>--log pathname</strong></p></td><td><p>Pathname for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.</p></td></tr><tr><td><p><strong>--modules directory</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a><br />(<strong>*.unit.so</strong> files).</p></td></tr><tr><td><p><strong>--pid pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.</p></td></tr><tr><td><p><strong>--state directory</strong></p></td><td><p>Directory path for Unit’s state storage.</p></td></tr><tr><td><p><strong>--tmp directory</strong></p></td><td><p>Directory path for Unit’s temporary file storage.</p></td></tr></tbody></table>
+<table><thead><tr><th><p><strong>--help</strong>, <strong>-h</strong></p></th><th><p>Displays a summary of the command-line options and their defaults.</p></th></tr></thead><tbody><tr><td><p><strong>--version</strong></p></td><td><p>Displays Unit’s version and the <strong>./configure</strong> settings it was<br />built with.</p></td></tr><tr><td><p><strong>--no-daemon</strong></p></td><td><p>Runs Unit in non-daemon mode.</p></td></tr><tr><td><p><strong>--control socket</strong></p></td><td><p>Control API socket address in IPv4, IPv6, or UNIX domain format:<br /></p><Code_Block language="bash" hints={[{ number: "1", display_text: "unix:/path/to/control.unit.sock", tooltip: "Note the unix: prefix", nxt_type: "nxt_hint" }]}>{`# unitd --control 127.0.0.1:8080
+# unitd --control [::1]:8080
+# unitd --control NXT1`}</Code_Block></td></tr><tr><td><p><strong>--control-mode</strong></p></td><td><p>Sets the permission of the UNIX domain control socket. Default: 0600</p></td></tr><tr><td><p><strong>--control-user</strong></p></td><td><p>Sets the owner of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--control-group</strong></p></td><td><p>Sets the group of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--group name</strong>, <strong>--user name</strong></p></td><td><p>Group name and user name used to run Unit’s non-privileged<br /><a href="security.md#security-apps">processes</a>.</p></td></tr><tr><td><p><strong>--log pathname</strong></p></td><td><p>Pathname for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.</p></td></tr><tr><td><p><strong>--modules directory</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a><br />(<strong>*.unit.so</strong> files).</p></td></tr><tr><td><p><strong>--pid pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.</p></td></tr><tr><td><p><strong>--state directory</strong></p></td><td><p>Directory path for Unit’s state storage.</p></td></tr><tr><td><p><strong>--tmp directory</strong></p></td><td><p>Directory path for Unit’s temporary file storage.</p></td></tr></tbody></table>
 
 Finally, to stop a running Unit:
 

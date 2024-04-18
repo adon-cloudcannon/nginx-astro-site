@@ -1,102 +1,81 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Building From Source
 ---
 # Building From Source
 
-After you’ve obtained Unit’s [source code](../installation.md#source), configure
-and compile it to fine-tune and run a custom Unit build.
-
-<a id="source-prereq-build"></a>
+After you’ve obtained Unit’s [source code](../installation.md#source), configure and compile it to fine-tune and run a custom Unit build.
 
 ## Installing Required Software
 
-Before configuring and compiling Unit, install the required build tools and the
-library files for the  and all other features you want in your
-Unit, such as TLS or regular expressions.
+Before configuring and compiling Unit, install the required build tools and the library files for the  and all other features you want in your Unit, such as TLS or regular expressions.
 
-The commands below assume you are configuring Unit with all supported languages
-and features (**X**, **Y**, and **Z** denote major, minor, and
-revision numbers, respectively); omit the packages you won’t use.
+The commands below assume you are configuring Unit with all supported languages and features (**X**, **Y**, and **Z** denote major, minor, and revision numbers, respectively); omit the packages you won’t use.
 
-```bash
-# apt install build-essential
+<Code_Block language="bash" hints={[{ number: "1", display_text: "VERSION", tooltip: "Node.js 8.11 or later is supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "pythonX", tooltip: "Both Python 2 and Python 3 are supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "X", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# apt install build-essential
 # apt install golang
-# apt install curl && \
-      curl -sL https://deb.nodesource.com/setup_:nxt_ph:`VERSION <Node.js 8.11 or later is supported>`.x | bash - && \
+# apt install curl && \\
+      curl -sL https://deb.nodesource.com/setup_NXT1.x | bash - && \\
       apt install nodejs
 # npm install -g node-gyp
 # apt install php-dev libphp-embed
 # apt install libperl-dev
-# apt install python:nxt_ph:`X <Both Python 2 and Python 3 are supported>`-dev
+# apt install NXT2-dev
 # apt install ruby-dev ruby-rack
-# apt install openjdk-:nxt_ph:`X <Java 8 or later is supported. Different JDKs may be used>`-jdk
+# apt install openjdk-NXT3-jdk
 # apt install libssl-dev
-# apt install libpcre2-dev
-```
+# apt install libpcre2-dev`}</Code_Block>
 
-```bash
-# yum install gcc make
+<Code_Block language="bash" hints={[{ number: "1", display_text: "VERSION", tooltip: "Node.js 8.11 or later is supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "pythonX", tooltip: "Both Python 2 and Python 3 are supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "X.Y.Z", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# yum install gcc make
 # yum install golang
-# yum install curl && \
-      curl -sL https://rpm.nodesource.com/setup_:nxt_ph:`VERSION <Node.js 8.11 or later is supported>`.x | bash - && \
+# yum install curl && \\
+      curl -sL https://rpm.nodesource.com/setup_NXT1.x | bash - && \\
       yum install nodejs
 # npm install -g node-gyp
 # yum install php-devel php-embedded
 # yum install perl-devel perl-libs
-# yum install python:nxt_ph:`X <Both Python 2 and Python 3 are supported>`-devel
+# yum install NXT2-devel
 # yum install ruby-devel rubygem-rack
-# yum install java-:nxt_ph:`X.Y.Z <Java 8 or later is supported. Different JDKs may be used>`-openjdk-devel
+# yum install java-NXT3-openjdk-devel
 # yum install openssl-devel
-# yum install pcre2-devel
-```
+# yum install pcre2-devel`}</Code_Block>
 
 Ports:
 
-```bash
-# cd /usr/ports/lang/go/ && make install clean
+<Code_Block language="bash" hints={[{ number: "1", display_text: "phpXY", tooltip: "PHP versions 5, 7, and 8 are supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "perlX.Y", tooltip: "Perl 5.12 or later is supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "rubyXY", tooltip: "Ruby 2.0 or later is supported", nxt_type: "nxt_ph" }, { number: "4", display_text: "openjdkX", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# cd /usr/ports/lang/go/ && make install clean
 # cd /usr/ports/www/node/ && make install clean
 # cd /usr/ports/www/npm/ && make install clean && npm i -g node-gyp
-# cd /usr/ports/lang/php:nxt_ph:`XY <PHP versions 5, 7, and 8 are supported>`/ && make install clean
-# cd /usr/ports/lang/perl:nxt_ph:`X.Y <Perl 5.12 or later is supported>`/ && make install clean
+# cd /usr/ports/lang/NXT1/ && make install clean
+# cd /usr/ports/lang/NXT2/ && make install clean
 # cd /usr/ports/lang/python/ && make install clean
-# cd /usr/ports/lang/ruby:nxt_ph:`XY <Ruby 2.0 or later is supported>`/ && make install clean
-# cd /usr/ports/java/openjdk:nxt_ph:`X <Java 8 or later is supported. Different JDKs may be used>`/ && make install clean
+# cd /usr/ports/lang/NXT3/ && make install clean
+# cd /usr/ports/java/NXT4/ && make install clean
 # cd /usr/ports/security/openssl/ && make install clean
-# cd /usr/ports/devel/pcre2/ && make install clean
-```
+# cd /usr/ports/devel/pcre2/ && make install clean`}</Code_Block>
 
 Packages:
 
-```bash
-# pkg install go
+<Code_Block language="bash" hints={[{ number: "1", display_text: "phpXY", tooltip: "PHP versions 5, 7, and 8 are supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "perlX", tooltip: "Perl 5.12 or later is supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "rubyXY", tooltip: "Ruby 2.0 is supported", nxt_type: "nxt_ph" }, { number: "4", display_text: "openjdkX", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# pkg install go
 # pkg install node && pkg install npm && npm i -g node-gyp
-# pkg install php:nxt_ph:`XY <PHP versions 5, 7, and 8 are supported>`
-# pkg install perl:nxt_ph:`X <Perl 5.12 or later is supported>`
+# pkg install NXT1
+# pkg install NXT2
 # pkg install python
-# pkg install ruby:nxt_ph:`XY <Ruby 2.0 is supported>`
-# pkg install openjdk:nxt_ph:`X <Java 8 or later is supported. Different JDKs may be used>`
+# pkg install NXT3
+# pkg install NXT4
 # pkg install openssl
-# pkg install pcre2
-```
+# pkg install pcre2`}</Code_Block>
 
-```bash
-# pkg install gcc
+<Code_Block language="bash" hints={[{ number: "1", display_text: "php-XY", tooltip: "PHP versions 5, 7, and 8 are supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "jdk-X", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# pkg install gcc
 # pkg install golang
-# pkg install php-:nxt_ph:`XY <PHP versions 5, 7, and 8 are supported>`
+# pkg install NXT1
 # pkg install ruby
-# pkg install jdk-:nxt_ph:`X <Java 8 or later is supported. Different JDKs may be used>`
+# pkg install NXT2
 # pkg install openssl
-# pkg install pcre
-```
+# pkg install pcre`}</Code_Block>
 
-Also, use **gmake** instead of **make** when [building
-and installing](#source-bld-src) Unit on Solaris.
+Also, use **gmake** instead of **make** when [building and installing](#source-bld-src) Unit on Solaris.
 
-To build Unit with [njs](https://nginx.org/en/docs/njs/) support,
-download the **njs** code
-to the same parent directory
-as the Unit code.
+To build Unit with [njs](https://nginx.org/en/docs/njs/) support, download the **njs** code to the same parent directory as the Unit code.
 
 If you’d like to use [Mercurial](https://www.mercurial-scm.org/downloads):
 
@@ -121,32 +100,15 @@ $ ./configure :nxt_hint:`--no-zlib --no-libxml2 <Ensures Unit can link against t
 
 Point to the resulting source and build directories when [configuring](#source-config-src-njs) the Unit code.
 
-To build Unit with support for the WebAssembly Component Model,
-you need **rust** version 1.76.0+, **cargo** and the developer
-package for **clang** as mentioned in the
-[Required Software Section](#source-prereq-build).
+To build Unit with support for the WebAssembly Component Model, you need **rust** version 1.76.0+, **cargo** and the developer package for **clang** as mentioned in the [Required Software Section](#source-prereq-build).
 
-Next please refer to
-[Configuring Modules - WebAssembly](#modules-webassembly) for
-further instructions.
+Next please refer to [Configuring Modules - WebAssembly](#modules-webassembly) for further instructions.
 
 #### WARNING
-The **unit-wasm** module is deprecated.
-We recommend using **wasm-wasi-component** instead,
-available in Unit 1.32.0 and later, which supports
-WebAssembly Components using standard WASI 0.2 interfaces.
 
-To build Unit with the [WebAssembly](https://webassembly.org)
-language module,
-you need the
-[Wasmtime](https://wasmtime.dev)
-runtime.
-Download the C API
-[files](https://github.com/bytecodealliance/wasmtime/releases/)
-suitable for your OS and architecture
-to the same parent directory
-as the Unit code,
-for example:
+The **unit-wasm** module is deprecated. We recommend using **wasm-wasi-component** instead, available in Unit 1.32.0 and later, which supports WebAssembly Components using standard WASI 0.2 interfaces.
+
+To build Unit with the [WebAssembly](https://webassembly.org) language module, you need the [Wasmtime](https://wasmtime.dev) runtime. Download the C API [files](https://github.com/bytecodealliance/wasmtime/releases/) suitable for your OS and architecture to the same parent directory as the Unit code, for example:
 
 ```bash
 $ cd ..
@@ -154,11 +116,9 @@ $ wget -O- https://github.com/bytecodealliance/wasmtime/releases/download/v12.0.
       | tar Jxf -  # Unpacks to the current directory
 ```
 
-Point to the resulting **include** and **lib** directories when
-[configuring](#modules-webassembly) the Unit code.
+Point to the resulting **include** and **lib** directories when [configuring](#modules-webassembly) the Unit code.
 
-To build WebAssembly apps that run on Unit, you need
-the [wasi-sysroot](https://github.com/WebAssembly/wasi-sdk) SDK:
+To build WebAssembly apps that run on Unit, you need the [wasi-sysroot](https://github.com/WebAssembly/wasi-sdk) SDK:
 
 ```bash
 $ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sysroot-20.0.tar.gz | tar zxf -
@@ -170,54 +130,35 @@ When building the apps, add the following environment variable:
 WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot-dir/ <wasi-sysroot directory>`
 ```
 
-<a id="source-config-src"></a>
+&nbsp;
 
 ## Configuring Sources
 
-To run system compatibility checks and generate a **Makefile** with core
-build instructions for Unit:
+To run system compatibility checks and generate a **Makefile** with core build instructions for Unit:
 
 ```bash
 $ ./configure :nxt_ph:`COMPILE-TIME OPTIONS <See the table below>`
 ```
 
-Finalize the resulting **Makefile** by configuring the [language
-modules](#source-modules) you need before proceeding further.
+Finalize the resulting **Makefile** by configuring the [language modules](#source-modules) you need before proceeding further.
 
-General options and settings that control compilation, runtime privileges,
-or support for certain features:
+General options and settings that control compilation, runtime privileges, or support for certain features:
 
-| **--help**                                 | Displays a summary of common **./configure** options.<br/><br/>For language-specific details, run **./configure \<language\><br/>--help** or see [below](#source-modules).                                                                                                                                                                                                                      |
-|--------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--cc=pathname**                          | Custom C compiler pathname.<br/><br/>The default is **cc**.                                                                                                                                                                                                                                                                                                                                   |
-| **--cc-opt=options**, **--ld-opt=options** | Extra options for the C compiler and linker.                                                                                                                                                                                                                                                                                                                                                  |
-| **--group=name**, **--user=name**          | Group name and username to run Unit’s non-privileged [processes](security.md#security-apps).<br/><br/>The defaults are `--user`’s primary group and<br/>**nobody**, respectively.                                                                                                                                                                                                             |
-| **--debug**                                | Turns on the [debug log](../troubleshooting.md#troubleshooting-dbg-log).                                                                                                                                                                                                                                                                                                                      |
-| **--no-ipv6**                              | Turns off IPv6 support.                                                                                                                                                                                                                                                                                                                                                                       |
-| **--no-unix-sockets**                      | Turns off UNIX domain sockets support for control and routing.                                                                                                                                                                                                                                                                                                                                |
-| **--openssl**                              | Turns on OpenSSL support.  Make sure OpenSSL (1.0.1+) header files and<br/>libraries are in your compiler’s path; it can be set with the<br/>`--cc-opt` and `--ld-opt` options or the<br/>`CFLAGS` and `LDFLAGS` environment variables when<br/>running **./configure**.<br/><br/>For details of TLS configuration in Unit, see [SSL/TLS certificates](../certificates.md#configuration-ssl). |
+<table><thead><tr><th><p><strong>--help</strong></p></th><th><p>Displays a summary of common <strong>./configure</strong> options.<br /><br />For language-specific details, run <strong>./configure &lt;language&gt;<br />--help</strong> or see <a href="#source-modules">below</a>.</p></th></tr></thead><tbody><tr><td><p><strong>--cc=pathname</strong></p></td><td><p>Custom C compiler pathname.<br /><br />The default is <strong>cc</strong>.</p></td></tr><tr><td><p><strong>--cc-opt=options</strong>, <strong>--ld-opt=options</strong></p></td><td><p>Extra options for the C compiler and linker.</p></td></tr><tr><td><p><strong>--group=name</strong>, <strong>--user=name</strong></p></td><td><p>Group name and username to run Unit’s non-privileged <a href="security.md#security-apps">processes</a>.<br /><br />The defaults are <code>--user</code>’s primary group and<br /><strong>nobody</strong>, respectively.</p></td></tr><tr><td><p><strong>--debug</strong></p></td><td><p>Turns on the <a href="../troubleshooting.md#troubleshooting-dbg-log">debug log</a>.</p></td></tr><tr><td><p><strong>--no-ipv6</strong></p></td><td><p>Turns off IPv6 support.</p></td></tr><tr><td><p><strong>--no-unix-sockets</strong></p></td><td><p>Turns off UNIX domain sockets support for control and routing.</p></td></tr><tr><td><p><strong>--openssl</strong></p></td><td><p>Turns on OpenSSL support.  Make sure OpenSSL (1.0.1+) header files and<br />libraries are in your compiler’s path; it can be set with the<br /><code>--cc-opt</code> and <code>--ld-opt</code> options or the<br /><code>CFLAGS</code> and <code>LDFLAGS</code> environment variables when<br />running <strong>./configure</strong>.<br /><br />For details of TLS configuration in Unit, see <a href="../certificates.md#configuration-ssl">SSL/TLS certificates</a>.</p></td></tr></tbody></table>
 
-<a id="source-config-src-pcre"></a>
+&nbsp;
 
-By default, Unit relies on the locally installed version of the [PCRE](https://www.pcre.org) library to support regular expressions in [routes](../configuration.md#configuration-routes); if both major versions are present, Unit selects
-PCRE2.  Two additional options alter this behavior:
+By default, Unit relies on the locally installed version of the [PCRE](https://www.pcre.org) library to support regular expressions in [routes](../configuration.md#configuration-routes); if both major versions are present, Unit selects PCRE2.  Two additional options alter this behavior:
 
-| **--no-regex**   | Turns off regex support; any attempts to use a regex in Unit<br/>configuration cause an error.   |
-|------------------|--------------------------------------------------------------------------------------------------|
-| **--no-pcre2**   | Ignores PCRE2; the older PCRE 8.x library is used instead.                                       |
+<table><thead><tr><th><p><strong>--no-regex</strong></p></th><th><p>Turns off regex support; any attempts to use a regex in Unit<br />configuration cause an error.</p></th></tr></thead><tbody><tr><td><p><strong>--no-pcre2</strong></p></td><td><p>Ignores PCRE2; the older PCRE 8.x library is used instead.</p></td></tr></tbody></table>
 
-<a id="source-config-src-njs"></a>
+&nbsp;
 
-Unit also supports the use of [njs](https://nginx.org/en/docs/njs/) scripts
-in configuration; to enable this feature, use the respective option:
+Unit also supports the use of [njs](https://nginx.org/en/docs/njs/) scripts in configuration; to enable this feature, use the respective option:
 
-| **--njs**   | Turns on **njs** support; requires **--openssl**.   |
-|-------------|-----------------------------------------------------|
+<table><thead><tr><th><p><strong>--njs</strong></p></th><th><p>Turns on <strong>njs</strong> support; requires <strong>--openssl</strong>.</p></th></tr></thead></table>
 
-When `--njs` is enabled, the `--cc-opt` and
-`--ld-opt` option values should point to the **src/**
-and **build/** subdirectories of the **njs** source code.
-For example, if you cloned the **njs** repo beside the Unit repo:
+When `--njs` is enabled, the `--cc-opt` and `--ld-opt` option values should point to the **src/** and **build/** subdirectories of the **njs** source code. For example, if you cloned the **njs** repo beside the Unit repo:
 
 ```bash
 $ ./configure --njs --openssl \
@@ -226,132 +167,73 @@ $ ./configure --njs --openssl \
               ...
 ```
 
-The next option group customizes Unit’s runtime [directory
-structure](#source-dir):
+The next option group customizes Unit’s runtime [directory structure](#source-dir):
 
-| **--prefix=PREFIX**                                | <a id="source-config-src-prefix"></a><br/><br/>Destination directory prefix for [path options](#source-dir):<br/>`--bindir`,<br/>`--sbindir`,<br/>`--includedir`,<br/>`--libdir`,<br/>`--modulesdir`,<br/>`--datarootdir`,<br/>`--mandir`,<br/>`--localstatedir`,<br/>`--libstatedir`,<br/>`--runstatedir`,<br/>`--logdir`,<br/>`--tmpdir`,<br/>`--control`,<br/>`--pid`,<br/>`--log`.<br/><br/>The default is **/usr/local**.                                                                                                                                                                                                                         |
-|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--exec-prefix=EXEC_PREFIX**                      | Destination directory prefix for the executable directories only.<br/><br/>The default is the **PREFIX** value.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| **--bindir=BINDIR**, **--sbindir=SBINDIR**         | Directory paths for client and server executables.<br/><br/>The defaults are **EXEC_PREFIX/bin** and **EXEC_PREFIX/sbin**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **--includedir=INCLUDEDIR**, **--libdir=LIBDIR**   | Directory paths for **libunit** header files and libraries.<br/><br/>The defaults are **PREFIX/include** and **EXEC_PREFIX/lib**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **--modulesdir=MODULESDIR**                        | Directory path for Unit’s language [modules](modules.md).<br/><br/>The default is **LIBDIR/unit/modules**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **--datarootdir=DATAROOTDIR**, **--mandir=MANDIR** | Directory path for **unitd(8)** data storage and its subdirectory<br/>where the **man** page is installed.<br/><br/>The defaults are **PREFIX/share** and **DATAROOTDIR/man**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| **--localstatedir=LOCALSTATEDIR**                  | Directory path where Unit stores its runtime state, PID file,<br/>control socket, and logs.<br/><br/>The default is **PREFIX/var**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| **--libstatedir=LIBSTATEDIR**                      | <a id="source-config-src-state"></a><br/><br/>Directory path where Unit’s runtime state (configuration, certificates,<br/>other resources) is stored between runs.  If you migrate your<br/>installation, copy the entire directory.<br/><br/>#### WARNING<br/>The directory is sensitive and must be owned by **root** with<br/>**700** permissions.  Don’t change its contents externally; use<br/>the config API to ensure integrity.<br/><br/>The default is **LOCALSTATEDIR/run/unit**.                                                                                                                                                           |
-| **--logdir=LOGDIR**, **--log=LOGFILE**             | Directory path and filename for Unit’s [log](../troubleshooting.md#troubleshooting-log).<br/><br/>The defaults are **LOCALSTATEDIR/log/unit** and<br/>**LOGDIR/unit.log**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| **--runstatedir=RUNSTATEDIR**                      | Directory path where Unit stores its PID file and control socket.<br/><br/>The default is **LOCALSTATEDIR/run/unit**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **--pid=pathname**                                 | Pathname for the PID file of Unit’s **main** [process](security.md#security-apps).<br/><br/>The default is **RUNSTATEDIR/unit.pid**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| **--control=SOCKET**                               | [Control API](../controlapi.md#configuration-mgmt) socket address in IPv4, IPv6,<br/>or UNIX domain format:<br/><br/>```bash<br/>$ ./configure --control=127.0.0.1:8080<br/>$ ./configure --control=[::1]:8080<br/>$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix<br/>```<br/><br/>#### WARNING<br/>Avoid exposing an unprotected control socket in public networks.  Use<br/>[NGINX](integration.md#nginx-secure-api) or a different solution such as SSH<br/>for security and authentication.<br/><br/>The default is **unix:RUNSTATEDIR/control.unit.sock**, created as<br/>**root** with **600** permissions. |
-| **--tmpdir=TMPDIR**                                | Defines the temporary file storage location (used to dump large request<br/>bodies).<br/><br/>The default value is **/tmp**.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+<table><thead><tr><th><p><strong>--prefix=PREFIX</strong></p></th><th><p><br /><br />Destination directory prefix for <a href="#source-dir">path options</a>:<br /><code>--bindir</code>,<br /><code>--sbindir</code>,<br /><code>--includedir</code>,<br /><code>--libdir</code>,<br /><code>--modulesdir</code>,<br /><code>--datarootdir</code>,<br /><code>--mandir</code>,<br /><code>--localstatedir</code>,<br /><code>--libstatedir</code>,<br /><code>--runstatedir</code>,<br /><code>--logdir</code>,<br /><code>--tmpdir</code>,<br /><code>--control</code>,<br /><code>--pid</code>,<br /><code>--log</code>.<br /><br />The default is <strong>/usr/local</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--exec-prefix=EXEC_PREFIX</strong></p></td><td><p>Destination directory prefix for the executable directories only.<br /><br />The default is the <strong>PREFIX</strong> value.</p></td></tr><tr><td><p><strong>--bindir=BINDIR</strong>, <strong>--sbindir=SBINDIR</strong></p></td><td><p>Directory paths for client and server executables.<br /><br />The defaults are <strong>EXEC_PREFIX/bin</strong> and <strong>EXEC_PREFIX/sbin</strong>.</p></td></tr><tr><td><p><strong>--includedir=INCLUDEDIR</strong>, <strong>--libdir=LIBDIR</strong></p></td><td><p>Directory paths for <strong>libunit</strong> header files and libraries.<br /><br />The defaults are <strong>PREFIX/include</strong> and <strong>EXEC_PREFIX/lib</strong>.</p></td></tr><tr><td><p><strong>--modulesdir=MODULESDIR</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a>.<br /><br />The default is <strong>LIBDIR/unit/modules</strong>.</p></td></tr><tr><td><p><strong>--datarootdir=DATAROOTDIR</strong>, <strong>--mandir=MANDIR</strong></p></td><td><p>Directory path for <strong>unitd(8)</strong> data storage and its subdirectory<br />where the <strong>man</strong> page is installed.<br /><br />The defaults are <strong>PREFIX/share</strong> and <strong>DATAROOTDIR/man</strong>.</p></td></tr><tr><td><p><strong>--localstatedir=LOCALSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its runtime state, PID file,<br />control socket, and logs.<br /><br />The default is <strong>PREFIX/var</strong>.</p></td></tr><tr><td><p><strong>--libstatedir=LIBSTATEDIR</strong></p></td><td><p><br /><br />Directory path where Unit’s runtime state (configuration, certificates,<br />other resources) is stored between runs.  If you migrate your<br />installation, copy the entire directory.<br /><br />#### WARNING<br />The directory is sensitive and must be owned by <strong>root</strong> with<br /><strong>700</strong> permissions.  Don’t change its contents externally; use<br />the config API to ensure integrity.<br /><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--logdir=LOGDIR</strong>, <strong>--log=LOGFILE</strong></p></td><td><p>Directory path and filename for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.<br /><br />The defaults are <strong>LOCALSTATEDIR/log/unit</strong> and<br /><strong>LOGDIR/unit.log</strong>.</p></td></tr><tr><td><p><strong>--runstatedir=RUNSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its PID file and control socket.<br /><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--pid=pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.<br /><br />The default is <strong>RUNSTATEDIR/unit.pid</strong>.</p></td></tr><tr><td><p><strong>--control=SOCKET</strong></p></td><td><p><a href="../controlapi.md#configuration-mgmt">Control API</a> socket address in IPv4, IPv6,<br />or UNIX domain format:<br /><br /><code>bash&lt;br/&gt;$ ./configure --control=127.0.0.1:8080&lt;br/&gt;$ ./configure --control=[::1]:8080&lt;br/&gt;$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix&lt;br/&gt;</code><br /><br />#### WARNING<br />Avoid exposing an unprotected control socket in public networks.  Use<br /><a href="integration.md#nginx-secure-api">NGINX</a> or a different solution such as SSH<br />for security and authentication.<br /><br />The default is <strong>unix:RUNSTATEDIR/control.unit.sock</strong>, created as<br /><strong>root</strong> with <strong>600</strong> permissions.</p></td></tr><tr><td><p><strong>--tmpdir=TMPDIR</strong></p></td><td><p>Defines the temporary file storage location (used to dump large request<br />bodies).<br /><br />The default value is <strong>/tmp</strong>.</p></td></tr></tbody></table>
 
-<a id="source-dir"></a>
+&nbsp;
 
 ### Directory Structure
 
 By default, **make install** installs Unit at the following pathnames:
 
-| Directory             | Default Path                                       |
-|-----------------------|----------------------------------------------------|
-| **bin** directory     | **/usr/local/bin/**                                |
-| **sbin** directory    | **/usr/local/sbin/**                               |
-| **lib** directory     | **/usr/local/lib/**                                |
-| **include** directory | **/usr/local/include/**                            |
-| **tmp** directory     | **/tmp/**                                          |
-| Man pages             | **/usr/local/share/man/**                          |
-| Language modules      | **/usr/local/lib/unit/modules/**                   |
-| Runtime state         | **/usr/local/var/lib/unit/**                       |
-| PID file              | **/usr/local/var/run/unit/unit.pid**               |
-| Log file              | **/usr/local/var/log/unit/unit.log**               |
-| Control API socket    | **unix:/usr/local/var/run/unit/control.unit.sock** |
+<table><thead><tr><th><p>Directory</p></th><th><p>Default Path</p></th></tr></thead><tbody><tr><td><p><strong>bin</strong> directory</p></td><td><p><strong>/usr/local/bin/</strong></p></td></tr><tr><td><p><strong>sbin</strong> directory</p></td><td><p><strong>/usr/local/sbin/</strong></p></td></tr><tr><td><p><strong>lib</strong> directory</p></td><td><p><strong>/usr/local/lib/</strong></p></td></tr><tr><td><p><strong>include</strong> directory</p></td><td><p><strong>/usr/local/include/</strong></p></td></tr><tr><td><p><strong>tmp</strong> directory</p></td><td><p><strong>/tmp/</strong></p></td></tr><tr><td><p>Man pages</p></td><td><p><strong>/usr/local/share/man/</strong></p></td></tr><tr><td><p>Language modules</p></td><td><p><strong>/usr/local/lib/unit/modules/</strong></p></td></tr><tr><td><p>Runtime state</p></td><td><p><strong>/usr/local/var/lib/unit/</strong></p></td></tr><tr><td><p>PID file</p></td><td><p><strong>/usr/local/var/run/unit/unit.pid</strong></p></td></tr><tr><td><p>Log file</p></td><td><p><strong>/usr/local/var/log/unit/unit.log</strong></p></td></tr><tr><td><p>Control API socket</p></td><td><p><strong>unix:/usr/local/var/run/unit/control.unit.sock</strong></p></td></tr></tbody></table>
 
-The defaults are designed to work for most cases; to customize this layout,
-set the `--prefix` and its related options during [configuration](#source-config-src-prefix), defining the resulting file structure.
+The defaults are designed to work for most cases; to customize this layout, set the `--prefix` and its related options during [configuration](#source-config-src-prefix), defining the resulting file structure.
 
-<a id="source-modules"></a>
+&nbsp;
 
 ## Configuring Modules
 
-Next, configure a module for each language you want to use with Unit.  The
-**./configure \<language\>** commands set up individual language modules
-and place module-specific instructions in the **Makefile**.
+Next, configure a module for each language you want to use with Unit.  The **./configure &lt;language&gt;** commands set up individual language modules and place module-specific instructions in the **Makefile**.
 
 #### NOTE
-To run apps in several versions of a language, build and install a module
-for each version.  To package custom modules, see the module [howto](modules.md#modules-pkg).
 
-When you run **./configure go**, Unit sets up the Go package that
-lets your applications [run on Unit](../configuration.md#configuration-go).  To use the
-package, [install](#source-bld-src-ext) it in your Go environment.
-Available configuration options:
+To run apps in several versions of a language, build and install a module for each version.  To package custom modules, see the module [howto](modules.md#modules-pkg).
 
-| **--go=pathname**       | Specific Go executable pathname, also used in [make](#source-bld-src-ext) targets.<br/><br/>The default is **go**.   |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------|
-| **--go-path=directory** | Custom directory path for Go package installation.<br/><br/>The default is **$GOPATH**.                              |
+When you run **./configure go**, Unit sets up the Go package that lets your applications [run on Unit](../configuration.md#configuration-go).  To use the package, [install](#source-bld-src-ext) it in your Go environment. Available configuration options:
+
+<table><thead><tr><th><p><strong>--go=pathname</strong></p></th><th><p>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--go-path=directory</strong></p></td><td><p>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</p></td></tr></tbody></table>
 
 #### NOTE
-Running **./configure go** doesn’t alter the `GOPATH`
-[environment variable](https://github.com/golang/go/wiki/GOPATH), so
-configure-time `--go-path` and compile-time `$GOPATH`
-must be coherent for Go to find the resulting package.
+
+Running **./configure go** doesn’t alter the `GOPATH` [environment variable](https://github.com/golang/go/wiki/GOPATH), so configure-time `--go-path` and compile-time `$GOPATH` must be coherent for Go to find the resulting package.
 
 ```bash
 $ GOPATH=<Go package installation path> GO111MODULE=auto go build -o :nxt_ph:`app <Executable name>` :nxt_ph:`app.go <Application source code>`
 ```
 
-When you run **./configure java**, the script configures a module
-to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html)
-on Unit.  Available command options:
+When you run **./configure java**, the script configures a module to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html) on Unit.  Available command options:
 
-| **--home=directory**       | Directory path for Java utilities and header files to build the<br/>module.<br/><br/>The default is the **java.home** setting.            |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| **--jars=directory**       | Directory path for Unit’s custom **.jar** files.<br/><br/>The default is the Java module path.                                            |
-| **--lib-path=directory**   | Directory path for the **libjvm.so** library.<br/><br/>The default is based on JDK settings.                                              |
-| **--local-repo=directory** | Directory path for the local **.jar** repository.<br/><br/>The default is **$HOME/.m2/repository/**.                                      |
-| **--repo=directory**       | URL path for the remote Maven repository.<br/><br/>The default is **http://central.maven.org/maven2/**.                                   |
-| **--module=basename**      | Resulting module’s name (**\<basename\>.unit.so**), also used<br/>in [make](#source-bld-src-emb) targets.<br/><br/>The default is **java**. |
+<table><thead><tr><th><p><strong>--home=directory</strong></p></th><th><p>Directory path for Java utilities and header files to build the<br />module.<br /><br />The default is the <strong>java.home</strong> setting.</p></th></tr></thead><tbody><tr><td><p><strong>--jars=directory</strong></p></td><td><p>Directory path for Unit’s custom <strong>.jar</strong> files.<br /><br />The default is the Java module path.</p></td></tr><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path for the <strong>libjvm.so</strong> library.<br /><br />The default is based on JDK settings.</p></td></tr><tr><td><p><strong>--local-repo=directory</strong></p></td><td><p>Directory path for the local <strong>.jar</strong> repository.<br /><br />The default is <strong>$HOME/.m2/repository/</strong>.</p></td></tr><tr><td><p><strong>--repo=directory</strong></p></td><td><p>URL path for the remote Maven repository.<br /><br />The default is <strong>http://central.maven.org/maven2/</strong>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also used<br />in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <strong>java</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **java11.unit.so** with OpenJDK 11.0.1:
+To configure a module called **java11.unit.so** with OpenJDK&nbsp;11.0.1:
 
 ```bash
 $ ./configure java --module=java11  \
                    --home=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home
 ```
 
-When you run **./configure nodejs**, Unit sets up the
-**unit-http** module that lets your applications [run on Unit](../configuration.md#configuration-nodejs).  Available configuration options:
+When you run **./configure nodejs**, Unit sets up the **unit-http** module that lets your applications [run on Unit](../configuration.md#configuration-nodejs).  Available configuration options:
 
-| **--local=directory**   | Local directory path where the resulting module is installed.<br/><br/>By default, the module is installed globally [(recommended)](../installation.md#installation-nodejs-package).   |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--node=pathname**     | Specific Node.js executable pathname, also used in<br/>[make](#source-bld-src-ext) targets.<br/><br/>The default is **node**.                                                          |
-| **--npm=pathname**      | Specific **npm** executable pathname.<br/><br/>The default is **npm**.                                                                                                                 |
-| **--node-gyp=pathname** | Specific **node-gyp** executable pathname.<br/><br/>The default is **node-gyp**.                                                                                                       |
+<table><thead><tr><th><p><strong>--local=directory</strong></p></th><th><p>Local directory path where the resulting module is installed.<br /><br />By default, the module is installed globally <a href="../installation.md#installation-nodejs-package">(recommended)</a>.</p></th></tr></thead><tbody><tr><td><p><strong>--node=pathname</strong></p></td><td><p>Specific Node.js executable pathname, also used in<br /><a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>node</strong>.</p></td></tr><tr><td><p><strong>--npm=pathname</strong></p></td><td><p>Specific <strong>npm</strong> executable pathname.<br /><br />The default is <strong>npm</strong>.</p></td></tr><tr><td><p><strong>--node-gyp=pathname</strong></p></td><td><p>Specific <strong>node-gyp</strong> executable pathname.<br /><br />The default is <strong>node-gyp</strong>.</p></td></tr></tbody></table>
 
-When you run **./configure perl**, the script configures a module
-to support running Perl scripts as applications on Unit.  Available
-command options:
+When you run **./configure perl**, the script configures a module to support running Perl scripts as applications on Unit.  Available command options:
 
-| **--perl=pathname**   | Specific Perl executable pathname.<br/><br/>The default is **perl**.                                                                                                     |
-|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--module=basename** | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--perl` executable. |
+<table><thead><tr><th><p><strong>--perl=pathname</strong></p></th><th><p>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</p></td></tr></tbody></table>
 
-To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
+To configure a module called **perl-5.20.unit.so** for Perl&nbsp;5.20.2:
 
 ```bash
 $ ./configure perl --module=perl-5.20  \
                    --perl=perl5.20.2
 ```
 
-When you run **./configure php**, the script configures a custom
-SAPI module linked with the **libphp** library to support running
-PHP applications on Unit.  Available command options:
+When you run **./configure php**, the script configures a custom SAPI module linked with the **libphp** library to support running PHP applications on Unit.  Available command options:
 
-| **--config=pathname**    | Pathname of the **php-config** script used to set up<br/>the resulting module.<br/><br/>The default is **php-config**.                                                                                                                                |
-|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--lib-path=directory** | Directory path of the **libphp** library file<br/>(**libphp\*.so** or **libphp\*.a**), usually available with<br/>an `--enable-embed` PHP build:<br/><br/>```bash<br/>$ php-config --php-sapis<br/><br/>      ... embed ...<br/>```                |
-| **--lib-static**         | Links the static **libphp** library (**libphp\*.a**)<br/>instead of the dynamic one (**libphp\*.so**); requires<br/>`--lib-path`.                                                                                                                     |
-| **--module=basename**    | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **--config=/path/php7-config** yields<br/>**php7.unit.so**. |
+<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:<br /><br /><code>bash&lt;br/&gt;$ php-config --php-sapis&lt;br/&gt;&lt;br/&gt;      ... embed ...&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **php70.unit.so** for PHP 7.0:
+To configure a module called **php70.unit.so** for PHP&nbsp;7.0:
 
 ```bash
 $ ./configure php --module=php70  \
@@ -359,65 +241,45 @@ $ ./configure php --module=php70  \
                   --lib-path=/usr/lib64/php7.0/lib64
 ```
 
-When you run **./configure python**, the script configures a
-module to support running Python scripts as applications on Unit.
-Available command options:
+When you run **./configure python**, the script configures a module to support running Python scripts as applications on Unit. Available command options:
 
-| **--config=pathname**    | Pathname of the **python-config** script used to<br/>set up the resulting module.<br/><br/>The default is **python-config**.                                                                                                                   |
-|--------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--lib-path=directory** | Custom directory path of the Python runtime library to use with<br/>Unit.                                                                                                                                                                      |
-| **--module=basename**    | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is `--config`’s filename minus the -config<br/>suffix; thus, **/path/python3-config** turns into<br/>**python3**. |
+<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>python-config</strong> script used to<br />set up the resulting module.<br /><br />The default is <strong>python-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Custom directory path of the Python runtime library to use with<br />Unit.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>/path/python3-config</strong> turns into<br /><strong>python3</strong>.</p></td></tr></tbody></table>
 
 #### NOTE
-The Python interpreter set by **python-config** must be
-compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
 
-To configure a module called **py33.unit.so** for Python 3.3:
+The Python interpreter set by **python-config** must be compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
+
+To configure a module called **py33.unit.so** for Python&nbsp;3.3:
 
 ```bash
 $ ./configure python --module=py33  \
                      --config=python-config-3.3
 ```
 
-When you run **./configure ruby**, the script configures a module
-to support running Ruby scripts as applications on Unit.  Available
-command options:
+When you run **./configure ruby**, the script configures a module to support running Ruby scripts as applications on Unit.  Available command options:
 
-| **--module=basename**   | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.<br/><br/>The default is the filename of the `--ruby` executable.   |
-|-------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--ruby=pathname**     | Specific Ruby executable pathname.<br/><br/>The default is **ruby**.                                                                                                       |
+<table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--ruby</code> executable.</p></th></tr></thead><tbody><tr><td><p><strong>--ruby=pathname</strong></p></td><td><p>Specific Ruby executable pathname.<br /><br />The default is <strong>ruby</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **ru23.unit.so** for Ruby 2.3:
+To configure a module called **ru23.unit.so** for Ruby&nbsp;2.3:
 
 ```bash
 $ ./configure ruby --module=ru23  \
                    --ruby=ruby23
 ```
 
-<a id="modules-webassembly"></a>
+&nbsp;
 
-When you run **./configure wasm-wasi-component**,
-the script configures a module to support running WebAssembly
-components on Unit.
+When you run **./configure wasm-wasi-component**, the script configures a module to support running WebAssembly components on Unit.
 
-The module doesn’t accept any extra configuration parameters.
-The module’s basename is wasm-wasi-component.
+The module doesn’t accept any extra configuration parameters. The module’s basename is wasm-wasi-component.
 
 #### WARNING
-Unit 1.32.0 and later support the WebAssembly Component Model and WASI
-0.2 APIs.
-We recommend using the new implementation.
 
-When you run **./configure wasm**, the script configures a module
-to support running WebAssembly applications on Unit.
-Available command options:
+Unit 1.32.0 and later support the WebAssembly Component Model and WASI 0.2 APIs. We recommend using the new implementation.
 
-| **--module=basename**   | Resulting module’s name (**\<basename\>.unit.so**), also<br/>used in [make](#source-bld-src-emb) targets.                                               |
-|-------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--runtime=basename**  | The WebAssembly runtime to use.<br/><br/>The default is **wasmtime**.                                                                                 |
-| **--include-path=path** | The directory path to the runtime’s header files.                                                                                                     |
-| **--lib-path=path**     | The directory path to the runtime’s library files.                                                                                                    |
-| **--rpath=\<path\>**      | The directory path that designates the run-time library search<br/>path.<br/><br/>If specified without a value,<br/>assumes the **--lib-path** value. |
+When you run **./configure wasm**, the script configures a module to support running WebAssembly applications on Unit. Available command options:
+
+<table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.</p></th></tr></thead><tbody><tr><td><p><strong>--runtime=basename</strong></p></td><td><p>The WebAssembly runtime to use.<br /><br />The default is <strong>wasmtime</strong>.</p></td></tr><tr><td><p><strong>--include-path=path</strong></p></td><td><p>The directory path to the runtime’s header files.</p></td></tr><tr><td><p><strong>--lib-path=path</strong></p></td><td><p>The directory path to the runtime’s library files.</p></td></tr><tr><td><p><strong>--rpath=&lt;path&gt;</strong></p></td><td><p>The directory path that designates the run-time library search<br />path.<br /><br />If specified without a value,<br />assumes the <strong>--lib-path</strong> value.</p></td></tr></tbody></table>
 
 To configure a module called **wasm.unit.so**:
 
@@ -427,20 +289,18 @@ $ ./configure wasm --include-path=:nxt_ph:`/path/to/wasmtime <Runtime's header d
                    --rpath
 ```
 
-<a id="source-bld-src"></a>
+&nbsp;
 
 ## Building and Installing Unit
 
-To build and install Unit’s executables and language modules that you have
-**./configure**’d earlier:
+To build and install Unit’s executables and language modules that you have **./configure**’d earlier:
 
 ```bash
 $ make
 # make install
 ```
 
-Mind that **make install** requires setting up Unit’s [directory
-structure](#source-dir) with **./configure** first.
+Mind that **make install** requires setting up Unit’s [directory structure](#source-dir) with **./configure** first.
 
 To run Unit from the build directory tree without installing:
 
@@ -450,33 +310,28 @@ $ make
 $ ./build/sbin/unitd
 ```
 
-You can also build and install language modules individually; the specific
-method depends on whether the language module is embedded in Unit (Java, Perl,
-PHP, Python, Ruby) or packaged externally (Go, Node.js).
+You can also build and install language modules individually; the specific method depends on whether the language module is embedded in Unit (Java, Perl, PHP, Python, Ruby) or packaged externally (Go, Node.js).
 
 #### NOTE
+
 For further details about Unit’s language modules, see [Working With Language Modules](modules.md).
 
-<a id="source-bld-src-emb"></a>
+&nbsp;
 
 ### Embedded Language Modules
 
-To build and install the modules for Java, PHP, Perl, Python, or Ruby after
-configuration, run **make \<module basename\>** and **make
-\<module basename\>-install**, for example:
+To build and install the modules for Java, PHP, Perl, Python, or Ruby after configuration, run **make &lt;module basename&gt;** and **make &lt;module basename&gt;-install**, for example:
 
 ```bash
 $ make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`
 # make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`-install
 ```
 
-<a id="source-bld-src-ext"></a>
+&nbsp;
 
 ### External Language Modules
 
-To build and install the modules for Go and Node.js globally after
-configuration, run **make \<go\>-install** and **make
-\<node\>-install**, for example:
+To build and install the modules for Go and Node.js globally after configuration, run **make &lt;go&gt;-install** and **make &lt;node&gt;-install**, for example:
 
 ```bash
 # make :nxt_hint:`go <This is the --go option value from ./configure go>`-install
@@ -484,27 +339,24 @@ configuration, run **make \<go\>-install** and **make
 ```
 
 #### NOTE
-To install the Node.js module locally, run **make
-\<node\>-local-install**:
+
+To install the Node.js module locally, run **make &lt;node&gt;-local-install**:
 
 ```bash
 # make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-local-install
 ```
 
-If you haven’t specified the `--local` [directory](#modules-nodejs) with **./configure nodejs**
-earlier, provide it here:
+If you haven’t specified the `--local` [directory](#modules-nodejs) with **./configure nodejs** earlier, provide it here:
 
 ```bash
 # DESTDIR=/your/project/directory/ make node-local-install
 ```
 
-If both options are specified, `DESTDIR` prefixes the
-`--local` value set by **./configure nodejs**.
+If both options are specified, `DESTDIR` prefixes the `--local` value set by **./configure nodejs**.
 
 Finally, mind that global installation is preferable for the Node.js module.
 
-If you customized the executable pathname with `--go` or
-`--node`, use the following pattern:
+If you customized the executable pathname with `--go` or `--node`, use the following pattern:
 
 ```bash
 $ ./configure nodejs --node=:nxt_hint:`/usr/local/bin/node8.12 <Executable pathname>`
@@ -514,45 +366,25 @@ $ ./configure go --go=:nxt_hint:`/usr/local/bin/go1.7 <Executable pathname>`
 # make :nxt_hint:`/usr/local/bin/go1.7 <Executable pathname becomes a part of the target>`-install
 ```
 
-<a id="source-startup"></a>
+&nbsp;
 
 ## Startup and Shutdown
 
 #### WARNING
+
 We advise installing Unit from [precompiled packages](../installation.md#installation-precomp-pkgs); in this case, startup is [configured](../installation.md#installation-precomp-startup) automatically.
 
-Even if you install Unit otherwise, avoid manual startup.  Instead,
-configure a service manager (**OpenRC**, **systemd**, and so
-on) or create an **rc.d** script to launch the Unit daemon using the
-options below.
+Even if you install Unit otherwise, avoid manual startup.  Instead, configure a service manager (**OpenRC**, **systemd**, and so on) or create an **rc.d** script to launch the Unit daemon using the options below.
 
-The startup command depends on the directories you set with
-**./configure**, but their default values place the **unitd**
-binary in a well-known place, so:
+The startup command depends on the directories you set with **./configure**, but their default values place the **unitd** binary in a well-known place, so:
 
 ```bash
 # :nxt_hint:`unitd <Your PATH environment variable should list a path to unitd>` :nxt_ph:`RUNTIME OPTIONS <See the table below>`
 ```
 
-Run **unitd -h** or **unitd --version** to list Unit’s
-compile-time settings.  Usually, the defaults don’t require overrides; still,
-the following runtime options are available.  For their compile-time
-counterparts, see [here](#source-config-src).
+Run **unitd -h** or **unitd --version** to list Unit’s compile-time settings.  Usually, the defaults don’t require overrides; still, the following runtime options are available.  For their compile-time counterparts, see [here](#source-config-src).
 
-| **--help**, **-h**                | Displays a summary of the command-line options and their defaults.                                                                                                                                                                                           |
-|-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **--version**                     | Displays Unit’s version and the **./configure** settings it was<br/>built with.                                                                                                                                                                              |
-| **--no-daemon**                   | Runs Unit in non-daemon mode.                                                                                                                                                                                                                                |
-| **--control socket**              | Control API socket address in IPv4, IPv6, or UNIX domain format:<br/><br/>```bash<br/># unitd --control 127.0.0.1:8080<br/># unitd --control [::1]:8080<br/># unitd --control :nxt_hint:`unix:/path/to/control.unit.sock <Note the unix: prefix>`<br/>``` |
-| **--control-mode**                | Sets the permission of the UNIX domain control socket. Default: 0600                                                                                                                                                                                         |
-| **--control-user**                | Sets the owner of the UNIX domain control socket.                                                                                                                                                                                                            |
-| **--control-group**               | Sets the group of the UNIX domain control socket.                                                                                                                                                                                                            |
-| **--group name**, **--user name** | Group name and user name used to run Unit’s non-privileged<br/>[processes](security.md#security-apps).                                                                                                                                                       |
-| **--log pathname**                | Pathname for Unit’s [log](../troubleshooting.md#troubleshooting-log).                                                                                                                                                                                        |
-| **--modules directory**           | Directory path for Unit’s language [modules](modules.md)<br/>(**\*.unit.so** files).                                                                                                                                                                         |
-| **--pid pathname**                | Pathname for the PID file of Unit’s **main** [process](security.md#security-apps).                                                                                                                                                                           |
-| **--state directory**             | Directory path for Unit’s state storage.                                                                                                                                                                                                                     |
-| **--tmp directory**               | Directory path for Unit’s temporary file storage.                                                                                                                                                                                                            |
+<table><thead><tr><th><p><strong>--help</strong>, <strong>-h</strong></p></th><th><p>Displays a summary of the command-line options and their defaults.</p></th></tr></thead><tbody><tr><td><p><strong>--version</strong></p></td><td><p>Displays Unit’s version and the <strong>./configure</strong> settings it was<br />built with.</p></td></tr><tr><td><p><strong>--no-daemon</strong></p></td><td><p>Runs Unit in non-daemon mode.</p></td></tr><tr><td><p><strong>--control socket</strong></p></td><td><p>Control API socket address in IPv4, IPv6, or UNIX domain format:<br /><br /><code>bash&lt;br/&gt;# unitd --control 127.0.0.1:8080&lt;br/&gt;# unitd --control [::1]:8080&lt;br/&gt;# unitd --control :nxt_hint:`unix:/path/to/control.unit.sock &lt;Note the unix: prefix&gt;`&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>--control-mode</strong></p></td><td><p>Sets the permission of the UNIX domain control socket. Default: 0600</p></td></tr><tr><td><p><strong>--control-user</strong></p></td><td><p>Sets the owner of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--control-group</strong></p></td><td><p>Sets the group of the UNIX domain control socket.</p></td></tr><tr><td><p><strong>--group name</strong>, <strong>--user name</strong></p></td><td><p>Group name and user name used to run Unit’s non-privileged<br /><a href="security.md#security-apps">processes</a>.</p></td></tr><tr><td><p><strong>--log pathname</strong></p></td><td><p>Pathname for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.</p></td></tr><tr><td><p><strong>--modules directory</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a><br />(<strong>*.unit.so</strong> files).</p></td></tr><tr><td><p><strong>--pid pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.</p></td></tr><tr><td><p><strong>--state directory</strong></p></td><td><p>Directory path for Unit’s state storage.</p></td></tr><tr><td><p><strong>--tmp directory</strong></p></td><td><p>Directory path for Unit’s temporary file storage.</p></td></tr></tbody></table>
 
 Finally, to stop a running Unit:
 

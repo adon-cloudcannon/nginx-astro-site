@@ -158,7 +158,9 @@ Even if you run a single app, this helps if you add more apps or need to decoupl
 
 2\. It’s important to add Unit’s non-privileged user account to *each* app group:
 
-`# usermod -a -G app_group unit_user `
+```bash
+# usermod -a -G app_group unit_user
+```
 
 Thus, Unit’s router process can access each app’s directory and serve files from each app’s shares.
 
@@ -171,13 +173,20 @@ Thus, Unit’s router process can access each app’s directory and serve files 
 
 This may be a problem because the **to/** directory isn’t owned by **app\_user:app\_group** and denies all permissions to non-owners (as the **\---** sequence tells us), so a fix can be warranted:
 
-`# :nxt_hint:chmod &lt;Add read/execute permissions for non-owners&gt; o+rx /path/to/ `
+<Code_Block language="bash" hints={[{ number: "1", display_text: "chmod", tooltip: "Add read/execute permissions for non-owners", nxt_type: "nxt_hint" }]}>{`# NXT1 o+rx /path/to/ `}</Code_Block>
 
 Another solution is to add **app\_user** to **some\_group** (assuming this was not done before):
 
-`# usermod -a -G some_group app_user `
+```bash
+# usermod -a -G some_group app_user
+```
 
 4\. Having checked the directory tree, assign ownership and permissions for your app’s directories, making them reachable for Unit and the app:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "chown", tooltip: "Assign ownership for the app code", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your command", nxt_type: "nxt_ph" }, { number: "3", display_text: "chown", tooltip: "Assign ownership for the static files", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/static/app/files/", tooltip: "Can be outside the app directory tree; use a real path in your command", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your command", nxt_type: "nxt_ph" }, { number: "6", display_text: "chmod", tooltip: "Add read/execute permissions to app code directories for user and group", nxt_type: "nxt_hint" }, { number: "7", display_text: "/path/to/static/app/files/", tooltip: "Can be outside the app directory tree; use a real path in your command", nxt_type: "nxt_ph" }, { number: "8", display_text: "chmod", tooltip: "Add read/execute permissions to static file directories for user and group", nxt_type: "nxt_hint" }]}>{`# NXT1 -R app_user:app_group NXT2
+# NXT3 -R app_user:app_group NXT3
+# find NXT5 -type d -exec NXT6 u=rx,g=rx,o= {} ;
+# find NXT7 -type d -exec NXT8 u=rx,g=rx,o= {} ; `}</Code_Block>
 
 `# :nxt_hint:chown &lt;Assign ownership for the app code&gt; -R app_user:app_group :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your command&gt; # :nxt_hint:chown &lt;Assign ownership for the static files&gt; -R app_user:app_group :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; # find :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your command&gt; -type d -exec :nxt_hint:chmod &lt;Add read/execute permissions to app code directories for user and group&gt; u=rx,g=rx,o= {} ; # find :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; -type d -exec :nxt_hint:chmod &lt;Add read/execute permissions to static file directories for user and group&gt; u=rx,g=rx,o= {} ; `
 

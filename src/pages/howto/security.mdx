@@ -212,7 +212,30 @@ Usually, apps store and update their data outside the app code directories, but 
 
 8\. To run a single app, [configure](../configuration.md) Unit as follows:
 
-<Code_Block language="json" hints={[]}>{`{     "listeners": {         ":nxt_hint:`*:80 &lt;Or another suitable socket address&gt;`": {             "pass": "routes"         }     },      "routes": [         {             "action": {                 "share": ":nxt_ph:`/path/to/static/app/files/ &lt;Router process needs read and execute permissions to serve static content from this directory&gt;`$uri",                 "fallback": {                     "pass": "applications/app"                 }             }         }     ],      "applications": {         "app": {             "type": "...",             "user": "app_user",             "group": "app_group"         }     } }`}</Code_Block>
+<Code_Block language="json" hints={[{ number: "1", display_text: "*:80", tooltip: "Or another suitable socket address", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/static/app/files/", tooltip: "Router process needs read and execute permissions to serve static content from this directory", nxt_type: "nxt_ph" }]}>{`{
+    "listeners": {
+        "NXT1": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "action": {
+                "share": "NXT2$uri",
+                "fallback": {
+                    "pass": "applications/app"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "app": {
+            "type": "...",
+            "user": "app_user",
+            "group": "app_group"
+        }
+    }
+}`}</Code_Block>
 
 9\. To run several apps side by side, [configure](../configuration.md) them with appropriate user and group names.  The following configuration distinguishes apps based on the request URI, but you can implement another scheme such as different listeners:
 

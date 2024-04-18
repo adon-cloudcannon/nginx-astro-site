@@ -93,10 +93,8 @@ $ git clone https://github.com/nginx/njs
 
 Next, configure and build the **njs** binaries:
 
-```bash
-$ cd njs
-$ ./configure :nxt_hint:`--no-zlib --no-libxml2 <Ensures Unit can link against the resulting library>` && make
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "--no-zlib --no-libxml2", tooltip: "Ensures Unit can link against the resulting library", nxt_type: "nxt_hint" }]}>{`$ cd njs
+$ ./configure NXT1 && make`}</Code_Block>
 
 Point to the resulting source and build directories when [configuring](#source-config-src-njs) the Unit code.
 
@@ -104,9 +102,9 @@ To build Unit with support for the WebAssembly Component Model, you need **rust*
 
 Next please refer to [Configuring Modules - WebAssembly](#modules-webassembly) for further instructions.
 
-#### WARNING
-
+<Note type="warning">
 The **unit-wasm** module is deprecated. We recommend using **wasm-wasi-component** instead, available in Unit 1.32.0 and later, which supports WebAssembly Components using standard WASI 0.2 interfaces.
+</Note>
 
 To build Unit with the [WebAssembly](https://webassembly.org) language module, you need the [Wasmtime](https://wasmtime.dev) runtime. Download the C API [files](https://github.com/bytecodealliance/wasmtime/releases/) suitable for your OS and architecture to the same parent directory as the Unit code, for example:
 
@@ -126,11 +124,7 @@ $ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20
 
 When building the apps, add the following environment variable:
 
-```bash
-WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot-dir/ <wasi-sysroot directory>`
-```
-
-&nbsp;
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasi-sysroot-dir/", tooltip: "wasi-sysroot directory", nxt_type: "nxt_ph" }]}>{`WASI_SYSROOT=NXT1`}</Code_Block>
 
 ## Configuring Sources
 
@@ -146,13 +140,9 @@ General options and settings that control compilation, runtime privileges, or su
 
 <table><thead><tr><th><p><strong>--help</strong></p></th><th><p>Displays a summary of common <strong>./configure</strong> options.<br /><br />For language-specific details, run <strong>./configure &lt;language&gt;<br />--help</strong> or see <a href="#source-modules">below</a>.</p></th></tr></thead><tbody><tr><td><p><strong>--cc=pathname</strong></p></td><td><p>Custom C compiler pathname.<br /><br />The default is <strong>cc</strong>.</p></td></tr><tr><td><p><strong>--cc-opt=options</strong>, <strong>--ld-opt=options</strong></p></td><td><p>Extra options for the C compiler and linker.</p></td></tr><tr><td><p><strong>--group=name</strong>, <strong>--user=name</strong></p></td><td><p>Group name and username to run Unit’s non-privileged <a href="security.md#security-apps">processes</a>.<br /><br />The defaults are <code>--user</code>’s primary group and<br /><strong>nobody</strong>, respectively.</p></td></tr><tr><td><p><strong>--debug</strong></p></td><td><p>Turns on the <a href="../troubleshooting.md#troubleshooting-dbg-log">debug log</a>.</p></td></tr><tr><td><p><strong>--no-ipv6</strong></p></td><td><p>Turns off IPv6 support.</p></td></tr><tr><td><p><strong>--no-unix-sockets</strong></p></td><td><p>Turns off UNIX domain sockets support for control and routing.</p></td></tr><tr><td><p><strong>--openssl</strong></p></td><td><p>Turns on OpenSSL support.  Make sure OpenSSL (1.0.1+) header files and<br />libraries are in your compiler’s path; it can be set with the<br /><code>--cc-opt</code> and <code>--ld-opt</code> options or the<br /><code>CFLAGS</code> and <code>LDFLAGS</code> environment variables when<br />running <strong>./configure</strong>.<br /><br />For details of TLS configuration in Unit, see <a href="../certificates.md#configuration-ssl">SSL/TLS certificates</a>.</p></td></tr></tbody></table>
 
-&nbsp;
-
 By default, Unit relies on the locally installed version of the [PCRE](https://www.pcre.org) library to support regular expressions in [routes](../configuration.md#configuration-routes); if both major versions are present, Unit selects PCRE2.  Two additional options alter this behavior:
 
 <table><thead><tr><th><p><strong>--no-regex</strong></p></th><th><p>Turns off regex support; any attempts to use a regex in Unit<br />configuration cause an error.</p></th></tr></thead><tbody><tr><td><p><strong>--no-pcre2</strong></p></td><td><p>Ignores PCRE2; the older PCRE 8.x library is used instead.</p></td></tr></tbody></table>
-
-&nbsp;
 
 Unit also supports the use of [njs](https://nginx.org/en/docs/njs/) scripts in configuration; to enable this feature, use the respective option:
 
@@ -169,7 +159,9 @@ $ ./configure --njs --openssl \
 
 The next option group customizes Unit’s runtime [directory structure](#source-dir):
 
-<table><thead><tr><th><p><strong>--prefix=PREFIX</strong></p></th><th><p><br /><br />Destination directory prefix for <a href="#source-dir">path options</a>:<br /><code>--bindir</code>,<br /><code>--sbindir</code>,<br /><code>--includedir</code>,<br /><code>--libdir</code>,<br /><code>--modulesdir</code>,<br /><code>--datarootdir</code>,<br /><code>--mandir</code>,<br /><code>--localstatedir</code>,<br /><code>--libstatedir</code>,<br /><code>--runstatedir</code>,<br /><code>--logdir</code>,<br /><code>--tmpdir</code>,<br /><code>--control</code>,<br /><code>--pid</code>,<br /><code>--log</code>.<br /><br />The default is <strong>/usr/local</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--exec-prefix=EXEC_PREFIX</strong></p></td><td><p>Destination directory prefix for the executable directories only.<br /><br />The default is the <strong>PREFIX</strong> value.</p></td></tr><tr><td><p><strong>--bindir=BINDIR</strong>, <strong>--sbindir=SBINDIR</strong></p></td><td><p>Directory paths for client and server executables.<br /><br />The defaults are <strong>EXEC_PREFIX/bin</strong> and <strong>EXEC_PREFIX/sbin</strong>.</p></td></tr><tr><td><p><strong>--includedir=INCLUDEDIR</strong>, <strong>--libdir=LIBDIR</strong></p></td><td><p>Directory paths for <strong>libunit</strong> header files and libraries.<br /><br />The defaults are <strong>PREFIX/include</strong> and <strong>EXEC_PREFIX/lib</strong>.</p></td></tr><tr><td><p><strong>--modulesdir=MODULESDIR</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a>.<br /><br />The default is <strong>LIBDIR/unit/modules</strong>.</p></td></tr><tr><td><p><strong>--datarootdir=DATAROOTDIR</strong>, <strong>--mandir=MANDIR</strong></p></td><td><p>Directory path for <strong>unitd(8)</strong> data storage and its subdirectory<br />where the <strong>man</strong> page is installed.<br /><br />The defaults are <strong>PREFIX/share</strong> and <strong>DATAROOTDIR/man</strong>.</p></td></tr><tr><td><p><strong>--localstatedir=LOCALSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its runtime state, PID file,<br />control socket, and logs.<br /><br />The default is <strong>PREFIX/var</strong>.</p></td></tr><tr><td><p><strong>--libstatedir=LIBSTATEDIR</strong></p></td><td><p><br /><br />Directory path where Unit’s runtime state (configuration, certificates,<br />other resources) is stored between runs.  If you migrate your<br />installation, copy the entire directory.<br /><br />#### WARNING<br />The directory is sensitive and must be owned by <strong>root</strong> with<br /><strong>700</strong> permissions.  Don’t change its contents externally; use<br />the config API to ensure integrity.<br /><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--logdir=LOGDIR</strong>, <strong>--log=LOGFILE</strong></p></td><td><p>Directory path and filename for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.<br /><br />The defaults are <strong>LOCALSTATEDIR/log/unit</strong> and<br /><strong>LOGDIR/unit.log</strong>.</p></td></tr><tr><td><p><strong>--runstatedir=RUNSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its PID file and control socket.<br /><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--pid=pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.<br /><br />The default is <strong>RUNSTATEDIR/unit.pid</strong>.</p></td></tr><tr><td><p><strong>--control=SOCKET</strong></p></td><td><p><a href="../controlapi.md#configuration-mgmt">Control API</a> socket address in IPv4, IPv6,<br />or UNIX domain format:<br /><br /><code>bash&lt;br/&gt;$ ./configure --control=127.0.0.1:8080&lt;br/&gt;$ ./configure --control=[::1]:8080&lt;br/&gt;$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix&lt;br/&gt;</code><br /><br />#### WARNING<br />Avoid exposing an unprotected control socket in public networks.  Use<br /><a href="integration.md#nginx-secure-api">NGINX</a> or a different solution such as SSH<br />for security and authentication.<br /><br />The default is <strong>unix:RUNSTATEDIR/control.unit.sock</strong>, created as<br /><strong>root</strong> with <strong>600</strong> permissions.</p></td></tr><tr><td><p><strong>--tmpdir=TMPDIR</strong></p></td><td><p>Defines the temporary file storage location (used to dump large request<br />bodies).<br /><br />The default value is <strong>/tmp</strong>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p><strong>--prefix=PREFIX</strong></p></th><th><p><br /><br />Destination directory prefix for <a href="#source-dir">path options</a>:<br /><code>--bindir</code>,<br /><code>--sbindir</code>,<br /><code>--includedir</code>,<br /><code>--libdir</code>,<br /><code>--modulesdir</code>,<br /><code>--datarootdir</code>,<br /><code>--mandir</code>,<br /><code>--localstatedir</code>,<br /><code>--libstatedir</code>,<br /><code>--runstatedir</code>,<br /><code>--logdir</code>,<br /><code>--tmpdir</code>,<br /><code>--control</code>,<br /><code>--pid</code>,<br /><code>--log</code>.<br /><br />The default is <strong>/usr/local</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--exec-prefix=EXEC_PREFIX</strong></p></td><td><p>Destination directory prefix for the executable directories only.<br /><br />The default is the <strong>PREFIX</strong> value.</p></td></tr><tr><td><p><strong>--bindir=BINDIR</strong>, <strong>--sbindir=SBINDIR</strong></p></td><td><p>Directory paths for client and server executables.<br /><br />The defaults are <strong>EXEC_PREFIX/bin</strong> and <strong>EXEC_PREFIX/sbin</strong>.</p></td></tr><tr><td><p><strong>--includedir=INCLUDEDIR</strong>, <strong>--libdir=LIBDIR</strong></p></td><td><p>Directory paths for <strong>libunit</strong> header files and libraries.<br /><br />The defaults are <strong>PREFIX/include</strong> and <strong>EXEC_PREFIX/lib</strong>.</p></td></tr><tr><td><p><strong>--modulesdir=MODULESDIR</strong></p></td><td><p>Directory path for Unit’s language <a href="modules.md">modules</a>.<br /><br />The default is <strong>LIBDIR/unit/modules</strong>.</p></td></tr><tr><td><p><strong>--datarootdir=DATAROOTDIR</strong>, <strong>--mandir=MANDIR</strong></p></td><td><p>Directory path for <strong>unitd(8)</strong> data storage and its subdirectory<br />where the <strong>man</strong> page is installed.<br /><br />The defaults are <strong>PREFIX/share</strong> and <strong>DATAROOTDIR/man</strong>.</p></td></tr><tr><td><p><strong>--localstatedir=LOCALSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its runtime state, PID file,<br />control socket, and logs.<br /><br />The default is <strong>PREFIX/var</strong>.</p></td></tr><tr><td><p><strong>--libstatedir=LIBSTATEDIR</strong></p></td><td><p><br /><br />Directory path where Unit’s runtime state (configuration, certificates,<br />other resources) is stored between runs.  If you migrate your<br />installation, copy the entire directory.<br /><br /><br /></p><Note type="warning">
+The directory is sensitive and must be owned by root with 700 permissions.  Don’t change its contents externally; usethe config API to ensure integrity.
+</Note><p><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--logdir=LOGDIR</strong>, <strong>--log=LOGFILE</strong></p></td><td><p>Directory path and filename for Unit’s <a href="../troubleshooting.md#troubleshooting-log">log</a>.<br /><br />The defaults are <strong>LOCALSTATEDIR/log/unit</strong> and<br /><strong>LOGDIR/unit.log</strong>.</p></td></tr><tr><td><p><strong>--runstatedir=RUNSTATEDIR</strong></p></td><td><p>Directory path where Unit stores its PID file and control socket.<br /><br />The default is <strong>LOCALSTATEDIR/run/unit</strong>.</p></td></tr><tr><td><p><strong>--pid=pathname</strong></p></td><td><p>Pathname for the PID file of Unit’s <strong>main</strong> <a href="security.md#security-apps">process</a>.<br /><br />The default is <strong>RUNSTATEDIR/unit.pid</strong>.</p></td></tr><tr><td><p><strong>--control=SOCKET</strong></p></td><td><p><a href="../controlapi.md#configuration-mgmt">Control API</a> socket address in IPv4, IPv6,<br />or UNIX domain format:<br /><br /><code>bash&lt;br/&gt;$ ./configure --control=127.0.0.1:8080&lt;br/&gt;$ ./configure --control=[::1]:8080&lt;br/&gt;$ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix&lt;br/&gt;</code><br /><br />#### WARNING<br />Avoid exposing an unprotected control socket in public networks.  Use<br /><a href="integration.md#nginx-secure-api">NGINX</a> or a different solution such as SSH<br />for security and authentication.<br /><br />The default is <strong>unix:RUNSTATEDIR/control.unit.sock</strong>, created as<br /><strong>root</strong> with <strong>600</strong> permissions.</p></td></tr><tr><td><p><strong>--tmpdir=TMPDIR</strong></p></td><td><p>Defines the temporary file storage location (used to dump large request<br />bodies).<br /><br />The default value is <strong>/tmp</strong>.</p></td></tr></tbody></table>
 
 &nbsp;
 
@@ -207,7 +199,7 @@ When you run **./configure java**, the script configures a module to support run
 
 <table><thead><tr><th><p><strong>--home=directory</strong></p></th><th><p>Directory path for Java utilities and header files to build the<br />module.<br /><br />The default is the <strong>java.home</strong> setting.</p></th></tr></thead><tbody><tr><td><p><strong>--jars=directory</strong></p></td><td><p>Directory path for Unit’s custom <strong>.jar</strong> files.<br /><br />The default is the Java module path.</p></td></tr><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path for the <strong>libjvm.so</strong> library.<br /><br />The default is based on JDK settings.</p></td></tr><tr><td><p><strong>--local-repo=directory</strong></p></td><td><p>Directory path for the local <strong>.jar</strong> repository.<br /><br />The default is <strong>$HOME/.m2/repository/</strong>.</p></td></tr><tr><td><p><strong>--repo=directory</strong></p></td><td><p>URL path for the remote Maven repository.<br /><br />The default is <strong>http://central.maven.org/maven2/</strong>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also used<br />in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <strong>java</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **java11.unit.so** with OpenJDK&nbsp;11.0.1:
+To configure a module called **java11.unit.so** with OpenJDK 11.0.1:
 
 ```bash
 $ ./configure java --module=java11  \
@@ -222,7 +214,7 @@ When you run **./configure perl**, the script configures a module to support run
 
 <table><thead><tr><th><p><strong>--perl=pathname</strong></p></th><th><p>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</p></td></tr></tbody></table>
 
-To configure a module called **perl-5.20.unit.so** for Perl&nbsp;5.20.2:
+To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
 
 ```bash
 $ ./configure perl --module=perl-5.20  \
@@ -233,7 +225,7 @@ When you run **./configure php**, the script configures a custom SAPI module lin
 
 <table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:<br /><br /><code>bash&lt;br/&gt;$ php-config --php-sapis&lt;br/&gt;&lt;br/&gt;      ... embed ...&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **php70.unit.so** for PHP&nbsp;7.0:
+To configure a module called **php70.unit.so** for PHP 7.0:
 
 ```bash
 $ ./configure php --module=php70  \
@@ -249,7 +241,7 @@ When you run **./configure python**, the script configures a module to support r
 
 The Python interpreter set by **python-config** must be compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
 
-To configure a module called **py33.unit.so** for Python&nbsp;3.3:
+To configure a module called **py33.unit.so** for Python 3.3:
 
 ```bash
 $ ./configure python --module=py33  \
@@ -260,7 +252,7 @@ When you run **./configure ruby**, the script configures a module to support run
 
 <table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--ruby</code> executable.</p></th></tr></thead><tbody><tr><td><p><strong>--ruby=pathname</strong></p></td><td><p>Specific Ruby executable pathname.<br /><br />The default is <strong>ruby</strong>.</p></td></tr></tbody></table>
 
-To configure a module called **ru23.unit.so** for Ruby&nbsp;2.3:
+To configure a module called **ru23.unit.so** for Ruby 2.3:
 
 ```bash
 $ ./configure ruby --module=ru23  \

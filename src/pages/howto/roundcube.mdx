@@ -67,7 +67,7 @@ For further details, including permissions, see the [security checklist](securit
 The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
 </Note>
 
-After a successful update, browse to [http://localhost/installer/](http://localhost/installer/) and [set up](https://github.com/roundcube/roundcubemail/wiki/Installation#configuring-roundcube) your Roundcube installation: ![Roundcube on Unit - Setup Screen](/roundcube-setup.png)
+After a successful update, browse to [http://localhost/installer/](http://localhost/installer/) and [set up](https://github.com/roundcube/roundcubemail/wiki/Installation#configuring-roundcube) your Roundcube installation: ![Roundcube on Unit - Setup Screen](/images/roundcube-setup.png)
 
 7\. After installation, switch **share** and **root** to the **public\_html/** subdirectory to [protect](https://github.com/roundcube/roundcubemail/wiki/Installation#protect-your-installation) sensitive data:
 
@@ -76,4 +76,4 @@ After a successful update, browse to [http://localhost/installer/](http://localh
    # curl -X PUT -d '"NXT4/public_html/"' --unix-socket \\
          NXT5 NXT6`}</Code_Block>
 
-Thus, Roundcube should be available on the listener’s IP address and port: ![Roundcube on Unit - Login Screen](/roundcube.png)
+Thus, Roundcube should be available on the listener’s IP address and port: ![Roundcube on Unit - Login Screen](/images/roundcube.png)

@@ -20,6 +20,8 @@ iframe {
     border: none;
 }
 
+img { width:100% }
+
 /* Saving for future use
 #rennab {
     padding: .3em 0;

@@ -1,5 +1,5 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+layout: '@layouts/BaseLayout.astro'
 title: Review Board
 ---
 # Review Board
@@ -10,14 +10,13 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
 
 2\. Install and configure Review Board’s [prerequisites](https://www.reviewboard.org/docs/manual/dev/admin/installation/linux/#before-you-begin).
 
-   #### NOTE
-   We’ll use Unit as the web server, so you can skip the corresponding step.
+<Note type="note">
+We’ll use Unit as the web server, so you can skip the corresponding step.
+</Note>
 
-3\. Install the [core files](https://www.reviewboard.org/docs/manual/dev/admin/installation/linux/#installing-review-board) and create a [site](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/).
-   Here, it’s **/path/to/app/**; use a real path in your configuration:
-   
-```bash
-   $ rb-site install :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
+3\. Install the [core files](https://www.reviewboard.org/docs/manual/dev/admin/installation/linux/#installing-review-board) and create a [site](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/). Here, it’s **/path/to/app/**; use a real path in your configuration:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ rb-site install NXT1
 
          * Welcome to the Review Board site installation wizard
 
@@ -27,42 +26,31 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
 
              We need to know a few things before we can prepare your site for
              installation. This will only take a few minutes.
-             ...
-```
+             ...`}</Code_Block>
 
-4\. Add the **.py** extension to the WSGI module’s name to make it
-   discoverable by Unit, for example:
-   
-```bash
-   $ mv :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/reviewboard.wsgi   \
-        :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/wsgi.py
-```
+4\. Add the **.py** extension to the WSGI module’s name to make it discoverable by Unit, for example:
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ mv NXT1/htdocs/reviewboard.wsgi   \\
+        NXT2/htdocs/wsgi.py`}</Code_Block>
 
 5\. Run the following command so Unit can access :
-   
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
 
-   #### NOTE
-   The **unit:unit** user-group pair is available only with [official
-   packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos).  Otherwise, account names may differ; run
-   the **ps aux | grep unitd** command to be sure.
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-   For further details, including permissions, see the [security checklist](security.md#security-apps).
+<Note type="note">
+The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+</Note>
 
-   Also, make sure the following directories are [writable](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/#changing-permissions):
-   
-```bash
-   $ chmod u+w :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/media/uploaded/
-   $ chmod u+w :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`data/
-```
+For further details, including permissions, see the [security checklist](security.md#security-apps).
 
-6\. Next, [prepare](../configuration.md#configuration-python) the Review Board configuration for Unit
-   (use real values for **share** and **path**):
-   
-```json
-   {
+Also, make sure the following directories are [writable](https://www.reviewboard.org/docs/manual/dev/admin/installation/creating-sites/#changing-permissions):
+
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ chmod u+w NXT1/htdocs/media/uploaded/
+   $ chmod u+w NXT2/data/`}</Code_Block>
+
+6\. Next, [prepare](../configuration.md#configuration-python) the Review Board configuration for Unit (use real values for **share** and **path**):
+
+<Code_Block language="json" hints={[{ number: "1", display_text: "uri", tooltip: "Static file directories", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves matching static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "wsgi", tooltip: "WSGI module basename with extension omitted", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -72,7 +60,7 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
        "routes": [
            {
                "match": {
-                   ":nxt_hint:`uri <Static file directories>`": [
+                   "NXT1": [
                        "/media/*",
                        "/static/*",
                        "/errordocs/*"
@@ -80,7 +68,7 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
                },
 
                "action": {
-                   ":nxt_hint:`share <Serves matching static files>`": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs$uri"
+                   "NXT2": "NXT3/htdocs$uri"
                }
            },
            {
@@ -93,25 +81,19 @@ To run the [Review Board](https://www.reviewboard.org) code review tool using Un
        "applications": {
            "rb": {
                "type": "python 2",
-               "path": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`htdocs/",
-               "module": ":nxt_hint:`wsgi <WSGI module basename with extension omitted>`"
+               "path": "NXT4/htdocs/",
+               "module": "NXT5"
            }
        }
-   }
-```
+   }`}</Code_Block>
 
-7\. Upload the updated configuration.  Assuming the JSON above was added to
-   `config.json`:
-   
-```bash
-   # curl -X PUT --data-binary @config.json --unix-socket \
-          :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` :nxt_hint:`http://localhost/config/ <Path to the config section in Unit's control API>`
-```
+7\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 
-   #### NOTE
-   The [control socket](../controlapi.md#configuration-socket) path may vary; run
-   **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+          NXT1 NXT2`}</Code_Block>
 
-   After a successful update, browse to [http://localhost](http://localhost) and [set up](https://www.reviewboard.org/docs/manual/dev/admin/#configuring-review-board)
-   your Review Board installation:
-   ![Review Board on Unit - Dashboard Screen](/reviewboard.png)
+<Note type="note">
+The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+</Note>
+
+After a successful update, browse to [http://localhost](http://localhost) and [set up](https://www.reviewboard.org/docs/manual/dev/admin/#configuring-review-board) your Review Board installation: ![Review Board on Unit - Dashboard Screen](/reviewboard.png)

@@ -110,8 +110,7 @@ This creates the app’s directory tree at **/path/to/app/**.
 
 3\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -122,7 +121,7 @@ This creates the app’s directory tree at **/path/to/app/**.
            {
                "match": {
                    "uri": [
-                       "!:nxt_hint:`/assets/* <This path stores application data that shouldn't be run as code>`",
+                       "!NXT1",
                        "!/protected/*",
                        "!/themes/*",
                        "*.php",
@@ -136,7 +135,7 @@ This creates the app’s directory tree at **/path/to/app/**.
            },
            {
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_ph:`/path/to/app <Path to the application directory; use a real path in your configuration>`$uri",
+                   "NXT2": "NXT3$uri",
                    "fallback": {
                        "pass": "applications/yii/index"
                    }
@@ -149,17 +148,16 @@ This creates the app’s directory tree at **/path/to/app/**.
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`"
+                       "root": "NXT4"
                    },
                    "index": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT5",
+                       "script": "NXT6"
                    }
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 For a detailed discussion, see Yii 1.1 [docs](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app).
 

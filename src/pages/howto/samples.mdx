@@ -265,8 +265,7 @@ my $app = sub {
 
 Upload the [app config](../configuration.md#configuration-perl) to Unit and test it:
 
-```bash
-# curl -X PUT --data-binary '{
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
           "pass": "applications/perl"
@@ -279,12 +278,11 @@ Upload the [app config](../configuration.md#configuration-perl) to Unit and test
           "script": "/www/app.psgi"
       }
   }
-  }' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
+  }' --unix-socket NXT1 http://localhost/config/
 
 $ curl http://localhost:8080
 
-    Hello, Perl on Unit!
-```
+    Hello, Perl on Unit!`}</Code_Block>
 
 Try this sample out with the Dockerfile [`here`](../downloads/Dockerfile.perl.txt) or use a more elaborate app example:
 
@@ -317,8 +315,6 @@ my $app = sub {
 };
 ```
 
-&nbsp;
-
 ## PHP
 
 Let’s configure the following basic app, saved as **/www/index.php**:
@@ -329,8 +325,7 @@ Let’s configure the following basic app, saved as **/www/index.php**:
 
 Upload the [app config](../configuration.md#configuration-php) to Unit and test it:
 
-```bash
-# curl -X PUT --data-binary '{
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
           "pass": "applications/php"
@@ -342,12 +337,11 @@ Upload the [app config](../configuration.md#configuration-php) to Unit and test 
           "root": "/www/"
       }
   }
-  }' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
+  }' --unix-socket NXT1 http://localhost/config/
 
 $ curl http://localhost:8080
 
-    Hello, PHP on Unit!
-```
+    Hello, PHP on Unit!`}</Code_Block>
 
 Try this sample out with the Dockerfile [`here`](../downloads/Dockerfile.php.txt) or use a more elaborate app example:
 
@@ -373,8 +367,6 @@ echo json_encode($r, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 ?>
 ```
 
-&nbsp;
-
 ## Python
 
 Let’s configure the following basic app, saved as **/www/wsgi.py**:
@@ -387,8 +379,7 @@ def application(environ, start_response):
 
 Upload the [app config](../configuration.md#configuration-python) to Unit and test it:
 
-```bash
-# curl -X PUT --data-binary '{
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
           "pass": "applications/python"
@@ -401,12 +392,11 @@ Upload the [app config](../configuration.md#configuration-python) to Unit and te
           "module": "wsgi"
       }
   }
-  }' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
+  }' --unix-socket NXT1 http://localhost/config/
 
 $ curl http://localhost:8080
 
-    Hello, Python on Unit!
-```
+    Hello, Python on Unit!`}</Code_Block>
 
 Try this sample out with the Dockerfile [`here`](../downloads/Dockerfile.python.txt) or use a more elaborate app example:
 
@@ -433,8 +423,6 @@ def application(env, start_response):
     return json.dumps(r, indent=4).encode("utf-8")
 ```
 
-&nbsp;
-
 ## Ruby
 
 Let’s configure the following basic app, saved as **/www/config.ru**:
@@ -451,8 +439,7 @@ run app
 
 Upload the [app config](../configuration.md#configuration-ruby) to Unit and test it:
 
-```bash
-# curl -X PUT --data-binary '{
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary '{
   "listeners": {
       "*:8080": {
           "pass": "applications/ruby"
@@ -465,12 +452,11 @@ Upload the [app config](../configuration.md#configuration-ruby) to Unit and test
           "script": "config.ru"
       }
   }
-  }' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
+  }' --unix-socket NXT1 http://localhost/config/
 
 $ curl http://localhost:8080
 
-    Hello, Ruby on Unit!
-```
+    Hello, Ruby on Unit!`}</Code_Block>
 
 Try this sample out with the Dockerfile [`here`](../downloads/Dockerfile.ruby.txt) or use a more elaborate app example:
 
@@ -495,8 +481,6 @@ end;
 
 run app
 ```
-
-&nbsp;
 
 ## WebAssembly (Wasm)
 
@@ -572,15 +556,15 @@ Congratulations! You have created your very first WebAssembly component on Unit!
 $ curl http://localhost:8080
 ```
 
-#### WARNING
-
+<Note type="warning">
 Unit 1.32.0 and later support the WebAssembly component Model and WASI 0.2 APIs. We recommend to use the new implementation.
+</Note>
 
 Instead of dealing with bytecode, let’s build a Unit-capable Rust app and compile it into WebAssembly.
 
-#### NOTE
-
+<Note type="note">
 Currently, WebAssembly support is provided as a Technology Preview. This includes support for compiling Rust and C code into Unit-compatible WebAssembly, using our SDK in the form of the the **libunit-wasm** library. For details, see our **unit-wasm** [repository](https://github.com/nginx/unit-wasm) on GitHub.
+</Note>
 
 First, install the WebAssembly-specific Rust tooling:
 
@@ -619,8 +603,7 @@ This yields the **target/wasm32-wasi/debug/wasm\_on\_unit.wasm** file (path may 
 
 Upload the [app config](../configuration.md#configuration-wasm) to Unit and test it:
 
-```bash
-# curl -X PUT --data-binary '{
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasm_on_unit", tooltip: "app directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary '{
       "listeners": {
          "127.0.0.1:8080": {
             "pass": "applications/wasm"
@@ -630,7 +613,7 @@ Upload the [app config](../configuration.md#configuration-wasm) to Unit and test
       "applications": {
          "wasm": {
             "type": "wasm",
-            "module": ":nxt_ph:`/path/to/wasm_on_unit <app directory>`/target/wasm32-wasi/debug/wasm_on_unit.wasm",
+            "module": "NXT1/target/wasm32-wasi/debug/wasm_on_unit.wasm",
             "request_handler": "uwr_request_handler",
             "malloc_handler": "luw_malloc_handler",
             "free_handler": "luw_free_handler",
@@ -638,7 +621,7 @@ Upload the [app config](../configuration.md#configuration-wasm) to Unit and test
             "module_end_handler": "uwr_module_end_handler"
          }
       }
-}' --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/config/
+}' --unix-socket NXT2 http://localhost/config/
 
 $ curl http://localhost:8080
 
@@ -657,8 +640,7 @@ $ curl http://localhost:8080
       [Request Headers]
       Host = localhost:8080
       User-Agent = curl/8.2.1
-      Accept = */*
-```
+      Accept = */*`}</Code_Block>
 
 Further, you can research the Unit-based WebAssembly app internals in more depth. Clone the **unit-wasm** repository and build the examples in C and Rust (may require **clang** and **lld**):
 
@@ -670,8 +652,7 @@ $ make WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot/ <wasi-sysroot directory>` ex
 $ make WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot/ <wasi-sysroot directory>` examples-rust  # Rust examples
 ```
 
-#### NOTE
-
+<Note type="note">
 If the above commands fail like this:
 
 ```bash
@@ -681,13 +662,12 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
 Download and install the library to **clang**’s run-time dependency directory:
 
-```bash
-$ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/libclang_rt.builtins-wasm32-wasi-20.0.tar.gz \
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/runtime/dir", tooltip: "run-time directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/runtime/dir", tooltip: "run-time directory", nxt_type: "nxt_ph" }, { number: "3", display_text: "lib/wasi", tooltip: "wget output above", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/runtime/dir", tooltip: "run-time directory", nxt_type: "nxt_ph" }]}>{`$ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/libclang_rt.builtins-wasm32-wasi-20.0.tar.gz \\
       | tar zxf -                  # Unpacks to lib/wasi/ in the current directory
 $ clang -print-runtime-dir         # Double-check the run-time directory, which is OS-dependent
 
-      :nxt_ph:`/path/to/runtime/dir <run-time directory>`/linux
+      NXT1/linux
 
-# mkdir :nxt_ph:`/path/to/runtime/dir <run-time directory>`/wasi  # Note the last part of the pathname
-# cp :nxt_hint:`lib/wasi/ <wget output above>`libclang_rt.builtins-wasm32.a :nxt_ph:`/path/to/runtime/dir <run-time directory>`/wasi/
-```
+# mkdir NXT2/wasi  # Note the last part of the pathname
+# cp NXT3/libclang_rt.builtins-wasm32.a NXT4/wasi/`}</Code_Block>
+</Note>

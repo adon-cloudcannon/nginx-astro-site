@@ -644,13 +644,11 @@ $ curl http://localhost:8080
 
 Further, you can research the Unit-based WebAssembly app internals in more depth. Clone the **unit-wasm** repository and build the examples in C and Rust (may require **clang** and **lld**):
 
-```bash
-$ git clone https://github.com/nginx/unit-wasm/
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasi-sysroot/", tooltip: "wasi-sysroot directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/wasi-sysroot/", tooltip: "wasi-sysroot directory", nxt_type: "nxt_ph" }]}>{`$ git clone https://github.com/nginx/unit-wasm/
 $ cd unit-wasm
 $ make help                                               # Explore your options first
-$ make WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot/ <wasi-sysroot directory>` examples       # C examples
-$ make WASI_SYSROOT=:nxt_ph:`/path/to/wasi-sysroot/ <wasi-sysroot directory>` examples-rust  # Rust examples
-```
+$ make WASI_SYSROOT=NXT1 examples       # C examples
+$ make WASI_SYSROOT=NXT2 examples-rust  # Rust examples`}</Code_Block>
 
 <Note type="note">
 If the above commands fail like this:

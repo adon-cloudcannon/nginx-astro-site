@@ -167,8 +167,6 @@ $ ./configure --control=unix:/path/to/control.unit.sock  # Note the unix: prefix
 Avoid exposing an unprotected control socket in public networks.  UseNGINX or a different solution such as SSHfor security and authentication.
 </Note><p><br />The default is <strong>unix:RUNSTATEDIR/control.unit.sock</strong>, created as<br /><strong>root</strong> with <strong>600</strong> permissions.</p></td></tr><tr><td><p><strong>--tmpdir=TMPDIR</strong></p></td><td><p>Defines the temporary file storage location (used to dump large request<br />bodies).<br /><br />The default value is <strong>/tmp</strong>.</p></td></tr></tbody></table>
 
-&nbsp;
-
 ### Directory Structure
 
 By default, **make install** installs Unit at the following pathnames:
@@ -177,27 +175,23 @@ By default, **make install** installs Unit at the following pathnames:
 
 The defaults are designed to work for most cases; to customize this layout, set the `--prefix` and its related options during [configuration](#source-config-src-prefix), defining the resulting file structure.
 
-&nbsp;
-
 ## Configuring Modules
 
 Next, configure a module for each language you want to use with Unit.  The **./configure &lt;language&gt;** commands set up individual language modules and place module-specific instructions in the **Makefile**.
 
-#### NOTE
-
-To run apps in several versions of a language, build and install a module for each version.  To package custom modules, see the module [howto](modules.md#modules-pkg).
+<Note type="note">
+To run apps in several versions of a language, build and install a module for each version. To package custom modules, see the module [howto](modules.md#modules-pkg).
+</Note>
 
 When you run **./configure go**, Unit sets up the Go package that lets your applications [run on Unit](../configuration.md#configuration-go).  To use the package, [install](#source-bld-src-ext) it in your Go environment. Available configuration options:
 
 <table><thead><tr><th><p><strong>--go=pathname</strong></p></th><th><p>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--go-path=directory</strong></p></td><td><p>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</p></td></tr></tbody></table>
 
-#### NOTE
-
+<Note type="note">
 Running **./configure go** doesn’t alter the `GOPATH` [environment variable](https://github.com/golang/go/wiki/GOPATH), so configure-time `--go-path` and compile-time `$GOPATH` must be coherent for Go to find the resulting package.
+</Note>
 
-```bash
-$ GOPATH=<Go package installation path> GO111MODULE=auto go build -o :nxt_ph:`app <Executable name>` :nxt_ph:`app.go <Application source code>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "app", tooltip: "Executable name", nxt_type: "nxt_ph" }, { number: "2", display_text: "app.go", tooltip: "Application source code", nxt_type: "nxt_ph" }]}>{`$ GOPATH=<Go package installation path> GO111MODULE=auto go build -o NXT1 NXT2`}</Code_Block>
 
 When you run **./configure java**, the script configures a module to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html) on Unit.  Available command options:
 
@@ -227,7 +221,9 @@ $ ./configure perl --module=perl-5.20  \
 
 When you run **./configure php**, the script configures a custom SAPI module linked with the **libphp** library to support running PHP applications on Unit.  Available command options:
 
-<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:<br /><br /><code>bash&lt;br/&gt;$ php-config --php-sapis&lt;br/&gt;&lt;br/&gt;      ... embed ...&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:</p><Code_Block language="bash" hints={[]}>{`$ php-config --php-sapis
+
+    ... embed ...<br/>`}</Code_Block></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
 
 To configure a module called **php70.unit.so** for PHP&nbsp;7.0:
 
@@ -241,9 +237,9 @@ When you run **./configure python**, the script configures a module to support r
 
 <table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>python-config</strong> script used to<br />set up the resulting module.<br /><br />The default is <strong>python-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Custom directory path of the Python runtime library to use with<br />Unit.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>/path/python3-config</strong> turns into<br /><strong>python3</strong>.</p></td></tr></tbody></table>
 
-#### NOTE
-
+<Note type="note">
 The Python interpreter set by **python-config** must be compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
+</Note>
 
 To configure a module called **py33.unit.so** for Python&nbsp;3.3:
 
@@ -263,15 +259,13 @@ $ ./configure ruby --module=ru23  \
                    --ruby=ruby23
 ```
 
-&nbsp;
-
 When you run **./configure wasm-wasi-component**, the script configures a module to support running WebAssembly components on Unit.
 
 The module doesn’t accept any extra configuration parameters. The module’s basename is wasm-wasi-component.
 
-#### WARNING
-
+<Note type="warning">
 Unit 1.32.0 and later support the WebAssembly Component Model and WASI 0.2 APIs. We recommend using the new implementation.
+</Note>
 
 When you run **./configure wasm**, the script configures a module to support running WebAssembly applications on Unit. Available command options:
 
@@ -279,13 +273,9 @@ When you run **./configure wasm**, the script configures a module to support run
 
 To configure a module called **wasm.unit.so**:
 
-```bash
-$ ./configure wasm --include-path=:nxt_ph:`/path/to/wasmtime <Runtime's header directory>`/include  \
-                   --lib-path=:nxt_ph:`/path/to/wasmtime <Runtime's library directory>`/lib \
-                   --rpath
-```
-
-&nbsp;
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasmtime", tooltip: "Runtime's header directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/wasmtime", tooltip: "Runtime's library directory", nxt_type: "nxt_ph" }]}>{`$ ./configure wasm --include-path=NXT1/include  \\
+                   --lib-path=NXT2/lib \\
+                   --rpath`}</Code_Block>
 
 ## Building and Installing Unit
 
@@ -308,49 +298,37 @@ $ ./build/sbin/unitd
 
 You can also build and install language modules individually; the specific method depends on whether the language module is embedded in Unit (Java, Perl, PHP, Python, Ruby) or packaged externally (Go, Node.js).
 
-#### NOTE
-
+<Note type="note">
 For further details about Unit’s language modules, see [Working With Language Modules](modules.md).
-
-&nbsp;
+</Note>
 
 ### Embedded Language Modules
 
 To build and install the modules for Java, PHP, Perl, Python, or Ruby after configuration, run **make &lt;module basename&gt;** and **make &lt;module basename&gt;-install**, for example:
 
-```bash
-$ make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`
-# make :nxt_hint:`perl-5.20 <This is the --module option value from ./configure perl>`-install
-```
-
-&nbsp;
+<Code_Block language="bash" hints={[{ number: "1", display_text: "perl-5.20", tooltip: "This is the --module option value from ./configure perl", nxt_type: "nxt_hint" }, { number: "2", display_text: "perl-5.20", tooltip: "This is the --module option value from ./configure perl", nxt_type: "nxt_hint" }]}>{`$ make NXT1
+# make NXT2-install`}</Code_Block>
 
 ### External Language Modules
 
 To build and install the modules for Go and Node.js globally after configuration, run **make &lt;go&gt;-install** and **make &lt;node&gt;-install**, for example:
 
-```bash
-# make :nxt_hint:`go <This is the --go option value from ./configure go>`-install
-# make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-install
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "go", tooltip: "This is the --go option value from ./configure go", nxt_type: "nxt_hint" }, { number: "2", display_text: "node", tooltip: "This is the --node option value from ./configure nodejs", nxt_type: "nxt_hint" }]}>{`# make NXT1-install
+# make NXT2-install`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 To install the Node.js module locally, run **make &lt;node&gt;-local-install**:
 
-```bash
-# make :nxt_hint:`node <This is the --node option value from ./configure nodejs>`-local-install
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "node", tooltip: "This is the --node option value from ./configure nodejs", nxt_type: "nxt_hint" }]}>{`# make NXT1-local-install`}</Code_Block>
 
 If you haven’t specified the `--local` [directory](#modules-nodejs) with **./configure nodejs** earlier, provide it here:
 
-```bash
-# DESTDIR=/your/project/directory/ make node-local-install
-```
+<Code_Block language="bash" hints={[]}>{`# DESTDIR=/your/project/directory/ make node-local-install`}</Code_Block>
 
 If both options are specified, `DESTDIR` prefixes the `--local` value set by **./configure nodejs**.
 
 Finally, mind that global installation is preferable for the Node.js module.
+</Note>
 
 If you customized the executable pathname with `--go` or `--node`, use the following pattern:
 

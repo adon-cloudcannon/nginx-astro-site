@@ -188,8 +188,6 @@ Another solution is to add **app\_user** to **some\_group** (assuming this was n
 # find NXT5 -type d -exec NXT6 u=rx,g=rx,o= {} ;
 # find NXT7 -type d -exec NXT8 u=rx,g=rx,o= {} ; `}</Code_Block>
 
-`# :nxt_hint:chown &lt;Assign ownership for the app code&gt; -R app_user:app_group :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your command&gt; # :nxt_hint:chown &lt;Assign ownership for the static files&gt; -R app_user:app_group :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; # find :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your command&gt; -type d -exec :nxt_hint:chmod &lt;Add read/execute permissions to app code directories for user and group&gt; u=rx,g=rx,o= {} ; # find :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; -type d -exec :nxt_hint:chmod &lt;Add read/execute permissions to static file directories for user and group&gt; u=rx,g=rx,o= {} ; `
-
 5\. If the app needs to update specific directories or files, make sure they’re writable for the app alone:
 
 `# :nxt_hint:chmod &lt;Add write permissions for the user only; the group shouldn't have them&gt; u+w :nxt_ph:/path/to/writable/file/or/directory/ &lt;Repeat for each file or directory that must be writable&gt; `

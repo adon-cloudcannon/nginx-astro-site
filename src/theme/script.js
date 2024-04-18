@@ -41,7 +41,7 @@ function nxt_nav_init() {
                            ? entry.target.id
                            : entry.target.previousElementSibling.id;
 
-            const selector = '#side .toctree-l1 a[href="/how-to/#' + toc_id + '"]'
+            const selector = '#side .toctree-l1 a[href="/howto/#' + toc_id + '"]'
             const anchor = document.querySelector(selector)
 
             if (anchor) {

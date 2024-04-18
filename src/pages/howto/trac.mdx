@@ -18,27 +18,23 @@ As of now, Trac [doesn’t fully support](https://trac.edgewall.org/ticket/12130
 
 2\. Prepare and activate a [virtual environment](https://virtualenv.pypa.io/en/latest/) to contain your installation (assuming **virtualenv** is installed):
 
-```bash
-   $ mkdir -p :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
-   $ cd :nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ mkdir -p NXT1
+   $ cd NXT2
    $ virtualenv venv
-   $ source venv/bin/activate
-```
+   $ source venv/bin/activate`}</Code_Block>
 
 3\. Next, [install Trac](https://trac.edgewall.org/wiki/TracInstall) and its optional dependencies, then initialize a [Trac environment](https://trac.edgewall.org/wiki/TracEnvironment) and deploy static files:
 
-```bash
-   $ pip install Trac
-   $ pip install babel docutils genshi \
+<Code_Block language="bash" hints={[{ number: "1", display_text: "static/", tooltip: "Arbitrary directory name", nxt_type: "nxt_ph" }, { number: "2", display_text: "trac_env/", tooltip: "Arbitrary directory name", nxt_type: "nxt_ph" }]}>{`   $ pip install Trac
+   $ pip install babel docutils genshi \\
                  pygments pytz textile             # optional dependencies
-   $ mkdir :nxt_ph:`static/ <Arbitrary directory name>`                                 # will store Trac's /chrome/ tree
-   $ mkdir :nxt_ph:`trac_env/ <Arbitrary directory name>`
+   $ mkdir NXT1                                 # will store Trac's /chrome/ tree
+   $ mkdir NXT2
    $ trac-admin trac_env/ initenv                  # initialize Trac environment
    $ trac-admin trac_env/ deploy static/           # extract Trac's static files
    $ mv static/htdocs static/chrome                # align static file paths
    $ rm -rf static/cgi-bin/                        # remove unneeded files
-   $ deactivate
-```
+   $ deactivate`}</Code_Block>
 
 4\. Unit [uses WSGI](../configuration.md#configuration-python) to run Python apps, so a [wrapper](https://trac.edgewall.org/wiki/1.3/TracModWSGI#Averybasicscript) script is required to run Trac as a Unit app; let’s save it as **/path/to/app/trac\_wsgi.py**.  Here, the **application** callable serves as the entry point for the app:
 
@@ -52,9 +48,7 @@ As of now, Trac [doesn’t fully support](https://trac.edgewall.org/ticket/12130
 
 5\. Run the following command so Unit can access :
 
-```bash
-   # chown -R :nxt_hint:`unit:unit <User and group that Unit's router runs as by default>` :nxt_ph:`/path/to/app/ <Path to the application files such as /data/www/app/; use a real path in your commands>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
 <Note type="note">
 The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.

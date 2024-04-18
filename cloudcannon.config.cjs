@@ -17,7 +17,7 @@ module.exports = {
       heading: "Collections",
       collections: [
         "pages",
-        "how-to",
+        "howto",
         "news"
       ]
     }

@@ -29,8 +29,7 @@ For further details, including permissions, see the [security checklist](securit
 
 4\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
 
-```json
-   {
+<Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
        "listeners": {
            "*:80": {
                "pass": "routes"
@@ -41,7 +40,7 @@ For further details, including permissions, see the [security checklist](securit
            {
                "match": {
                    "uri": [
-                       "!:nxt_hint:`/assets/* <This path stores application data that shouldn't be run as code>`",
+                       "!NXT1",
                        "*.php",
                        "*.php/*"
                    ]
@@ -53,7 +52,7 @@ For further details, including permissions, see the [security checklist](securit
            },
            {
                "action": {
-                   ":nxt_hint:`share <Serves static files>`": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`web$uri",
+                   "NXT2": "NXT3/web$uri",
                    "fallback": {
                        "pass": "applications/yii/index"
                    }
@@ -66,18 +65,17 @@ For further details, including permissions, see the [security checklist](securit
                "type": "php",
                "targets": {
                    "direct": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`web/"
+                       "root": "NXT4/web/"
                    },
 
                    "index": {
-                       "root": ":nxt_ph:`/path/to/app/ <Path to the application directory; use a real path in your configuration>`web/",
-                       "script": ":nxt_hint:`index.php <All requests are handled by a single script>`"
+                       "root": "NXT5/web/",
+                       "script": "NXT6"
                    }
                }
            }
        }
-   }
-```
+   }`}</Code_Block>
 
 For a detailed discussion, see [Configuring Web Servers](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#configuring-web-servers) and [Running Applications](https://www.yiiframework.com/doc/guide/2.0/en/start-workflow) in Yii 2.0 docs.
 

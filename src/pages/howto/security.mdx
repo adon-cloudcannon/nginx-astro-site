@@ -164,7 +164,10 @@ Thus, Unit’s router process can access each app’s directory and serve files 
 
 3\. A frequent source of issues is the lack of permissions for directories inside a directory path needed to run the app, so check for that if in doubt.  Assuming your app code is stored at **/path/to/app/**:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "drwxr-xr-x", tooltip: "Permissions are OK", nxt_type: "nxt_hint" }, { number: "2", display_text: "drwxr-x---", tooltip: "Permissions are too restrictive", nxt_type: "nxt_hint" }]}>{`# ls -l /        NXT1  some_user some_group  path  # ls -l /path/        NXT2  some_user some_group  to `}</Code_Block>
+<Code_Block language="bash" hints={[{ number: "1", display_text: "drwxr-xr-x", tooltip: "Permissions are OK", nxt_type: "nxt_hint" }, { number: "2", display_text: "drwxr-x---", tooltip: "Permissions are too restrictive", nxt_type: "nxt_hint" }]}>{`# ls -l /
+      NXT1  some_user some_group  path
+# ls -l /path/
+      NXT2  some_user some_group  to `}</Code_Block>
 
 This may be a problem because the **to/** directory isn’t owned by **app\_user:app\_group** and denies all permissions to non-owners (as the **\---** sequence tells us), so a fix can be warranted:
 

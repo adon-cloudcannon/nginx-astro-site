@@ -190,33 +190,79 @@ Another solution is to add **app\_user** to **some\_group** (assuming this was n
 
 5\. If the app needs to update specific directories or files, make sure they’re writable for the app alone:
 
-`# :nxt_hint:chmod &lt;Add write permissions for the user only; the group shouldn't have them&gt; u+w :nxt_ph:/path/to/writable/file/or/directory/ &lt;Repeat for each file or directory that must be writable&gt; `
+<Code_Block language="bash" hints={[{ number: "1", display_text: "chmod", tooltip: "Add write permissions for the user only; the group shouldn't have them", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/writable/file/or/directory/", tooltip: "Repeat for each file or directory that must be writable", nxt_type: "nxt_ph" }]}>{`# NXT1 u+w NXT2`}</Code_Block>
 
 In case of a writable directory, you may also want to prevent non-owners from messing with its files:
 
-`# :nxt_hint:chmod &lt;Sticky bit prevents non-owners from deleting or renaming files&gt; +t :nxt_ph:/path/to/writable/directory/ &lt;Repeat for each directory that must be writable&gt; ` NOTE
+<Code_Block language="bash" hints={[{ number: "1", display_text: "chmod", tooltip: "Sticky bit prevents non-owners from deleting or renaming files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/writable/directory/", tooltip: "Repeat for each directory that must be writable", nxt_type: "nxt_ph" }]}>{`# NXT1 +t NXT2`}</Code_Block>
 
-Usually, apps store and update their data outside the app code directories, but some apps may mix code and data.  In such a case, assign permissions on an individual basis, making sure you understand how the app uses each file or directory: is it code, read-only content, or writable data.
+<Note type="note">
+Usually, apps store and update their data outside the app code directories, but some apps may mix code and data. In such a case, assign permissions on an individual basis, making sure you understand how the app uses each file or directory: is it code, read-only content, or writable data.
+</Note>
 
 6\. For [embedded](modules.md#modules-emb) apps, it’s usually enough to make the app code and the static files readable:
 
-`# find :nxt_ph:/path/to/app/code/ &lt;Path to the application's code directory; use a real path in your command&gt; -type f -exec :nxt_hint:chmod &lt;Add read rights to app code for user and group&gt; u=r,g=r,o= {} ; # find :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; -type f -exec :nxt_hint:chmod &lt;Add read rights to static files for user and group&gt; u=r,g=r,o= {} ; `
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/code/", tooltip: "Path to the application's code directory; use a real path in your command", nxt_type: "nxt_ph" }, { number: "2", display_text: "chmod", tooltip: "Add read rights to app code for user and group", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/static/app/files/", tooltip: "Can be outside the app directory tree; use a real path in your command", nxt_type: "nxt_ph" }, { number: "4", display_text: "chmod", tooltip: "Add read rights to static files for user and group", nxt_type: "nxt_hint" }]}>{`# find NXT1 -type f -exec NXT2 u=r,g=r,o= {} ;
+# find NXT3 -type f -exec NXT4 u=r,g=r,o= {} ; `}</Code_Block>
 
 7\. For [external](modules.md#modules-emb) apps, additionally make the app code or binaries executable:
 
-`# find :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your command&gt; -type f -exec :nxt_hint:chmod &lt;Add read and execute rights to app code for user and group&gt; u=rx,g=rx,o= {} ; # find :nxt_ph:/path/to/static/app/files/ &lt;Can be outside the app directory tree; use a real path in your command&gt; -type f -exec :nxt_hint:chmod &lt;Add read rights to static files for user and group&gt; u=r,g=r,o= {} ; `
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your command", nxt_type: "nxt_ph" }, { number: "2", display_text: "chmod", tooltip: "Add read and execute rights to app code for user and group", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/static/app/files/", tooltip: "Can be outside the app directory tree; use a real path in your command", nxt_type: "nxt_ph" }, { number: "4", display_text: "chmod", tooltip: "Add read rights to static files for user and group", nxt_type: "nxt_hint" }]}>{`# find NXT1 -type f -exec NXT2 u=rx,g=rx,o= {} ;
+# find NXT3 -type f -exec NXT4 u=r,g=r,o= {} ; `}</Code_Block>
 
 8\. To run a single app, [configure](../configuration.md) Unit as follows:
 
-<code>{     "listeners": {         ":nxt_hint:`*:80 &lt;Or another suitable socket address&gt;`": {             "pass": "routes"         }     },      "routes": [         {             "action": {                 "share": ":nxt_ph:`/path/to/static/app/files/ &lt;Router process needs read and execute permissions to serve static content from this directory&gt;`$uri",                 "fallback": {                     "pass": "applications/app"                 }             }         }     ],      "applications": {         "app": {             "type": "...",             "user": "app_user",             "group": "app_group"         }     } } </code>
+<Code_Block language="json" hints={[]}>{`{     "listeners": {         ":nxt_hint:`*:80 &lt;Or another suitable socket address&gt;`": {             "pass": "routes"         }     },      "routes": [         {             "action": {                 "share": ":nxt_ph:`/path/to/static/app/files/ &lt;Router process needs read and execute permissions to serve static content from this directory&gt;`$uri",                 "fallback": {                     "pass": "applications/app"                 }             }         }     ],      "applications": {         "app": {             "type": "...",             "user": "app_user",             "group": "app_group"         }     } }`}</Code_Block>
 
 9\. To run several apps side by side, [configure](../configuration.md) them with appropriate user and group names.  The following configuration distinguishes apps based on the request URI, but you can implement another scheme such as different listeners:
 
-<code>{     "listeners": {         ":nxt_hint:`*:80 &lt;Or another suitable socket address&gt;`": {             "pass": "routes"         }     },      "routes": [         {             "match": {                 "uri": ":nxt_hint:`/app1/* &lt;Arbitrary matching condition&gt;`"             },              "action": {                 "share": ":nxt_ph:`/path/to/static/app1/files/ &lt;Router process needs read and execute permissions to serve static content from this directory&gt;`$uri",                 "fallback": {                     "pass": "applications/app1"                 }             }         },          {             "match": {                 "uri": ":nxt_hint:`/app2/* &lt;Arbitrary matching condition&gt;`"             },              "action": {                 "share": ":nxt_ph:`/path/to/static/app2/files/ &lt;Router process needs read and execute permissions to serve static content from this directory&gt;`$uri",                 "fallback": {                     "pass": "applications/app2"                 }             }         }     ],      "applications": {         "app1": {             "type": "...",             "user": "app_user1",             "group": "app_group1"         },          "app2": {             "type": "...",             "user": "app_user2",             "group": "app_group2"         }     } } </code>
+<Code_Block language="json" hints={[{ number: "1", display_text: "*:80", tooltip: "Or another suitable socket address", nxt_type: "nxt_hint" }, { number: "2", display_text: "/app1/*", tooltip: "Arbitrary matching condition", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/static/app1/files/", tooltip: "Router process needs read and execute permissions to serve static content from this directory", nxt_type: "nxt_ph" }, { number: "4", display_text: "/app2/*", tooltip: "Arbitrary matching condition", nxt_type: "nxt_hint" }, { number: "5", display_text: "/path/to/static/app2/files/", tooltip: "Router process needs read and execute permissions to serve static content from this directory", nxt_type: "nxt_ph" }]}>{`{
+    "listeners": {
+        "NXT1": {
+            "pass": "routes"
+        }
+    },
+    "routes": [
+        {
+            "match": {
+                "uri": "NXT2"
+            },
+            "action": {
+                "share": "NXT3$uri",
+                "fallback": {
+                    "pass": "applications/app1"
+                }
+            }
+        },
+        {
+            "match": {
+                "uri": "NXT4"
+            },
+            "action": {
+                "share": "NXT5$uri",
+                "fallback": {
+                    "pass": "applications/app2"
+                }
+            }
+        }
+    ],
+    "applications": {
+        "app1": {
+            "type": "...",
+            "user": "app_user1",
+            "group": "app_group1"
+        },
+        "app2": {
+            "type": "...",
+            "user": "app_user2",
+            "group": "app_group2"
+        }
+    }
+}`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 As usual with permissions, different steps may be required if you use ACLs.
+</Note>
 
 Unfortunately, quite a few web apps are built in a manner that mixes their source code, data, and configuration files with static content, which calls for complex access restrictions.  The situation is further aggravated by the inevitable need for maintenance activities that may leave a footprint of extra files and directories unrelated to the app’s operation.  The issue has several aspects:
 
@@ -273,8 +319,6 @@ If these can’t be avoided, investigate the inner workings of the app to preven
 
 However, this does not replace the need to set up file permissions; use both [matching rules](../configuration.md#configuration-routes-matching) and per-app user permissions to manage access.  For more info and real-life examples, refer to our app [howtos](index.md) and the ‘File Permissions’ callout above.
 
-&nbsp;
-
 Unit’s processes are detailed [elsewhere](https://www.nginx.com/blog/introducing-nginx-unit/), but here’s a synopsis of the different roles they have:
 
 <table><thead><tr><th><p>Process</p></th><th><p>Privileged?</p></th><th><p>User and Group</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p>Main</p></td><td><p>Yes</p></td><td><p>Whoever starts the <strong>unitd</strong> executable; by default,<br /><strong>root</strong>.</p></td><td><p>Runs as a daemon, spawning Unit’s non-privileged and app processes;<br />requires numerous system capabilities and privileges for operation.</p></td></tr><tr><td><p>Controller</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Serves the control API, accepting reconfiguration requests,<br />sanitizing them, and passing them to other processes for<br />implementation.</p></td></tr><tr><td><p>Discovery</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Discovers the language modules in the module directory at startup,<br />then quits.</p></td></tr><tr><td><p>Router</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Serves client requests, accepting them, processing them on the spot,<br />passing them to app processes, or proxying them further; requires<br />access to static content paths you configure.</p></td></tr><tr><td><p>App processes</p></td><td><p>No</p></td><td><p>Set by per-app <strong>user</strong> and <strong>group</strong><br /><a href="../configuration.md#configuration-applications">options</a>; by default,<br /><code>--user</code> and <code>--group</code> values.</p></td><td><p>Serve client requests that are routed to apps; require access to<br />paths and namespaces you configure for the app.</p></td></tr></tbody></table>
@@ -293,8 +337,6 @@ $ ps aux | grep unit
 
 The important outtake here is to understand that Unit’s non-privileged processes don’t require running as **root**.  Instead, they should have the minimal privileges required to operate, which so far means the ability to open connections and access the application code and the static files shared during routing.
 
-&nbsp;
-
 ## Prune Debug and Access Logs
 
 **Rationale**: Unit stores potentially sensitive data in its general and access logs; their size can also become a concern if debug mode is enabled.
@@ -308,8 +350,7 @@ Unit can maintain two different logs:
 
 If you enable debug-mode or access logging, rotate these logs with tools such as **logrotate** to avoid overgrowth.  A sample **logrotate** [configuration](https://man7.org/linux/man-pages/man8/logrotate.8.html#CONFIGURATION_FILE_DIRECTIVES):
 
-```none
-:nxt_ph:`/path/to/unit.log <Use a real path in your configuration>` {
+<Code_Block language="none" hints={[{ number: "1", display_text: "/path/to/unit.log", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/unit.pid", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/bin/kill", tooltip: "Signals Unit to reopen the log", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/unit.pid", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`NXT1 {
     daily
     missingok
     rotate 7
@@ -319,63 +360,54 @@ If you enable debug-mode or access logging, rotate these logs with tools such as
     notifempty
     su root root
     postrotate
-        if [ -f :nxt_ph:`/path/to/unit.pid <Use a real path in your configuration>` ]; then
-            :nxt_hint:`/bin/kill <Signals Unit to reopen the log>` -SIGUSR1 `cat :nxt_ph:`/path/to/unit.pid <Use a real path in your configuration>``
+        if [ -f NXT2 ]; then
+            NXT3 -SIGUSR1 \`cat NXT4\`
         fi
     endscript
-}
-```
+}`}</Code_Block>
 
 To figure out the log and PID file paths:
 
-```bash
-$ unitd -h
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/default/path/to/unit.pid", tooltip: "Build-time setting, can be overridden", nxt_type: "nxt_ph" }, { number: "2", display_text: "/default/path/to/unit.log", tooltip: "Build-time setting, can be overridden", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/unit.pid", tooltip: "Make sure to check for runtime overrides", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/unit.log", tooltip: "Make sure to check for runtime overrides", nxt_type: "nxt_ph" }]}>{`$ unitd -h
 
       ...
       --pid FILE           set pid filename
-                           default: ":nxt_ph:`/default/path/to/unit.pid <Build-time setting, can be overridden>`"
+                           default: "NXT1"
 
       --log FILE           set log filename
-                           default: ":nxt_ph:`/default/path/to/unit.log <Build-time setting, can be overridden>`"
+                           default: "NXT2"
 
 $ ps ax | grep unitd
 
-      ... unit: main v1.32.1 [... --pid :nxt_ph:`/path/to/unit.pid <Make sure to check for runtime overrides>` --log :nxt_ph:`/path/to/unit.log <Make sure to check for runtime overrides>` ...]
-```
+      ... unit: main v1.32.1 [... --pid NXT3 --log NXT4 ...]`}</Code_Block>
 
 Another issue is the logs’ accessibility.  Logs are opened and updated by the [main process](#security-apps) that usually runs as **root**. However, to make them available for a certain consumer, you may need to enable access for a dedicated user that the consumer runs as.
 
 Perhaps, the most straightforward way to achieve this is to assign log ownership to the consumer’s account.  Suppose you have a log utility running as **log\_user:log\_group**:
 
-```bash
-# :nxt_hint:`chown <Assign ownership to the log user>` log_user:log_group :nxt_ph:`/path/to/unit.log <If it's overridden, use the runtime setting>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "chown", tooltip: "Assign ownership to the log user", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/unit.log", tooltip: "If it's overridden, use the runtime setting", nxt_type: "nxt_ph" }, { number: "3", display_text: "curl", tooltip: "Enable access log in the Unit configuration at the given path", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/access.log", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket", nxt_type: "nxt_ph" }, { number: "6", display_text: "chown", tooltip: "Assign ownership to the log user", nxt_type: "nxt_hint" }, { number: "7", display_text: "/path/to/access.log", tooltip: "Use a real path in your command", nxt_type: "nxt_ph" }]}>{`# NXT1 log_user:log_group NXT2
 
-# :nxt_hint:`curl <Enable access log in the Unit configuration at the given path>` -X PUT -d '":nxt_ph:`/path/to/access.log <Use a real path in your configuration>`"'  \
-       --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket>` \
+# NXT3 -X PUT -d '"NXT4"'  \\
+       --unix-socket NXT5 \\
        http://localhost/config/access_log
 
       {
           "success": "Reconfiguration done."
       }
 
-# :nxt_hint:`chown <Assign ownership to the log user>` log_user:log_group :nxt_ph:`/path/to/access.log <Use a real path in your command>`
-```
+# NXT6 log_user:log_group NXT7`}</Code_Block>
 
 If you change the log file ownership, adjust your **logrotate** settings accordingly:
 
-```none
-:nxt_ph:`/path/to/unit.log <Use a real path in your configuration>` {
+<Code_Block language="none" hints={[{ number: "1", display_text: "/path/to/unit.log", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`NXT1 {
     ...
     su log_user log_group
     ...
-}
-```
+}`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 As usual with permissions, different steps may be required if you use ACLs.
-
-&nbsp;
+</Note>
 
 ## Add Restrictions, Isolation
 

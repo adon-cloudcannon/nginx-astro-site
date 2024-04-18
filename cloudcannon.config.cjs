@@ -17,7 +17,7 @@ module.exports = {
       heading: "Collections",
       collections: [
         "pages",
-        "howto",
+        "how-to",
         "news"
       ]
     }
@@ -43,7 +43,7 @@ module.exports = {
       }
     },
     "how-to": {
-      path: "pages/how-to",
+      path: "pages/howto",
       output: false,
       icon: "psychology_alt",
       disable_add: false,

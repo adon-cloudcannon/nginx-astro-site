@@ -192,15 +192,29 @@ Next, configure a module for each language you want to use with Unit.  The **./c
 To run apps in several versions of a language, build and install a module for each version. To package custom modules, see the module [howto](modules.md#modules-pkg).
 </Note>
 
-When you run **./configure go**, Unit sets up the Go package that lets your applications [run on Unit](../configuration.md#configuration-go).  To use the package, [install](#source-bld-src-ext) it in your Go environment. Available configuration options:
+<Tabs label="Go/Java/Node.js/Perl/PHP/Python/Ruby/WebAssembly/Unit-Wasm">
+  <Tab name="Go">
+    When you run **./configure go**, Unit sets up the Go package that lets your applications [run on Unit](../configuration.md#configuration-go). To use the package, [install](#source-bld-src-ext) it in your Go environment. Available configuration options:
 
-<table><thead><tr><th><p><strong>--go=pathname</strong></p></th><th><p>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--go-path=directory</strong></p></td><td><p>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</p></td></tr></tbody></table>
+    <table><thead><tr><th><p><strong>--go=pathname</strong></p></th><th><p>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--go-path=directory</strong></p></td><td><p>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</p></td></tr></tbody></table>
 
-<Note type="note">
-Running **./configure go** doesn’t alter the `GOPATH` [environment variable](https://github.com/golang/go/wiki/GOPATH), so configure-time `--go-path` and compile-time `$GOPATH` must be coherent for Go to find the resulting package.
-</Note>
+    <Note type="note">
+    Running **./configure go** doesn’t alter the `GOPATH` [environment variable](https://github.com/golang/go/wiki/GOPATH), so configure-time `--go-path` and compile-time `$GOPATH` must be coherent for Go to find the resulting package.
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "app", tooltip: "Executable name", nxt_type: "nxt_ph" }, { number: "2", display_text: "app.go", tooltip: "Application source code", nxt_type: "nxt_ph" }]}>{`$ GOPATH=<Go package installation path> GO111MODULE=auto go build -o NXT1 NXT2`}</Code_Block>
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "app", tooltip: "Executable name", nxt_type: "nxt_ph" }, { number: "2", display_text: "app.go", tooltip: "Application source code", nxt_type: "nxt_ph" }]}>{`$ GOPATH=<Go package installation path> GO111MODULE=auto go build -o NXT1 NXT2`}</Code_Block>
+    </Note>
+  </Tab>
+  <Tab name="Java"></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+  <Tab name=""></Tab>
+</Tabs>
+
+&nbsp;
 
 When you run **./configure java**, the script configures a module to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html) on Unit.  Available command options:
 

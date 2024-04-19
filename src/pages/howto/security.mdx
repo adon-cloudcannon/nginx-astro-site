@@ -114,11 +114,13 @@ $ ps ax | grep unitd
 
 **Actions**: Familiarize yourself with the [matching](../configuration.md#configuration-routes-matching) logic and double-check all [patterns](../configuration.md#configuration-routes-matching-patterns) that you use.
 
+<Dropdown label="Details">
 Some considerations:
 
 * Mind that [variables](../configuration.md#configuration-variables) contain arbitrary user-supplied request values; variable-based **pass** values in [listeners](../configuration.md#configuration-listeners) and [routes](../configuration.md#configuration-routes-action) must account for malicious requests, or the requests must be properly filtered.
 * Create [matching rules](../configuration.md#configuration-routes-matching) to formalize the restrictions of your Unit instance and the apps it runs.
 * Configure [shares](../configuration.md#configuration-static) only for directories and files you intend to make public.
+</Dropdown>
 
 ## Protect App Data
 

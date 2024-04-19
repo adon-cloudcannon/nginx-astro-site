@@ -290,41 +290,12 @@ As usual with permissions, different steps may be required if you use ACLs.
 </Note>
 </Dropdown>
 
-&nbsp;
+<Dropdown label="App Internals">
+Unfortunately, quite a few web apps are built in a manner that mixes their source code, data, and configuration files with static content, which calls for complex access restrictions. The situation is further aggravated by the inevitable need for maintenance activities that may leave a footprint of extra files and directories unrelated to the app’s operation. The issue has several aspects:
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-Unfortunately, quite a few web apps are built in a manner that mixes their source code, data, and configuration files with static content, which calls for complex access restrictions.  The situation is further aggravated by the inevitable need for maintenance activities that may leave a footprint of extra files and directories unrelated to the app’s operation.  The issue has several aspects:
-
-* Storage of code and data at the same locations, which usually happens by (insufficient) design.  You neither want your internal data and code files to be freely downloadable nor your user-uploaded data to be executable as code, so configure your routes and apps to prevent both.
-* Exposure of configuration data.  Your app-specific settings, **.ini** or **.htaccess** files, and credentials are best kept hidden from prying eyes, and your routing configuration should reflect that.
-* Presence of hidden files from versioning, backups by text editors, and other temporary files.  Instead of carving your configuration around these, it’s best to keep your app free of them altogether.
+* Storage of code and data at the same locations, which usually happens by (insufficient) design. You neither want your internal data and code files to be freely downloadable nor your user-uploaded data to be executable as code, so configure your routes and apps to prevent both.
+* Exposure of configuration data. Your app-specific settings, **.ini** or **.htaccess** files, and credentials are best kept hidden from prying eyes, and your routing configuration should reflect that.
+* Presence of hidden files from versioning, backups by text editors, and other temporary files. Instead of carving your configuration around these, it’s best to keep your app free of them altogether.
 
 If these can’t be avoided, investigate the inner workings of the app to prevent exposure, for example:
 
@@ -371,7 +342,14 @@ If these can’t be avoided, investigate the inner workings of the app to preven
     }
 }`}</Code_Block>
 
-However, this does not replace the need to set up file permissions; use both [matching rules](../configuration.md#configuration-routes-matching) and per-app user permissions to manage access.  For more info and real-life examples, refer to our app [howtos](index.md) and the ‘File Permissions’ callout above.
+However, this does not replace the need to set up file permissions; use both [matching rules](../configuration.md#configuration-routes-matching) and per-app user permissions to manage access. For more info and real-life examples, refer to our app [howtos](index.md) and the ‘File Permissions’ callout above.
+</Dropdown>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 Unit’s processes are detailed [elsewhere](https://www.nginx.com/blog/introducing-nginx-unit/), but here’s a synopsis of the different roles they have:
 

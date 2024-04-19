@@ -1,5 +1,5 @@
 {
-    "snippet": "<details><summary>{`[[label]]`}</summary>[[content]]</details>",
+    "snippet": "<details><summary>[[label]]</summary>[[content]]</details>",
     "inline": false,
     "preview": {
       "text": [   
@@ -25,7 +25,7 @@
     },
     "params": {
       "label": {
-        "parser": "argument",
+        "parser": "content",
         "options": {
           "model": 
           {
@@ -40,8 +40,7 @@
       "content": {
         "parser": "content",
         "options": {
-          "editor_key": "content",
-          "allow_nested": false
+          "editor_key": "content"
         }
       }
     }

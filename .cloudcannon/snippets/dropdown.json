@@ -31,6 +31,14 @@
           {
               "editor_key": "label",
               "type": "string"
+          },
+          "format": {
+            "string_boundary": [
+                ""
+            ]
+          },
+          "style": { 
+              "output": "inline"
           }
         }
       },

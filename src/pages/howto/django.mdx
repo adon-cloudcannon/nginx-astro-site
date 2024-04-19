@@ -40,184 +40,98 @@ You can also set up some environment variables that your project relies on, usin
 
 Here’s an example (use real values for **share**, **path**, **environment**, **module**, and **home**):
 
-<Tabs label="">
+<Tabs label="WSGI/ASGI">
   <Tab name="WSGI">
     <Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.wsgi", tooltip: "Note the qualified name of the WSGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
-           "listeners": {
-               "*:80": {
-                   "pass": "routes"
-               }
-           },
-
-           "routes": [
-               {
-                   "match": {
-                       "uri": "/static/*"
-                   },
-
-                   "action": {
-                       "NXT1": "NXT2$uri"
+               "listeners": {
+                   "*:80": {
+                       "pass": "routes"
                    }
                },
-               {
-                   "action": {
-                       "pass": "applications/django"
-                   }
-               }
-           ],
 
-           "applications": {
-               "django": {
-                   "type": "python NXT3",
-                   "path": "NXT4",
-                   "home": "NXT5",
-                   "module": "NXT6",
-                   "NXT7": {
-                       "DJANGO_SETTINGS_MODULE": "project.settings",
-                       "DB_ENGINE": "django.db.backends.postgresql",
-                       "DB_NAME": "project",
-                       "DB_HOST": "127.0.0.1",
-                       "DB_PORT": "5432"
+               "routes": [
+                   {
+                       "match": {
+                           "uri": "/static/*"
+                       },
+
+                       "action": {
+                           "NXT1": "NXT2$uri"
+                       }
+                   },
+                   {
+                       "action": {
+                           "pass": "applications/django"
+                       }
+                   }
+               ],
+
+               "applications": {
+                   "django": {
+                       "type": "python NXT3",
+                       "path": "NXT4",
+                       "home": "NXT5",
+                       "module": "NXT6",
+                       "NXT7": {
+                           "DJANGO_SETTINGS_MODULE": "project.settings",
+                           "DB_ENGINE": "django.db.backends.postgresql",
+                           "DB_NAME": "project",
+                           "DB_HOST": "127.0.0.1",
+                           "DB_PORT": "5432"
+                       }
                    }
                }
-           }
-       }`}</Code_Block>
+           }`}</Code_Block>
   </Tab>
   <Tab name="ASGI">
     <Note type="note">
-    ASGI requires Python 3.5+ and Django 3.0+.
+        ASGI requires Python 3.5+ and Django 3.0+.
     </Note>
 
     <Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.asgi", tooltip: "Note the qualified name of the ASGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
-           "listeners": {
-               "*:80": {
-                   "pass": "routes"
-               }
-           },
-
-           "routes": [
-               {
-                   "match": {
-                       "uri": "/static/*"
-                   },
-
-                   "action": {
-                       "NXT1": "NXT2$uri"
+               "listeners": {
+                   "*:80": {
+                       "pass": "routes"
                    }
                },
-               {
-                   "action": {
-                       "pass": "applications/django"
-                   }
-               }
-           ],
 
-           "applications": {
-               "django": {
-                   "type": "python NXT3",
-                   "path": "NXT4",
-                   "home": "NXT5",
-                   "module": "NXT6",
-                   "NXT7": {
-                       "DJANGO_SETTINGS_MODULE": "project.settings",
-                       "DB_ENGINE": "django.db.backends.postgresql",
-                       "DB_NAME": "project",
-                       "DB_HOST": "127.0.0.1",
-                       "DB_PORT": "5432"
+               "routes": [
+                   {
+                       "match": {
+                           "uri": "/static/*"
+                       },
+
+                       "action": {
+                           "NXT1": "NXT2$uri"
+                       }
+                   },
+                   {
+                       "action": {
+                           "pass": "applications/django"
+                       }
+                   }
+               ],
+
+               "applications": {
+                   "django": {
+                       "type": "python NXT3",
+                       "path": "NXT4",
+                       "home": "NXT5",
+                       "module": "NXT6",
+                       "NXT7": {
+                           "DJANGO_SETTINGS_MODULE": "project.settings",
+                           "DB_ENGINE": "django.db.backends.postgresql",
+                           "DB_NAME": "project",
+                           "DB_HOST": "127.0.0.1",
+                           "DB_PORT": "5432"
+                       }
                    }
                }
-           }
-       }`}</Code_Block>
+           }`}</Code_Block>
 
     &nbsp;
   </Tab>
 </Tabs>
-
-<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.wsgi", tooltip: "Note the qualified name of the WSGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
-       "listeners": {
-           "*:80": {
-               "pass": "routes"
-           }
-       },
-
-       "routes": [
-           {
-               "match": {
-                   "uri": "/static/*"
-               },
-
-               "action": {
-                   "NXT1": "NXT2$uri"
-               }
-           },
-           {
-               "action": {
-                   "pass": "applications/django"
-               }
-           }
-       ],
-
-       "applications": {
-           "django": {
-               "type": "python NXT3",
-               "path": "NXT4",
-               "home": "NXT5",
-               "module": "NXT6",
-               "NXT7": {
-                   "DJANGO_SETTINGS_MODULE": "project.settings",
-                   "DB_ENGINE": "django.db.backends.postgresql",
-                   "DB_NAME": "project",
-                   "DB_HOST": "127.0.0.1",
-                   "DB_PORT": "5432"
-               }
-           }
-       }
-   }`}</Code_Block>
-
-<Note type="note">
-ASGI requires Python 3.5+ and Django 3.0+.
-</Note>
-
-<Code_Block language="json" hints={[{ number: "1", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app", tooltip: "Thus, URIs starting with /static/ are served from /path/to/app/static/", nxt_type: "nxt_ph" }, { number: "3", display_text: "3.X", tooltip: "Must match language module version and virtual environment version", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Project directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/venv/", tooltip: "Virtual environment directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "project.asgi", tooltip: "Note the qualified name of the ASGI module; use a real project directory name in your configuration", nxt_type: "nxt_ph" }, { number: "7", display_text: "environment", tooltip: "App-specific environment variables", nxt_type: "nxt_hint" }]}>{`   {
-       "listeners": {
-           "*:80": {
-               "pass": "routes"
-           }
-       },
-
-       "routes": [
-           {
-               "match": {
-                   "uri": "/static/*"
-               },
-
-               "action": {
-                   "NXT1": "NXT2$uri"
-               }
-           },
-           {
-               "action": {
-                   "pass": "applications/django"
-               }
-           }
-       ],
-
-       "applications": {
-           "django": {
-               "type": "python NXT3",
-               "path": "NXT4",
-               "home": "NXT5",
-               "module": "NXT6",
-               "NXT7": {
-                   "DJANGO_SETTINGS_MODULE": "project.settings",
-                   "DB_ENGINE": "django.db.backends.postgresql",
-                   "DB_NAME": "project",
-                   "DB_HOST": "127.0.0.1",
-                   "DB_PORT": "5432"
-               }
-           }
-       }
-   }`}</Code_Block>
 
 6\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
 

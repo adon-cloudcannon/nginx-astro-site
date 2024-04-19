@@ -28,30 +28,35 @@ Here, **$VENV** isn’t set because Unit picks up the virtual environment from *
 
 3\. Let’s see how the apps from the Pyramid [tutorial](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial) run on Unit.
 
-We modify the [tutorial app](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/hello_world.html#steps), saving it as **/path/to/app/wsgi.py**:
+<Tabs label="Single-file/INI-based">
+  <Tab name="Single-File">
+    We modify the [tutorial app](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/hello_world.html#steps), saving it as **/path/to/app/wsgi.py**:
 
-<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.config import Configurator
-   from pyramid.response import Response
+    <Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.config import Configurator
+       from pyramid.response import Response
 
-   def hello_world(request):
-       return Response('<body><h1>Hello, World!</h1></body>')
+       def hello_world(request):
+           return Response('<body><h1>Hello, World!</h1></body>')
 
-   with Configurator() as config:
-       config.add_route('hello', '/')
-       config.add_view(hello_world, route_name='hello')
-       NXT1 = config.make_wsgi_app()
-   # serve(app, host='0.0.0.0', port=6543)`}</Code_Block>
+       with Configurator() as config:
+           config.add_route('hello', '/')
+           config.add_view(hello_world, route_name='hello')
+           NXT1 = config.make_wsgi_app()
+       # serve(app, host='0.0.0.0', port=6543)`}</Code_Block>
 
-Note that we’ve dropped the server code; also, mind that Unit imports the module, so the **if \_\_name\_\_ == ‘*****\_main*****\_’** idiom would be irrelevant.
+    Note that we’ve dropped the server code; also, mind that Unit imports the module, so the **if \_\_name\_\_ == ‘*****\_main***\*\*\_’\*\* idiom would be irrelevant.
+  </Tab>
+  <Tab name="INI-Based">
+    To load the [configuration](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/ini.html), we place a **wsgi.py** file next to **development.ini** in **/path/to/app/**:
 
-To load the [configuration](https://docs.pylonsproject.org/projects/pyramid/en/latest/quick_tutorial/ini.html), we place a **wsgi.py** file next to **development.ini** in **/path/to/app/**:
+    <Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.paster import get_app, setup_logging
 
-<Code_Block language="python" hints={[{ number: "1", display_text: "app", tooltip: "Callable's name is used in Unit configuration", nxt_type: "nxt_hint" }]}>{`   from pyramid.paster import get_app, setup_logging
+       NXT1 = get_app('development.ini')
+       setup_logging('development.ini')`}</Code_Block>
 
-   NXT1 = get_app('development.ini')
-   setup_logging('development.ini')`}</Code_Block>
-
-This [sets up](https://docs.pylonsproject.org/projects/pyramid/en/latest/api/paster.html) the WSGI application for Unit; if the **.ini**’s pathname is relative, provide the appropriate **working\_directory** in Unit configuration.
+    This [sets up](https://docs.pylonsproject.org/projects/pyramid/en/latest/api/paster.html) the WSGI application for Unit; if the **.ini**’s pathname is relative, provide the appropriate **working\_directory** in Unit configuration.
+  </Tab>
+</Tabs>
 
 4\. Run the following command so Unit can access :
 

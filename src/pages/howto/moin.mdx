@@ -26,15 +26,33 @@ For example:
 
 4\. Configure your wiki instances:
 
+<Tabs label="">
+  <Tab name=""></Tab>
+</Tabs>
+
 See the ‘Single Wiki’ section [here](https://master.moinmo.in/InstallDocs/ServerInstall) for an explanation of these commands:
 
-`$ cd :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your configuration&gt; $ mkdir single/ $ cp :nxt_hint:wiki/config/wikiconfig.py &lt;Wiki instance configuration&gt; single/ $ cp -r wiki/data/ single/data/ $ cp -r wiki/underlay/ single/underlay/ $ cp :nxt_hint:wiki/server/moin.wsgi &lt;WSGI module to run, extension should be changed for proper discovery&gt; single/moin.py `
+<Code_Block language="console" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "wiki/config/wikiconfig.py", tooltip: "Wiki instance configuration", nxt_type: "nxt_hint" }, { number: "3", display_text: "wiki/server/moin.wsgi", tooltip: "WSGI module to run, extension should be changed for proper discovery", nxt_type: "nxt_hint" }]}>{`$ cd NXT1
+$ mkdir single/
+$ cp NXT2 single/
+$ cp -r wiki/data/ single/data/
+$ cp -r wiki/underlay/ single/underlay/
+$ cp NXT3 single/moin.py `}</Code_Block>
 
 Next, [edit](https://moinmo.in/HelpOnConfiguration#Configuring_a_single_wiki) the wiki instance configuration in **wikiconfig.py** as appropriate.
 
 See the ‘Multiple Wikis’ section [here](https://master.moinmo.in/InstallDocs/ServerInstall) for an explanation of these commands:
 
-`$ cd :nxt_ph:/path/to/app/ &lt;Path to the application directory; use a real path in your configuration&gt; $ mkdir multi/ multi/wiki1/ multi/wiki2/ $ cp wiki/config/wikifarm/* multi/ $ cp :nxt_hint:wiki/config/wikiconfig.py &lt;Wiki instance configuration&gt; multi/wiki1.py $ cp :nxt_hint:wiki/config/wikiconfig.py &lt;Wiki instance configuration&gt; multi/wiki2.py $ cp -r wiki/data/ multi/wiki1/data/ $ cp -r wiki/data/ multi/wiki2/data/ $ cp -r wiki/underlay/ multi/wiki1/underlay/ $ cp -r wiki/underlay/ multi/wiki2/underlay/ $ cp :nxt_hint:wiki/server/moin.wsgi &lt;WSGI module to run, extension should be changed for proper discovery&gt; multi/moin.py `
+<Code_Block language="console" hints={[{ number: "1", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "wiki/config/wikiconfig.py", tooltip: "Wiki instance configuration", nxt_type: "nxt_hint" }, { number: "3", display_text: "wiki/config/wikiconfig.py", tooltip: "Wiki instance configuration", nxt_type: "nxt_hint" }, { number: "4", display_text: "wiki/server/moin.wsgi", tooltip: "WSGI module to run, extension should be changed for proper discovery", nxt_type: "nxt_hint" }]}>{`$ cd NXT1
+$ mkdir multi/ multi/wiki1/ multi/wiki2/
+$ cp wiki/config/wikifarm/* multi/
+$ cp NXT2 multi/wiki1.py
+$ cp NXT3 multi/wiki2.py
+$ cp -r wiki/data/ multi/wiki1/data/
+$ cp -r wiki/data/ multi/wiki2/data/
+$ cp -r wiki/underlay/ multi/wiki1/underlay/
+$ cp -r wiki/underlay/ multi/wiki2/underlay/
+$ cp NXT4 multi/moin.py `}</Code_Block>
 
 Next, [edit](https://moinmo.in/HelpOnConfiguration#Configuration_of_multiple_wikis) the farm configuration in **farmconfig.py** and the wiki instance configurations, shown here as **wiki1.py** and **wiki2.py**, as appropriate.
 

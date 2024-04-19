@@ -10,7 +10,8 @@ export default defineConfig({
             imports: [
                 '@components/Code_Block.astro',
                 '@components/Note.astro',
-                '@components/Tabs.astro'
+                '@components/Tabs.astro',
+                '@components/Tab.astro'
             ],
         }),
         mdx()

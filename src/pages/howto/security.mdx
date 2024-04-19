@@ -369,12 +369,13 @@ The important outtake here is to understand that Unit’s non-privileged process
 
 **Actions**: Secure access to the logs and ensure they don’t exceed the allowed disk space.
 
+<Dropdown label="Details">
 Unit can maintain two different logs:
 
 * A general-purpose log that is enabled by default and can be switched to debug mode for verbosity.
 * An access log that is off by default but can be enabled via the control API.
 
-If you enable debug-mode or access logging, rotate these logs with tools such as **logrotate** to avoid overgrowth.  A sample **logrotate** [configuration](https://man7.org/linux/man-pages/man8/logrotate.8.html#CONFIGURATION_FILE_DIRECTIVES):
+If you enable debug-mode or access logging, rotate these logs with tools such as **logrotate** to avoid overgrowth. A sample **logrotate** [configuration](https://man7.org/linux/man-pages/man8/logrotate.8.html#CONFIGURATION_FILE_DIRECTIVES):
 
 <Code_Block language="none" hints={[{ number: "1", display_text: "/path/to/unit.log", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/unit.pid", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "3", display_text: "/bin/kill", tooltip: "Signals Unit to reopen the log", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/unit.pid", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`NXT1 {
     daily
@@ -407,9 +408,9 @@ $ ps ax | grep unitd
 
       ... unit: main v1.32.1 [... --pid NXT3 --log NXT4 ...]`}</Code_Block>
 
-Another issue is the logs’ accessibility.  Logs are opened and updated by the [main process](#security-apps) that usually runs as **root**. However, to make them available for a certain consumer, you may need to enable access for a dedicated user that the consumer runs as.
+Another issue is the logs’ accessibility. Logs are opened and updated by the [main process](#security-apps) that usually runs as **root**. However, to make them available for a certain consumer, you may need to enable access for a dedicated user that the consumer runs as.
 
-Perhaps, the most straightforward way to achieve this is to assign log ownership to the consumer’s account.  Suppose you have a log utility running as **log\_user:log\_group**:
+Perhaps, the most straightforward way to achieve this is to assign log ownership to the consumer’s account. Suppose you have a log utility running as **log\_user:log\_group**:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "chown", tooltip: "Assign ownership to the log user", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/unit.log", tooltip: "If it's overridden, use the runtime setting", nxt_type: "nxt_ph" }, { number: "3", display_text: "curl", tooltip: "Enable access log in the Unit configuration at the given path", nxt_type: "nxt_hint" }, { number: "4", display_text: "/path/to/access.log", tooltip: "Use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket", nxt_type: "nxt_ph" }, { number: "6", display_text: "chown", tooltip: "Assign ownership to the log user", nxt_type: "nxt_hint" }, { number: "7", display_text: "/path/to/access.log", tooltip: "Use a real path in your command", nxt_type: "nxt_ph" }]}>{`# NXT1 log_user:log_group NXT2
 
@@ -434,6 +435,7 @@ If you change the log file ownership, adjust your **logrotate** settings accordi
 <Note type="note">
 As usual with permissions, different steps may be required if you use ACLs.
 </Note>
+</Dropdown>
 
 ## Add Restrictions, Isolation
 

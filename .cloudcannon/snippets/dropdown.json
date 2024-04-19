@@ -29,16 +29,12 @@
         "options": {
           "model": 
           {
-              "editor_key": "label",
-              "type": "string"
+              "editor_key": "label"
           },
           "format": {
             "string_boundary": [
                 ""
             ]
-          },
-          "style": { 
-              "output": "inline"
           }
         }
       },

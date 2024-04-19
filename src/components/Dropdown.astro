@@ -1,0 +1,5 @@
+---
+const content = Astro.slots.render("default")
+const { label } = Astro.props
+---
+<details><summary>{label}</summary><Fragment set:html={content} /></details>

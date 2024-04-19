@@ -9,6 +9,7 @@ export default defineConfig({
         AutoImport({
             imports: [
                 '@components/Code_Block.astro',
+                '@components/Dropdown.astro',
                 '@components/Note.astro',
                 '@components/Tabs.astro',
                 '@components/Tab.astro',

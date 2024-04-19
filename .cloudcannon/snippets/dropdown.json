@@ -1,5 +1,5 @@
 {
-    "snippet": "<details>\n<summary>[[label]]</summary>\n[[content]]\n</details>",
+    "snippet": "<Dropdown label=[[label]]>[[content]]</Dropdown>",
     "inline": false,
     "preview": {
       "text": [   
@@ -29,12 +29,14 @@
         "options": {
           "model": 
           {
-              "editor_key": "label"
+              "editor_key": "label",
+              "type": "string"
           },
           "format": {
-            "string_boundary": [
-                ""
-            ]
+            "ref": "mdx_format"
+          },
+          "style": { 
+              "output": "inline"
           }
         }
       },

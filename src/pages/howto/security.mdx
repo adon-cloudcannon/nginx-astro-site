@@ -82,14 +82,7 @@ $ curl 203.0.113.14:8080
 However, any processes local to the same system can access the local socket, which calls for additional measures. A go-to solution would be using NGINX to [proxy](integration.md#nginx-secure-api) Unit’s control API.
 </Dropdown>
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
+<Dropdown label="State Directory">
 The state directory stores Unit’s internal configuration between launches. Avoid manipulating it or relying on its contents even if tempted to do so. Instead, use only the control API to manage Unit’s configuration.
 
 Also, the state directory should be available only to **root** (or the user that the **main** [process](#security-apps) runs as):
@@ -107,6 +100,7 @@ $ ps ax | grep unitd
 # ls -l NXT3
 
       drwx------ 2 root root 4096 ...`}</Code_Block>
+</Dropdown>
 
 ## Configure SSL/TLS
 

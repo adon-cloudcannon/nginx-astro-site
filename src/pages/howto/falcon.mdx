@@ -24,6 +24,66 @@ Create your virtual environment with a Python version that matches the language 
 
 3\. Let’s try an updated version of the [quickstart app](https://falcon.readthedocs.io/en/stable/user/quickstart.html):
 
+<Tabs label="WSGI/ASGI">
+  <Tab name="WSGI">
+    ```
+       import falcon
+
+
+       # Falcon follows the REST architectural style, meaning (among
+       # other things) that you think in terms of resources and state
+       # transitions, which map to HTTP verbs.
+       class HelloUnitResource:
+           def on_get(self, req, resp):
+               """Handles GET requests"""
+               resp.status = falcon.HTTP_200  # This is the default status
+               resp.content_type = falcon.MEDIA_TEXT  # Default is JSON, so override
+               resp.text = ('Hello, Unit!')
+
+       # falcon.App instances are callable WSGI apps
+       # in larger applications the app is created in a separate file
+       app = falcon.App()
+
+       # Resources are represented by long-lived class instances
+       hellounit = HelloUnitResource()
+
+       # hellounit will handle all requests to the '/unit' URL path
+       app.add_route('/unit', hellounit)
+    ```
+
+    Note that we’ve dropped the server code; save the file as **/path/to/app/wsgi.py**.
+  </Tab>
+  <Tab name="ASGI">
+    ```
+       import falcon
+       import falcon.asgi
+
+
+       # Falcon follows the REST architectural style, meaning (among
+       # other things) that you think in terms of resources and state
+       # transitions, which map to HTTP verbs.
+       class HelloUnitResource:
+           async def on_get(self, req, resp):
+               """Handles GET requests"""
+               resp.status = falcon.HTTP_200  # This is the default status
+               resp.content_type = falcon.MEDIA_TEXT  # Default is JSON, so override
+               resp.text = ('Hello, Unit!')
+
+       # falcon.asgi.App instances are callable ASGI apps...
+       # in larger applications the app is created in a separate file
+       app = falcon.asgi.App()
+
+       # Resources are represented by long-lived class instances
+       hellounit = HelloUnitResource()
+
+       # hellounit will handle all requests to the '/unit' URL path
+       app.add_route('/unit', hellounit)
+    ```
+
+    Save the file as **/path/to/app/asgi.py**.
+  </Tab>
+</Tabs>
+
 ```python
    import falcon
 

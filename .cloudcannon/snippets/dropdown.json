@@ -4,7 +4,7 @@
     "preview": {
       "text": [   
         {
-          "template": "{label}"
+          "template": "Dropdown: {label}"
         },
         "Dropdown"
       ],
@@ -32,9 +32,7 @@
               "editor_key": "label",
               "type": "string"
           },
-          "format": {
-            "ref": "mdx_format"
-          },
+          
           "style": { 
               "output": "inline"
           }

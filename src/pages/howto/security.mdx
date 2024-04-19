@@ -26,7 +26,7 @@ This guide lists the steps to protect your Unit from installation to individual 
 
 **Actions**: Default configuration in our [official packages](../installation.md#installation-precomp-pkgs) is usually sufficient; if you use another installation method, ensure the control socket and the state directory are safe.
 
-If you use a UNIX control socket, ensure it is available to **root** only:
+<Dropdown label="Control Socket">{`If you use a UNIX control socket, ensure it is available to **root** only:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/default/path/to/control.unit.sock", tooltip: "Build-time setting, can be overridden", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.sock", tooltip: "Make sure to check for runtime overrides", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/control.unit.sock", tooltip: "If it's overridden, use the runtime setting", nxt_type: "nxt_ph" }]}>{`$ unitd -h
 
@@ -55,10 +55,9 @@ $ curl --unix-socket NXT4
           }
       }`}</Code_Block>
 
-If you prefer an IP-based control socket, avoid public IPs; they expose the [control API](../controlapi.md#configuration-api) and all its capabilities.  This means your Unit instance can be manipulated by whoever is physically able to connect:
+If you prefer an IP-based control socket, avoid public IPs; they expose the [control API](../controlapi.md#configuration-api) and all its capabilities. This means your Unit instance can be manipulated by whoever is physically able to connect:
 
-```bash
-# unitd --control 203.0.113.14:8080
+<Code_Block language="bash" hints={[]}>{`# unitd --control 203.0.113.14:8080
 $ curl 203.0.113.14:8080
 
       {
@@ -67,19 +66,26 @@ $ curl 203.0.113.14:8080
               "listeners": {},
               "applications": {}
           }
-      }
-```
+      }`}</Code_Block>
 
 Instead, opt for the loopback address to ensure all access is local to your server:
 
-```bash
-# unitd --control 127.0.0.1:8080
+<Code_Block language="bash" hints={[]}>{`# unitd --control 127.0.0.1:8080
 $ curl 203.0.113.14:8080
 
-    curl: (7) Failed to connect to 203.0.113.14 port 8080: Connection refused
-```
+    curl: (7) Failed to connect to 203.0.113.14 port 8080: Connection refused`}</Code_Block>
 
-However, any processes local to the same system can access the local socket, which calls for additional measures.  A go-to solution would be using NGINX to [proxy](integration.md#nginx-secure-api) Unit’s control API.
+However, any processes local to the same system can access the local socket, which calls for additional measures. A go-to solution would be using NGINX to [proxy](integration.md#nginx-secure-api) Unit’s control API.`}</Dropdown>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 The state directory stores Unit’s internal configuration between launches. Avoid manipulating it or relying on its contents even if tempted to do so. Instead, use only the control API to manage Unit’s configuration.
 

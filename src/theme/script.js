@@ -20,13 +20,6 @@ function nxt_scroll_init() {
 }
 
 
-function nxt_tab_click(e) {
-    e.preventDefault()
-    history.replaceState({}, '', e.target.href)
-    e.target.parentElement.previousElementSibling.checked=true
-}
-
-
 function nxt_tab_init() {
     for (const el of document.querySelectorAll('.nxt_tabs > input')) {
         el.classList.replace('nojs', 'js')

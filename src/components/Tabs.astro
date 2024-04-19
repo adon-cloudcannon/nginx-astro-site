@@ -1,20 +1,10 @@
 ---
-let children = Astro.props.children
-children = Array.isArray(children) ? children : [children];
-const tabs = children?.map(child => child?.props?.name ?? "") ?? [];
+let children = await Astro.slots.render('default')
+//children = Array.isArray(children) ? children : [children];
+children = children.replaceAll("&lt;","<").replaceAll("&gt;",">")
+console.log(children)
 ---
 
-<div class="c-tabs">
-    <div class="c-tabs__nav" role="tablist">
-        { tabs.map(tab => {
-            return (
-                <button class="c-tabs__tab"
-                    role="tab"
-                    data-key={tab}>
-                    { tab }
-                </button>
-            );
-        }) }
-    </div>
-    {children}
+<div class="c-tabs nxt_tabs">
+    <Fragment set:html={children} />
 </div>

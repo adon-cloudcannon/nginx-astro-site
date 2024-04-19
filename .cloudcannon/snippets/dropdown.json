@@ -1,0 +1,51 @@
+{
+    "snippet": "<details><summary>[[label]]</summary>[[content]]</details>",
+    "inline": false,
+    "preview": {
+      "text": [   
+        {
+          "template": "{label}"
+        },
+        "Dropdown"
+      ],
+      "subtext": [
+        {
+          "key": "content"
+        }
+      ],
+      "icon": "segment"
+    },
+    "_inputs": {
+      "content": {
+        "type": "markdown"
+      },
+      "label": {
+        "type": "text"
+      }
+    },
+    "params": {
+      "type": {
+        "parser": "argument",
+        "options": {
+          "model": 
+          {
+              "editor_key": "label",
+              "type": "string"
+          },
+          "format": {
+            "ref": "mdx_format"
+          },
+          "style": { 
+              "output": "inline"
+          }
+        }
+      },
+      "body": {
+        "parser": "content",
+        "options": {
+          "editor_key": "body",
+          "allow_nested": false
+        }
+      }
+    }
+}

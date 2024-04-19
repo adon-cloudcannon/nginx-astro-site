@@ -85,7 +85,8 @@ module.exports = {
   _snippets: {
     code_block: require(snip("code_block")),
     note: require(snip("note")),
-    tabs: require(snip("tabs"))
+    tabs: require(snip("tabs")),
+    dropdown: require(snip("dropdown"))
   }
 }
 

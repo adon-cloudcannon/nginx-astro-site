@@ -67,65 +67,84 @@ Here, we are packaging a custom PHP&nbsp;7.3 [module](source.md#modules-php) to 
 For details of building Unit language modules, see the source code [howto](source.md#source-modules); it also describes building [Unit](source.md) itself. For more packaging examples, see our package [sources](https://hg.nginx.org/unit/file/tip/pkg/).
 </Note>
 
-Assuming you are packaging for the current system and have the official Unit package installed:
+<Tabs label="deb/rpm">
+  <Tab name=".deb">
+    Assuming you are packaging for the current system and have the official Unit package installed:
 
-1\. Make sure to install the [prerequisites](source.md#source-prereq-build) for the package.  In our example, it’s PHP&nbsp;7.3 on Debian&nbsp;10:
+    1\. Make sure to install the [prerequisites](source.md#source-prereq-build) for the package. In our example, it’s PHP 7.3 on Debian 10:
 
-<Code_Block language="console" hints={[{ number: "1", display_text: "ca-certificates apt-transport-https debian-archive-keyring", tooltip: "Needed to install the php7.3 package from the PHP repo", nxt_type: "nxt_hint" }, { number: "2", display_text: "https://packages.sury.org/php/apt.gpg", tooltip: "Adding the repo key to make it usable", nxt_type: "nxt_hint" }, { number: "3", display_text: "php-dev libphp-embed", tooltip: "Needed to build the module and the package", nxt_type: "nxt_hint" }]}>{`# apt update
-# apt install NXT1
-# curl --output /usr/share/keyrings/php-keyring.gpg  \\
-      NXT2
-# echo "deb [signed-by=/usr/share/keyrings/php-keyring.gpg]  \\
-      https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list
-# apt update
-# apt install php7.3
-# apt install NXT3`}</Code_Block>
+    <Code_Block language="console" hints={[{ number: "1", display_text: "ca-certificates apt-transport-https debian-archive-keyring", tooltip: "Needed to install the php7.3 package from the PHP repo", nxt_type: "nxt_hint" }, { number: "2", display_text: "https://packages.sury.org/php/apt.gpg", tooltip: "Adding the repo key to make it usable", nxt_type: "nxt_hint" }, { number: "3", display_text: "php-dev libphp-embed", tooltip: "Needed to build the module and the package", nxt_type: "nxt_hint" }]}>{`# apt update
+    # apt install NXT1
+    # curl --output /usr/share/keyrings/php-keyring.gpg  \\
+          NXT2
+    # echo "deb [signed-by=/usr/share/keyrings/php-keyring.gpg]  \\
+          https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list
+    # apt update
+    # apt install php7.3
+    # apt install NXT3`}</Code_Block>
 
-2\. Create a staging directory for your package:
+    2\. Create a staging directory for your package:
 
-<Code_Block language="console" hints={[]}>{`$ export UNITTMP=$(mktemp -d -p /tmp -t unit.XXXXXX)
-$ mkdir -p $UNITTMP/unit-php7.3/DEBIAN
-$ cd $UNITTMP `}</Code_Block>
+    <Code_Block language="console" hints={[]}>{`$ export UNITTMP=$(mktemp -d -p /tmp -t unit.XXXXXX)
+    $ mkdir -p $UNITTMP/unit-php7.3/DEBIAN
+    $ cd $UNITTMP `}</Code_Block>
 
-This creates a folder structure fit for **dpkg-deb**; the **DEBIAN** folder will store the package definition.
+    This creates a folder structure fit for **dpkg-deb**; the **DEBIAN** folder will store the package definition.
 
-3\. Run **unitd --version** and note the **./configure** [flags](source.md#source-config-src) for later use, omitting `--ld-opt` and `--njs`:
+    3\. Run **unitd --version** and note the **./configure** [flags](source.md#source-config-src) for later use, omitting `--ld-opt` and `--njs`:
 
-<Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS", tooltip: "Note the flags, omitting --ld-opt and --njs", nxt_type: "nxt_ph" }]}>{`$ unitd --version
-      unit version: 1.32.1
-      configured as ./configure NXT1`}</Code_Block>
+    <Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS", tooltip: "Note the flags, omitting --ld-opt and --njs", nxt_type: "nxt_ph" }]}>{`$ unitd --version
+          unit version: 1.32.1
+          configured as ./configure NXT1`}</Code_Block>
 
-4\. Download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
+    4\. Download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
 
-<Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS W/O --LD-OPT & --NJS", tooltip: "The ./configure flags, except for --ld-opt and --njs", nxt_type: "nxt_ph" }, { number: "2", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }, { number: "3", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }]}>{`$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz
-$ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory
-$ cd unit-1.32.1
-$ ./configure NXT1                     # Use the ./configure flags noted in the previous step
-$ ./configure php --module=php7.3 --config=php-config        # Configures the module itself
-$ make php7.3                                                # Builds the module in the build/ subdirectory
-$ mkdir -p $UNITTMP/unit-php7.3/NXT2                  # Use the module path set by ./configure or by default
-$ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/NXT3   # Adds the module to the package `}</Code_Block>
+    <Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS W/O --LD-OPT & --NJS", tooltip: "The ./configure flags, except for --ld-opt and --njs", nxt_type: "nxt_ph" }, { number: "2", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }, { number: "3", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }]}>{`$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz
+    $ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory
+    $ cd unit-1.32.1
+    $ ./configure NXT1                     # Use the ./configure flags noted in the previous step
+    $ ./configure php --module=php7.3 --config=php-config        # Configures the module itself
+    $ make php7.3                                                # Builds the module in the build/ subdirectory
+    $ mkdir -p $UNITTMP/unit-php7.3/NXT2                  # Use the module path set by ./configure or by default
+    $ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/NXT3   # Adds the module to the package `}</Code_Block>
 
-5\. Create a **$UNITTMP/unit-php7.3/DEBIAN/control** [file](https://www.debian.org/doc/debian-policy/ch-controlfields.html), listing **unit** with other dependencies:
+    5\. Create a **$UNITTMP/unit-php7.3/DEBIAN/control** [file](https://www.debian.org/doc/debian-policy/ch-controlfields.html), listing **unit** with other dependencies:
 
-<Code_Block language="control" hints={[]}>{`Package: unit-php7.3
-Version: 1.32.1
-Comment0: Use Unit's package version for consistency: 'apt show unit | grep Version'
-Architecture: amd64
-Comment1: To get current architecture, run 'dpkg --print-architecture'
-Comment2: For a list of other options, run 'dpkg-architecture -L'
-Depends: unit (= 1.32.1-1~buster), php7.3, libphp-embed
-Comment3: Specify Unit's package version to avoid issues when Unit updates
-Comment4: Again, run 'apt show unit | grep Version' to get this value
-Maintainer: Jane Doe <j.doe@example.com>
-Description: Custom PHP 7.3 language module for NGINX Unit 1.32.1 `}</Code_Block>
+    <Code_Block language="control" hints={[]}>{`Package: unit-php7.3
+    Version: 1.32.1
+    Comment0: Use Unit's package version for consistency: 'apt show unit | grep Version'
+    Architecture: amd64
+    Comment1: To get current architecture, run 'dpkg --print-architecture'
+    Comment2: For a list of other options, run 'dpkg-architecture -L'
+    Depends: unit (= 1.32.1-1~buster), php7.3, libphp-embed
+    Comment3: Specify Unit's package version to avoid issues when Unit updates
+    Comment4: Again, run 'apt show unit | grep Version' to get this value
+    Maintainer: Jane Doe <j.doe@example.com>
+    Description: Custom PHP 7.3 language module for NGINX Unit 1.32.1 `}</Code_Block>
 
-Save and close the file.
+    Save and close the file.
 
-6\. Build and install the package:
+    6\. Build and install the package:
 
-<Code_Block language="console" hints={[]}>{`$ dpkg-deb -b $UNITTMP/unit-php7.3
-# dpkg -i $UNITTMP/unit-php7.3.deb `}</Code_Block>
+    <Code_Block language="console" hints={[]}>{`$ dpkg-deb -b $UNITTMP/unit-php7.3
+    # dpkg -i $UNITTMP/unit-php7.3.deb `}</Code_Block>
+  </Tab>
+  <Tab name=".rpm"></Tab>
+</Tabs>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 Assuming you are packaging for the current system and have the official Unit package installed:
 

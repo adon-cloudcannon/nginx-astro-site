@@ -108,13 +108,24 @@ $ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/NXT3   # Adds the module to the p
 
 5\. Create a **$UNITTMP/unit-php7.3/DEBIAN/control** [file](https://www.debian.org/doc/debian-policy/ch-controlfields.html), listing **unit** with other dependencies:
 
-`Package: unit-php7.3 Version: 1.32.1 Comment0: Use Unit's package version for consistency: 'apt show unit | grep Version' Architecture: amd64 Comment1: To get current architecture, run 'dpkg --print-architecture' Comment2: For a list of other options, run 'dpkg-architecture -L' Depends: unit (= 1.32.1-1~buster), php7.3, libphp-embed Comment3: Specify Unit's package version to avoid issues when Unit updates Comment4: Again, run 'apt show unit | grep Version' to get this value Maintainer: Jane Doe <j.doe@example.com> Description: Custom PHP 7.3 language module for NGINX Unit 1.32.1 `
+<Code_Block language="control" hints={[]}>{`Package: unit-php7.3
+Version: 1.32.1
+Comment0: Use Unit's package version for consistency: 'apt show unit | grep Version'
+Architecture: amd64
+Comment1: To get current architecture, run 'dpkg --print-architecture'
+Comment2: For a list of other options, run 'dpkg-architecture -L'
+Depends: unit (= 1.32.1-1~buster), php7.3, libphp-embed
+Comment3: Specify Unit's package version to avoid issues when Unit updates
+Comment4: Again, run 'apt show unit | grep Version' to get this value
+Maintainer: Jane Doe <j.doe@example.com>
+Description: Custom PHP 7.3 language module for NGINX Unit 1.32.1 `}</Code_Block>
 
 Save and close the file.
 
 6\. Build and install the package:
 
-`$ dpkg-deb -b $UNITTMP/unit-php7.3 # dpkg -i $UNITTMP/unit-php7.3.deb `
+<Code_Block language="console" hints={[]}>{`$ dpkg-deb -b $UNITTMP/unit-php7.3
+# dpkg -i $UNITTMP/unit-php7.3.deb `}</Code_Block>
 
 Assuming you are packaging for the current system and have the official Unit package installed:
 

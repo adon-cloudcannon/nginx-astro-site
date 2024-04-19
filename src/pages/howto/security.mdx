@@ -128,6 +128,7 @@ Some considerations:
 
 **Actions**: Properly configure your app directories and shares: apps and the router process need access to them.  Still, avoid loose rights such as the notorious **777**, instead assigning them on a need-to-know basis.
 
+<Dropdown label="File Permissions">
 To configure file permissions for your apps, check Unit’s build-time and run-time options first:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "unit_user", tooltip: "Build-time setting, can be overridden", nxt_type: "nxt_ph" }, { number: "2", display_text: "unit_user", tooltip: "Make sure to check for runtime overrides", nxt_type: "nxt_ph" }, { number: "3", display_text: "unit_group", tooltip: "Make sure to check for runtime overrides", nxt_type: "nxt_ph" }]}>{`$ unitd -h
@@ -143,19 +144,19 @@ $ ps ax | grep unitd
 
       ... unit: main v1.32.1 [... --user NXT2 --group NXT3 ...]`}</Code_Block>
 
-In particular, this is the account the router process runs as.  Use this information to set up permissions for the app code or binaries and shared static files.  The main idea is to limit each app to its own files and directories while simultaneously allowing Unit’s router process to access static files for all apps.
+In particular, this is the account the router process runs as. Use this information to set up permissions for the app code or binaries and shared static files. The main idea is to limit each app to its own files and directories while simultaneously allowing Unit’s router process to access static files for all apps.
 
 Specifically, the requirements are as follows:
 
-* All apps should run as different users so that the permissions can be configured properly.  Even if you run a single app, it’s reasonable to create a dedicated user for added flexibility.
-* An app’s code or binaries should be reachable for the user the app runs as; the static files should be reachable for the router process.  Thus, each part of an app’s directory path must have execute permissions assigned for the respective users.
-* An app’s directories should not be available to other apps or non-privileged system users. The router process should be able to access the app’s static file directories.  Accordingly, the app’s directories must have read and execute permissions assigned for the respective users.
+* All apps should run as different users so that the permissions can be configured properly. Even if you run a single app, it’s reasonable to create a dedicated user for added flexibility.
+* An app’s code or binaries should be reachable for the user the app runs as; the static files should be reachable for the router process. Thus, each part of an app’s directory path must have execute permissions assigned for the respective users.
+* An app’s directories should not be available to other apps or non-privileged system users. The router process should be able to access the app’s static file directories. Accordingly, the app’s directories must have read and execute permissions assigned for the respective users.
 * The files and directories that the app is designed to update should be writable only for the user the app runs as.
 * The app code should be readable (and executable in case of [external](modules.md#modules-ext) apps) for the user the app runs as; the static content should be readable for the router process.
 
 A detailed walkthrough to guide you through each requirement:
 
-1\. If you have several independent apps, running them with a single user account poses a security risk.  Consider adding a separate system user and group per each app:
+1\. If you have several independent apps, running them with a single user account poses a security risk. Consider adding a separate system user and group per each app:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "useradd", tooltip: "Add user account without home directory", nxt_type: "nxt_hint" }, { number: "2", display_text: "usermod", tooltip: "Deny interactive login", nxt_type: "nxt_hint" }, { number: "3", display_text: "usermod", tooltip: "Add user to the group", nxt_type: "nxt_hint" }]}>{`# NXT1 -M app_user # groupadd app_group # NXT2 -L app_user # NXT3 -a -G app_group app_user`}</Code_Block>
 
@@ -163,13 +164,11 @@ Even if you run a single app, this helps if you add more apps or need to decoupl
 
 2\. It’s important to add Unit’s non-privileged user account to *each* app group:
 
-```bash
-# usermod -a -G app_group unit_user
-```
+<Code_Block language="bash" hints={[]}>{`# usermod -a -G app_group unit_user`}</Code_Block>
 
 Thus, Unit’s router process can access each app’s directory and serve files from each app’s shares.
 
-3\. A frequent source of issues is the lack of permissions for directories inside a directory path needed to run the app, so check for that if in doubt.  Assuming your app code is stored at **/path/to/app/**:
+3\. A frequent source of issues is the lack of permissions for directories inside a directory path needed to run the app, so check for that if in doubt. Assuming your app code is stored at **/path/to/app/**:
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "drwxr-xr-x", tooltip: "Permissions are OK", nxt_type: "nxt_hint" }, { number: "2", display_text: "drwxr-x---", tooltip: "Permissions are too restrictive", nxt_type: "nxt_hint" }]}>{`# ls -l /
       NXT1  some_user some_group  path
@@ -182,9 +181,7 @@ This may be a problem because the **to/** directory isn’t owned by **app\_user
 
 Another solution is to add **app\_user** to **some\_group** (assuming this was not done before):
 
-```bash
-# usermod -a -G some_group app_user
-```
+<Code_Block language="bash" hints={[]}>{`# usermod -a -G some_group app_user`}</Code_Block>
 
 4\. Having checked the directory tree, assign ownership and permissions for your app’s directories, making them reachable for Unit and the app:
 
@@ -242,7 +239,7 @@ Usually, apps store and update their data outside the app code directories, but 
     }
 }`}</Code_Block>
 
-9\. To run several apps side by side, [configure](../configuration.md) them with appropriate user and group names.  The following configuration distinguishes apps based on the request URI, but you can implement another scheme such as different listeners:
+9\. To run several apps side by side, [configure](../configuration.md) them with appropriate user and group names. The following configuration distinguishes apps based on the request URI, but you can implement another scheme such as different listeners:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "*:80", tooltip: "Or another suitable socket address", nxt_type: "nxt_hint" }, { number: "2", display_text: "/app1/*", tooltip: "Arbitrary matching condition", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/static/app1/files/", tooltip: "Router process needs read and execute permissions to serve static content from this directory", nxt_type: "nxt_ph" }, { number: "4", display_text: "/app2/*", tooltip: "Arbitrary matching condition", nxt_type: "nxt_hint" }, { number: "5", display_text: "/path/to/static/app2/files/", tooltip: "Router process needs read and execute permissions to serve static content from this directory", nxt_type: "nxt_ph" }]}>{`{
     "listeners": {
@@ -291,6 +288,37 @@ Usually, apps store and update their data outside the app code directories, but 
 <Note type="note">
 As usual with permissions, different steps may be required if you use ACLs.
 </Note>
+</Dropdown>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 Unfortunately, quite a few web apps are built in a manner that mixes their source code, data, and configuration files with static content, which calls for complex access restrictions.  The situation is further aggravated by the inevitable need for maintenance activities that may leave a footprint of extra files and directories unrelated to the app’s operation.  The issue has several aspects:
 

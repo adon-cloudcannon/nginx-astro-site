@@ -1,5 +1,5 @@
 {
-    "snippet": "<Dropdown label=[[label]]>{`[[content]]`}</Dropdown>",
+    "snippet": "<Dropdown label=[[label]]>\n[[content]]\n</Dropdown>",
     "inline": false,
     "preview": {
       "text": [   

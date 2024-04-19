@@ -17,5 +17,5 @@ const { name } = Astro.props
     <a href=`#interface-${name}`>{name}</a>
 </label>
 <div>
-    {content}
+    <Fragment set:html={content}>
 </div>

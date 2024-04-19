@@ -1,10 +1,7 @@
 ---
-let children = await Astro.slots.render('default')
-//children = Array.isArray(children) ? children : [children];
-children = children.replaceAll("&lt;","<").replaceAll("&gt;",">")
-console.log(children)
+let tabs = await Astro.slots.render('default')
 ---
 
 <div class="c-tabs nxt_tabs">
-    <Fragment set:html={children} />
+    <Fragment set:html={tabs} />
 </div>

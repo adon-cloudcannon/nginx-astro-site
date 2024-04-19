@@ -25,22 +25,20 @@
     },
     "params": {
       "label": {
-        "parser": "content",
+        "parser": "argument",
         "options": {
           "model": 
           {
               "editor_key": "label",
               "type": "string"
-          },
-          "style": { 
-              "output": "inline"
           }
         }
       },
       "content": {
         "parser": "content",
         "options": {
-          "editor_key": "content"
+          "editor_key": "content",
+          "allow_nested": false
         }
       }
     }

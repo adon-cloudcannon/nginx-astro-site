@@ -204,100 +204,88 @@ To run apps in several versions of a language, build and install a module for ea
     <Code_Block language="bash" hints={[{ number: "1", display_text: "app", tooltip: "Executable name", nxt_type: "nxt_ph" }, { number: "2", display_text: "app.go", tooltip: "Application source code", nxt_type: "nxt_ph" }]}>{`$ GOPATH=<Go package installation path> GO111MODULE=auto go build -o NXT1 NXT2`}</Code_Block>
     </Note>
   </Tab>
-  <Tab name="Java"></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
-  <Tab name=""></Tab>
+  <Tab name="Java">
+    When you run **./configure java**, the script configures a module to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html) on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--home=directory</strong></p></th><th><p>Directory path for Java utilities and header files to build the<br />module.<br /><br />The default is the <strong>java.home</strong> setting.</p></th></tr></thead><tbody><tr><td><p><strong>--jars=directory</strong></p></td><td><p>Directory path for Unit’s custom <strong>.jar</strong> files.<br /><br />The default is the Java module path.</p></td></tr><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path for the <strong>libjvm.so</strong> library.<br /><br />The default is based on JDK settings.</p></td></tr><tr><td><p><strong>--local-repo=directory</strong></p></td><td><p>Directory path for the local <strong>.jar</strong> repository.<br /><br />The default is <strong>$HOME/.m2/repository/</strong>.</p></td></tr><tr><td><p><strong>--repo=directory</strong></p></td><td><p>URL path for the remote Maven repository.<br /><br />The default is <strong>http://central.maven.org/maven2/</strong>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also used<br />in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <strong>java</strong>.</p></td></tr></tbody></table>
+
+    To configure a module called **java11.unit.so** with OpenJDK 11.0.1:
+
+    <Code_Block language="bash" hints={[]}>{`$ ./configure java --module=java11  \\
+                       --home=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home`}</Code_Block>
+  </Tab>
+  <Tab name="Node.js">
+    When you run **./configure nodejs**, Unit sets up the **unit-http** module that lets your applications [run on Unit](../configuration.md#configuration-nodejs). Available configuration options:
+
+    <table><thead><tr><th><p><strong>--local=directory</strong></p></th><th><p>Local directory path where the resulting module is installed.<br /><br />By default, the module is installed globally <a href="../installation.md#installation-nodejs-package">(recommended)</a>.</p></th></tr></thead><tbody><tr><td><p><strong>--node=pathname</strong></p></td><td><p>Specific Node.js executable pathname, also used in<br /><a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>node</strong>.</p></td></tr><tr><td><p><strong>--npm=pathname</strong></p></td><td><p>Specific <strong>npm</strong> executable pathname.<br /><br />The default is <strong>npm</strong>.</p></td></tr><tr><td><p><strong>--node-gyp=pathname</strong></p></td><td><p>Specific <strong>node-gyp</strong> executable pathname.<br /><br />The default is <strong>node-gyp</strong>.</p></td></tr></tbody></table>
+  </Tab>
+  <Tab name="Perl">
+    When you run **./configure perl**, the script configures a module to support running Perl scripts as applications on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--perl=pathname</strong></p></th><th><p>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</p></td></tr></tbody></table>
+
+    To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
+
+    <Code_Block language="bash" hints={[]}>{`$ ./configure perl --module=perl-5.20  \
+                       --perl=perl5.20.2`}</Code_Block>
+  </Tab>
+  <Tab name="PHP">
+    When you run **./configure php**, the script configures a custom SAPI module linked with the **libphp** library to support running PHP applications on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:</p><Code_Block language="bash" hints={[]}>{`$ php-config --php-sapis
+        ... embed ...`}</Code_Block></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
+
+    To configure a module called **php70.unit.so** for PHP 7.0:
+
+    <Code_Block language="bash" hints={[]}>{`$ ./configure php --module=php70  \
+                      --config=/usr/lib64/php7.0/bin/php-config  \
+                      --lib-path=/usr/lib64/php7.0/lib64`}</Code_Block>
+  </Tab>
+  <Tab name="Python">
+    When you run **./configure python**, the script configures a module to support running Python scripts as applications on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>python-config</strong> script used to<br />set up the resulting module.<br /><br />The default is <strong>python-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Custom directory path of the Python runtime library to use with<br />Unit.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>/path/python3-config</strong> turns into<br /><strong>python3</strong>.</p></td></tr></tbody></table>
+
+    <Note type="note">
+    The Python interpreter set by **python-config** must be compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
+    </Note>
+
+    To configure a module called **py33.unit.so** for Python 3.3:
+
+    <Code_Block language="bash" hints={[]}>{`$ ./configure python --module=py33  \
+                         --config=python-config-3.3`}</Code_Block>
+  </Tab>
+  <Tab name="Ruby">
+    When you run **./configure ruby**, the script configures a module to support running Ruby scripts as applications on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--ruby</code> executable.</p></th></tr></thead><tbody><tr><td><p><strong>--ruby=pathname</strong></p></td><td><p>Specific Ruby executable pathname.<br /><br />The default is <strong>ruby</strong>.</p></td></tr></tbody></table>
+
+    To configure a module called **ru23.unit.so** for Ruby 2.3:
+
+    <Code_Block language="bash" hints={[]}>{`$ ./configure ruby --module=ru23  \
+                       --ruby=ruby23`}</Code_Block>
+  </Tab>
+  <Tab name="WebAssembly">
+    When you run **./configure wasm-wasi-component**, the script configures a module to support running WebAssembly components on Unit.
+
+    The module doesn’t accept any extra configuration parameters. The module’s basename is wasm-wasi-component.
+  </Tab>
+  <Tab name="Unit-Wasm">
+    <Note type="warning">
+    Unit 1.32.0 and later support the WebAssembly Component Model and WASI 0.2 APIs. We recommend using the new implementation.
+    </Note>
+
+    When you run **./configure wasm**, the script configures a module to support running WebAssembly applications on Unit. Available command options:
+
+    <table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.</p></th></tr></thead><tbody><tr><td><p><strong>--runtime=basename</strong></p></td><td><p>The WebAssembly runtime to use.<br /><br />The default is <strong>wasmtime</strong>.</p></td></tr><tr><td><p><strong>--include-path=path</strong></p></td><td><p>The directory path to the runtime’s header files.</p></td></tr><tr><td><p><strong>--lib-path=path</strong></p></td><td><p>The directory path to the runtime’s library files.</p></td></tr><tr><td><p><strong>--rpath=&lt;path&gt;</strong></p></td><td><p>The directory path that designates the run-time library search<br />path.<br /><br />If specified without a value,<br />assumes the <strong>--lib-path</strong> value.</p></td></tr></tbody></table>
+
+    To configure a module called **wasm.unit.so**:
+
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasmtime", tooltip: "Runtime's header directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/wasmtime", tooltip: "Runtime's library directory", nxt_type: "nxt_ph" }]}>{`$ ./configure wasm --include-path=NXT1/include  \\
+                       --lib-path=NXT2/lib \\
+                       --rpath`}</Code_Block>
+  </Tab>
 </Tabs>
-
-&nbsp;
-
-When you run **./configure java**, the script configures a module to support running [Java Web Applications](https://download.oracle.com/otndocs/jcp/servlet-3_1-fr-spec/index.html) on Unit.  Available command options:
-
-<table><thead><tr><th><p><strong>--home=directory</strong></p></th><th><p>Directory path for Java utilities and header files to build the<br />module.<br /><br />The default is the <strong>java.home</strong> setting.</p></th></tr></thead><tbody><tr><td><p><strong>--jars=directory</strong></p></td><td><p>Directory path for Unit’s custom <strong>.jar</strong> files.<br /><br />The default is the Java module path.</p></td></tr><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path for the <strong>libjvm.so</strong> library.<br /><br />The default is based on JDK settings.</p></td></tr><tr><td><p><strong>--local-repo=directory</strong></p></td><td><p>Directory path for the local <strong>.jar</strong> repository.<br /><br />The default is <strong>$HOME/.m2/repository/</strong>.</p></td></tr><tr><td><p><strong>--repo=directory</strong></p></td><td><p>URL path for the remote Maven repository.<br /><br />The default is <strong>http://central.maven.org/maven2/</strong>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also used<br />in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <strong>java</strong>.</p></td></tr></tbody></table>
-
-To configure a module called **java11.unit.so** with OpenJDK&nbsp;11.0.1:
-
-```bash
-$ ./configure java --module=java11  \
-                   --home=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home
-```
-
-When you run **./configure nodejs**, Unit sets up the **unit-http** module that lets your applications [run on Unit](../configuration.md#configuration-nodejs).  Available configuration options:
-
-<table><thead><tr><th><p><strong>--local=directory</strong></p></th><th><p>Local directory path where the resulting module is installed.<br /><br />By default, the module is installed globally <a href="../installation.md#installation-nodejs-package">(recommended)</a>.</p></th></tr></thead><tbody><tr><td><p><strong>--node=pathname</strong></p></td><td><p>Specific Node.js executable pathname, also used in<br /><a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>node</strong>.</p></td></tr><tr><td><p><strong>--npm=pathname</strong></p></td><td><p>Specific <strong>npm</strong> executable pathname.<br /><br />The default is <strong>npm</strong>.</p></td></tr><tr><td><p><strong>--node-gyp=pathname</strong></p></td><td><p>Specific <strong>node-gyp</strong> executable pathname.<br /><br />The default is <strong>node-gyp</strong>.</p></td></tr></tbody></table>
-
-When you run **./configure perl**, the script configures a module to support running Perl scripts as applications on Unit.  Available command options:
-
-<table><thead><tr><th><p><strong>--perl=pathname</strong></p></th><th><p>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</p></td></tr></tbody></table>
-
-To configure a module called **perl-5.20.unit.so** for Perl&nbsp;5.20.2:
-
-```bash
-$ ./configure perl --module=perl-5.20  \
-                   --perl=perl5.20.2
-```
-
-When you run **./configure php**, the script configures a custom SAPI module linked with the **libphp** library to support running PHP applications on Unit.  Available command options:
-
-<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>php-config</strong> script used to set up<br />the resulting module.<br /><br />The default is <strong>php-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Directory path of the <strong>libphp</strong> library file<br />(<strong>libphp*.so</strong> or <strong>libphp*.a</strong>), usually available with<br />an <code>--enable-embed</code> PHP build:</p><Code_Block language="bash" hints={[]}>{`$ php-config --php-sapis
-    ... embed ...`}</Code_Block></td></tr><tr><td><p><strong>--lib-static</strong></p></td><td><p>Links the static <strong>libphp</strong> library (<strong>libphp*.a</strong>)<br />instead of the dynamic one (<strong>libphp*.so</strong>); requires<br /><code>--lib-path</code>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>--config=/path/php7-config</strong> yields<br /><strong>php7.unit.so</strong>.</p></td></tr></tbody></table>
-
-To configure a module called **php70.unit.so** for PHP&nbsp;7.0:
-
-```bash
-$ ./configure php --module=php70  \
-                  --config=/usr/lib64/php7.0/bin/php-config  \
-                  --lib-path=/usr/lib64/php7.0/lib64
-```
-
-When you run **./configure python**, the script configures a module to support running Python scripts as applications on Unit. Available command options:
-
-<table><thead><tr><th><p><strong>--config=pathname</strong></p></th><th><p>Pathname of the <strong>python-config</strong> script used to<br />set up the resulting module.<br /><br />The default is <strong>python-config</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--lib-path=directory</strong></p></td><td><p>Custom directory path of the Python runtime library to use with<br />Unit.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is <code>--config</code>’s filename minus the -config<br />suffix; thus, <strong>/path/python3-config</strong> turns into<br /><strong>python3</strong>.</p></td></tr></tbody></table>
-
-<Note type="note">
-The Python interpreter set by **python-config** must be compiled with the `--enable-shared` [option](https://docs.python.org/3/using/configure.html#linker-options).
-</Note>
-
-To configure a module called **py33.unit.so** for Python&nbsp;3.3:
-
-```bash
-$ ./configure python --module=py33  \
-                     --config=python-config-3.3
-```
-
-When you run **./configure ruby**, the script configures a module to support running Ruby scripts as applications on Unit.  Available command options:
-
-<table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--ruby</code> executable.</p></th></tr></thead><tbody><tr><td><p><strong>--ruby=pathname</strong></p></td><td><p>Specific Ruby executable pathname.<br /><br />The default is <strong>ruby</strong>.</p></td></tr></tbody></table>
-
-To configure a module called **ru23.unit.so** for Ruby&nbsp;2.3:
-
-```bash
-$ ./configure ruby --module=ru23  \
-                   --ruby=ruby23
-```
-
-When you run **./configure wasm-wasi-component**, the script configures a module to support running WebAssembly components on Unit.
-
-The module doesn’t accept any extra configuration parameters. The module’s basename is wasm-wasi-component.
-
-<Note type="warning">
-Unit 1.32.0 and later support the WebAssembly Component Model and WASI 0.2 APIs. We recommend using the new implementation.
-</Note>
-
-When you run **./configure wasm**, the script configures a module to support running WebAssembly applications on Unit. Available command options:
-
-<table><thead><tr><th><p><strong>--module=basename</strong></p></th><th><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.</p></th></tr></thead><tbody><tr><td><p><strong>--runtime=basename</strong></p></td><td><p>The WebAssembly runtime to use.<br /><br />The default is <strong>wasmtime</strong>.</p></td></tr><tr><td><p><strong>--include-path=path</strong></p></td><td><p>The directory path to the runtime’s header files.</p></td></tr><tr><td><p><strong>--lib-path=path</strong></p></td><td><p>The directory path to the runtime’s library files.</p></td></tr><tr><td><p><strong>--rpath=&lt;path&gt;</strong></p></td><td><p>The directory path that designates the run-time library search<br />path.<br /><br />If specified without a value,<br />assumes the <strong>--lib-path</strong> value.</p></td></tr></tbody></table>
-
-To configure a module called **wasm.unit.so**:
-
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasmtime", tooltip: "Runtime's header directory", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/wasmtime", tooltip: "Runtime's library directory", nxt_type: "nxt_ph" }]}>{`$ ./configure wasm --include-path=NXT1/include  \\
-                   --lib-path=NXT2/lib \\
-                   --rpath`}</Code_Block>
 
 ## Building and Installing Unit
 

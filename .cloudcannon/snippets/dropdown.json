@@ -32,9 +32,6 @@
               "editor_key": "label",
               "type": "string"
           },
-          "format": {
-            "ref": "mdx_format"
-          },
           "style": { 
               "output": "inline"
           }

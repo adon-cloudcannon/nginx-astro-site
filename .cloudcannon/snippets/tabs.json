@@ -5,7 +5,8 @@
         "text": "Tabs",
         "subtext": {
           "key": "label"
-        }
+        },
+        "icon":"featured_play_list"
       },
       "_inputs": {
         "inner_markdown": {

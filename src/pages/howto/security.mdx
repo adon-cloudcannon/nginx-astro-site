@@ -345,29 +345,23 @@ If these can’t be avoided, investigate the inner workings of the app to preven
 However, this does not replace the need to set up file permissions; use both [matching rules](../configuration.md#configuration-routes-matching) and per-app user permissions to manage access. For more info and real-life examples, refer to our app [howtos](index.md) and the ‘File Permissions’ callout above.
 </Dropdown>
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
+<Dropdown label="Unit's Process Summary">
 Unit’s processes are detailed [elsewhere](https://www.nginx.com/blog/introducing-nginx-unit/), but here’s a synopsis of the different roles they have:
 
 <table><thead><tr><th><p>Process</p></th><th><p>Privileged?</p></th><th><p>User and Group</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p>Main</p></td><td><p>Yes</p></td><td><p>Whoever starts the <strong>unitd</strong> executable; by default,<br /><strong>root</strong>.</p></td><td><p>Runs as a daemon, spawning Unit’s non-privileged and app processes;<br />requires numerous system capabilities and privileges for operation.</p></td></tr><tr><td><p>Controller</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Serves the control API, accepting reconfiguration requests,<br />sanitizing them, and passing them to other processes for<br />implementation.</p></td></tr><tr><td><p>Discovery</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Discovers the language modules in the module directory at startup,<br />then quits.</p></td></tr><tr><td><p>Router</p></td><td><p>No</p></td><td><p>Set by <code>--user</code> and <code>--group</code> options at<br /><a href="source.md#source-config-src">build</a> or <a href="source.md#source-startup">execution</a>; by default, <strong>unit</strong>.</p></td><td><p>Serves client requests, accepting them, processing them on the spot,<br />passing them to app processes, or proxying them further; requires<br />access to static content paths you configure.</p></td></tr><tr><td><p>App processes</p></td><td><p>No</p></td><td><p>Set by per-app <strong>user</strong> and <strong>group</strong><br /><a href="../configuration.md#configuration-applications">options</a>; by default,<br /><code>--user</code> and <code>--group</code> values.</p></td><td><p>Serve client requests that are routed to apps; require access to<br />paths and namespaces you configure for the app.</p></td></tr></tbody></table>
 
 You can check all of the above on your system when Unit is running:
 
-```bash
-$ ps aux | grep unit
+<Code_Block language="bash" hints={[]}>{`$ ps aux | grep unit
 
       ...
       root   ... unit: main v1.32.1
       unit   ... unit: controller
       unit   ... unit: router
-      unit   ... unit: "front" application
-```
+      unit   ... unit: "front" application`}</Code_Block>
 
-The important outtake here is to understand that Unit’s non-privileged processes don’t require running as **root**.  Instead, they should have the minimal privileges required to operate, which so far means the ability to open connections and access the application code and the static files shared during routing.
+The important outtake here is to understand that Unit’s non-privileged processes don’t require running as **root**. Instead, they should have the minimal privileges required to operate, which so far means the ability to open connections and access the application code and the static files shared during routing.
+</Dropdown>
 
 ## Prune Debug and Access Logs
 

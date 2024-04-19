@@ -1,5 +1,5 @@
 {
-    "snippet": "<details><summary>[[label]]</summary>[[content]]</details>",
+    "snippet": "<details><summary>{`[[label]]`}</summary>[[content]]</details>",
     "inline": false,
     "preview": {
       "text": [   
@@ -32,7 +32,9 @@
               "editor_key": "label",
               "type": "string"
           },
-          
+          "format": {
+            "ref": "mdx_format"
+          },
           "style": { 
               "output": "inline"
           }

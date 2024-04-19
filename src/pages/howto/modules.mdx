@@ -83,7 +83,9 @@ Assuming you are packaging for the current system and have the official Unit pac
 
 2\. Create a staging directory for your package:
 
-`$ export UNITTMP=$(mktemp -d -p /tmp -t unit.XXXXXX) $ mkdir -p $UNITTMP/unit-php7.3/DEBIAN $ cd $UNITTMP `
+<Code_Block language="console" hints={[]}>{`$ export UNITTMP=$(mktemp -d -p /tmp -t unit.XXXXXX)
+$ mkdir -p $UNITTMP/unit-php7.3/DEBIAN
+$ cd $UNITTMP `}</Code_Block>
 
 This creates a folder structure fit for **dpkg-deb**; the **DEBIAN** folder will store the package definition.
 

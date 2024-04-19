@@ -1,5 +1,4 @@
 {
-    "tabs": {
       "snippet": "<Tabs [[args]]>[[tabs]]</Tabs>",
       "inline": false,
       "preview": {
@@ -92,5 +91,4 @@
           }
         }
       }
-    }
-  }
+}

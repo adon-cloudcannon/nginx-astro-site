@@ -97,7 +97,14 @@ This creates a folder structure fit for **dpkg-deb**; the **DEBIAN** folder will
 
 4\. Download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
 
-`$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz $ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory $ cd unit-1.32.1 $ ./configure :nxt_ph:FLAGS W/O --LD-OPT &amp; --NJS &lt;The ./configure flags, except for --ld-opt and --njs&gt;                     # Use the ./configure flags noted in the previous step $ ./configure php --module=php7.3 --config=php-config        # Configures the module itself $ make php7.3                                                # Builds the module in the build/ subdirectory $ mkdir -p $UNITTMP/unit-php7.3/:nxt_ph:MODULESPATH &lt;Path to Unit's language modules&gt;                  # Use the module path set by ./configure or by default $ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/:nxt_ph:MODULESPATH &lt;Path to Unit's language modules&gt;   # Adds the module to the package `
+<Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS W/O --LD-OPT & --NJS", tooltip: "The ./configure flags, except for --ld-opt and --njs", nxt_type: "nxt_ph" }, { number: "2", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }, { number: "3", display_text: "MODULESPATH", tooltip: "Path to Unit's language modules", nxt_type: "nxt_ph" }]}>{`$ curl -O https://sources.nginx.org/unit/unit-1.32.1.tar.gz
+$ tar xzf unit-1.32.1.tar.gz                                 # Puts Unit's sources in the unit-1.32.1 subdirectory
+$ cd unit-1.32.1
+$ ./configure NXT1                     # Use the ./configure flags noted in the previous step
+$ ./configure php --module=php7.3 --config=php-config        # Configures the module itself
+$ make php7.3                                                # Builds the module in the build/ subdirectory
+$ mkdir -p $UNITTMP/unit-php7.3/NXT2                  # Use the module path set by ./configure or by default
+$ mv build/php7.3.unit.so $UNITTMP/unit-php7.3/NXT3   # Adds the module to the package `}</Code_Block>
 
 5\. Create a **$UNITTMP/unit-php7.3/DEBIAN/control** [file](https://www.debian.org/doc/debian-policy/ch-controlfields.html), listing **unit** with other dependencies:
 

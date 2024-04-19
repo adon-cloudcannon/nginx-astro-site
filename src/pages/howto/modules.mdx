@@ -91,7 +91,9 @@ This creates a folder structure fit for **dpkg-deb**; the **DEBIAN** folder will
 
 3\. Run **unitd --version** and note the **./configure** [flags](source.md#source-config-src) for later use, omitting `--ld-opt` and `--njs`:
 
-`$ unitd --version      unit version: 1.32.1     configured as ./configure :nxt_ph:FLAGS &lt;Note the flags, omitting --ld-opt and --njs&gt; `
+<Code_Block language="console" hints={[{ number: "1", display_text: "FLAGS", tooltip: "Note the flags, omitting --ld-opt and --njs", nxt_type: "nxt_ph" }]}>{`$ unitd --version
+      unit version: 1.32.1
+      configured as ./configure NXT1`}</Code_Block>
 
 4\. Download Unit’s sources, [configure](source.md#source-modules) and build your custom module, then put it where Unit will find it:
 

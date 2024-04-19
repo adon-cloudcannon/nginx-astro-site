@@ -24,7 +24,7 @@
       }
     },
     "params": {
-      "type": {
+      "label": {
         "parser": "argument",
         "options": {
           "model": 
@@ -40,10 +40,10 @@
           }
         }
       },
-      "body": {
+      "content": {
         "parser": "content",
         "options": {
-          "editor_key": "body",
+          "editor_key": "content",
           "allow_nested": false
         }
       }

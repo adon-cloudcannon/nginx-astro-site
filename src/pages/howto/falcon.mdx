@@ -26,8 +26,7 @@ Create your virtual environment with a Python version that matches the language 
 
 <Tabs label="WSGI/ASGI">
   <Tab name="WSGI">
-    ```
-       import falcon
+    <Code_Block language="python" hints={[]}>{`   import falcon
 
 
        # Falcon follows the REST architectural style, meaning (among
@@ -48,14 +47,12 @@ Create your virtual environment with a Python version that matches the language 
        hellounit = HelloUnitResource()
 
        # hellounit will handle all requests to the '/unit' URL path
-       app.add_route('/unit', hellounit)
-    ```
+       app.add_route('/unit', hellounit)`}</Code_Block>
 
     Note that we’ve dropped the server code; save the file as **/path/to/app/wsgi.py**.
   </Tab>
   <Tab name="ASGI">
-    ```
-       import falcon
+    <Code_Block language="python" hints={[]}>{`   import falcon
        import falcon.asgi
 
 
@@ -77,8 +74,7 @@ Create your virtual environment with a Python version that matches the language 
        hellounit = HelloUnitResource()
 
        # hellounit will handle all requests to the '/unit' URL path
-       app.add_route('/unit', hellounit)
-    ```
+       app.add_route('/unit', hellounit)`}</Code_Block>
 
     Save the file as **/path/to/app/asgi.py**.
   </Tab>

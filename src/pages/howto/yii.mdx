@@ -6,175 +6,180 @@ title: Yii
 
 To run apps based on the [Yii](https://www.yiiframework.com) framework versions 1.1 or 2.0 using Unit:
 
-1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
+<Tabs label="Yii 2.0/Yii 1.1">
+  <Tab name="Yii 2.0">
+    1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
 
-2\. Next, [install](https://www.yiiframework.com/doc/guide/2.0/en/start-installation) Yii and create or deploy your app.
+    2\. Next, [install](https://www.yiiframework.com/doc/guide/2.0/en/start-installation) Yii and create or deploy your app.
 
-Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#installing-from-composer) and Composer:
+    Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#installing-from-composer) and Composer:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/", tooltip: "Partial path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "app", tooltip: "Arbitrary app name", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
-   $ composer create-project --prefer-dist yiisoft/yii2-app-basic NXT2`}</Code_Block>
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/", tooltip: "Partial path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "2", display_text: "app", tooltip: "Arbitrary app name", nxt_type: "nxt_ph" }]}>{`   $ cd NXT1
+       $ composer create-project --prefer-dist yiisoft/yii2-app-basic NXT2`}</Code_Block>
 
-This creates the app’s directory tree at **/path/to/app/**. Its **web/** subdirectory contains both the root **index.php** and the static files; if your app requires additional **.php** scripts, also store them here.
+    This creates the app’s directory tree at **/path/to/app/**. Its **web/** subdirectory contains both the root **index.php** and the static files; if your app requires additional **.php** scripts, also store them here.
 
-3\. Run the following command so Unit can access :
+    3\. Run the following command so Unit can access :
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/app/", tooltip: "Path to the application files such as /data/www/app/; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`   # chown -R NXT1 NXT2`}</Code_Block>
 
-<Note type="note">
-The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
-</Note>
+    <Note type="note">
+    The **unit:unit** user-group pair is available only with [official packages](../installation.md#installation-precomp-pkgs), Docker [images](../installation.md#installation-docker), and some [third-party repos](../installation.md#installation-community-repos). Otherwise, account names may differ; run the **ps aux \| grep unitd** command to be sure.
+    </Note>
 
-For further details, including permissions, see the [security checklist](security.md#security-apps).
+    For further details, including permissions, see the [security checklist](security.md#security-apps).
 
-4\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
+    4\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
 
-<Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
-       "listeners": {
-           "*:80": {
-               "pass": "routes"
-           }
-       },
-
-       "routes": [
-           {
-               "match": {
-                   "uri": [
-                       "!NXT1",
-                       "*.php",
-                       "*.php/*"
-                   ]
-               },
-
-               "action": {
-                   "pass": "applications/yii/direct"
+    <Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
+           "listeners": {
+               "*:80": {
+                   "pass": "routes"
                }
            },
-           {
-               "action": {
-                   "NXT2": "NXT3/web$uri",
-                   "fallback": {
-                       "pass": "applications/yii/index"
-                   }
-               }
-           }
-       ],
 
-       "applications": {
-           "yii": {
-               "type": "php",
-               "targets": {
-                   "direct": {
-                       "root": "NXT4/web/"
+           "routes": [
+               {
+                   "match": {
+                       "uri": [
+                           "!NXT1",
+                           "*.php",
+                           "*.php/*"
+                       ]
                    },
 
-                   "index": {
-                       "root": "NXT5/web/",
-                       "script": "NXT6"
+                   "action": {
+                       "pass": "applications/yii/direct"
+                   }
+               },
+               {
+                   "action": {
+                       "NXT2": "NXT3/web$uri",
+                       "fallback": {
+                           "pass": "applications/yii/index"
+                       }
+                   }
+               }
+           ],
+
+           "applications": {
+               "yii": {
+                   "type": "php",
+                   "targets": {
+                       "direct": {
+                           "root": "NXT4/web/"
+                       },
+
+                       "index": {
+                           "root": "NXT5/web/",
+                           "script": "NXT6"
+                       }
                    }
                }
            }
-       }
-   }`}</Code_Block>
+       }`}</Code_Block>
 
-For a detailed discussion, see [Configuring Web Servers](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#configuring-web-servers) and [Running Applications](https://www.yiiframework.com/doc/guide/2.0/en/start-workflow) in Yii 2.0 docs.
+    For a detailed discussion, see [Configuring Web Servers](https://www.yiiframework.com/doc/guide/2.0/en/start-installation#configuring-web-servers) and [Running Applications](https://www.yiiframework.com/doc/guide/2.0/en/start-workflow) in Yii 2.0 docs.
 
-<Note type="note">
-The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
+    <Note type="note">
+    The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
 
-* The **direct** target runs the **.php** script from the URI or **index.php** if the URI omits it.
-* The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
-</Note>
+    * The **direct** target runs the **.php** script from the URI or **index.php** if the URI omits it.
+    * The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
+    </Note>
 
-5\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+    5\. Upload the updated configuration. Assuming the JSON above was added to `config.json`:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
-          NXT1 NXT2`}</Code_Block>
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+              NXT1 NXT2`}</Code_Block>
 
-<Note type="note">
-The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
-</Note>
+    <Note type="note">
+    The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+    </Note>
 
-After a successful update, your app should be available on the listener’s IP address and port: ![Yii Basic Template App on Unit](/images/yii2.png)
+    After a successful update, your app should be available on the listener’s IP address and port: ![Yii Basic Template App on Unit](/images/yii2.png)
+  </Tab>
+  <Tab name="Yii 1.1">
+    1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
 
-1\. Install [Unit](../installation.md#installation-precomp-pkgs) with a PHP language module.
+    2\. Next, [install](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.installation) Yii and create or deploy your app.
 
-2\. Next, [install](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.installation) Yii and create or deploy your app.
+    Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app) and **yiic**:
 
-Here, we use Yii’s [basic project template](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app) and **yiic**:
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/yii1.1/", tooltip: "Arbitrary framework path", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/yii1.1", tooltip: "Arbitrary framework path", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ git clone git@github.com:yiisoft/yii.git NXT1
+       $ NXT2/framework/yiic webapp NXT3`}</Code_Block>
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/yii1.1/", tooltip: "Arbitrary framework path", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/yii1.1", tooltip: "Arbitrary framework path", nxt_type: "nxt_ph" }, { number: "3", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }]}>{`   $ git clone git@github.com:yiisoft/yii.git NXT1
-   $ NXT2/framework/yiic webapp NXT3`}</Code_Block>
+    This creates the app’s directory tree at **/path/to/app/**.
 
-This creates the app’s directory tree at **/path/to/app/**.
+    3\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
 
-3\. Next, [prepare](../configuration.md#configuration-php) the Yii configuration for Unit (use real values for **share** and **root**):
-
-<Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
-       "listeners": {
-           "*:80": {
-               "pass": "routes"
-           }
-       },
-
-       "routes": [
-           {
-               "match": {
-                   "uri": [
-                       "!NXT1",
-                       "!/protected/*",
-                       "!/themes/*",
-                       "*.php",
-                       "*.php/*"
-                   ]
-               },
-
-               "action": {
-                   "pass": "applications/yii/direct"
+    <Code_Block language="json" hints={[{ number: "1", display_text: "/assets/*", tooltip: "This path stores application data that shouldn't be run as code", nxt_type: "nxt_hint" }, { number: "2", display_text: "share", tooltip: "Serves static files", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/app", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "4", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "5", display_text: "/path/to/app/", tooltip: "Path to the application directory; use a real path in your configuration", nxt_type: "nxt_ph" }, { number: "6", display_text: "index.php", tooltip: "All requests are handled by a single script", nxt_type: "nxt_hint" }]}>{`   {
+           "listeners": {
+               "*:80": {
+                   "pass": "routes"
                }
            },
-           {
-               "action": {
-                   "NXT2": "NXT3$uri",
-                   "fallback": {
-                       "pass": "applications/yii/index"
-                   }
-               }
-           }
-       ],
 
-       "applications": {
-           "yii": {
-               "type": "php",
-               "targets": {
-                   "direct": {
-                       "root": "NXT4"
+           "routes": [
+               {
+                   "match": {
+                       "uri": [
+                           "!NXT1",
+                           "!/protected/*",
+                           "!/themes/*",
+                           "*.php",
+                           "*.php/*"
+                       ]
                    },
-                   "index": {
-                       "root": "NXT5",
-                       "script": "NXT6"
+
+                   "action": {
+                       "pass": "applications/yii/direct"
+                   }
+               },
+               {
+                   "action": {
+                       "NXT2": "NXT3$uri",
+                       "fallback": {
+                           "pass": "applications/yii/index"
+                       }
+                   }
+               }
+           ],
+
+           "applications": {
+               "yii": {
+                   "type": "php",
+                   "targets": {
+                       "direct": {
+                           "root": "NXT4"
+                       },
+                       "index": {
+                           "root": "NXT5",
+                           "script": "NXT6"
+                       }
                    }
                }
            }
-       }
-   }`}</Code_Block>
+       }`}</Code_Block>
 
-For a detailed discussion, see Yii 1.1 [docs](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app).
+    For a detailed discussion, see Yii 1.1 [docs](https://www.yiiframework.com/doc/guide/1.1/en/quickstart.first-app).
 
-<Note type="note">
-The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
+    <Note type="note">
+    The difference between the **pass** targets is their usage of the **script** [setting](../configuration.md#configuration-php):
 
-* The **direct** target runs the **.php** script from the URI or **index.php** if the URI omits it.
-* The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
-</Note>
+    * The **direct** target runs the **.php** script from the URI or **index.php** if the URI omits it.
+    * The **index** target specifies the **script** that Unit runs for *any* URIs the target receives.
+    </Note>
 
-4\. Upload the updated configuration.  Assuming the JSON above was added to `config.json`:
+    4\. Upload the updated configuration. Assuming the JSON above was added to `config.json`:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
-          NXT1 NXT2`}</Code_Block>
+    <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "http://localhost/config/", tooltip: "Path to the config section in Unit's control API", nxt_type: "nxt_hint" }]}>{`   # curl -X PUT --data-binary @config.json --unix-socket \\
+              NXT1 NXT2`}</Code_Block>
 
-<Note type="note">
-The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
-</Note>
+    <Note type="note">
+    The [control socket](../controlapi.md#configuration-socket) path may vary; run **unitd -h** or see [Startup and Shutdown](source.md#source-startup) for details.
+    </Note>
 
-After a successful update, your app should be available on the listener’s IP address and port: ![Yii Basic Template App on Unit](/images/yii1.1.png)
+    After a successful update, your app should be available on the listener’s IP address and port: ![Yii Basic Template App on Unit](/images/yii1.1.png)
+  </Tab>
+</Tabs>

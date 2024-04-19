@@ -1,5 +1,5 @@
 {
-    "snippet": "<details><summary>[[label]]</summary>[[content]]</details>",
+    "snippet": "<details><summary>\n[[label]]\n</summary>[[content]]</details>",
     "inline": false,
     "preview": {
       "text": [   

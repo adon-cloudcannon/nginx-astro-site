@@ -130,11 +130,11 @@ General options and settings that control compilation, runtime privileges, or su
 
 By default, Unit relies on the locally installed version of the [PCRE](https://www.pcre.org) library to support regular expressions in [routes](../configuration.md#configuration-routes); if both major versions are present, Unit selects PCRE2.  Two additional options alter this behavior:
 
-<table><tbody><tr><td><strong>--no-regex</strong></td><td>Turns off regex support; any attempts to use a regex in Unit<br />configuration cause an error.</td></tr><tr><td><strong>--no-pcre2</strong></td><td>Ignores PCRE2; the older PCRE 8.x library is used instead.</td></tr></tbody></table>
+<table><tbody valign="top"><tr><td><strong>--no-regex</strong></td><td>Turns off regex support; any attempts to use a regex in Unit<br />configuration cause an error.</td></tr><tr><td><strong>--no-pcre2</strong></td><td>Ignores PCRE2; the older PCRE 8.x library is used instead.</td></tr></tbody></table>
 
 Unit also supports the use of [njs](https://nginx.org/en/docs/njs/) scripts in configuration; to enable this feature, use the respective option:
 
-<table><tbody><tr><td><strong>--njs</strong></td><td>Turns on <strong>njs</strong> support; requires <strong>--openssl</strong>.</td></tr></tbody></table>
+<table><tbody valign="top"><tr><td><strong>--njs</strong></td><td>Turns on <strong>njs</strong> support; requires <strong>--openssl</strong>.</td></tr></tbody></table>
 
 When `--njs` is enabled, the `--cc-opt` and `--ld-opt` option values should point to the **src/** and **build/** subdirectories of the **njs** source code. For example, if you cloned the **njs** repo beside the Unit repo:
 

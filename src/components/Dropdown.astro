@@ -1,7 +1,5 @@
 ---
-import { parse_marked } from '@utils/nxt'
 let content = await Astro.slots.render("default")
-//content = parse_marked(content)
 const { label } = Astro.props
 ---
 <details><summary>{label}</summary><Fragment set:html={content} /></details>

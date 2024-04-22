@@ -13,7 +13,9 @@ hints.forEach(hint => {
 	let regex = new RegExp('\\bNXT' + hint.number + '\\b','g');
 	innerContent = innerContent.replaceAll(regex,`:${hint.nxt_type}: \`${hint.display_text} <${hint.tooltip}>\``)
 })
-const html = nxt_hint("```"+language+"\n"+innerContent+"\n```")
+let html = `<div class="highlight">`;
+html += nxt_hint("```"+language+"\n"+innerContent+"\n```")
+html += `</div>`
 ---
 
 <Fragment set:html={html} />

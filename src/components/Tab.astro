@@ -3,7 +3,7 @@ const content = await Astro.slots.render("default")
 const { name } = Astro.props
 ---
 <script>
-    document.querySelectorAll("label a").forEach(el => {
+    document.querySelectorAll("label.interface_tab a").forEach(el => {
         el.addEventListener("click", e => {
             e.preventDefault()
             history.replaceState({}, '', e.target.href)
@@ -13,7 +13,7 @@ const { name } = Astro.props
 </script>
 
 <input name="interface" type="radio" id="interface_0" class="js" checked="">
-<label for="interface_0" id=`interface-${name}`>
+<label class="interface_tab" for="interface_0" id=`interface-${name}`>
     <a href=`#interface-${name}`>{name}</a>
 </label>
 <div>

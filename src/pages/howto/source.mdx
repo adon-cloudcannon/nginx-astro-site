@@ -175,7 +175,7 @@ To run apps in several versions of a language, build and install a module for ea
   <Tab name="Go">
     When you run **./configure go**, Unit sets up the Go package that lets your applications [run on Unit](../configuration.md#configuration-go). To use the package, [install](#source-bld-src-ext) it in your Go environment. Available configuration options:
 
-    <table><thead><tr><th><p><strong>--go=pathname</strong></p></th><th><p>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</p></th></tr></thead><tbody><tr><td><p><strong>--go-path=directory</strong></p></td><td><p>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</p></td></tr></tbody></table>
+    <table><tbody valign="top"><tr><td><strong>--go=pathname</strong></td><td>Specific Go executable pathname, also used in <a href="#source-bld-src-ext">make</a> targets.<br /><br />The default is <strong>go</strong>.</td></tr><tr><td><strong>--go-path=directory</strong></td><td>Custom directory path for Go package installation.<br /><br />The default is <strong>$GOPATH</strong>.</td></tr></tbody></table>
 
     <Note type="note">
                     Running **./configure go** doesn’t alter the `GOPATH` [environment variable](https://github.com/golang/go/wiki/GOPATH), so configure-time `--go-path` and compile-time `$GOPATH` must be coherent for Go to find the resulting package.

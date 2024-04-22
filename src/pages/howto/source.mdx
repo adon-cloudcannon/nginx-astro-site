@@ -103,39 +103,28 @@ $ ./configure NXT1 && make`}</Code_Block>
 Point to the resulting source and build directories when [configuring](#source-config-src-njs) the Unit code.
 </Dropdown>
 
+<Dropdown label="Enabling WebAssembly">
+<Tabs label="wasm-wasi-component/unit-wasm">
+  <Tab name="wasm-wasi-component">
+    To build Unit with support for the WebAssembly Component Model, you need **rust** version 1.76.0+, **cargo** and the developer package for **clang** as mentioned in the [Required Software Section](#source-prereq-build).
+
+    Next please refer to [Configuring Modules - WebAssembly](#modules-webassembly) for further instructions.
+  </Tab>
+  <Tab name="unit-wasm"></Tab>
+</Tabs>
+</Dropdown>
+
+&nbsp;
+
+&nbsp;
+
 &nbsp;
 
 &nbsp;
 
 &nbsp;
 
-To build Unit with support for the WebAssembly Component Model, you need **rust** version 1.76.0+, **cargo** and the developer package for **clang** as mentioned in the [Required Software Section](#source-prereq-build).
-
-Next please refer to [Configuring Modules - WebAssembly](#modules-webassembly) for further instructions.
-
-<Note type="warning">
-The **unit-wasm** module is deprecated. We recommend using **wasm-wasi-component** instead, available in Unit 1.32.0 and later, which supports WebAssembly Components using standard WASI 0.2 interfaces.
-</Note>
-
-To build Unit with the [WebAssembly](https://webassembly.org) language module, you need the [Wasmtime](https://wasmtime.dev) runtime. Download the C API [files](https://github.com/bytecodealliance/wasmtime/releases/) suitable for your OS and architecture to the same parent directory as the Unit code, for example:
-
-```bash
-$ cd ..
-$ wget -O- https://github.com/bytecodealliance/wasmtime/releases/download/v12.0.0/wasmtime-v12.0.0-x86_64-linux-c-api.tar.xz \
-      | tar Jxf -  # Unpacks to the current directory
-```
-
-Point to the resulting **include** and **lib** directories when [configuring](#modules-webassembly) the Unit code.
-
-To build WebAssembly apps that run on Unit, you need the [wasi-sysroot](https://github.com/WebAssembly/wasi-sdk) SDK:
-
-```bash
-$ wget -O- https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-20/wasi-sysroot-20.0.tar.gz | tar zxf -
-```
-
-When building the apps, add the following environment variable:
-
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/wasi-sysroot-dir/", tooltip: "wasi-sysroot directory", nxt_type: "nxt_ph" }]}>{`WASI_SYSROOT=NXT1`}</Code_Block>
+&nbsp;
 
 ## Configuring Sources
 

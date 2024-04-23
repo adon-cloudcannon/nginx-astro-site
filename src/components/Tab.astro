@@ -12,9 +12,9 @@ const { name } = Astro.props
     })
 </script>
 
-<input name="interface" type="radio" id="interface_0" class="js" checked="">
-<label class="interface_tab" for="interface_0" id=`interface-${name}`>
-    <a href=`#interface-${name}`>{name}</a>
+<input type="radio" id=`interface_${name.replaceAll("%20","_")}` class="js">
+<label class="interface_tab" for=`interface_${name.replaceAll("%20","_")}` id=`interface-${name.replaceAll("%20","_")}`>
+    <a href=`#interface-${name.replaceAll("%20","_")}`>{name}</a>
 </label>
 <div>
     <Fragment set:html={content}>

@@ -196,6 +196,16 @@ function nxt_dom_ready() {
     } else {
         console.log('Clipboard API is not available')
     }
+
+    let count = 0;
+
+    document.querySelectorAll(".nxt_tabs").forEach(tabGroup => {
+        tabGroup.querySelectorAll("input").forEach(input => {
+            input.name = `interface_${count}`
+        })
+        tabGroup.querySelector("input").checked = true;
+        count++
+    })
 }
 
 

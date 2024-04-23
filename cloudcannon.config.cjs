@@ -76,6 +76,8 @@ module.exports = {
       numberedlist: true,
       outdent: true,
       code: true,
+      image: true,
+      table: true,
       snippet: true
     }
   },

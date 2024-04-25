@@ -247,6 +247,10 @@ img { width:100% }
 #content td > .last {
     margin-bottom: 0;
 }
+#content td > p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
 #content .option-list td {
     border: none;
 }

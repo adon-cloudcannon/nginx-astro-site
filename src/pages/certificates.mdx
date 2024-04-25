@@ -30,6 +30,13 @@ Usually, your website’s certificate (optionally followed by the intermediate C
 
 Upload the resulting bundle file to Unit’s certificate storage under a suitable name (in this case, **bundle**):
 
+<Code_Block language="bash" hints={[{ number: "1", display_text: "bundle.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "bundle", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary @NXT1 --unix-socket \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NXT2 http://localhost/certificates/NXT3
+
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": "Certificate chain uploaded."
+&nbsp;&nbsp;&nbsp;&nbsp;}`}</Code_Block>
+
 ```bash
 # curl -X PUT --data-binary @:nxt_ph:`bundle.pem <Certificate bundle's filename>` --unix-socket \
        :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` http://localhost/certificates/:nxt_ph:`bundle <Certificate bundle name in Unit's configuration>`

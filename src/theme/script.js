@@ -24,6 +24,15 @@ function nxt_tab_init() {
     for (const el of document.querySelectorAll('.nxt_tabs > input')) {
         el.classList.replace('nojs', 'js')
     }
+    let count = 0;
+
+    document.querySelectorAll(".nxt_tabs").forEach(tabGroup => {
+        tabGroup.querySelectorAll("input").forEach(input => {
+            input.name = `interface_${count}`
+        })
+        tabGroup.querySelector("input").checked = true;
+        count++
+    })
 }
 
 
@@ -197,21 +206,14 @@ function nxt_dom_ready() {
         console.log('Clipboard API is not available')
     }
 
-    let count = 0;
-
-    document.querySelectorAll(".nxt_tabs").forEach(tabGroup => {
-        tabGroup.querySelectorAll("input").forEach(input => {
-            input.name = `interface_${count}`
-        })
-        tabGroup.querySelector("input").checked = true;
-        count++
-    })
+    
 }
 
 
 function nxt_hash_change() {
     if (window.location.hash) {
-        const selector = '.nxt_tabs > label' + window.location.hash
+        let hash = window.location.hash.replaceAll("%20", "_")
+        const selector = hash
 
         const el = document.querySelector(selector)
         if (el) {

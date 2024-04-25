@@ -354,14 +354,14 @@ A request passed to a route traverses its steps sequentially:
 * If a step’s condition isn’t met, Unit proceeds to the next step of the route.
 * If no steps of the route match, a 404 “Not Found” response is returned.
 
-#### WARNING
-
+<Note type="warning">
 If a step omits the **match** option, its **action** occurs automatically. Thus, use no more than one such step per route, always placing it last to avoid potential routing issues.
+</Note>
 
+<Dropdown label="Ad-Hoc examples">
 A basic one:
 
-```json
-{
+<Code_Block language="json" hints={[]}>{`{
     "routes": [
         {
             "match": {
@@ -380,15 +380,13 @@ A basic one:
             }
         }
     ]
-}
-```
+}`}</Code_Block>
 
 This route passes all HTTPS requests to the **/php/** subsection of the **example.com** website to the **php\_version** app. All other requests are served with static content from the **/www/static\_version/** directory. If there’s no matching content, a 404 “Not Found” response is returned.
 
 A more elaborate example with chained routes and proxying:
 
-```json
-{
+<Code_Block language="json" hints={[]}>{`{
     "routes": {
         "main": [
             {
@@ -441,10 +439,18 @@ A more elaborate example with chained routes and proxying:
             }
         ]
     }
-}
-```
+}`}</Code_Block>
 
 Here, a route called **main** is explicitly defined, so **routes** is an object instead of an array. The first step of the route passes all HTTP requests to the **http\_site** app. The second step passes all requests that target **blog.example.com** to the **blog** app. The final step serves requests for certain file types from the **/www/static/** directory. If no steps match, a 404 “Not Found” response is returned.
+</Dropdown>
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
 
 &nbsp;
 

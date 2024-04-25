@@ -1,42 +1,34 @@
 ---
-layout: "@layouts/BaseLayout.astro"
+_schema: default
 title: SSL/TLS certificates
+layout: '@layouts/BaseLayout.astro'
 order: 7
+seo:
+  open_graph_type: article
+  no_index: false
+_inputs:
+  order:
+    type: number
 ---
-
-<a id="configuration-ssl"></a>
+&nbsp;
 
 # SSL/TLS certificates
 
-The **/certificates** section of the
-[control API](controlapi.md#configuration-api)
-handles TLS certificates that are used with Unit’s
-[listeners](configuration.md#configuration-listeners).
+The **/certificates** section of the [control API](controlapi.md#configuration-api) handles TLS certificates that are used with Unit’s [listeners](configuration.md#configuration-listeners).
 
-To set up SSL/TLS for a listener,
-upload a **.pem** file with your certificate chain and private key to Unit,
-and name the uploaded bundle in the listener’s configuration;
-next, the listener can be accessed via SSL/TLS.
+To set up SSL/TLS for a listener, upload a **.pem** file with your certificate chain and private key to Unit, and name the uploaded bundle in the listener’s configuration; next, the listener can be accessed via SSL/TLS.
 
-#### NOTE
-For the details of certificate issuance and renewal in Unit,
-see an example in [TLS with Certbot](howto/certbot.md).
+<Note type="note">
+For the details of certificate issuance and renewal in Unit, see an example in [TLS with Certbot](howto/certbot.md).
+</Note>
 
 First, create a **.pem** file with your certificate chain and private key:
 
-```bash
-$ cat :nxt_ph:`cert.pem <Leaf certificate file>` :nxt_ph:`ca.pem <CA certificate file>` :nxt_ph:`key.pem <Private key file>` > :nxt_ph:`bundle.pem <Arbitrary certificate bundle's filename>`
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "cert.pem", tooltip: "Leaf certificate file", nxt_type: "nxt_ph" }, { number: "2", display_text: "ca.pem", tooltip: "CA certificate file", nxt_type: "nxt_ph" }, { number: "3", display_text: "key.pem", tooltip: "Private key file", nxt_type: "nxt_ph" }, { number: "4", display_text: "bundle.pem", tooltip: "Arbitrary certificate bundle's filename", nxt_type: "nxt_ph" }]}>{`$ cat NXT1 NXT2 NXT3 > NXT4`}</Code_Block>
 
-Usually, your website’s certificate
-(optionally followed by the intermediate CA certificate)
-is enough to build a certificate chain.
-If you add more certificates to your chain,
-order them leaf to root.
+Usually, your website’s certificate (optionally followed by the intermediate CA certificate) is enough to build a certificate chain. If you add more certificates to your chain, order them leaf to root.
 
-Upload the resulting bundle file to Unit’s certificate storage
-under a suitable name
-(in this case, **bundle**):
+Upload the resulting bundle file to Unit’s certificate storage under a suitable name (in this case, **bundle**):
 
 ```bash
 # curl -X PUT --data-binary @:nxt_ph:`bundle.pem <Certificate bundle's filename>` --unix-socket \
@@ -48,19 +40,10 @@ under a suitable name
 ```
 
 #### WARNING
-Don’t use **-d** for file upload with **curl**;
-this option damages **.pem** files.
-Use the **--data-binary** option
-when uploading file-based data
-to avoid data corruption.
 
-Internally, Unit stores the uploaded certificate bundles
-along with other configuration data
-in its **state** subdirectory;
-the
-[control API](controlapi.md#configuration-api)
-exposes some of their properties
-as **GET**-table JSON using **/certificates**:
+Don’t use **\-d** for file upload with **curl**; this option damages **.pem** files. Use the **\--data-binary** option when uploading file-based data to avoid data corruption.
+
+Internally, Unit stores the uploaded certificate bundles along with other configuration data in its **state** subdirectory; the [control API](controlapi.md#configuration-api) exposes some of their properties as **GET**\-table JSON using **/certificates**:
 
 ```json
 {
@@ -120,9 +103,8 @@ as **GET**-table JSON using **/certificates**:
 ```
 
 #### NOTE
-Access array items,
-such as individual certificates in a chain,
-and their properties by indexing:
+
+Access array items, such as individual certificates in a chain, and their properties by indexing:
 
 ```bash
 # curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
@@ -131,9 +113,7 @@ and their properties by indexing:
        http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`/chain/0/subject/alt_names/0/
 ```
 
-Next, add the uploaded bundle to a
-[listener](configuration.md#configuration-listeners);
-the resulting control API configuration may look like this:
+Next, add the uploaded bundle to a [listener](configuration.md#configuration-listeners); the resulting control API configuration may look like this:
 
 ```json
 {
@@ -167,8 +147,7 @@ the resulting control API configuration may look like this:
 }
 ```
 
-All done;
-the application is now accessible via SSL/TLS:
+All done; the application is now accessible via SSL/TLS:
 
 ```bash
 $ curl -v :nxt_hint:`https://127.0.0.1 <Port 443 is conventionally used for HTTPS connections>`
@@ -186,9 +165,7 @@ $ curl -v :nxt_hint:`https://127.0.0.1 <Port 443 is conventionally used for HTTP
     ...
 ```
 
-Finally, you can delete a certificate bundle
-that you don’t need anymore
-from the storage:
+Finally, you can delete a certificate bundle that you don’t need anymore from the storage:
 
 ```bash
 # curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
@@ -200,5 +177,5 @@ from the storage:
 ```
 
 #### NOTE
-You can’t delete certificate bundles still referenced in your
-configuration, overwrite existing bundles using **put**, or delete non-existent ones.
+
+You can’t delete certificate bundles still referenced in your configuration, overwrite existing bundles using **put**, or delete non-existent ones.

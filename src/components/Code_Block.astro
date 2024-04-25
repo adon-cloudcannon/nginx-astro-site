@@ -3,12 +3,12 @@ import { nxt_hint } from "@utils/nxt";
 const { hints, language } = Astro.props
 let innerContent = await Astro.slots.render("default")
 
+
 innerContent = innerContent.replaceAll("&quot;",`"`)
 							.replaceAll("&amp;","&")
 							.replaceAll("&#39;","'")
 							.replaceAll("&lt;","<")
 							.replaceAll("&gt;",">")
-							//.replaceAll(/^\s{2,}/gm,"")
 
 hints.forEach(hint => {
 	let regex = new RegExp('\\bNXT' + hint.number + '\\b','g');

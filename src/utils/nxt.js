@@ -46,6 +46,11 @@ function nxt_hint(content){
         return replaceMarker
     });
 
+    result = result.replace(/(?<nbsp>&nbsp;)/g,function(match,...args) {
+        const groups = args.at(-1)        
+        return "NBSP"
+    })
+
     const marked = new Marked(
         markedHighlight({
           highlight: function(code, lang) {
@@ -63,6 +68,10 @@ function nxt_hint(content){
 
                 return `<span title="${filtered.hint_text}" class="${clazz}">${filtered.hint_display}</span>`
               })
+              replaced = replaced.replace(/(?<nbsp>NBSP)/g, function(match,...args) {
+                const groups = args.at(-1)
+                return `<span class="">&nbsp;</span>`
+              })
               return replaced;
             } else {
               return code;
@@ -72,7 +81,6 @@ function nxt_hint(content){
     );
 
     const compiledContent = marked.parse(result);
-
     return compiledContent;
 }
 

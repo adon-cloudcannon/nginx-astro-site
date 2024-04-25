@@ -497,7 +497,7 @@ img { width:100% }
 /* Click-to-copy */
 .nxt_copy_btn {
     position: absolute;
-    top: 1em;
+    top: .4em;
     right: .2em;
     cursor: pointer;
 }

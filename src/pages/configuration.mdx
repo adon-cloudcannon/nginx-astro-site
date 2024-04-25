@@ -149,41 +149,77 @@ The **tickets** option works as follows:
 
 * A string enables tickets and explicitly sets the session ticket key:
 
-  <code>{     "session": {         ":nxt_hint:`tickets &amp;lt;Enables session tickets, sets a single session ticket key&amp;gt;`": "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP"     } } </code>
+<Code_Block language="json" hints={[{ number: "1", display_text: "tickets", tooltip: "Enables session tickets, sets a single session ticket key", nxt_type: "nxt_hint" }]}>{`{
+    "session": {
+        "NXT1": "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP"
+    }
+}  `}</Code_Block>
 
-  This enables ticket reuse in scenarios where the key is shared between individual servers.
+* This enables ticket reuse in scenarios where the key is shared between individual servers.
 
-  If multiple Unit instances need to recognize tickets issued by each other (for example, when running behind a load balancer), they should share session ticket keys.
+<Dropdown label="Shared key rotation">
+If multiple Unit instances need to recognize tickets issued by each other (for example, when running behind a load balancer), they should share session ticket keys.
 
-  For example, consider three SSH-enabled servers named **unit\*.example.com**, with Unit installed and identical **\*:443** listeners configured. To configure a single set of three initial keys on each server:
+For example, consider three SSH-enabled servers named **unit\*.example.com**, with Unit installed and identical **\*:443** listeners configured. To configure a single set of three initial keys on each server:
 
-  `SERVERS="unit1.example.com unit2.example.com unit3.example.com"  KEY1=$(openssl rand -base64 48) KEY2=$(openssl rand -base64 48) KEY3=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/' done `
+<Code_Block language="shell" hints={[{ number: "1", display_text: "root", tooltip: "Assuming Unit runs as root on each server", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to the remote control socket", nxt_type: "nxt_ph" }]}>{`SERVERS="unit1.example.com
+unit2.example.com
+unit3.example.com"
 
-  To add a new key on each server:
+KEY1=$(openssl rand -base64 48)
+KEY2=$(openssl rand -base64 48)
+KEY3=$(openssl rand -base64 48)
 
-  `NEWKEY=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X POST -d '"$NEWKEY"' --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/'" done `
+for SRV in $SERVERS; do
+&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket NXT2  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'
+done `}</Code_Block>
 
-  To delete the oldest key after adding the new one:
+To add a new key on each server:
 
-  `for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X DELETE --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/0' done `
+<Code_Block language="shell" hints={[{ number: "1", display_text: "root", tooltip: "Assuming Unit runs as root on each server", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to the remote control socket", nxt_type: "nxt_ph" }]}>{`NEWKEY=$(openssl rand -base64 48)
 
-  This scheme enables safely sharing session ticket keys between individual Unit instances.
+for SRV in $SERVERS; do
+&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X POST -d '"$NEWKEY"' --unix-socket NXT2  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'"
+done `}</Code_Block>
 
-  Unit supports AES256 (80-byte keys) or AES128 (48-byte keys); the bytes should be encoded in Base64:
+To delete the oldest key after adding the new one:
 
-  `$ openssl rand -base64 48        LoYjFVxpUFFOj4TzGkr5MsSIRMjhuh8RCsVvtIJiQ12FGhn0nhvvQsEND1+OugQ7  $ openssl rand -base64 80        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK       YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA= `
+<Code_Block language="shell" hints={[{ number: "1", display_text: "root", tooltip: "Assuming Unit runs as root on each server", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to the remote control socket", nxt_type: "nxt_ph" }]}>{`for SRV in $SERVERS; do
+&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X DELETE --unix-socket NXT2  \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/0'
+done `}</Code_Block>
+
+This scheme enables safely sharing session ticket keys between individual Unit instances.
+</Dropdown>
+
+Unit supports AES256 (80-byte keys) or AES128 (48-byte keys); the bytes should be encoded in Base64:
+
+<Code_Block language="console" hints={[]}>{`$ openssl rand -base64 48
+        LoYjFVxpUFFOj4TzGkr5MsSIRMjhuh8RCsVvtIJiQ12FGhn0nhvvQsEND1+OugQ7
+$ openssl rand -base64 80
+        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK       YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA= `}</Code_Block>
 
 * An array of strings just like the one above:
 
-  <code>{     "session": {         ":nxt_hint:`tickets &amp;lt;Enables session tickets, sets two session ticket keys&amp;gt;`": [             "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP",             "Ax4bv/JvMWoQG+BfH0feeM9Qb32wSaVVKOj1+1hmyU8ORMPHnf3Tio8gLkqm2ifC"         ]     } } </code>
+<Code_Block language="json" hints={[{ number: "1", display_text: "tickets", tooltip: "Enables session tickets, sets two session ticket keys", nxt_type: "nxt_hint" }]}>{`{
+    "session": {
+        "NXT1": [
+            "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP",
+            "Ax4bv/JvMWoQG+BfH0feeM9Qb32wSaVVKOj1+1hmyU8ORMPHnf3Tio8gLkqm2ifC"
+        ]
+    }
+} `}</Code_Block>
 
-  Unit uses these keys to decrypt the tickets submitted by clients who want to recover their session state; the last key is always used to create new session tickets and update the tickets created earlier.
+Unit uses these keys to decrypt the tickets submitted by clients who want to recover their session state; the last key is always used to create new session tickets and update the tickets created earlier.
 
-  NOTE
-
-  An empty array effectively disables session tickets, same as setting **tickets** to **false**.
-
-  &nbsp;
+<Note type="note">
+An empty array effectively disables session tickets, same as setting **tickets** to **false**.
+</Note>
 
 ### IP, protocol forwarding
 
@@ -191,34 +227,30 @@ Unit enables the **X-Forwarded-\*** header fields with the **forwarded** object 
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>source</strong> (required)</p></td><td><p>String or an array of strings;<br />defines<br /><a href="#configuration-routes-matching-patterns">address-based patterns</a><br />for trusted addresses.<br />Replacement occurs only if the source IP of the request is a<br /><a href="#configuration-routes-matching-resolution">match</a>.<br /><br />A special case here is the <strong>“unix”</strong> string;<br />it matches <em>any</em> UNIX domain sockets.</p></td></tr><tr><td><p><strong>client_ip</strong></p></td><td><p>String;<br />names the HTTP header fields to expect in the request.<br />They should use the<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For">X-Forwarded-For</a><br />format where the value is a comma- or space-separated list<br />of IPv4s or IPv6s.</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String;<br />defines the relevant HTTP header field to look for in the request.<br />Unit expects it to follow the<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto">X-Forwarded-Proto</a><br />notation,<br />with the field value itself<br />being <strong>http</strong>, <strong>https</strong>, or <strong>on</strong>.</p></td></tr><tr><td><p><strong>recursive</strong></p></td><td><p>Boolean;<br />controls how the <strong>client_ip</strong> fields are traversed.<br /><br />The default is <strong>false</strong><br />(no recursion).</p></td></tr></tbody></table>
 
-#### NOTE
-
+<Note type="note">
 Besides **source**, the **forwarded** object must specify **client\_ip**, **protocol**, or both.
+</Note>
 
-#### WARNING
-
+<Note type="warning">
 Before version 1.28.0, Unit provided the **client\_ip** object that evolved into **forwarded**:
 
-<table><thead><tr><th><p><strong>client_ip</strong> (pre-1.28.0)</p></th><th><p><strong>forwarded</strong> (post-1.28.0)</p></th></tr></thead><tbody><tr><td><p><strong>header</strong></p></td><td><p><strong>client_ip</strong></p></td></tr><tr><td><p><strong>recursive</strong></p></td><td><p><strong>recursive</strong></p></td></tr><tr><td><p><strong>source</strong></p></td><td><p><strong>source</strong></p></td></tr><tr><td><p>N/A</p></td><td><p><strong>protocol</strong></p></td></tr></tbody></table>
+<table><tbody><tr><td><p><strong>client_ip (pre-1.28.0)</strong></p></td><td><p><strong>forwarded (post-1.28.0)</strong></p></td></tr><tr><td><p><strong>header</strong></p></td><td><p><strong>client_ip</strong></p></td></tr><tr><td><p><strong>recursive</strong></p></td><td><p><strong>recursive</strong></p></td></tr><tr><td><p><strong>source</strong></p></td><td><p><strong>source</strong></p></td></tr><tr><td><p>N/A</p></td><td><p><strong>protocol</strong></p></td></tr></tbody></table>
+</Note>
 
 This old syntax still works but will be eventually deprecated, though not earlier than version 1.30.0.
 
 When **forwarded** is set, Unit respects the appropriate header fields only if the immediate source IP of the request [matches](#configuration-routes-matching-resolution) the **source** option. Mind that it can use not only subnets but any [address-based patterns](#configuration-routes-matching-patterns):
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "198.51.100.1-198.51.100.254", tooltip: "Ranges can be specified explicitly", nxt_type: "nxt_hint" }, { number: "2", display_text: "!198.51.100.128/26", tooltip: "Negation rejects any addresses originating here", nxt_type: "nxt_hint" }, { number: "3", display_text: "203.0.113.195", tooltip: "Individual addresses are supported as well", nxt_type: "nxt_hint" }]}>{`{
     "forwarded": {
         "client_ip": "X-Forwarded-For",
         "source": [
-            ":nxt_hint:`198.51.100.1-198.51.100.254 <Ranges can be specified explicitly>`",
-            ":nxt_hint:`!198.51.100.128/26 <Negation rejects any addresses originating here>`",
-            ":nxt_hint:`203.0.113.195 <Individual addresses are supported as well>`"
+            "NXT1",
+            "NXT2",
+            "NXT3"
         ]
     }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 #### Overwriting protocol scheme
 
@@ -243,8 +275,6 @@ X-Forwarded-Proto: https
 ```
 
 If the source IP of the request matches **source**, Unit handles this request as an **https** one.
-
-&nbsp;
 
 #### Originating IP identification
 
@@ -274,32 +304,27 @@ If **recursive** is set to **false** (default), Unit chooses the *rightmost* add
 
 If **recursive** is set to **true**, Unit inspects all **client\_ip** fields in reverse order. Each is traversed from right to left until the first non-trusted address; if found, it’s chosen as the originating IP. In the previous example with **“recursive”: true**, the client IP would be set to 203.0.113.195 because 198.51.100.178 is also trusted; this simplifies working behind multiple reverse proxies.
 
-&nbsp;
-
 ## Routes
 
 The **config/routes** configuration entity defines internal request routing. It receives requests from [listeners](#configuration-listeners) and filters them through [sets of conditions](#configuration-routes-matching) to be processed by [apps](#configuration-applications), [proxied](#configuration-proxy) to external servers or [load-balanced](#configuration-upstreams) between them, served with [static content](#configuration-static), [answered](#configuration-return) with arbitrary status codes, or [redirected](#configuration-return).
 
 In its simplest form, **routes** is an array that defines a single route:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "routes", tooltip: "Array-mode routes, simply referred to as 'routes'", nxt_type: "nxt_hint" }, { number: "2", display_text: "...", tooltip: "Any acceptable route array may go here; see the 'Route Steps' section for details", nxt_type: "nxt_ph" }]}>{`{
      "listeners": {
          "*:8300": {
              "pass": "routes"
          }
      },
 
-     ":nxt_hint:`routes <Array-mode routes, simply referred to as 'routes'>`": [
-         ":nxt_ph:`... <Any acceptable route array may go here; see the 'Route Steps' section for details>`"
+     "NXT1": [
+         "NXT2"
      ]
-}
-```
+}`}</Code_Block>
 
 Another form is an object with one or more named route arrays as members:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "main", tooltip: "Named route, referred to as 'routes/main'", nxt_type: "nxt_hint" }, { number: "1", display_text: "...", tooltip: "Any acceptable route array may go here; see the 'Route Steps' section for details", nxt_type: "nxt_ph" }, { number: "3", display_text: "route66", tooltip: "Named route, referred to as 'routes/route66'", nxt_type: "nxt_hint" }, { number: "4", display_text: "...", tooltip: "Any acceptable route array may go here; see the 'Route Steps' section for details", nxt_type: "nxt_ph" }]}>{`{
      "listeners": {
          "*:8300": {
              "pass": "routes/main"
@@ -307,18 +332,15 @@ Another form is an object with one or more named route arrays as members:
      },
 
      "routes": {
-         ":nxt_hint:`main <Named route, referred to as 'routes/main'>`": [
-             ":nxt_ph:`... <Any acceptable route array may go here; see the 'Route Steps' section for details>`"
+         "NXT1": [
+             "NXT2"
          ],
 
-         ":nxt_hint:`route66 <Named route, referred to as 'routes/route66'>`": [
-             ":nxt_ph:`... <Any acceptable route array may go here; see the 'Route Steps' section for details>`"
+         "NXT3": [
+             "NXT4"
          ]
      }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 ### Route steps
 

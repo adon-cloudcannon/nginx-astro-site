@@ -219,12 +219,12 @@ To run apps in several versions of a language, build and install a module for ea
   <Tab name="Perl">
     When you run **./configure perl**, the script configures a module to support running Perl scripts as applications on Unit. Available command options:
 
-    <table><tbody valign="top"><tr><td><strong>--perl=pathname</strong></td><td>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</td></tr><tr><td><strong>--module=basename</strong></td><td>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</td></tr></tbody></table>
+    <table><tbody><tr><td><p><strong>--perl=pathname</strong></p></td><td><p>Specific Perl executable pathname.<br /><br />The default is <strong>perl</strong>.</p></td></tr><tr><td><p><strong>--module=basename</strong></p></td><td><p>Resulting module’s name (<strong>&lt;basename&gt;.unit.so</strong>), also<br />used in <a href="#source-bld-src-emb">make</a> targets.<br /><br />The default is the filename of the <code>--perl</code> executable.</p></td></tr></tbody></table>
 
     To configure a module called **perl-5.20.unit.so** for Perl 5.20.2:
 
     <Code_Block language="bash" hints={[]}>{`$ ./configure perl --module=perl-5.20  \\
-                                                                                   --perl=perl5.20.2`}</Code_Block>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--perl=perl5.20.2`}</Code_Block>
   </Tab>
   <Tab name="PHP">
                                                                     When you run **./configure php**, the script configures a custom SAPI module linked with the **libphp** library to support running PHP applications on Unit. Available command options:

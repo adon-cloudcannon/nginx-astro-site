@@ -55,6 +55,12 @@ code[class*="language-"]::mozselection {
   text-shadow: none;
   background: #b3d4fc;
 }
+
+#content > .highlight > pre > code[class*="language-"],
+#content > pre > code[class*="language-"]{
+  white-space: pre;
+}
+
 @media print {
   pre[class*="language-"],
   code[class*="language-"] {

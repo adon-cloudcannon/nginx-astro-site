@@ -99,15 +99,7 @@
             "trim_text": true,
             "forbidden_tokens": [
               "```"
-            ],
-            "style": {
-              "output": "block",
-              "block": {
-                "leading": "\n",
-                "trailing": "\n",
-                "indent": ""
-              }
-            }
+            ]
           }
         },
         "hints": {

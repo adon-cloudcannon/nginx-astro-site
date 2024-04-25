@@ -229,6 +229,9 @@ img { width:100% }
     border: none;
     border-collapse: collapse;
 }
+#content table tbody{
+    vertical-align: top;
+}
 #content th,
 #content td {
     border: none;

@@ -117,9 +117,9 @@ Point to the resulting source and build directories when [configuring](#source-c
 
     To build Unit with the [WebAssembly](https://webassembly.org/) language module, you need the [Wasmtime](https://wasmtime.dev/) runtime. Download the C API [files](https://github.com/bytecodealliance/wasmtime/releases/) suitable for your OS and architecture to the same parent directory as the Unit code, for example:
 
-    <Code_Block language="console" hints={[]}>{`cd ..
-                wget -O- https://github.com/bytecodealliance/wasmtime/releases/download/v12.0.0/wasmtime-v12.0.0-x86_64-linux-c-api.tar.xz \\
-                      | tar Jxf -  # Unpacks to the current directory`}</Code_Block>
+    <Code_Block language="console" hints={[]}>{`$ cd ..
+    $ wget -O- https://github.com/bytecodealliance/wasmtime/releases/download/v12.0.0/wasmtime-v12.0.0-x86_64-linux-c-api.tar.xz \\
+          | tar Jxf -  # Unpacks to the current directory`}</Code_Block>
 
     Point to the resulting **include** and **lib** directories when [configuring](https://unit.nginx.org/howto/source/#modules-webassembly) the Unit code.
   </Tab>

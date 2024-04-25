@@ -15,18 +15,18 @@ The commands below assume you are configuring Unit with all supported languages 
 <Tabs label="Debian, Ubuntu/Amazon, Fedora, RHEL/FreeBSD/Solaris">
   <Tab name="Debian Ubuntu">
     <Code_Block language="bash" hints={[{ number: "1", display_text: "VERSION", tooltip: "Node.js 8.11 or later is supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "pythonX", tooltip: "Both Python 2 and Python 3 are supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "X", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# apt install build-essential
-            # apt install golang
-            # apt install curl && \\
-                  curl -sL https://deb.nodesource.com/setup_NXT1.x | bash - && \\
-                  apt install nodejs
-            # npm install -g node-gyp
-            # apt install php-dev libphp-embed
-            # apt install libperl-dev
-            # apt install NXT2-dev
-            # apt install ruby-dev ruby-rack
-            # apt install openjdk-NXT3-jdk
-            # apt install libssl-dev
-            # apt install libpcre2-dev`}</Code_Block>
+    # apt install golang
+    # apt install curl && \\
+          curl -sL https://deb.nodesource.com/setup_NXT1.x | bash - && \\
+          apt install nodejs
+    # npm install -g node-gyp
+    # apt install php-dev libphp-embed
+    # apt install libperl-dev
+    # apt install NXT2-dev
+    # apt install ruby-dev ruby-rack
+    # apt install openjdk-NXT3-jdk
+    # apt install libssl-dev
+    # apt install libpcre2-dev`}</Code_Block>
   </Tab>
   <Tab name="Amazon Fedora RHEL">
     <Code_Block language="bash" hints={[{ number: "1", display_text: "VERSION", tooltip: "Node.js 8.11 or later is supported", nxt_type: "nxt_ph" }, { number: "2", display_text: "pythonX", tooltip: "Both Python 2 and Python 3 are supported", nxt_type: "nxt_ph" }, { number: "3", display_text: "X.Y.Z", tooltip: "Java 8 or later is supported. Different JDKs may be used", nxt_type: "nxt_ph" }]}>{`# yum install gcc make

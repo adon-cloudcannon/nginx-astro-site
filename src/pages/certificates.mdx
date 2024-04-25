@@ -10,8 +10,6 @@ _inputs:
   order:
     type: number
 ---
-&nbsp;
-
 # SSL/TLS certificates
 
 The **/certificates** section of the [control API](controlapi.md#configuration-api) handles TLS certificates that are used with Unit’s [listeners](configuration.md#configuration-listeners).
@@ -42,6 +40,61 @@ Don’t use **\-d** for file upload with **curl**; this option damages **.pem** 
 </Note>
 
 Internally, Unit stores the uploaded certificate bundles along with other configuration data in its **state** subdirectory; the [control API](controlapi.md#configuration-api) exposes some of their properties as **GET**\-table JSON using **/certificates**:
+
+<Code_Block language="json" hints={[{ number: "1", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_ph" }]}>{`{
+    "certificates": {
+        "NXT1": {
+            "key": "RSA (4096 bits)",
+            "chain": [
+                {
+                    "subject": {
+                        "common_name": "example.com",
+                        "alt_names": [
+                            "example.com",
+                            "www.example.com"
+                        ],
+
+                        "country": "US",
+                        "state_or_province": "CA",
+                        "organization": "Acme, Inc."
+                    },
+
+                    "issuer": {
+                        "common_name": "intermediate.ca.example.com",
+                        "country": "US",
+                        "state_or_province": "CA",
+                        "organization": "Acme Certification Authority"
+                    },
+
+                    "validity": {
+                        "since": "Sep 18 19:46:19 2022 GMT",
+                        "until": "Jun 15 19:46:19 2025 GMT"
+                    }
+                },
+                {
+                    "subject": {
+                        "common_name": "intermediate.ca.example.com",
+                        "country": "US",
+                        "state_or_province": "CA",
+                        "organization": "Acme Certification Authority"
+                    },
+
+                    "issuer": {
+                        "common_name": "root.ca.example.com",
+                        "country": "US",
+                        "state_or_province": "CA",
+                        "organization": "Acme Root Certification Authority"
+                    },
+
+                    "validity": {
+                        "since": "Feb 22 22:45:55 2023 GMT",
+                        "until": "Feb 21 22:45:55 2026 GMT"
+                    }
+                }
+            ]
+        }
+    }
+}`}</Code_Block>
 
 ```json
 {

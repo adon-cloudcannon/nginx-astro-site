@@ -96,12 +96,12 @@ Internally, Unit stores the uploaded certificate bundles along with other config
 
 <Note type="note">
 Access array items, such as individual certificates in a chain, and their properties by indexing:
-</Note>
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "4", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }]}>{`# curl -X GET --unix-socket NXT1 \\
-       http://localhost/certificates/NXT2/chain/0/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://localhost/certificates/NXT2/chain/0/
 # curl -X GET --unix-socket NXT3 \\
-       http://localhost/certificates/NXT4/chain/0/subject/alt_names/0/`}</Code_Block>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://localhost/certificates/NXT4/chain/0/subject/alt_names/0/`}</Code_Block>
+</Note>
 
 Next, add the uploaded bundle to a [listener](configuration.md#configuration-listeners); the resulting control API configuration may look like this:
 

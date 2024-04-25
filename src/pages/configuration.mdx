@@ -72,18 +72,16 @@ The **tls** object provides the following options:
 
 To use a certificate bundle you [uploaded](certificates.md#configuration-ssl) earlier, name it in the **certificate** option of the **tls** object:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "127.0.0.1:443": {
             "pass": "applications/wsgi-app",
             "tls": {
-                "certificate": ":nxt_hint:`bundle <Certificate bundle name>`"
+                "certificate": "NXT1"
             }
         }
     }
-}
-```
+}`}</Code_Block>
 
 Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](https://datatracker.ietf.org/doc/html/rfc6066#section-3) on a listener by supplying an array of certificate bundle names for the **certificate** option value:
 
@@ -108,19 +106,15 @@ Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](h
 
 To set custom OpenSSL [configuration commands](https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html) for a listener, use the **conf\_commands** object in **tls**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }, { number: "2", display_text: "TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256", tooltip: "Mandatory cipher suites as per RFC8446, section 9.1", nxt_type: "nxt_hint" }]}>{`{
     "tls": {
-        "certificate": ":nxt_hint:`bundle <Certificate bundle name>`",
+        "certificate": "NXT1",
         "conf_commands": {
-            "ciphersuites": ":nxt_hint:`TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256 <Mandatory cipher suites as per RFC8446, section 9.1>`",
+            "ciphersuites": "NXT2",
             "minprotocol": "TLSv1.3"
         }
     }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 The **session** object in **tls** configures the session settings of the listener:
 
@@ -128,10 +122,9 @@ The **session** object in **tls** configures the session settings of the listene
 
 Example:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }]}>{`{
     "tls": {
-        "certificate": ":nxt_hint:`bundle <Certificate bundle name>`",
+        "certificate": "NXT1",
         "session": {
             "cache_size": 10240,
             "timeout": 60,
@@ -142,18 +135,21 @@ Example:
             ]
         }
     }
-}
-```
+}`}</Code_Block>
 
 The **tickets** option works as follows:
 
 * Boolean values enable or disable session tickets; with **true**, a random session ticket key is used:
 
-  <code>{     "session": {         "tickets": :nxt_hint:`true &lt;Enables session tickets&gt;`     } } </code>
+<Code_Block language="json" hints={[{ number: "1", display_text: "true", tooltip: "Enables session tickets", nxt_type: "nxt_hint" }]}>{`{
+    "session": {
+        "tickets": NXT1
+    }
+}`}</Code_Block>
 
 * A string enables tickets and explicitly sets the session ticket key:
 
-  <code>{     "session": {         ":nxt_hint:`tickets &lt;Enables session tickets, sets a single session ticket key&gt;`": "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP"     } } </code>
+  <code>{     "session": {         ":nxt_hint:`tickets &amp;lt;Enables session tickets, sets a single session ticket key&amp;gt;`": "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP"     } } </code>
 
   This enables ticket reuse in scenarios where the key is shared between individual servers.
 
@@ -161,15 +157,15 @@ The **tickets** option works as follows:
 
   For example, consider three SSH-enabled servers named **unit\*.example.com**, with Unit installed and identical **\*:443** listeners configured. To configure a single set of three initial keys on each server:
 
-  <code>SERVERS="unit1.example.com unit2.example.com unit3.example.com"  KEY1=$(openssl rand -base64 48) KEY2=$(openssl rand -base64 48) KEY3=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:`root &lt;Assuming Unit runs as root on each server&gt;`@$SRV  \         curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket :nxt_ph:`/path/to/control.unit.sock &lt;Path to the remote control socket&gt;`  \             'http://localhost/config/listeners/*:443/tls/session/tickets/' done </code>
+  `SERVERS="unit1.example.com unit2.example.com unit3.example.com"  KEY1=$(openssl rand -base64 48) KEY2=$(openssl rand -base64 48) KEY3=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/' done `
 
   To add a new key on each server:
 
-  <code>NEWKEY=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:`root &lt;Assuming Unit runs as root on each server&gt;`@$SRV  \         curl -X POST -d '\"$NEWKEY\"' --unix-socket :nxt_ph:`/path/to/control.unit.sock &lt;Path to the remote control socket&gt;`  \             'http://localhost/config/listeners/*:443/tls/session/tickets/'" done </code>
+  `NEWKEY=$(openssl rand -base64 48)  for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X POST -d '"$NEWKEY"' --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/'" done `
 
   To delete the oldest key after adding the new one:
 
-  <code>for SRV in $SERVERS; do     ssh :nxt_hint:`root &lt;Assuming Unit runs as root on each server&gt;`@$SRV  \         curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock &lt;Path to the remote control socket&gt;`  \             'http://localhost/config/listeners/*:443/tls/session/tickets/0' done </code>
+  `for SRV in $SERVERS; do     ssh :nxt_hint:root &lt;Assuming Unit runs as root on each server&gt;@$SRV  \         curl -X DELETE --unix-socket :nxt_ph:/path/to/control.unit.sock &lt;Path to the remote control socket&gt;  \             'http://localhost/config/listeners/*:443/tls/session/tickets/0' done `
 
   This scheme enables safely sharing session ticket keys between individual Unit instances.
 
@@ -179,7 +175,7 @@ The **tickets** option works as follows:
 
 * An array of strings just like the one above:
 
-  <code>{     "session": {         ":nxt_hint:`tickets &lt;Enables session tickets, sets two session ticket keys&gt;`": [             "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP",             "Ax4bv/JvMWoQG+BfH0feeM9Qb32wSaVVKOj1+1hmyU8ORMPHnf3Tio8gLkqm2ifC"         ]     } } </code>
+  <code>{     "session": {         ":nxt_hint:`tickets &amp;lt;Enables session tickets, sets two session ticket keys&amp;gt;`": [             "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP",             "Ax4bv/JvMWoQG+BfH0feeM9Qb32wSaVVKOj1+1hmyU8ORMPHnf3Tio8gLkqm2ifC"         ]     } } </code>
 
   Unit uses these keys to decrypt the tickets submitted by clients who want to recover their session state; the last key is always used to create new session tickets and update the tickets created earlier.
 
@@ -187,7 +183,7 @@ The **tickets** option works as follows:
 
   An empty array effectively disables session tickets, same as setting **tickets** to **false**.
 
-&nbsp;
+  &nbsp;
 
 ### IP, protocol forwarding
 

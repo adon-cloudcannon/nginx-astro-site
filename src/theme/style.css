@@ -321,7 +321,7 @@ img { width:100% }
     position:relative;
     margin: 1em 0;
     border-radius: .5em;
-    padding: .6em 0;
+    padding: 0;
     overflow-x: auto;
 }
 #content .video {

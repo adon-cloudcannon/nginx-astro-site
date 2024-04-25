@@ -8,6 +8,7 @@ innerContent = innerContent.replaceAll("&quot;",`"`)
 							.replaceAll("&#39;","'")
 							.replaceAll("&lt;","<")
 							.replaceAll("&gt;",">")
+							//.replaceAll(/^\s{2,}/gm,"")
 
 hints.forEach(hint => {
 	let regex = new RegExp('\\bNXT' + hint.number + '\\b','g');

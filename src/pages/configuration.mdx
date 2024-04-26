@@ -20,7 +20,7 @@ To accept requests, add a listener object in the **config/listeners** API sectio
 
 * A unique IP socket: **127\.0.0.1:80**, **\[::1\]:8080**
 * A wildcard that matches any host IPs on the port: **\*:80**
-* On Linux-based systems, <br>[abstract UNIX sockets](https://man7.org/linux/man-pages/man7/unix.7.html) can be used as well: **unix:@abstract\_socket**.
+* On Linux-based systems, [abstract UNIX sockets](https://man7.org/linux/man-pages/man7/unix.7.html) can be used as well: **unix:@abstract\_socket**.
 
 <Note type="note">
 Also on Linux-based systems, wildcard listeners can’t overlap with other listeners on the same port due to rules imposed by the kernel. For example, **\*:8080** conflicts with **127\.0.0.1:8080**; in particular, this means **\*:8080** can’t be *immediately* replaced by **127\.0.0.1:8080** (or vice versa) without deleting it first.

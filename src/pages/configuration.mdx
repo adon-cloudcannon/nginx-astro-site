@@ -2858,7 +2858,7 @@ Example with NJS and the use of a template literal:
 
 <Code_Block language="json" hints={[]}>{`{
    "access_log": {
-      "if": "\`${uri == '/health' ? false : true}\`",
+      "if": "\`$\{uri == '/health' ? false : true\}\`",
       "path": "..."
    }
 }`}</Code_Block>

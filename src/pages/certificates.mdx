@@ -29,11 +29,10 @@ Usually, your website’s certificate (optionally followed by the intermediate C
 Upload the resulting bundle file to Unit’s certificate storage under a suitable name (in this case, **bundle**):
 
 <Code_Block language="bash" hints={[{ number: "1", display_text: "bundle.pem", tooltip: "Certificate bundle's filename", nxt_type: "nxt_ph" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "3", display_text: "bundle", tooltip: "Certificate bundle name in Unit's configuration", nxt_type: "nxt_ph" }]}>{`# curl -X PUT --data-binary @NXT1 --unix-socket \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NXT2 http://localhost/certificates/NXT3
-
-&nbsp;&nbsp;&nbsp;&nbsp;{
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"success": "Certificate chain uploaded."
-&nbsp;&nbsp;&nbsp;&nbsp;}`}</Code_Block>
+      NXT2 http://localhost/certificates/NXT3
+    {
+        "success": "Certificate chain uploaded."
+    }`}</Code_Block>
 
 <Note type="warning">
 Don’t use **\-d** for file upload with **curl**; this option damages **.pem** files. Use the **\--data-binary** option when uploading file-based data to avoid data corruption.
@@ -96,80 +95,20 @@ Internally, Unit stores the uploaded certificate bundles along with other config
     }
 }`}</Code_Block>
 
-```json
-{
-    "certificates": {
-        ":nxt_ph:`bundle <Certificate bundle name>`": {
-            "key": "RSA (4096 bits)",
-            "chain": [
-                {
-                    "subject": {
-                        "common_name": "example.com",
-                        "alt_names": [
-                            "example.com",
-                            "www.example.com"
-                        ],
-
-                        "country": "US",
-                        "state_or_province": "CA",
-                        "organization": "Acme, Inc."
-                    },
-
-                    "issuer": {
-                        "common_name": "intermediate.ca.example.com",
-                        "country": "US",
-                        "state_or_province": "CA",
-                        "organization": "Acme Certification Authority"
-                    },
-
-                    "validity": {
-                        "since": "Sep 18 19:46:19 2022 GMT",
-                        "until": "Jun 15 19:46:19 2025 GMT"
-                    }
-                },
-                {
-                    "subject": {
-                        "common_name": "intermediate.ca.example.com",
-                        "country": "US",
-                        "state_or_province": "CA",
-                        "organization": "Acme Certification Authority"
-                    },
-
-                    "issuer": {
-                        "common_name": "root.ca.example.com",
-                        "country": "US",
-                        "state_or_province": "CA",
-                        "organization": "Acme Root Certification Authority"
-                    },
-
-                    "validity": {
-                        "since": "Feb 22 22:45:55 2023 GMT",
-                        "until": "Feb 21 22:45:55 2026 GMT"
-                    }
-                }
-            ]
-        }
-    }
-}
-```
-
 <Note type="note">
 Access array items, such as individual certificates in a chain, and their properties by indexing:
-</Note>
 
-```bash
-# curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
-       http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`/chain/0/
-# curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
-       http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`/chain/0/subject/alt_names/0/
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }, { number: "3", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "4", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }]}>{`# curl -X GET --unix-socket NXT1 \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://localhost/certificates/NXT2/chain/0/
+# curl -X GET --unix-socket NXT3 \\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://localhost/certificates/NXT4/chain/0/subject/alt_names/0/`}</Code_Block>
+</Note>
 
 Next, add the uploaded bundle to a [listener](configuration.md#configuration-listeners); the resulting control API configuration may look like this:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_ph" }]}>{`{
     "certificates": {
-        ":nxt_ph:`bundle <Certificate bundle name>`": {
+        "NXT1": {
             "key": "<key type>",
             "chain": [
                 "<certificate chain, omitted for brevity>"
@@ -182,7 +121,7 @@ Next, add the uploaded bundle to a [listener](configuration.md#configuration-lis
             "*:443": {
                 "pass": "applications/wsgi-app",
                 "tls": {
-                    "certificate": ":nxt_ph:`bundle <Certificate bundle name>`"
+                    "certificate": "NXT2"
                 }
             }
         },
@@ -195,13 +134,11 @@ Next, add the uploaded bundle to a [listener](configuration.md#configuration-lis
             }
         }
     }
-}
-```
+}`}</Code_Block>
 
 All done; the application is now accessible via SSL/TLS:
 
-```bash
-$ curl -v :nxt_hint:`https://127.0.0.1 <Port 443 is conventionally used for HTTPS connections>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "https://127.0.0.1", tooltip: "Port 443 is conventionally used for HTTPS connections", nxt_type: "nxt_hint" }]}>{`$ curl -v NXT1
     ...
     * TLSv1.2 (OUT), TLS handshake, Client hello (1):
     * TLSv1.2 (IN), TLS handshake, Server hello (2):
@@ -213,20 +150,17 @@ $ curl -v :nxt_hint:`https://127.0.0.1 <Port 443 is conventionally used for HTTP
     * TLSv1.2 (IN), TLS change cipher, Client hello (1):
     * TLSv1.2 (IN), TLS handshake, Finished (20):
     * SSL connection using TLSv1.2 / AES256-GCM-SHA384
-    ...
-```
+    ...`}</Code_Block>
 
 Finally, you can delete a certificate bundle that you don’t need anymore from the storage:
 
-```bash
-# curl -X DELETE --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
-       http://localhost/certificates/:nxt_hint:`bundle <Certificate bundle name>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "bundle", tooltip: "Certificate bundle name", nxt_type: "nxt_hint" }]}>{`# curl -X DELETE --unix-socket NXT1 \\
+       http://localhost/certificates/NXT2
 
     {
         "success": "Certificate deleted."
-    }
-```
+    }`}</Code_Block>
 
-#### NOTE
-
+<Note type="note">
 You can’t delete certificate bundles still referenced in your configuration, overwrite existing bundles using **put**, or delete non-existent ones.
+</Note>

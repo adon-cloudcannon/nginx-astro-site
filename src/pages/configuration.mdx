@@ -78,6 +78,7 @@ To use a certificate bundle you [uploaded](certificates.md#configuration-ssl) ea
     }
 }`}</Code_Block>
 
+<Dropdown label="Configuring multiple bundles">
 Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](https://datatracker.ietf.org/doc/html/rfc6066#section-3) on a listener by supplying an array of certificate bundle names for the **certificate** option value:
 
 ```json
@@ -98,6 +99,7 @@ Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](h
 * If the connecting client sends a server name, Unit responds with the matching certificate bundle.
 * If the name matches several bundles, exact matches have priority over wildcards; if this doesn’t help, the one listed first is used.
 * If there’s no match or no server name was sent, Unit uses the first bundle on the list.
+</Dropdown>
 
 To set custom OpenSSL [configuration commands](https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html) for a listener, use the **conf\_commands** object in **tls**:
 

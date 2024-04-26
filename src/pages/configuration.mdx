@@ -63,7 +63,6 @@ Also, **pass** values can be [percent encoded](https://datatracker.ietf.org/doc/
 The **tls** object provides the following options:
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>certificate</strong> (required)</p></td><td><p>String or an array of strings; refers to one or more <a href="certificates.md#configuration-ssl">certificate bundles</a> uploaded earlier, enabling secure communication via the listener.</p></td></tr><tr><td><p><strong>conf_commands</strong></p></td><td><p>Object; defines the OpenSSL <a href="https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html">configuration commands</a> to be set for the listener.<br /><br />To have this option, Unit must be built and run with OpenSSL 1.0.2+:<br /></p><Code_Block language="bash" hints={[]}>{`$ openssl version
-
       OpenSSL 1.1.1d  10 Sep 2019`}</Code_Block><p>Also, make sure your OpenSSL version supports the commands<br />set by this option.</p></td></tr><tr><td><p><strong>session</strong></p></td><td><p>Object; configures the TLS session cache and tickets<br />for the listener.</p></td></tr></tbody></table>
 
 To use a certificate bundle you [uploaded](certificates.md#configuration-ssl) earlier, name it in the **certificate** option of the **tls** object:

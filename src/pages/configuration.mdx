@@ -153,7 +153,7 @@ The **tickets** option works as follows:
     "session": {
         "NXT1": "IAMkP16P8OBuqsijSDGKTpmxrzfFNPP4EdRovXH2mqstXsodPC6MqIce5NlMzHLP"
     }
-}  `}</Code_Block>
+}`}</Code_Block>
 
 * This enables ticket reuse in scenarios where the key is shared between individual servers.
 
@@ -174,7 +174,7 @@ for SRV in $SERVERS; do
 &nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket NXT2  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'
-done `}</Code_Block>
+done`}</Code_Block>
 
 To add a new key on each server:
 
@@ -184,7 +184,7 @@ for SRV in $SERVERS; do
 &nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X POST -d '"$NEWKEY"' --unix-socket NXT2  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'"
-done `}</Code_Block>
+done`}</Code_Block>
 
 To delete the oldest key after adding the new one:
 
@@ -192,7 +192,7 @@ To delete the oldest key after adding the new one:
 &nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X DELETE --unix-socket NXT2  \\
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/0'
-done `}</Code_Block>
+done`}</Code_Block>
 
 This scheme enables safely sharing session ticket keys between individual Unit instances.
 </Dropdown>
@@ -202,7 +202,7 @@ Unit supports AES256 (80-byte keys) or AES128 (48-byte keys); the bytes should b
 <Code_Block language="console" hints={[]}>{`$ openssl rand -base64 48
         LoYjFVxpUFFOj4TzGkr5MsSIRMjhuh8RCsVvtIJiQ12FGhn0nhvvQsEND1+OugQ7
 $ openssl rand -base64 80
-        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK       YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA= `}</Code_Block>
+        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK       YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA=`}</Code_Block>
 
 * An array of strings just like the one above:
 
@@ -213,7 +213,7 @@ $ openssl rand -base64 80
             "Ax4bv/JvMWoQG+BfH0feeM9Qb32wSaVVKOj1+1hmyU8ORMPHnf3Tio8gLkqm2ifC"
         ]
     }
-} `}</Code_Block>
+}`}</Code_Block>
 
 Unit uses these keys to decrypt the tickets submitted by clients who want to recover their session state; the last key is always used to create new session tickets and update the tickets created earlier.
 
@@ -444,22 +444,13 @@ A more elaborate example with chained routes and proxying:
 Here, a route called **main** is explicitly defined, so **routes** is an object instead of an array. The first step of the route passes all HTTP requests to the **http\_site** app. The second step passes all requests that target **blog.example.com** to the **blog** app. The final step serves requests for certain file types from the **/www/static/** directory. If no steps match, a 404 “Not Found” response is returned.
 </Dropdown>
 
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
-&nbsp;
-
 ### Matching conditions
 
 Conditions in a [route step](#configuration-routes-step)’s **match** object define patterns to be compared to the request’s properties:
 
 <table><thead><tr><th><p>Property</p></th><th><p>Patterns Are Matched Against</p></th><th><p>Case‑</p></th></tr></thead><tbody><tr><td><p><strong>arguments</strong></p></td><td><p>Arguments supplied with the request’s<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a>;<br />these names and value pairs are<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>,<br />with plus signs<br />(<strong>+</strong>)<br />replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>cookies</strong></p></td><td><p>Cookies supplied with the request.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>destination</strong></p></td><td><p>Target IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>headers</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-6.3">Header fields</a><br />supplied with the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p><strong>Host</strong><br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-7.2">header field</a>,<br />converted to lower case and normalized<br />by removing the port number and the trailing period<br />(if any).</p></td><td><p>No</p></td></tr><tr><td><p><strong>method</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">Method</a><br />from the request line,<br />uppercased.</p></td><td><p>No</p></td></tr><tr><td><p><strong>query</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">Query string</a>,<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>,<br />with plus signs<br />(<strong>+</strong>)<br />replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>scheme</strong></p></td><td><p>URI<br /><a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">scheme</a>.<br />Accepts only two patterns,<br />either <strong>http</strong> or <strong>https</strong>.</p></td><td><p>No</p></td></tr><tr><td><p><strong>source</strong></p></td><td><p>Source IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>uri</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#target.resource">Request target</a>,<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a><br />and normalized<br />by removing the<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a><br />and resolving<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-4.2">relative references</a><br />(“.” and “..”, “//”).</p></td><td><p>Yes</p></td></tr></tbody></table>
 
+<Dropdown label="Arguments vs. query">
 Both **arguments** and **query** operate on the query string, but **query** is matched against the entire string whereas **arguments** considers only the key-value pairs such as **key1=4861&key2=a4f3**.
 
 Use **arguments** to define conditions based on key-value pairs in the query string:
@@ -497,8 +488,7 @@ To the contrary, use **query** if your conditions concern query strings but don�
 ```
 
 This only matches query strings of the form **https://example.com?utf8** or **https://example.com?utf16**.
-
-&nbsp;
+</Dropdown>
 
 #### Match resolution
 
@@ -513,8 +503,7 @@ This logic can be described with set operations. Suppose set *U* comprises all p
 
 Here, the URI of the request must fit **pattern3**, but must not match **pattern1** or **pattern2**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "uri": [
             "!pattern1",
@@ -524,17 +513,15 @@ Here, the URI of the request must fit **pattern3**, but must not match **pattern
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Additionally, special matching logic applies to **arguments**, **cookies**, and **headers**. Each of these can be either a single object that lists custom-named properties and their patterns or an array of such objects.
 
 To match a single object, the request must match *all* properties named in the object. To match an object array, it’s enough to match *any* single one of its item objects. The following condition matches only if the request arguments include **arg1** and **arg2**, and both match their patterns:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_hint" }]}>{`{
     "match": {
         "arguments": {
             "arg1": "pattern",
@@ -543,15 +530,13 @@ To match a single object, the request must match *all* properties named in the o
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 With an object array, the condition matches if the request’s arguments include **arg1** or **arg2** (or both) that matches the respective pattern:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "arguments": [
             {
@@ -564,15 +549,13 @@ With an object array, the condition matches if the request’s arguments include
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 The following example combines all matching types. Here, **host**, **method**, **uri**, **arg1** *and* **arg2**, either **cookie1** or **cookie2**, and either **header1** or **header2** *and* **header3** must be matched for the **action** to be taken (**host & method & uri & arg1 & arg2 & (cookie1 \| cookie2) & (header1 \| (header2 & header3))**):
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "host": "pattern",
         "method": "!pattern",
@@ -607,15 +590,13 @@ The following example combines all matching types. Here, **host**, **method**, *
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This requires **mode=strict** and any **access** argument other than **access=full** in the URI query:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_hint" }]}>{`{
     "match": {
         "arguments": {
             "mode": "strict",
@@ -624,15 +605,13 @@ This requires **mode=strict** and any **access** argument other than **access=fu
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This matches requests that either use **gzip** and identify as **Mozilla/5.0** or list **curl** as the user agent:
 
-```json
-{
+<Code_Block language="" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "headers": [
             {
@@ -646,12 +625,9 @@ This matches requests that either use **gzip** and identify as **Mozilla/5.0** o
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 #### Pattern syntax
 
@@ -662,15 +638,11 @@ String-based patterns must match the property to a character; wildcards or
 modify this behavior:
 
 * A wildcard pattern may contain any combination of wildcards (**\***), each standing for an arbitrary number of characters: **How\*s\*that\*to\*you**.
-
-&nbsp;
-
 * A regex pattern starts with a tilde (**~**): **~^\\d+\\.\\d+\\.\\d+\\.\\d+** (escaping backslashes is a [JSON requirement](https://www.json.org/json-en.html)). The regexes are [PCRE](https://www.pcre.org/current/doc/html/pcre2syntax.html)\-flavored.
 
 Argument names, non-regex string patterns in **arguments**, **query**, and **uri** can be [percent encoded](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) to mask special characters (**!** is **%21**, **~** is **%7E**, **\*** is **%2A**, **%** is **%25**) or even target single bytes. For example, you can select diacritics such as Ö or Å by their starting byte **0xC3** in UTF-8:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "arguments": {
             "word": "*%C3*"
@@ -678,19 +650,17 @@ Argument names, non-regex string patterns in **arguments**, **query**, and **uri
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Unit decodes such strings and matches them against respective request entities, decoding these as well:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "%7E", tooltip: "Tilde", nxt_type: "nxt_ph" }]}>{`{
     "routes": [
         {
             "match": {
-                "query": ":nxt_ph:`%7E <Tilde>`fuzzy word search"
+                "query": "NXT1\fuzzy word search"
             },
 
             "action": {
@@ -698,68 +668,58 @@ Unit decodes such strings and matches them against respective request entities, 
             }
         }
     ]
-}
-```
+}`}</Code_Block>
 
 This condition matches the following percent-encoded request:
 
-```bash
-$ curl http://127.0.0.1/?~fuzzy:nxt_ph:`%20 <Space>`word:nxt_ph:`%20 <Space>`search -v
+<Code_Block language="bash" hints={[{ number: "1", display_text: "%20", tooltip: "Space", nxt_type: "nxt_ph" }, { number: "2", display_text: "%20", tooltip: "Space", nxt_type: "nxt_ph" }]}>{`$ curl http://127.0.0.1/?~fuzzy\NXT1\word\NXT2\search -v
 
       > GET /?~fuzzy%20word%20search HTTP/1.1
       ...
       < HTTP/1.1 200 OK
-      ...
-```
+      ...`}</Code_Block>
 
 Note that the encoded spaces (**%20**) in the request match their unencoded counterparts in the pattern; vice versa, the encoded tilde (**%7E**) in the condition matches **~** in the request.
 
 A regular expression that matches any **.php** files in the **/data/www/** directory and its subdirectories. Note the backslashes; escaping is a JSON-specific requirement:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "uri": "~^/data/www/.*\\.php(/.*)?$"
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Only subdomains of **example.com** match:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "host": "*.example.com"
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Only requests for **.php** files located in **/admin/**’s subdirectories match:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "uri": "/admin/*/*.php"
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Here, any **eu-** subdomains of **example.com** match except **eu-5.example.com**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "host": [
             "eu-*.example.com",
@@ -768,15 +728,13 @@ Here, any **eu-** subdomains of **example.com** match except **eu-5.example.com*
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Any methods match except **HEAD** and **GET**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "method": [
             "!HEAD",
@@ -785,29 +743,25 @@ Any methods match except **HEAD** and **GET**:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 You can also combine certain special characters in a pattern. Here, any URIs match except the ones containing **/api/**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "uri": "!*/api/*"
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Here, URIs of any articles that don’t look like **YYYY-MM-DD** dates match. Again, note the backslashes; they are a JSON requirement:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "uri": [
             "/articles/*",
@@ -816,10 +770,9 @@ Here, URIs of any articles that don’t look like **YYYY-MM-DD** dates match. Ag
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Address-based patterns define individual IPv4 (dot-decimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4632)), IPv6 (hexadecimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4291#section-2.3)), or any [UNIX domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket) addresses that must exactly match the property; wildcards and ranges modify this behavior:
 
@@ -863,8 +816,7 @@ location / {
 
 This uses IPv4-based matching with wildcards and ranges:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "source": [
             "192.0.2.1-192.0.2.200",
@@ -882,15 +834,13 @@ This uses IPv4-based matching with wildcards and ranges:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This uses IPv6-based matching with wildcards and ranges:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "source": [
              "2001:0db8::-2001:0db8:aaa9:ffff:ffff:ffff:ffff:ffff",
@@ -908,15 +858,13 @@ This uses IPv6-based matching with wildcards and ranges:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This matches any of the listed IPv4 or IPv6 addresses:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "destination": [
             "127.0.0.1",
@@ -927,15 +875,13 @@ This matches any of the listed IPv4 or IPv6 addresses:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Here, any IPs from the range match except **192\.0.2.9**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "source": [
             "192.0.2.1-192.0.2.10",
@@ -944,15 +890,13 @@ Here, any IPs from the range match except **192\.0.2.9**:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This matches any IPs but limits the acceptable ports:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "source": [
             "*:80",
@@ -962,26 +906,21 @@ This matches any IPs but limits the acceptable ports:
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 This matches any UNIX domain sockets:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
     "match": {
         "source": "unix"
     },
 
     "action": {
-        "pass": ":nxt_ph:`... <Any acceptable 'pass' value may go here; see the 'Listeners' section for details>`"
+        "pass": "NXT1"
     }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 ### Handling actions
 
@@ -1050,10 +989,6 @@ An example:
 }
 ```
 
-&nbsp;
-
-&nbsp;
-
 ## Variables
 
 Some options in Unit configuration allow the use of [variables](#configuration-variables-native) whose values are calculated at runtime. There’s a number of built-in variables available:
@@ -1070,11 +1005,10 @@ These variables can be used with:
 
 To reference a variable, prefix its name with the dollar sign character (**$**), optionally enclosing the name in curly brackets (**{}**) to separate it from adjacent text or enhance visibility. Variable names can contain letters and underscores (**\_**), so use the brackets if the variable is immediately followed by such characters:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "${method}", tooltip: "The method variable is thus separated from the '_route' postfix", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "*:80": {
-            "pass": "routes/:nxt_hint:`${method} <The method variable is thus separated from the '_route' postfix>`_route"
+            "pass": "routes/NXT1_route"
         }
     },
 
@@ -1103,14 +1037,13 @@ To reference a variable, prefix its name with the dollar sign character (**$**),
             }
         ]
     }
-}
-```
+}`}</Code_Block>
 
 To reference an **arg\_\***, **cookie\_\***, or **header\_\*** variable, add the name you need to the prefix. A query string of **Type=car&Color=red** yields two variables, **$arg\_Type** and **$arg\_Color**; Unit additionally normalizes capitalization and hyphenation in header field names, so the **Accept-Encoding** header field can also be referred to as **$header\_Accept\_Encoding**, **$header\_accept-encoding**, or **$header\_accept\_encoding**.
 
-#### NOTE
-
+<Note type="note">
 With multiple argument instances (think **Color=Red&Color=Blue**), the rightmost one is used (**Blue**).
+</Note>
 
 At runtime, variables expand into dynamically computed values (at your risk!). The previous example targets an entire set of routes, picking individual ones by HTTP verbs from the incoming requests:
 
@@ -1136,8 +1069,7 @@ If you reference a non-existing variable, it is considered empty.
 
 This configuration selects the static file location based on the requested hostname; if nothing’s found, it attempts to retrieve the requested file from a common storage:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }, { number: "2", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "*:80": {
             "pass": "routes"
@@ -1148,22 +1080,20 @@ This configuration selects the static file location based on the requested hostn
         {
             "action": {
                 "share": [
-                    "/www/$host:nxt_hint:`$uri <Note that the $uri variable value always includes a starting slash>`",
-                    "/www/storage:nxt_hint:`$uri <Note that the $uri variable value always includes a starting slash>`"
+                    "/www/$host\NXT1",
+                    "/www/storage\NXT2"
                 ]
             }
         }
     ]
-}
-```
+}`}</Code_Block>
 
 Another use case is employing the URI to choose between applications:
 
-```json
-{
+<Code_Block language="" hints={[{ number: "1", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "*:80": {
-            "pass": "applications:nxt_hint:`$uri <Note that the $uri variable value always includes a starting slash>`"
+            "pass": "applications\NXT1"
         }
     },
 
@@ -1179,8 +1109,7 @@ Another use case is employing the URI to choose between applications:
             "script": "index.php"
         }
     }
-}
-```
+}`}</Code_Block>
 
 This way, requests are routed between applications by their target URIs:
 
@@ -1216,15 +1145,13 @@ A different approach puts the **Host** header field received from the client to 
 
 You can use multiple variables in a string, repeating and placing them arbitrarily. This configuration picks an app target (supported for [PHP](#configuration-php-targets) and [Python](#configuration-python-targets) apps) based on the requested hostname and URI:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "$uri", tooltip: "Note that the $uri value doesn't include the request's query part", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "*:80": {
-            "pass": "applications/app_$host:nxt_hint:`$uri <Note that the $uri value doesn't include the request's query part>`"
+            "pass": "applications/app_$host\NXT1"
         }
     }
-}
-```
+}`}</Code_Block>
 
 At runtime, a request for **example.com/myapp** is passed to **applications/app\_example.com/myapp**.
 
@@ -1240,14 +1167,12 @@ To select a share directory based on an **app\_session** cookie:
 
 Here, if **$uri** in **share** resolves to a directory, the choice of an index file to be served is dictated by **index**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }]}>{`{
     "action": {
-        "share": "/www/data:nxt_hint:`$uri <Note that the $uri variable value always includes a starting slash>`",
+        "share": "/www/data\NXT1",
         "index": "index.htm"
     }
-}
-```
+}`}</Code_Block>
 
 Here, a redirect uses the **$request\_uri** variable value to relay the request, *including* the query part, to the same website over HTTPS:
 
@@ -1259,8 +1184,6 @@ Here, a redirect uses the **$request\_uri** variable value to relay the request,
     }
 }
 ```
-
-&nbsp;
 
 ## URI rewrite
 
@@ -1277,9 +1200,9 @@ This **match**\-less action prefixes the request URI with **/v1** and returns it
 }
 ```
 
-#### WARNING
-
-Avoid infinite loops when you  **pass** requests back to **routes**.
+<Note type="warning">
+Avoid infinite loops when you **pass** requests back to **routes**.
+</Note>
 
 This action normalizes the request URI and passes it to an application:
 
@@ -1298,8 +1221,6 @@ This action normalizes the request URI and passes it to an application:
     }
 }
 ```
-
-&nbsp;
 
 ## Response headers
 
@@ -1350,8 +1271,6 @@ One use is to update the headers in the final response; this extends the **Conte
 ```
 
 Alternatively, they will come in handy with [custom log formatting](#configuration-access-log).
-
-&nbsp;
 
 ## Instant responses, redirects
 
@@ -1416,8 +1335,6 @@ Besides enriching the response semantics, **return** simplifies [allow-deny list
 ]
 ```
 
-&nbsp;
-
 ## Static files
 
 Unit is capable of acting as a standalone web server, efficiently serving static files from the local file system; to use the feature, list the file paths in the **share** option of a route step [action](#configuration-routes-action).
@@ -1426,9 +1343,9 @@ A **share**\-based action provides the following options:
 
 <table><thead><tr><th><p><strong>share</strong> (required)</p></th><th><p>String or an array of strings;<br />lists file paths that are tried<br />until a file is found.<br />When no file is found,<br /><strong>fallback</strong> is used if set.<br /><br />The value is<br /><a href="#configuration-variables">variable</a>-interpolated.</p></th></tr></thead><tbody><tr><td><p><strong>index</strong></p></td><td><p>Filename;<br />tried if <strong>share</strong> is a directory.<br />When no file is found,<br /><strong>fallback</strong> is used if set.<br /><br />The default is <strong>index.html</strong>.</p></td></tr><tr><td><p><strong>fallback</strong></p></td><td><p>Action-like <a href="#configuration-fallback">object</a>;<br />used if the request<br />can’t be served by <strong>share</strong> or <strong>index</strong>.</p></td></tr><tr><td><p><strong>types</strong></p></td><td><p><a href="#configuration-share-mime">Array</a><br />of<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME type</a><br />patterns;<br />used to filter the shared files.</p></td></tr><tr><td><p><strong>chroot</strong></p></td><td><p>Directory pathname that<br /><a href="#configuration-share-path">restricts</a><br />the shareable paths.<br /><br />The value is<br /><a href="#configuration-variables">variable</a>-interpolated.</p></td></tr><tr><td><p><strong>follow_symlinks</strong>, <strong>traverse_mounts</strong></p></td><td><p>Booleans;<br />turn on and off symbolic link and mount point<br /><a href="#configuration-share-resolution">resolution</a><br />respectively;<br />if <strong>chroot</strong> is set,<br />they only<br /><a href="#configuration-share-path">affect</a><br />the insides of <strong>chroot</strong>.<br /><br />The default for both options is <strong>true</strong><br />(resolve links and mounts).</p></td></tr></tbody></table>
 
-#### NOTE
-
+<Note type="note">
 To serve the files, Unit’s router process must be able to access them; thus, the account this process runs as must have proper permissions [assigned](howto/security.md#security-apps). When Unit is installed from the [official packages](installation.md#installation-precomp-pkgs), the process runs as **unit:unit**; for details of other installation methods, see [Installation](installation.md).
+</Note>
 
 Consider the following configuration:
 
@@ -1452,8 +1369,7 @@ Consider the following configuration:
 
 It uses [variable interpolation](#configuration-variables): Unit replaces the **$uri** reference with its current value and tries the resulting path. If this doesn’t yield a servable file, a 404 “Not Found” response is returned.
 
-#### WARNING
-
+<Note type="warning">
 Before version 1.26.0, Unit used **share** as the document root. This was changed for flexibility, so now **share** must resolve to specific files. A common solution is to append **$uri** to your document root.
 
 Pre-1.26, the snippet above would’ve looked like this:
@@ -1465,6 +1381,7 @@ Pre-1.26, the snippet above would’ve looked like this:
 ```
 
 Mind that URI paths always start with a slash, so there’s no need to separate the directory from **$uri**; even if you do, Unit compacts adjacent slashes during path resolution, so there won’t be an issue.
+</Note>
 
 If **share** is an array, its items are searched in order of appearance until a servable file is found:
 
@@ -1506,11 +1423,9 @@ $ curl http://localhost/ -v
  ...
 ```
 
-#### NOTE
-
+<Note type="note">
 Unit’s ETag response header fields use the **MTIME-FILESIZE** format, where **MTIME** stands for file modification timestamp and **FILESIZE** stands for file size in bytes, both in hexadecimal.
-
-&nbsp;
+</Note>
 
 ### MIME filtering
 
@@ -1560,53 +1475,43 @@ If the MIME type of a requested file isn’t recognized, it’s considered empty
 
 If a share path specifies only the directory name, Unit *doesn’t* apply MIME filtering.
 
-&nbsp;
-
 ### Path restrictions
 
-#### NOTE
-
+<Note type="note">
 To have these options, Unit must be built and run on a system with Linux kernel version 5.6+.
+</Note>
 
 The **chroot** option confines the path resolution within a share to a certain directory. First, it affects symbolic links: any attempts to go up the directory tree with relative symlinks like **../../var/log** stop at the **chroot** directory, and absolute symlinks are treated as relative to this directory to avoid breaking out:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/data/", tooltip: "Now, any paths accessible via the share are confined to this directory", nxt_type: "nxt_hint" }]}>{`{
     "action": {
         "share": "/www/data$uri",
-        "chroot": ":nxt_hint:`/www/data/ <Now, any paths accessible via the share are confined to this directory>`"
+        "chroot": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Here, a request for **/log** initially resolves to **/www/data/log**; however, if that’s an absolute symlink to **/var/log/app.log**, the resulting path is **/www/data/var/log/app.log**.
 
 Another effect is that any requests for paths that resolve outside the **chroot** directory are forbidden:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/data/", tooltip: "Now, any paths accessible via the share are confined to this directory", nxt_type: "nxt_hint" }]}>{`{
     "action": {
         "share": "/www$uri",
-        "chroot": ":nxt_hint:`/www/data/ <Now, any paths accessible via the share are confined to this directory>`"
+        "chroot": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Here, a request for **/index.xml** elicits a 403 “Forbidden” response because it resolves to **/www/index.xml**, which is outside **chroot**.
 
-&nbsp;
-
 The **follow\_symlinks** and **traverse\_mounts** options disable resolution of symlinks and traversal of mount points when set to **false** (both default to **true**):
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "false", tooltip: "Disables symlink traversal", nxt_type: "nxt_hint" }, { number: "2", display_text: "false", tooltip: "Disables mount point traversal", nxt_type: "nxt_hint" }]}>{`{
     "action": {
         "share": "/www/$host/static$uri",
-        "follow_symlinks": :nxt_hint:`false <Disables symlink traversal>`,
-        "traverse_mounts": :nxt_hint:`false <Disables mount point traversal>`
+        "follow_symlinks": NXT1,
+        "traverse_mounts": NXT2
     }
-}
-```
+}`}</Code_Block>
 
 Here, any symlink or mount point in the entire **share** path results in a 403 “Forbidden” response.
 
@@ -1629,14 +1534,12 @@ Suppose you want to serve files from a share that itself includes a symlink (let
 
 Initial configuration:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/$host/", tooltip: "Now, any paths accessible via the share are confined to this directory", nxt_type: "nxt_hint" }]}>{`{
     "action": {
         "share": "/www/$host/static$uri",
-        "chroot": ":nxt_hint:`/www/$host/ <Now, any paths accessible via the share are confined to this directory>`"
+        "chroot": "NXT1"
     }
-}
-```
+}`}</Code_Block>
 
 Create a symlink to **/www/localhost/static/index.html**:
 
@@ -1664,15 +1567,13 @@ $ curl http://localhost/symlink
 
 Now set **follow\_symlinks** to **false**:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/$host/", tooltip: "Now, any paths accessible via the share are confined to this directory", nxt_type: "nxt_hint" }]}>{`{
     "action": {
         "share": "/www/$host/static$uri",
-        "chroot": ":nxt_hint:`/www/$host/ <Now, any paths accessible via the share are confined to this directory>`",
+        "chroot": "NXT1",
         "follow_symlinks": false
     }
-}
-```
+}`}</Code_Block>
 
 The symlink request is forbidden, which is presumably the desired effect:
 
@@ -1704,8 +1605,6 @@ $ curl http://localhost/index.html
 
       <!DOCTYPE html><title>Error 403</title><p>Error 403.
 ```
-
-&nbsp;
 
 ### Fallback action
 
@@ -1866,14 +1765,11 @@ Another way to combine **share**, **types**, and **fallback** is exemplified by 
 
 It forwards explicit requests for PHP files to the app while serving all other types of files from the share; note that a **match** object isn’t needed here to achieve this effect.
 
-&nbsp;
-
 ## Proxying
 
 Unit’s routes support HTTP proxying to socket addresses using the **proxy** option of a route step [action](#configuration-routes-action):
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "http://127.0.0.1:8080", tooltip: "Note that the http:// scheme is required", nxt_type: "nxt_hint" }, { number: "2", display_text: "http://[::1]:8080", tooltip: "Note that the http:// scheme is required", nxt_type: "nxt_hint" }, { number: "3", display_text: "http://unix:/path/to/unix.sock", tooltip: "Note that the http:// scheme is required, followed by the unix: prefix", nxt_type: "nxt_hint" }]}>{`{
     "routes": [
         {
             "match": {
@@ -1881,7 +1777,7 @@ Unit’s routes support HTTP proxying to socket addresses using the **proxy** op
             },
 
             "action": {
-                "proxy": ":nxt_hint:`http://127.0.0.1:8080 <Note that the http:// scheme is required>`"
+                "proxy": "NXT1"
             }
         },
         {
@@ -1890,7 +1786,7 @@ Unit’s routes support HTTP proxying to socket addresses using the **proxy** op
             },
 
             "action": {
-                "proxy": ":nxt_hint:`http://[::1]:8080 <Note that the http:// scheme is required>`"
+                "proxy": "NXT2"
             }
         },
         {
@@ -1899,20 +1795,17 @@ Unit’s routes support HTTP proxying to socket addresses using the **proxy** op
             },
 
             "action": {
-                "proxy": ":nxt_hint:`http://unix:/path/to/unix.sock <Note that the http:// scheme is required, followed by the unix: prefix>`"
+                "proxy": "NXT3"
             }
         }
     ]
-}
-```
+}`}</Code_Block>
 
 As the example suggests, you can use UNIX, IPv4, and IPv6 socket addresses for proxy destinations.
 
-#### NOTE
-
+<Note type="note">
 The HTTPS scheme is not supported yet.
-
-&nbsp;
+</Note>
 
 ### Load balancing
 
@@ -1920,8 +1813,7 @@ Besides proxying requests to individual servers, Unit can also relay incoming re
 
 Upstreams are defined in the eponymous **/config/upstreams** section of the API:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "rr-lb", tooltip: "Upstream object", nxt_type: "nxt_hint" }, { number: "2", display_text: "servers", tooltip: "Lists individual servers as object-valued options", nxt_type: "nxt_hint" }, { number: "3", display_text: "192.168.0.100:8080", tooltip: "Empty object needed due to JSON requirements", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
         "*:80": {
             "pass": "upstreams/rr-lb"
@@ -1929,51 +1821,46 @@ Upstreams are defined in the eponymous **/config/upstreams** section of the API:
     },
 
     "upstreams": {
-        ":nxt_hint:`rr-lb <Upstream object>`": {
-            ":nxt_hint:`servers <Lists individual servers as object-valued options>`": {
-                ":nxt_hint:`192.168.0.100:8080 <Empty object needed due to JSON requirements>`": {},
+        "NXT1": {
+            ":NXT2": {
+                "NXT3": {},
                 "192.168.0.101:8080": {
                     "weight": 0.5
                 }
             }
         }
     }
-}
-```
+}`}</Code_Block>
 
 An upstream must define a **servers** object that lists socket addresses as server object names. Unit dispatches requests between the upstream’s servers in a round-robin fashion, acting as a load balancer. Each server object can set a numeric **weight** to adjust the share of requests it receives via the upstream. In the above example, **192\.168.0.100:8080** receives twice as many requests as **192\.168.0.101:8080**.
 
 Weights can be specified as integers or fractions in decimal or scientific notation:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "weight", tooltip: "All three values are equal", nxt_type: "nxt_hint" }, { number: "2", display_text: "weight", tooltip: "All three values are equal", nxt_type: "nxt_hint" }, { number: "3", display_text: "weight", tooltip: "All three values are equal", nxt_type: "nxt_hint" }]}>{`{
     "servers": {
         "192.168.0.100:8080": {
-            ":nxt_hint:`weight <All three values are equal>`": 1e1
+            "NXT1": 1e1
         },
 
         "192.168.0.101:8080": {
-            ":nxt_hint:`weight <All three values are equal>`": 10.0
+            "NXT2": 10.0
         },
 
         "192.168.0.102:8080": {
-            ":nxt_hint:`weight <All three values are equal>`": 10
+            "NXT3": 10
         }
     }
-}
-```
+}`}</Code_Block>
 
 The maximum weight is **1000000**, the minimum is **0** (such servers receive no requests); the default is **1**.
-
-&nbsp;
 
 ## Applications
 
 Each app that Unit runs is defined as an object in the **/config/applications** section of the control API; it lists the app’s language and settings, its runtime limits, process model, and various language-specific options.
 
-#### NOTE
-
+<Note type="note">
 Our official [language-specific packages](installation.md#installation-precomp-pkgs) include end-to-end examples of application configuration, available for your reference at **/usr/share/doc/&lt;module name&gt;/examples/** after package installation.
+</Note>
 
 Here, Unit runs 20 processes of a PHP app called **blogs**, stored in the **/www/blogs/scripts/** directory:
 
@@ -1986,8 +1873,6 @@ Here, Unit runs 20 processes of a PHP app called **blogs**, stored in the **/www
     }
 }
 ```
-
-&nbsp;
 
 App objects have a number of options shared between all application languages:
 
@@ -2014,34 +1899,34 @@ Also, you need to set **type**\-specific options to run the app. This [Python ap
 }
 ```
 
-&nbsp;
-
 ### Process management
 
 Unit has three per-app options that control how the app’s processes behave: **isolation**, **limits**, and **processes**. Also, you can **GET** the **/control/applications/** section of the API to restart an app:
 
-```bash
-# curl -X GET --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>`  \
-      http://localhost/control/applications/:nxt_ph:`app_name <Your application's name as defined in the /config/applications/ section>`/restart
-```
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }, { number: "2", display_text: "app_name", tooltip: "Your application's name as defined in the /config/applications/ section", nxt_type: "nxt_ph" }]}>{`# curl -X GET --unix-socket NXT1  \\
+      http://localhost/control/applications/NXT2/restart`}</Code_Block>
 
 Unit handles the rollover gracefully, allowing the old processes to deal with existing requests and starting a new set of processes (as defined by the **processes** [option](#configuration-proc-mgmt-prcs)) to accept new requests.
-
-&nbsp;
 
 #### Process isolation
 
 You can use [namespace](https://man7.org/linux/man-pages/man7/namespaces.7.html) and [file system](https://man7.org/linux/man-pages/man2/chroot.2.html) isolation for your apps if Unit’s underlying OS supports them:
 
-```bash
-$ ls /proc/self/ns/
+<Code_Block language="bash" hints={[{ number: "1", display_text: "mnt", tooltip: "The mount namespace", nxt_type: "nxt_hint" }, { number: "2", display_text: "net", tooltip: "The network namespace", nxt_type: "nxt_hint" }, { number: "3", display_text: "user", tooltip: "The credential namespace", nxt_type: "nxt_hint" }, { number: "4", display_text: "uts", tooltip: "The uname namespace", nxt_type: "nxt_hint" }]}>{`$ ls /proc/self/ns/
 
-    cgroup :nxt_hint:`mnt <The mount namespace>` :nxt_hint:`net <The network namespace>` pid ... :nxt_hint:`user <The credential namespace>` :nxt_hint:`uts <The uname namespace>`
-```
+    cgroup NXT1 NXT2 pid ... NXT3 NXT4`}</Code_Block>
 
 The **isolation** application option has the following members:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>automount</strong></p></td><td><p>Object;<br />controls mount behavior<br />if <strong>rootfs</strong> is enabled.<br />By default, Unit automatically mounts the<br /><a href="#conf-rootfs">language runtime dependencies</a>,<br />a<br /><a href="https://man7.org/linux/man-pages/man5/procfs.5.html">procfs</a><br />at <strong>/proc/</strong>,<br />and a<br /><a href="https://man7.org/linux/man-pages/man5/tmpfs.5.html">tmpfs</a> at <strong>/tmp/</strong>,<br />but you can disable any of these default mounts:<br /><br /><code>json&lt;br/&gt;{&lt;br/&gt;    "isolation": {&lt;br/&gt;        "automount": {&lt;br/&gt;            "language_deps": false,&lt;br/&gt;            "procfs": false,&lt;br/&gt;            "tmpfs": false&lt;br/&gt;        }&lt;br/&gt;    }&lt;br/&gt;}&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>cgroup</strong></p></td><td><p>Object;<br />defines the app’s<br /><a href="#conf-app-cgroup">cgroup</a>.<br /><br /></p></td></tr><tr><td><p><strong>gidmap</strong></p></td><td><p>Same as <strong>uidmap</strong>,<br />but configures group IDs instead of user IDs.</p></td></tr><tr><td><p><strong>namespaces</strong></p></td><td><p>Object; configures<br /><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">namespace</a><br />isolation scheme for the application.<br /><br />Available options<br />(system-dependent;<br />check your OS manual for guidance):<br /><br /></p></td></tr><tr><td><p><strong>rootfs</strong></p></td><td><p>String; pathname of the directory<br />to be used as the new<br /><a href="#conf-rootfs">file system root</a><br />for the app.</p></td></tr><tr><td><p><strong>uidmap</strong></p></td><td><p>Array of user ID<br /><a href="#conf-uidgid-mapping">mapping objects</a>;<br />each array item must define the following:<br /><br /></p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>automount</strong></p></td><td><p>Object;<br />controls mount behavior<br />if <strong>rootfs</strong> is enabled.<br />By default, Unit automatically mounts the<br /><a href="#conf-rootfs">language runtime dependencies</a>,<br />a<br /><a href="https://man7.org/linux/man-pages/man5/procfs.5.html">procfs</a><br />at <strong>/proc/</strong>,<br />and a<br /><a href="https://man7.org/linux/man-pages/man5/tmpfs.5.html">tmpfs</a> at <strong>/tmp/</strong>,<br />but you can disable any of these default mounts:</p><Code_Block language="json" hints={[]}>{`{
+    "isolation": {
+        "automount": {
+            "language_deps": false,
+            "procfs": false,
+            "tmpfs": false
+        }
+    }
+}`}</Code_Block></td></tr><tr><td><p><strong>cgroup</strong></p></td><td><p>Object;<br />defines the app’s<br /><a href="#conf-app-cgroup">cgroup</a>.<br /><br /></p></td></tr><tr><td><p><strong>gidmap</strong></p></td><td><p>Same as <strong>uidmap</strong>,<br />but configures group IDs instead of user IDs.</p></td></tr><tr><td><p><strong>namespaces</strong></p></td><td><p>Object; configures<br /><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">namespace</a><br />isolation scheme for the application.<br /><br />Available options<br />(system-dependent;<br />check your OS manual for guidance):<br /><br /></p></td></tr><tr><td><p><strong>rootfs</strong></p></td><td><p>String; pathname of the directory<br />to be used as the new<br /><a href="#conf-rootfs">file system root</a><br />for the app.</p></td></tr><tr><td><p><strong>uidmap</strong></p></td><td><p>Array of user ID<br /><a href="#conf-uidgid-mapping">mapping objects</a>;<br />each array item must define the following:<br /><br /></p></td></tr></tbody></table>
 
 A sample **isolation** object that enables all namespaces and sets mappings for user and group IDs:
 
@@ -2077,8 +1962,6 @@ A sample **isolation** object that enables all namespaces and sets mappings for 
     ]
 }
 ```
-
-&nbsp;
 
 ##### Using control groups
 
@@ -2120,21 +2003,17 @@ $ mount -l | grep cgroup
 
 Next, check the available controllers and set the **memory.high** limit:
 
-```bash
-# cat /sys/fs/cgroup/:nxt_hint:`/staging/app <cgroup's path set in Unit configuration>`/cgroup.controllers
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/staging/app", tooltip: "cgroup's path set in Unit configuration", nxt_type: "nxt_hint" }, { number: "2", display_text: "/staging/app", tooltip: "cgroup's path set in Unit configuration", nxt_type: "nxt_hint" }]}>{`# cat /sys/fs/cgroup/NXT1/cgroup.controllers
 
     cpuset cpu io memory pids
 
-# echo 1G > /sys/fs/cgroup:nxt_hint:`/staging/app <cgroup's path set in Unit configuration>`/memory.high
-```
+# echo 1G > /sys/fs/cgroup\NXT2/memory.high`}</Code_Block>
 
 For more details and possible options, refer to the [admin guide](https://docs.kernel.org/admin-guide/cgroup-v2.html).
 
-#### NOTE
-
+<Note type="note">
 To avoid confusion, mind that the **namespaces/cgroups** option controls the application’s cgroup *namespace*; instead, the **cgroup/path** option specifies the cgroup where Unit puts the application.
-
-&nbsp;
+</Note>
 
 ##### Changing root directory
 
@@ -2142,20 +2021,17 @@ The **rootfs** option confines the app to the directory you provide, making it t
 
 The root directory is changed before the language module starts the app, so any path options for the app should be relative to the new root. Note the **path** and **home** settings:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/", tooltip: "Without rootfs, this would be /var/app/sandbox/", nxt_type: "nxt_hint" }, { number: "2", display_text: "/venv/", tooltip: "Without rootfs, this would be /var/app/sandbox/venv/", nxt_type: "nxt_hint" }]}>{`{
     "type": "python 2.7",
-    "path": ":nxt_hint:`/ <Without rootfs, this would be /var/app/sandbox/>`",
-    "home": ":nxt_hint:`/venv/ <Without rootfs, this would be /var/app/sandbox/venv/>`",
+    "path": "NXT1",
+    "home": "NXT2",
     "module": "wsgi",
     "isolation": {
         "rootfs": "/var/app/sandbox/"
     }
-}
-```
+}`}</Code_Block>
 
-#### WARNING
-
+<Note type="warning">
 When using **rootfs** with **credential** set to **true**:
 
 ```json
@@ -2168,6 +2044,7 @@ When using **rootfs** with **credential** set to **true**:
 ```
 
 Ensure that the user the app *runs as* can access the **rootfs** directory.
+</Note>
 
 Unit mounts language-specific files and directories to the new root so the app stays operational:
 
@@ -2217,8 +2094,6 @@ Is equivalent to the following (assuming **some\_user**’s EUID and EGID are bo
 }
 ```
 
-&nbsp;
-
 #### Request limits
 
 The **limits** object controls request handling by the app process and has two integer options:
@@ -2239,8 +2114,6 @@ Example:
 }
 ```
 
-&nbsp;
-
 #### Application processes
 
 The **processes** option offers a choice between static and dynamic process management. If you set it to an integer, Unit immediately launches the given number of app processes and keeps them without scaling.
@@ -2249,7 +2122,7 @@ To enable a dynamic prefork model for your app, supply a **processes** object wi
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Number of seconds<br />Unit waits for<br />before terminating an idle process<br />that exceeds <strong>spare</strong>.</p></td></tr><tr><td><p><strong>max</strong></p></td><td><p>Maximum number of application processes<br />that Unit maintains<br />(busy and idle).<br /><br />The default is 1.</p></td></tr><tr><td><p><strong>spare</strong></p></td><td><p>Minimum number of idle processes<br />that Unit tries to maintain for an app.<br />When the app is started,<br /><strong>spare</strong> idles are launched;<br />Unit passes new requests to existing idles,<br />forking new idles<br />to keep the <strong>spare</strong> level<br />if <strong>max</strong> allows.<br />When busy processes complete their work<br />and turn idle again,<br />Unit terminates extra idles<br />after <strong>idle_timeout</strong>.</p></td></tr></tbody></table>
 
-If **processes** is omitted entirely, Unit creates 1 static process. If an empty object is provided: **“processes”: {}**, dynamic behavior with default option values is assumed.
+If **processes** is omitted entirely, Unit creates 1 static process. If an empty object is provided: `"processes": {}`, dynamic behavior with default option values is assumed.
 
 Here, Unit allows 10 processes maximum, keeps 5 idles, and terminates extra idles after 20 seconds:
 
@@ -2261,13 +2134,9 @@ Here, Unit allows 10 processes maximum, keeps 5 idles, and terminates extra idle
 }
 ```
 
-#### NOTE
-
+<Note type="note">
 For details of manual application process restart, see [here](#configuration-proc-mgmt).
-
-&nbsp;
-
-&nbsp;
+</Note>
 
 ### Go
 
@@ -2312,21 +2181,17 @@ func main() {
 
 If you haven’t done so yet, initialize the Go module for your app:
 
-```bash
-$ go mod init :nxt_ph:`example.com/app <Arbitrary module designation>`
+<Code_Block language="bash" hints={[{ number: "1", display_text: "example.com/app", tooltip: "Arbitrary module designation", nxt_type: "nxt_ph" }]}>{`$ go mod init NXT1
 
-      go: creating new go.mod: module example.com/app
-```
+      go: creating new go.mod: module example.com/app`}</Code_Block>
 
 Install the newly added dependency and build your application:
 
-```bash
-$ go get unit.nginx.org/go@1.32.1
+<Code_Block language="bash" hints={[{ number: "1", display_text: "app", tooltip: "Executable name", nxt_type: "nxt_ph" }, { number: "1", display_text: "app.go", tooltip: "Application source code", nxt_type: "nxt_ph" }]}>{`$ go get unit.nginx.org/go@1.32.1
 
       go: downloading unit.nginx.org
 
-$ go build -o :nxt_ph:`app <Executable name>` :nxt_ph:`app.go <Application source code>`
-```
+$ go build -o NXT1 NXT2`}</Code_Block>
 
 If you update Unit to a newer version, repeat the two commands above to rebuild your app.
 
@@ -2355,11 +2220,9 @@ Example:
 }
 ```
 
-#### NOTE
-
+<Note type="note">
 For Go-based examples, see our [Grafana](howto/grafana.md) howto or a basic [sample](howto/samples.md#sample-go).
-
-&nbsp;
+</Note>
 
 ### Java
 
@@ -2386,11 +2249,9 @@ Example:
 }
 ```
 
-#### NOTE
-
+<Note type="note">
 For Java-based examples, see our [Jira](howto/jira.md), [OpenGrok](howto/opengrok.md), and [Spring Boot](howto/springboot.md) howtos or a basic [sample](howto/samples.md#sample-java).
-
-&nbsp;
+</Note>
 
 ### Node.js
 
@@ -2422,37 +2283,31 @@ Example:
 }
 ```
 
-&nbsp;
-
 You can run Node.js apps without altering their code, using a loader module we provide with **unit-http**. Apply the following app configuration, depending on your version of Node.js:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/usr/bin/env", tooltip: "The external app type allows to run arbitrary executables, provided they establish communication with Unit", nxt_type: "nxt_hint" }, { number: "2", display_text: "app.js", tooltip: "Application script name", nxt_type: "nxt_ph" }]}>{`{
     "type": "external",
-    "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
+    "executable": "NXT1",
     "arguments": [
         "node",
         "--loader",
         "unit-http/loader.mjs",
         "--require",
         "unit-http/loader",
-        ":nxt_ph:`app.js <Application script name>`"
+        "NXT2"
     ]
-}
-```
+}`}</Code_Block>
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/usr/bin/env", tooltip: "The external app type allows to run arbitrary executables, provided they establish communication with Unit", nxt_type: "nxt_hint" }, { number: "2", display_text: "app.js", tooltip: "Application script name", nxt_type: "nxt_ph" }]}>{`{
     "type": "external",
-    "executable": ":nxt_hint:`/usr/bin/env <The external app type allows to run arbitrary executables, provided they establish communication with Unit>`",
+    "executable": "NXT1",
     "arguments": [
         "node",
         "--require",
         "unit-http/loader",
-        ":nxt_ph:`app.js <Application script name>`"
+        "NXT2"
     ]
-}
-```
+}`}</Code_Block>
 
 The loader overrides the **http** and **websocket** modules with their Unit-aware versions and starts the app.
 
@@ -2468,11 +2323,9 @@ To use the WebSocket protocol, your app only needs to replace the default **webs
 var webSocketServer = require('unit-http/websocket').server;
 ```
 
-#### NOTE
-
+<Note type="note">
 For Node.js-based examples, see our [Apollo](howto/apollo.md), [Express](howto/express.md), [Koa](howto/koa.md), and [Docker](howto/docker.md#docker-apps) howtos or a basic [sample](howto/samples.md#sample-nodejs).
-
-&nbsp;
+</Note>
 
 ### Perl
 
@@ -2495,11 +2348,9 @@ Example:
 }
 ```
 
-#### NOTE
-
+<Note type="note">
 For Perl-based examples of Perl, see our [Bugzilla](howto/bugzilla.md) and [Catalyst](howto/catalyst.md) howtos or a basic [sample](howto/samples.md#sample-perl).
-
-&nbsp;
+</Note>
 
 ### PHP
 
@@ -2514,38 +2365,34 @@ The **index** and **script** options enable two modes of operation:
 * If **script** is set, all requests to the application are handled by the script you specify in this option.
 * Otherwise, the requests are served according to their URI paths; if they point to directories, **index** is used.
 
-&nbsp;
-
 You can customize **php.ini** via the **options** object:
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>admin</strong>, <strong>user</strong></p></td><td><p>Objects for extra directives.<br />Values in <strong>admin</strong> are set in <strong>PHP_INI_SYSTEM</strong> mode,<br />so the app can’t alter them;<br /><strong>user</strong> values are set in <strong>PHP_INI_USER</strong> mode<br />and can be<br /><a href="https://www.php.net/manual/en/function.ini-set.php">updated</a><br />at runtime.<br /><br />- The objects override the settings<br />  from any <strong>*.ini</strong> files<br />- The <strong>admin</strong> object can only set what’s<br />  <a href="https://www.php.net/manual/en/ini.list.php">listed</a><br />  as <strong>PHP_INI_SYSTEM</strong>;<br />  for other modes,<br />  set <strong>user</strong><br />- Neither <strong>admin</strong> nor <strong>user</strong><br />  can set directives listed as<br />  <a href="https://www.php.net/manual/en/ini.list.php">php.ini only</a><br />  except for <strong>disable_classes</strong> and <strong>disable_functions</strong></p></td></tr><tr><td><p><strong>file</strong></p></td><td><p>String;<br />pathname of the <strong>php.ini</strong> file with<br /><a href="https://www.php.net/manual/en/ini.list.php">PHP configuration directives</a>.</p></td></tr></tbody></table>
 
 To load multiple **.ini** files, use **environment** with `PHP_INI_SCAN_DIR` to [scan a custom directory](https://www.php.net/manual/en/configuration.file.php):
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: ":", tooltip: "Path separator", nxt_type: "nxt_ph" }]}>{`{
     "applications": {
         "hello-world": {
             "type": "php",
             "root": "/www/public/",
             "script": "index.php",
             "environment": {
-                "PHP_INI_SCAN_DIR": ":nxt_ph:`: <Path separator>`/tmp/php.inis/"
+                "PHP_INI_SCAN_DIR": "NXT1/tmp/php.inis/"
             }
         }
     }
-}
-```
+}`}</Code_Block>
 
 Mind that the colon that prefixes the value here is a path separator; it causes PHP to scan the directory preconfigured with the `--with-config-file-scan-dir` option, which is usually **/etc/php.d/**, and then the directory you set here, which is **/tmp/php.inis/**. To skip the preconfigured directory, drop the **\:** prefix.
 
-#### NOTE
-
+<Note type="note">
 Values in **options** must be strings (for example, **“max\_file\_uploads”: “4”**, not **“max\_file\_uploads”: 4**); for boolean flags, use **“0”** and **“1”** only. For details aof **PHP\_INI\_\*** modes, see the [PHP docs](https://www.php.net/manual/en/configuration.changes.modes.php).
+</Note>
 
-#### NOTE
-
+<Note type="note">
 Unit implements the **fastcgi\_finish\_request()** [function](https://www.php.net/manual/en/function.fastcgi-finish-request.php) in a manner similar to PHP-FPM.
+</Note>
 
 Example:
 
@@ -2569,8 +2416,6 @@ Example:
     }
 }
 ```
-
-&nbsp;
 
 #### Targets
 
@@ -2627,15 +2472,13 @@ Each target is an object that specifies **root** and can define **index** or **s
 
 App-wide settings (**isolation**, **limits**, **options**, **processes**) are shared by all targets within the app.
 
-#### WARNING
-
+<Note type="warning">
 If you specify **targets**, there should be no **root**, **index**, or **script** defined at the app level.
+</Note>
 
-#### NOTE
-
+<Note type="note">
 For PHP-based examples, see our [CakePHP](howto/cakephp.md), [CodeIgniter](howto/codeigniter.md), [DokuWiki](howto/dokuwiki.md), [Drupal](howto/drupal.md), [Laravel](howto/laravel.md), [Lumen](howto/lumen.md), [Matomo](howto/matomo.md), [MediaWiki](howto/mediawiki.md), [MODX](howto/modx.md), [NextCloud](howto/nextcloud.md), [phpBB](howto/phpbb.md), [phpMyAdmin](howto/phpmyadmin.md), [Roundcube](howto/roundcube.md), [Symfony](howto/symfony.md), [WordPress](howto/wordpress.md), and [Yii](howto/yii.md) howtos or a basic [sample](howto/samples.md#sample-php).
-
-&nbsp;
+</Note>
 
 ### Python
 
@@ -2643,28 +2486,27 @@ First, make sure to install Unit along with the [Python language module](install
 
 Besides the [common options](#configuration-apps-common), you have:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String;<br />app’s module name.<br />This module is<br /><a href="https://docs.python.org/3/reference/import.html">imported</a><br />by Unit<br />the usual Python way.</p></td></tr><tr><td><p><strong>callable</strong></p></td><td><p>String;<br />name of the <strong>module</strong>-based callable<br />that Unit runs as the app.<br /><br />The default is <strong>application</strong>.</p></td></tr><tr><td><p><strong>home</strong></p></td><td><p>String;<br />path to the app’s<br /><a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments">virtual environment</a>.<br />Absolute or relative to <strong>working_directory</strong>.<br /><br />#### NOTE<br />The Python version used to run the app<br />is determined by <strong>type</strong>;<br />for performance,<br />Unit doesn’t use the command-line interpreter<br />from the virtual environment.<br /><br />Seeing this in Unit’s<br /><a href="troubleshooting.md#troubleshooting-log">log</a><br />after you set up <strong>home</strong> for your app?<br />This usually occurs<br />if the interpreter can’t use the virtual environment,<br />possible reasons including:<br /><br />- Version mismatch<br />  between the <strong>type</strong> setting<br />  and the virtual environment;<br />  check the environment’s version:<br />  <code>bash&lt;br/&gt;  $ source :nxt_ph:`/path/to/venv/ &lt;Path to the virtual environment; use a real path in your commands&gt;`bin/activate&lt;br/&gt;  (venv) $ python --version&lt;br/&gt;  </code><br />- Unit’s unprivileged user<br />  (usually <strong>unit</strong>)<br />  having no access to the environment’s files;<br />  assign the necessary rights:<br />  <code>bash&lt;br/&gt;  # chown -R :nxt_hint:`unit:unit &lt;User and group that Unit's router runs as by default&gt;` :nxt_ph:`/path/to/venv/ &lt;Path to the virtual environment; use a real path in your commands&gt;`&lt;br/&gt;  </code></p></td></tr><tr><td><p><strong>path</strong></p></td><td><p>String or an array of strings;<br />additional Python module lookup paths.<br />These values are prepended to <strong>sys.path</strong>.</p></td></tr><tr><td><p><strong>prefix</strong></p></td><td><p>String;<br /><strong>SCRIPT_NAME</strong> context value for WSGI<br />or the <strong>root_path</strong> context value for ASGI.<br />Should start with a slash<br />(<strong>/</strong>).</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String;<br />hints Unit that the app uses a certain interface.<br />Can be <strong>asgi</strong> or <strong>wsgi</strong>.</p></td></tr><tr><td><p><strong>targets</strong></p></td><td><p>Object;<br />app sections with<br /><a href="#configuration-python-targets">custom</a><br /><strong>module</strong> and <strong>callable</strong> values.</p></td></tr><tr><td><p><strong>thread_stack_size</strong></p></td><td><p>Integer;<br />stack size of a worker thread<br />(in bytes,<br />multiple of memory page size;<br />the minimum value is usually architecture specific).<br /><br />The default is usually system dependent<br />and can be set with <strong>ulimit -s &lt;SIZE_KB&gt;</strong>.</p></td></tr><tr><td><p><strong>threads</strong></p></td><td><p>Integer;<br />number of worker threads<br />per <a href="howto/security.md#sec-processes">app process</a>.<br />When started,<br />each app process creates this number of threads<br />to handle requests.<br /><br />The default is <strong>1</strong>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String;<br />app’s module name.<br />This module is<br /><a href="https://docs.python.org/3/reference/import.html">imported</a><br />by Unit<br />the usual Python way.</p></td></tr><tr><td><p><strong>callable</strong></p></td><td><p>String;<br />name of the <strong>module</strong>-based callable<br />that Unit runs as the app.<br /><br />The default is <strong>application</strong>.</p></td></tr><tr><td><p><strong>home</strong></p></td><td><p>String;<br />path to the app’s<br /><a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments">virtual environment</a>.<br />Absolute or relative to <strong>working_directory</strong>.</p><Note type="note">
+The Python version used to run the app<br>is determined by **type**;<br>for performance,<br>Unit doesn’t use the command-line interpreter<br>from the virtual environment.
+</Note><p>Seeing this in Unit’s<br /><a href="troubleshooting.md#troubleshooting-log">log</a><br />after you set up <strong>home</strong> for your app?<br />This usually occurs<br />if the interpreter can’t use the virtual environment,<br />possible reasons including:<br /><br />- Version mismatch<br />  between the <strong>type</strong> setting<br />  and the virtual environment;<br />  check the environment’s version:<br /> </p><Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/venv", tooltip: "Path to the virtual environment; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`$ source NXT1/bin/activate
+(venv) $ python --version`}</Code_Block><p><br />- Unit’s unprivileged user<br />  (usually <strong>unit</strong>)<br />  having no access to the environment’s files;<br />  assign the necessary rights:<br />  </p><Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/venv/", tooltip: "Path to the virtual environment; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`# chown -R NXT1 NXT2`}</Code_Block></td></tr><tr><td><p><strong>path</strong></p></td><td><p>String or an array of strings;<br />additional Python module lookup paths.<br />These values are prepended to <strong>sys.path</strong>.</p></td></tr><tr><td><p><strong>prefix</strong></p></td><td><p>String;<br /><strong>SCRIPT_NAME</strong> context value for WSGI<br />or the <strong>root_path</strong> context value for ASGI.<br />Should start with a slash<br />(<strong>/</strong>).</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String;<br />hints Unit that the app uses a certain interface.<br />Can be <strong>asgi</strong> or <strong>wsgi</strong>.</p></td></tr><tr><td><p><strong>targets</strong></p></td><td><p>Object;<br />app sections with<br /><a href="#configuration-python-targets">custom</a><br /><strong>module</strong> and <strong>callable</strong> values.</p></td></tr><tr><td><p><strong>thread_stack_size</strong></p></td><td><p>Integer;<br />stack size of a worker thread<br />(in bytes,<br />multiple of memory page size;<br />the minimum value is usually architecture specific).<br /><br />The default is usually system dependent<br />and can be set with <strong>ulimit -s &lt;SIZE_KB&gt;</strong>.</p></td></tr><tr><td><p><strong>threads</strong></p></td><td><p>Integer;<br />number of worker threads<br />per <a href="howto/security.md#sec-processes">app process</a>.<br />When started,<br />each app process creates this number of threads<br />to handle requests.<br /><br />The default is <strong>1</strong>.</p></td></tr></tbody></table>
 
 Example:
 
-```json
-{
+<Code_Block language="json" hints={[{ number: "1", display_text: "/www/store/", tooltip: "Added to sys.path for lookup; store the application module within this directory", nxt_type: "nxt_hint" }, { number: "2", display_text: ".virtualenv/", tooltip: "Path where the virtual environment is located; here, it's relative to the working directory", nxt_type: "nxt_hint" }, { number: "3", display_text: "cart.run", tooltip: "Looks for a 'run.py' module in /www/store/cart/", nxt_type: "nxt_hint" }, { number: "4", display_text: "/cart", tooltip: "Sets the SCRIPT_NAME or root_path context value", nxt_type: "nxt_hint" }]}>{`{
     "type": "python",
     "processes": 10,
     "working_directory": "/www/store/cart/",
-    "path": ":nxt_hint:`/www/store/ <Added to sys.path for lookup; store the application module within this directory>`",
-    "home": ":nxt_hint:`.virtualenv/ <Path where the virtual environment is located; here, it's relative to the working directory>`",
-    "module": ":nxt_hint:`cart.run <Looks for a 'run.py' module in /www/store/cart/>`",
+    "path": "NXT1",
+    "home": "NXT2",
+    "module": "NXT3",
     "callable": "app",
-    "prefix": ":nxt_hint:`/cart <Sets the SCRIPT_NAME or root_path context value>`",
+    "prefix": "NXT4",
     "user": "www",
     "group": "www"
-}
-```
+}`}</Code_Block>
 
 This snippet runs the **app** callable from the **/www/store/cart/run.py** module with **/www/store/cart/** as the working directory and **/www/store/.virtualenv/** as the virtual environment; the **path** value accommodates for situations when some modules of the app are imported from outside the **cart/** subdirectory.
-
-&nbsp;
 
 You can provide the callable in two forms. The first one uses WSGI ([PEP 333](https://peps.python.org/pep-0333/) or [PEP 3333](https://peps.python.org/pep-3333/)):
 
@@ -2690,17 +2532,15 @@ async def application(scope, receive, send):
     })
 ```
 
-#### NOTE
-
+<Note type="note">
 Legacy [two-callable](https://asgi.readthedocs.io/en/latest/specs/main.html#legacy-applications) ASGI 2.0 applications were not supported prior to Unit 1.21.0.
+</Note>
 
 Choose either one according to your needs; Unit tries to infer your choice automatically. If this inference fails, use the **protocol** option to set the interface explicitly.
 
-#### NOTE
-
+<Note type="note">
 The **prefix** option controls the **SCRIPT\_NAME** ([WSGI](https://wsgi.readthedocs.io/en/latest/definitions.html)) or **root\_path** ([ASGI](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)) setting in Python’s context, allowing to route requests regardless of the app’s factual path.
-
-&nbsp;
+</Note>
 
 #### Targets
 
@@ -2758,27 +2598,25 @@ Each target is an object that specifies **module** and can also define **callabl
 
 The **home**, **path**, **protocol**, **threads**, and **thread\_stack\_size** settings are shared by all targets in the app.
 
-#### WARNING
-
+<Note type="warning">
 If you specify **targets**, there should be no **module** or **callable** defined at the app level. Moreover, you can’t combine WSGI and ASGI targets within a single app.
+</Note>
 
-#### NOTE
-
+<Note type="note">
 For Python-based examples, see our [Bottle](howto/bottle.md), [Datasette](howto/datasette.md), [Django](howto/django.md), [Django Channels](howto/djangochannels.md), [Falcon](howto/falcon.md), [FastAPI](howto/fastapi.md), [Flask](howto/flask.md), [Guillotina](howto/guillotina.md), [Mailman Web](howto/mailman.md), [Mercurial](howto/mercurial.md), [MoinMoin](howto/moin.md), [Plone](howto/plone.md), [Pyramid](howto/pyramid.md), [Quart](howto/quart.md), [Responder](howto/responder.md), [Review Board](howto/reviewboard.md), [Sanic](howto/sanic.md), [Starlette](howto/starlette.md), [Trac](howto/trac.md), and [Zope](howto/zope.md) howtos or a basic [sample](howto/samples.md#sample-python).
-
-&nbsp;
+</Note>
 
 ### Ruby
 
 First, make sure to install Unit along with the [Ruby language module](installation.md#installation-precomp-pkgs).
 
-#### NOTE
-
+<Note type="note">
 Unit uses the [Rack](https://rack.github.io) interface to run Ruby scripts; you need to have it installed as well:
 
 ```bash
 $ gem install rack
 ```
+</Note>
 
 Besides the [common options](#configuration-apps-common), you have:
 
@@ -2836,11 +2674,9 @@ end
 
 Use these hooks to add custom runtime logic to your app.
 
-#### NOTE
-
+<Note type="note">
 For Ruby-based examples, see our [Ruby on Rails](howto/rails.md) and [Redmine](howto/redmine.md) howtos or a basic [sample](howto/samples.md#sample-ruby).
-
-&nbsp;
+</Note>
 
 ### WebAssembly
 
@@ -2848,7 +2684,12 @@ First, make sure to install Unit along with the [WebAssembly language module](in
 
 Besides the [common options](#configuration-apps-common), you have:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>component</strong> (required)</p></td><td><p>String; WebAssembly component pathname, including the <strong>.wasm</strong><br />extension, for instance: “/var/www/wasm/component.wasm”</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists<br />directories to which the application has access:<br /><br /><code>json&lt;br/&gt;"access": {&lt;br/&gt;   "filesystem": [&lt;br/&gt;      "/tmp/",&lt;br/&gt;      "/var/tmp/"&lt;br/&gt;   ]&lt;br/&gt;}&lt;br/&gt;</code></p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>component</strong> (required)</p></td><td><p>String; WebAssembly component pathname, including the <strong>.wasm</strong><br />extension, for instance: “/var/www/wasm/component.wasm”</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists<br />directories to which the application has access:</p><Code_Block language="json" hints={[]}>{`"access":{
+    "filesystem": [
+        "/tmp/",
+        "/var/tmp/"
+    ]
+}`}</Code_Block></td></tr></tbody></table>
 
 Example:
 
@@ -2874,19 +2715,24 @@ Example:
 }
 ```
 
-#### NOTE
-
+<Note type="note">
 A good, first Rust-based project is available at [sunfishcode/hello-wasi-http](https://github.com/sunfishcode/hello-wasi-http). It also includes all the important steps to get started with WebAssembly, WASI, and Rust.
+</Note>
 
-#### WARNING
-
+<Note type="warning">
 The unit-wasm module is deprecated. We recommend using wasm-wasi-component instead, which supports WebAssembly Components using standard WASI 0.2 interfaces. The wasm-wasi-component module is available in Unit 1.32 and later.
+</Note>
 
 First, make sure to install Unit along with the [WebAssembly language module](installation.md#installation-precomp-pkgs).
 
 Besides the [common options](#configuration-apps-common), you have:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String; WebAssembly module pathname, including the <strong>.wasm</strong> extension,<br />for instance: <strong>applications/wasmapp/module.wasm</strong>.</p></td></tr><tr><td><p><strong>request_handler</strong> (required)</p></td><td><p>String; name of the request handler function. If you use Unit<br />with the official <strong>unit-wasm</strong> <a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific; see the<br /><a href="https://github.com/nginx/unit-wasm/">SDK</a> documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />The runtime calls this handler, providing the address of the<br />shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>malloc_handler</strong> (required)</p></td><td><p>String; name of the memory allocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module startup to allocate<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>free_handler</strong> (required)</p></td><td><p>String;  name of the memory deallocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module shutdown to free<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists directories<br />the application can access:<br /><br /><code>json&lt;br/&gt;"access": {&lt;br/&gt;   "filesystem": [&lt;br/&gt;      "/tmp/",&lt;br/&gt;      "/var/tmp/"&lt;br/&gt;   ]&lt;br/&gt;}&lt;br/&gt;</code></p></td></tr><tr><td><p><strong>module_init_handler</strong>,</p></td><td><p>String;<br />name of the module initilization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at language module startup,<br />after the WebAssembly module was initialized.</p></td></tr><tr><td><p><strong>module_end_handler</strong></p></td><td><p>String;<br />name of the module finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at language module shutdown.</p></td></tr><tr><td><p><strong>request_init_handler</strong></p></td><td><p>String;<br />name of the request initialization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the start of each request.</p></td></tr><tr><td><p><strong>request_end_handler</strong></p></td><td><p>String;<br />name of the request finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the end of each request,<br />when the headers and the request body were received.</p></td></tr><tr><td><p><strong>response_end_handler</strong></p></td><td><p>String;<br />name of the response finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the end of each response,<br />when the headers and the response body were sent.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String; WebAssembly module pathname, including the <strong>.wasm</strong> extension,<br />for instance: <strong>applications/wasmapp/module.wasm</strong>.</p></td></tr><tr><td><p><strong>request_handler</strong> (required)</p></td><td><p>String; name of the request handler function. If you use Unit<br />with the official <strong>unit-wasm</strong> <a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific; see the<br /><a href="https://github.com/nginx/unit-wasm/">SDK</a> documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />The runtime calls this handler, providing the address of the<br />shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>malloc_handler</strong> (required)</p></td><td><p>String; name of the memory allocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module startup to allocate<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>free_handler</strong> (required)</p></td><td><p>String;  name of the memory deallocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module shutdown to free<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists directories<br />the application can access:</p><Code_Block language="json" hints={[]}>{`"access": {
+    "filesystem": [
+        "/tmp/",
+        "/var/tmp/"
+    ]
+}`}</Code_Block></td></tr><tr><td><p><strong>module_init_handler</strong>,</p></td><td><p>String;<br />name of the module initilization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at language module startup,<br />after the WebAssembly module was initialized.</p></td></tr><tr><td><p><strong>module_end_handler</strong></p></td><td><p>String;<br />name of the module finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at language module shutdown.</p></td></tr><tr><td><p><strong>request_init_handler</strong></p></td><td><p>String;<br />name of the request initialization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the start of each request.</p></td></tr><tr><td><p><strong>request_end_handler</strong></p></td><td><p>String;<br />name of the request finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the end of each request,<br />when the headers and the request body were received.</p></td></tr><tr><td><p><strong>response_end_handler</strong></p></td><td><p>String;<br />name of the response finalization function.<br />If you use Unit with the official <strong>unit-wasm</strong><br /><a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific;<br />see the <a href="https://github.com/nginx/unit-wasm/">SDK</a><br />documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />It is invoked by the WebAssembly language module<br />at the end of each response,<br />when the headers and the response body were sent.</p></td></tr></tbody></table>
 
 Example:
 
@@ -2913,11 +2759,9 @@ Example:
 
 Use these handlers to add custom runtime logic to your app; for a detailed discussion of their usage and requirements, see the [SDK](https://github.com/nginx/unit-wasm/) source code and documentation.
 
-#### NOTE
-
+<Note type="note">
 For WASM-based examples, see our [Rust and C samples](howto/samples.md#sample-wasm).
-
-&nbsp;
+</Note>
 
 ## Settings
 
@@ -2927,9 +2771,11 @@ Unit has a global **settings** configuration object that stores instance-wide pr
 
 In turn, the **http** option exposes the following settings:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>body_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read data from the body<br />of a client’s request.<br />This is the interval<br />between consecutive read operations,<br />not the time to read the entire body.<br />If Unit doesn’t receive any data<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>discard_unsafe_fields</strong></p></td><td><p>Boolean;<br />controls header field name parsing.<br />If it’s set to <strong>true</strong>,<br />Unit only processes header names<br />made of alphanumeric characters and hyphens<br />(see<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-16.3.1-6">RFC 9110</a>);<br />otherwise,<br />these characters are also permitted:<br />**.!#$%&amp;’*+^_`</p></td></tr><tr><td><p><strong>header_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read the header<br />of a client’s request.<br />If Unit doesn’t receive the entire header<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Maximum number of seconds<br />between requests<br />in a keep-alive connection.<br />If no new requests<br />arrive within this interval,<br />Unit returns a 408 “Request Timeout” response<br />and closes the connection.<br /><br />The default is 180.</p></td></tr><tr><td><p><strong>log_route</strong></p></td><td><p>Boolean;<br />enables or disables<br /><a href="troubleshooting.md#troubleshooting-router-log">router logging</a>.<br /><br />The default is <strong>false</strong> (disabled).</p></td></tr><tr><td><p><strong>max_body_size</strong></p></td><td><p>Maximum number of bytes<br />in the body of a client’s request.<br />If the body size exceeds this value,<br />Unit returns a 413 “Payload Too Large” response<br />and closes the connection.<br /><br />The default is 8388608 (8 MB).</p></td></tr><tr><td><p><strong>send_timeout</strong></p></td><td><p>Maximum number of seconds<br />to transmit data<br />as a response to the client.<br />This is the interval<br />between consecutive transmissions,<br />not the time for the entire response.<br />If no data<br />is sent to the client<br />within this interval,<br />Unit closes the connection.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>server_version</strong></p></td><td><p>Boolean;<br />if set to <strong>false</strong>,<br />Unit omits version information<br />in its <strong>Server</strong> response<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110.html#section-10.2.4">header fields</a>.<br /><br />The default is <strong>true</strong>.</p></td></tr><tr><td><p><strong>static</strong></p></td><td><p>Object;<br />configures static asset handling.<br />Has a single object option named <strong>mime_types</strong><br />that defines specific<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME types</a><br />as options.<br />Their values<br />can be strings or arrays of strings;<br />each string must specify a filename extension<br />or a specific filename<br />that’s included in the MIME type.<br />You can override default MIME types<br />or add new types:<br /><br /><code>bash&lt;br/&gt;# curl -X PUT -d '&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="d2b334cf-6ab3-4e9a-8529-3ac01cbcdb4c" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlwidGV4dC94LWNvZGVcIjogW1wiLmNcIiwgXCIuaFwiXSIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcInRleHQveC1jb2RlXCI6IFtcIi5jXCIsIFwiLmhcIl0ifV19fX0="&gt;&lt;/span&gt;' :nxt_ph:`/path/to/control.unit.sock &lt;Path to Unit's control socket in your installation&gt;` \&lt;br/&gt;       http://localhost/config/settings/http/static/mime_types&lt;br/&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="da580e62-7be1-4c5b-b2db-cca6306076d8" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6Ijxici8+ICAgICAgIFwic3VjY2Vzc1wiOiBcIlJlY29uZmlndXJhdGlvbiBkb25lLlwiPGJyLz4iLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiPGJyLz4gICAgICAgXCJzdWNjZXNzXCI6IFwiUmVjb25maWd1cmF0aW9uIGRvbmUuXCI8YnIvPiJ9XX19fQ=="&gt;&lt;/span&gt;&lt;br/&gt;</code><br /><br /><br /><br />Defaults:<br /><strong>.aac</strong>, <strong>.apng</strong>, <strong>.atom</strong>,<br /><strong>.avi</strong>, <strong>.avif</strong>, <strong>avifs</strong>, <strong>.bin</strong>, <strong>.css</strong>,<br /><strong>.deb</strong>, <strong>.dll</strong>, <strong>.exe</strong>, <strong>.flac</strong>, <strong>.gif</strong>,<br /><strong>.htm</strong>, <strong>.html</strong>, <strong>.ico</strong>, <strong>.img</strong>, <strong>.iso</strong>,<br /><strong>.jpeg</strong>, <strong>.jpg</strong>, <strong>.js</strong>, <strong>.json</strong>, <strong>.md</strong>,<br /><strong>.mid</strong>, <strong>.midi</strong>, <strong>.mp3</strong>, <strong>.mp4</strong>, <strong>.mpeg</strong>,<br /><strong>.mpg</strong>, <strong>.msi</strong>, <strong>.ogg</strong>, <strong>.otf</strong>, <strong>.pdf</strong>,<br /><strong>.php</strong>, <strong>.png</strong>, <strong>.rpm</strong>, <strong>.rss</strong>, <strong>.rst</strong>,<br /><strong>.svg</strong>, <strong>.ttf</strong>, <strong>.txt</strong>, <strong>.wav</strong>, <strong>.webm</strong>,<br /><strong>.webp</strong>, <strong>.woff2</strong>, <strong>.woff</strong>, <strong>.xml</strong>, and<br /><strong>.zip</strong>.</p></td></tr></tbody></table>
-
-&nbsp;
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>body_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read data from the body<br />of a client’s request.<br />This is the interval<br />between consecutive read operations,<br />not the time to read the entire body.<br />If Unit doesn’t receive any data<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>discard_unsafe_fields</strong></p></td><td><p>Boolean;<br />controls header field name parsing.<br />If it’s set to <strong>true</strong>,<br />Unit only processes header names<br />made of alphanumeric characters and hyphens<br />(see<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-16.3.1-6">RFC 9110</a>);<br />otherwise,<br />these characters are also permitted:<br />**.!#$%&amp;’*+^_`</p></td></tr><tr><td><p><strong>header_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read the header<br />of a client’s request.<br />If Unit doesn’t receive the entire header<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Maximum number of seconds<br />between requests<br />in a keep-alive connection.<br />If no new requests<br />arrive within this interval,<br />Unit returns a 408 “Request Timeout” response<br />and closes the connection.<br /><br />The default is 180.</p></td></tr><tr><td><p><strong>log_route</strong></p></td><td><p>Boolean;<br />enables or disables<br /><a href="troubleshooting.md#troubleshooting-router-log">router logging</a>.<br /><br />The default is <strong>false</strong> (disabled).</p></td></tr><tr><td><p><strong>max_body_size</strong></p></td><td><p>Maximum number of bytes<br />in the body of a client’s request.<br />If the body size exceeds this value,<br />Unit returns a 413 “Payload Too Large” response<br />and closes the connection.<br /><br />The default is 8388608 (8 MB).</p></td></tr><tr><td><p><strong>send_timeout</strong></p></td><td><p>Maximum number of seconds<br />to transmit data<br />as a response to the client.<br />This is the interval<br />between consecutive transmissions,<br />not the time for the entire response.<br />If no data<br />is sent to the client<br />within this interval,<br />Unit closes the connection.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>server_version</strong></p></td><td><p>Boolean;<br />if set to <strong>false</strong>,<br />Unit omits version information<br />in its <strong>Server</strong> response<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110.html#section-10.2.4">header fields</a>.<br /><br />The default is <strong>true</strong>.</p></td></tr><tr><td><p><strong>static</strong></p></td><td><p>Object;<br />configures static asset handling.<br />Has a single object option named <strong>mime_types</strong><br />that defines specific<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME types</a><br />as options.<br />Their values<br />can be strings or arrays of strings;<br />each string must specify a filename extension<br />or a specific filename<br />that’s included in the MIME type.<br />You can override default MIME types<br />or add new types:<br /></p><Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT -d '{"text/x-code": [".c", ".h"]}' NXT1 \\
+       http://localhost/config/settings/http/static/mime_types
+{
+       "success": "Reconfiguration done."
+}`}</Code_Block><p>Defaults:<br /><strong>.aac</strong>, <strong>.apng</strong>, <strong>.atom</strong>,<br /><strong>.avi</strong>, <strong>.avif</strong>, <strong>avifs</strong>, <strong>.bin</strong>, <strong>.css</strong>,<br /><strong>.deb</strong>, <strong>.dll</strong>, <strong>.exe</strong>, <strong>.flac</strong>, <strong>.gif</strong>,<br /><strong>.htm</strong>, <strong>.html</strong>, <strong>.ico</strong>, <strong>.img</strong>, <strong>.iso</strong>,<br /><strong>.jpeg</strong>, <strong>.jpg</strong>, <strong>.js</strong>, <strong>.json</strong>, <strong>.md</strong>,<br /><strong>.mid</strong>, <strong>.midi</strong>, <strong>.mp3</strong>, <strong>.mp4</strong>, <strong>.mpeg</strong>,<br /><strong>.mpg</strong>, <strong>.msi</strong>, <strong>.ogg</strong>, <strong>.otf</strong>, <strong>.pdf</strong>,<br /><strong>.php</strong>, <strong>.png</strong>, <strong>.rpm</strong>, <strong>.rss</strong>, <strong>.rst</strong>,<br /><strong>.svg</strong>, <strong>.ttf</strong>, <strong>.txt</strong>, <strong>.wav</strong>, <strong>.webm</strong>,<br /><strong>.webp</strong>, <strong>.woff2</strong>, <strong>.woff</strong>, <strong>.xml</strong>, and<br /><strong>.zip</strong>.</p></td></tr></tbody></table>
 
 ## Access log
 
@@ -2937,13 +2783,13 @@ To enable basic access logging, specify the log file path in the **access\_log**
 
 In the example below, all requests will be logged to **/var/log/access.log**:
 
-```bash
-# curl -X PUT -d '"/var/log/access.log"' \
-       --unix-socket :nxt_ph:`/path/to/control.unit.sock <Path to Unit's control socket in your installation>` \
+<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT -d '"/var/log/access.log"' \\
+       --unix-socket NXT1 \\
        http://localhost/config/access_log
 
-    <span data-cms-snippet-type="inline" data-cms-snippet-id="c31e0433-738d-4301-88ae-b6e8f71e9bfb" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgICAgICBcInN1Y2Nlc3NcIjogXCJSZWNvbmZpZ3VyYXRpb24gZG9uZS5cIlxuICAgICIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICAgICAgXCJzdWNjZXNzXCI6IFwiUmVjb25maWd1cmF0aW9uIGRvbmUuXCJcbiAgICAifV19fX0="></span>
-```
+    {
+        "success": "Reconfiguration done."
+    }`}</Code_Block>
 
 By default, the log is written in the [Combined Log Format](https://httpd.apache.org/docs/2.2/logs.html#combined). Example of a CLF line:
 
@@ -2953,29 +2799,31 @@ By default, the log is written in the [Combined Log Format](https://httpd.apache
 
 ### Custom log formatting
 
-&nbsp;
-
 The **access\_log** option can be also set to an object to customize both the log path and its format:
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>format</strong></p></td><td><p>String;<br />sets the log format.<br />Besides arbitrary text,<br />can contain any<br /><a href="#configuration-variables">variables</a><br />Unit supports.</p></td></tr><tr><td><p><strong>path</strong></p></td><td><p>String;<br />pathname of the access log file.</p></td></tr></tbody></table>
 
 Example:
 
-```json
-<span data-cms-snippet-type="inline" data-cms-snippet-id="7c5b4d99-b7ad-4ece-bf81-7fea76bafd09" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgIFwiYWNjZXNzX2xvZ1wiOiB7XG4gICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYWNjZXNzLmxvZ1wiLFxuICAgICAgICBcImZvcm1hdFwiOiBcIiRyZW1vdGVfYWRkciAtIC0gWyR0aW1lX2xvY2FsXSBcXFwiJHJlcXVlc3RfbGluZVxcXCIgJHN0YXR1cyAkYm9keV9ieXRlc19zZW50IFxcXCIkaGVhZGVyX3JlZmVyZXJcXFwiIFxcXCIkaGVhZGVyX3VzZXJfYWdlbnRcXFwiXCJcbiAgICB9XG4iLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4gICAgXCJhY2Nlc3NfbG9nXCI6ICJ9LHsidGVtcGxhdGUiOiJcbiAgICAgICAgXCJwYXRoXCI6IFwiL3Zhci9sb2cvdW5pdC9hY2Nlc3MubG9nXCIsXG4gICAgICAgIFwiZm9ybWF0XCI6IFwiJHJlbW90ZV9hZGRyIC0gLSBbJHRpbWVfbG9jYWxdIFxcXCIkcmVxdWVzdF9saW5lXFxcIiAkc3RhdHVzICRib2R5X2J5dGVzX3NlbnQgXFxcIiRoZWFkZXJfcmVmZXJlclxcXCIgXFxcIiRoZWFkZXJfdXNlcl9hZ2VudFxcXCJcIlxuICAgICIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICAgICAgXCJwYXRoXCI6IFwiL3Zhci9sb2cvdW5pdC9hY2Nlc3MubG9nXCIsXG4gICAgICAgIFwiZm9ybWF0XCI6IFwiJHJlbW90ZV9hZGRyIC0gLSBbJHRpbWVfbG9jYWxdIFxcXCIkcmVxdWVzdF9saW5lXFxcIiAkc3RhdHVzICRib2R5X2J5dGVzX3NlbnQgXFxcIiRoZWFkZXJfcmVmZXJlclxcXCIgXFxcIiRoZWFkZXJfdXNlcl9hZ2VudFxcXCJcIlxuICAgICJ9XX19fSx7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiJ9XX19fQ=="></span>
-```
+<Code_Block language="json" hints={[]}>{`{
+    "access_log": {
+        "path": "/var/log/unit/access.log",
+        "format": "$remote_addr - - [$time_local] \"$request_line\" $status $body_bytes_sent \"$header_referer\" \"$header_user_agent\""
+    }
+}`}</Code_Block>
 
 By a neat coincidence, the above **format** is the default setting. Also, mind that the log entry is formed *after* the request has been handled.
 
 Besides [built-in variables](#configuration-variables-native), you can use **njs** [templates](scripting.md) to define the log format:
 
-```json
-<span data-cms-snippet-type="inline" data-cms-snippet-id="6f917e4d-3b55-49a7-867f-5cfac42ebb36" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgIFwiYWNjZXNzX2xvZ1wiOiB7XG4gICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYmFzaWNfYWNjZXNzLmxvZ1wiLFxuICAgICAgICBcImZvcm1hdFwiOiBcImAke2hvc3QgKyAnOiAnICsgdXJpfWBcIlxuICAgIH1cbiIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICBcImFjY2Vzc19sb2dcIjogIn0seyJ0ZW1wbGF0ZSI6IlxuICAgICAgICBcInBhdGhcIjogXCIvdmFyL2xvZy91bml0L2Jhc2ljX2FjY2Vzcy5sb2dcIixcbiAgICAgICAgXCJmb3JtYXRcIjogXCJgJHtob3N0ICsgJzogJyArIHVyaX1gXCJcbiAgICAiLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4gICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYmFzaWNfYWNjZXNzLmxvZ1wiLFxuICAgICAgICBcImZvcm1hdFwiOiBcImAke2hvc3QgKyAnOiAnICsgdXJpfWBcIlxuICAgICJ9XX19fSx7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiJ9XX19fQ=="></span>
-```
+<Code_Block language="json" hints={[]}>{`{
+    "access_log": {
+        "path": "/var/log/unit/basic_access.log",
+        "format": "`${host + ': ' + uri}`"
+    }
+}`}</Code_Block>
 
 ### Conditional access log
-
-&nbsp;
 
 The **access\_log** can be dynamically turned on and off by using the **if** option:
 
@@ -2985,22 +2833,31 @@ This feature lets users set conditions to determine whether access logs are reco
 
 Example without NJS:
 
-```json
-<span data-cms-snippet-type="inline" data-cms-snippet-id="3083327c-3839-40d5-9c31-73e13c4ba36f" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgXCJhY2Nlc3NfbG9nXCI6IHtcbiAgICAgIFwiaWZcIjogXCIkY29va2llX3Nlc3Npb25cIixcbiAgICAgIFwicGF0aFwiOiBcIi4uLlwiXG4gICB9XG4iLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4gICBcImFjY2Vzc19sb2dcIjogIn0seyJ0ZW1wbGF0ZSI6IlxuICAgICAgXCJpZlwiOiBcIiRjb29raWVfc2Vzc2lvblwiLFxuICAgICAgXCJwYXRoXCI6IFwiLi4uXCJcbiAgICIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICAgIFwiaWZcIjogXCIkY29va2llX3Nlc3Npb25cIixcbiAgICAgIFwicGF0aFwiOiBcIi4uLlwiXG4gICAifV19fX0seyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4ifV19fX0="></span>
-```
+<Code_Block language="json" hints={[]}>{`{
+   "access_log": {
+      "if": "$cookie_session",
+      "path": "..."
+   }
+}`}</Code_Block>
 
 All requests using a session cookie named **session** will be logged.
 
 We can add ! to inverse the condition.
 
-```json
-<span data-cms-snippet-type="inline" data-cms-snippet-id="9d9d4e49-a2e9-4bac-bf8b-9710c97dba65" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgXCJhY2Nlc3NfbG9nXCI6IHtcbiAgICAgIFwiaWZcIjogXCIhJGNvb2tpZV9zZXNzaW9uXCIsXG4gICAgICBcInBhdGhcIjogXCIuLi5cIlxuICAgfVxuIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxuICAgXCJhY2Nlc3NfbG9nXCI6ICJ9LHsidGVtcGxhdGUiOiJcbiAgICAgIFwiaWZcIjogXCIhJGNvb2tpZV9zZXNzaW9uXCIsXG4gICAgICBcInBhdGhcIjogXCIuLi5cIlxuICAgIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxuICAgICAgXCJpZlwiOiBcIiEkY29va2llX3Nlc3Npb25cIixcbiAgICAgIFwicGF0aFwiOiBcIi4uLlwiXG4gICAifV19fX0seyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4ifV19fX0="></span>
-```
+<Code_Block language="json" hints={[]}>{`{
+   "access_log": {
+      "if": "!$cookie_session",
+      "path": "..."
+   }
+}`}</Code_Block>
 
 Now, all requests without a session cookie will be logged.
 
 Example with NJS and the use of a template literal:
 
-```json
-<span data-cms-snippet-type="inline" data-cms-snippet-id="295fc433-608f-423f-8367-30fcc3353f95" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgXCJhY2Nlc3NfbG9nXCI6IHtcbiAgICAgIFwiaWZcIjogXCJgJHt1cmkgPT0gJy9oZWFsdGgnID8gZmFsc2UgOiB0cnVlfWBcIixcbiAgICAgIFwicGF0aFwiOiBcIi4uLlwiXG4gICB9XG4iLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4gICBcImFjY2Vzc19sb2dcIjogIn0seyJ0ZW1wbGF0ZSI6IlxuICAgICAgXCJpZlwiOiBcImAke3VyaSA9PSAnL2hlYWx0aCcgPyBmYWxzZSA6IHRydWV9YFwiLFxuICAgICAgXCJwYXRoXCI6IFwiLi4uXCJcbiAgICIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICAgIFwiaWZcIjogXCJgJHt1cmkgPT0gJy9oZWFsdGgnID8gZmFsc2UgOiB0cnVlfWBcIixcbiAgICAgIFwicGF0aFwiOiBcIi4uLlwiXG4gICAifV19fX0seyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXG4ifV19fX0="></span>
-```
+<Code_Block language="json" hints={[]}>{`{
+   "access_log": {
+      "if": "`${uri == '/health' ? false : true}`",
+      "path": "..."
+   }
+}`}</Code_Block>

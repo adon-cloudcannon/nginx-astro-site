@@ -783,6 +783,7 @@ Address-based patterns define individual IPv4 (dot-decimal or [CIDR](https://dat
 * Wildcards (**\***) can only match arbitrary IPs (**\*:&lt;port&gt;**).
 * Ranges (**\-**) work with both IPs (in respective notation) and ports (**&lt;start\_port&gt;-&lt;end\_port&gt;**).
 
+<Dropdown label="Address-based allow-deny lists">
 Addresses come in handy when implementing an allow-deny mechanism with routes, for instance:
 
 ```json
@@ -817,7 +818,9 @@ location / {
     root /www/data;
 }
 ```
+</Dropdown>
 
+<Dropdown label="Address pattern examples">
 This uses IPv4-based matching with wildcards and ranges:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -925,6 +928,7 @@ This matches any UNIX domain sockets:
         "pass": "NXT1"
     }
 }`}</Code_Block>
+</Dropdown>
 
 ### Handling actions
 

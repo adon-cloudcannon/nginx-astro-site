@@ -2064,7 +2064,7 @@ Unit mounts language-specific files and directories to the new root so the app s
 
 <table><thead><tr><th><p>Language</p></th><th><p>Language-Specific Mounts</p></th></tr></thead><tbody><tr><td><p>Java</p></td><td><p>- JVM’s <strong>libc.so</strong> directory<br />- Java module’s <a href="howto/source.md#modules-java">home</a> directory</p></td></tr><tr><td><p>Python</p></td><td><p>Python’s <strong>sys.path </strong><a href="https://docs.python.org/3/library/sys.html#sys.path">directories</a></p></td></tr><tr><td><p>Ruby</p></td><td><p>- Ruby’s header, interpreter, and library <a href="https://idiosyncratic-ruby.com/42-ruby-config.html">directories</a>: <strong>rubyarchhdrdir</strong>, <strong>rubyhdrdir</strong>, <strong>rubylibdir</strong>, <strong>rubylibprefix</strong>, <strong>sitedir</strong>, and <strong>topdir</strong><br />- Ruby’s gem installation directory (<strong>gem env gemdir</strong>)<br />- Ruby’s entire gem path list (<strong>gem env gempath</strong>)</p></td></tr></tbody></table>
 
-<Dropdown label="Using \"uidmap\", \"gidmap\"">
+<Dropdown label="Using 'uidmap', 'gidmap'">
 The **uidmap** and **gidmap** options are available only if the underlying OS supports [user namespaces](https://man7.org/linux/man-pages/man7/user_namespaces.7.html).
 
 If **uidmap** is omitted but **credential** isolation is enabled, the effective UID (EUID) of the application process in the host namespace is mapped to the same UID in the container namespace; the same applies to **gidmap** and GID, respectively. This means that the configuration below:

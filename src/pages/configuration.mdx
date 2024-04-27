@@ -635,9 +635,7 @@ This matches requests that either use **gzip** and identify as **Mozilla/5.0** o
 
 Individual patterns can be address-based (**source** and **destination**) or string-based (other properties).
 
-String-based patterns must match the property to a character; wildcards or
-
-modify this behavior:
+String-based patterns must match the property to a character; wildcards or modify this behavior:
 
 * A wildcard pattern may contain any combination of wildcards (**\***), each standing for an arbitrary number of characters: **How\*s\*that\*to\*you**.
 * A regex pattern starts with a tilde (**~**): **~^\\d+\\.\\d+\\.\\d+\\.\\d+** (escaping backslashes is a [JSON requirement](https://www.json.org/json-en.html)). The regexes are [PCRE](https://www.pcre.org/current/doc/html/pcre2syntax.html)\-flavored.

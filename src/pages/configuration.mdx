@@ -1011,7 +1011,7 @@ These variables can be used with:
 * **location** in **return** [actions](#configuration-return) to enable HTTP redirects.
 * **format** in the [access log](#configuration-access-log) to customize Unit’s log output.
 
-To reference a variable, prefix its name with the dollar sign character (**$**), optionally enclosing the name in curly brackets (**&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="2c8e95bb-0112-4be7-ba3c-a75bdc21e4ce" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6Ilx0XFwiLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiXHRcXCJ9XX19fQ=="&gt;**) to separate it from adjacent text or enhance visibility. Variable names can contain letters and underscores (**\_**), so use the brackets if the variable is immediately followed by such characters:
+To reference a variable, prefix its name with the dollar sign character (**$**), optionally enclosing the name in curly brackets (``) to separate it from adjacent text or enhance visibility. Variable names can contain letters and underscores (**\_**), so use the brackets if the variable is immediately followed by such characters:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "${method}", tooltip: "The method variable is thus separated from the '_route' postfix", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {

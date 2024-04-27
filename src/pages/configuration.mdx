@@ -1540,6 +1540,7 @@ With **chroot** set, **follow\_symlinks** and **traverse\_mounts** only affect p
 
 Here, **www/** and interpolated **$host** can be symlinks or mount points, but any symlinks and mount points beyond them, including the **static/** portion, won’t be resolved.
 
+<Dropdown label="Details">
 Suppose you want to serve files from a share that itself includes a symlink (let’s assume **$host** always resolves to **localhost** and make it a symlink in our example) but disable any symlinks inside the share.
 
 Initial configuration:
@@ -1615,6 +1616,7 @@ $ curl http://localhost/index.html
 
       <!DOCTYPE html><title>Error 403</title><p>Error 403.
 ```
+</Dropdown>
 
 ### Fallback action
 

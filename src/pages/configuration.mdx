@@ -1657,6 +1657,7 @@ If the **fallback** itself is a **share**, it can also contain a nested **fallba
 
 The first **share** tries to serve the request from **/www/data/static/**; on failure, the second **share** tries the **/www/cache/** path with **chroot** enabled. If both attempts fail, the request is proxied elsewhere.
 
+<Dropdown label="Examples">
 One common use case that this feature enables is the separation of requests for static and dynamic content into independent routes. The following example relays all requests that target **.php** files to an application and uses a catch-all static **share** with a **fallback**:
 
 ```json
@@ -1776,6 +1777,7 @@ Another way to combine **share**, **types**, and **fallback** is exemplified by 
 ```
 
 It forwards explicit requests for PHP files to the app while serving all other types of files from the share; note that a **match** object isn’t needed here to achieve this effect.
+</Dropdown>
 
 ## Proxying
 

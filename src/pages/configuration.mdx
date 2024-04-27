@@ -640,6 +640,7 @@ String-based patterns must match the property to a character; wildcards or modif
 * A wildcard pattern may contain any combination of wildcards (**\***), each standing for an arbitrary number of characters: **How\*s\*that\*to\*you**.
 * A regex pattern starts with a tilde (**~**): **~^\\d+\\.\\d+\\.\\d+\\.\\d+** (escaping backslashes is a [JSON requirement](https://www.json.org/json-en.html)). The regexes are [PCRE](https://www.pcre.org/current/doc/html/pcre2syntax.html)\-flavored.
 
+<Dropdown label="Percent encoding in arguments, query, and URI patterns">
 Argument names, non-regex string patterns in **arguments**, **query**, and **uri** can be [percent encoded](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) to mask special characters (**!** is **%21**, **~** is **%7E**, **\*** is **%2A**, **%** is **%25**) or even target single bytes. For example, you can select diacritics such as Ö or Å by their starting byte **0xC3** in UTF-8:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -680,7 +681,9 @@ This condition matches the following percent-encoded request:
       ...`}</Code_Block>
 
 Note that the encoded spaces (**%20**) in the request match their unencoded counterparts in the pattern; vice versa, the encoded tilde (**%7E**) in the condition matches **~** in the request.
+</Dropdown>
 
+<Dropdown label="String pattern examples">
 A regular expression that matches any **.php** files in the **/data/www/** directory and its subdirectories. Note the backslashes; escaping is a JSON-specific requirement:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -773,6 +776,7 @@ Here, URIs of any articles that don’t look like **YYYY-MM-DD** dates match. Ag
         "pass": "NXT1"
     }
 }`}</Code_Block>
+</Dropdown>
 
 Address-based patterns define individual IPv4 (dot-decimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4632)), IPv6 (hexadecimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4291#section-2.3)), or any [UNIX domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket) addresses that must exactly match the property; wildcards and ranges modify this behavior:
 

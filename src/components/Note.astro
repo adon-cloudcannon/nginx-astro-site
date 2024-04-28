@@ -2,6 +2,11 @@
 import { parse_marked } from "@utils/nxt"
 const { type } = Astro.props
 let body = await Astro.slots.render('default')
+body = body.replaceAll("&quot;",`"`)
+            .replaceAll("&amp;","&")
+            .replaceAll("&#39;","'")
+            .replaceAll("&lt;","<")
+            .replaceAll("&gt;",">")
 let parsed = parse_marked(body)
 ---
 <div class=`admonition ${type}`>

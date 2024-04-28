@@ -1041,9 +1041,7 @@ To reference a variable, prefix its name with the dollar sign character (**$**),
 
 To reference an **arg\_\***, **cookie\_\***, or **header\_\*** variable, add the name you need to the prefix. A query string of **Type=car&Color=red** yields two variables, **$arg\_Type** and **$arg\_Color**; Unit additionally normalizes capitalization and hyphenation in header field names, so the **Accept-Encoding** header field can also be referred to as **$header\_Accept\_Encoding**, **$header\_accept-encoding**, or **$header\_accept\_encoding**.
 
-<Note type="note">
-With multiple argument instances (think **Color=Red&Color=Blue**), the rightmost one is used (**Blue**).
-</Note>
+<Note type="note">{`With multiple argument instances (think **Color=Red&Color=Blue**), the rightmost one is used (**Blue**).`}</Note>
 
 At runtime, variables expand into dynamically computed values (at your risk!). The previous example targets an entire set of routes, picking individual ones by HTTP verbs from the incoming requests:
 

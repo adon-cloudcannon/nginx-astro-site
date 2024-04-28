@@ -1365,19 +1365,15 @@ Consider the following configuration:
 
 It uses [variable interpolation](#configuration-variables): Unit replaces the **$uri** reference with its current value and tries the resulting path. If this doesn’t yield a servable file, a 404 “Not Found” response is returned.
 
-<Note type="warning">
-Before version 1.26.0, Unit used **share** as the document root. This was changed for flexibility, so now **share** must resolve to specific files. A common solution is to append **$uri** to your document root.
+<Note type="warning">{`Before version 1.26.0, Unit used **share** as the document root. This was changed for flexibility, so now **share** must resolve to specific files. A common solution is to append **$uri** to your document root.
 
 Pre-1.26, the snippet above would’ve looked like this:
 
-```json
-"action": {
+<Code_Block language="json" hints={[]}>{`"action": {
     "share": "/www/static/"
-}
-```
+}`}</Code_Block>
 
-Mind that URI paths always start with a slash, so there’s no need to separate the directory from **$uri**; even if you do, Unit compacts adjacent slashes during path resolution, so there won’t be an issue.
-</Note>
+Mind that URI paths always start with a slash, so there’s no need to separate the directory from **$uri**; even if you do, Unit compacts adjacent slashes during path resolution, so there won’t be an issue.`}</Note>
 
 If **share** is an array, its items are searched in order of appearance until a servable file is found:
 

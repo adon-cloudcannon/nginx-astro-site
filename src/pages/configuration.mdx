@@ -20,7 +20,7 @@ To accept requests, add a listener object in the **config/listeners** API sectio
 
 * A unique IP socket: **127\.0.0.1:80**, **\[::1\]:8080**
 * A wildcard that matches any host IPs on the port: **\*:80**
-* On Linux-based systems, : [abstract UNIX sockets](https://man7.org/linux/man-pages/man7/unix.7.html) can be used as well: **unix:@abstract\_socket**.
+* On Linux-based systems, [abstract UNIX sockets](https://man7.org/linux/man-pages/man7/unix.7.html) can be used as well: **unix:@abstract\_socket**.
 
 <Note type="note">
 Also on Linux-based systems, wildcard listeners can’t overlap with other listeners on the same port due to rules imposed by the kernel. For example, **\*:8080** conflicts with **127\.0.0.1:8080**; in particular, this means **\*:8080** can’t be *immediately* replaced by **127\.0.0.1:8080** (or vice versa) without deleting it first.
@@ -30,12 +30,11 @@ Unit dispatches the requests it receives to destinations referenced by listeners
 
 Available listener options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>pass</strong> (required)</p></td><td><p>Destination to which the listener passes incoming requests.<br />Possible alternatives:<br /><br />- <a href="#configuration-applications">Application</a>:<br />  <strong>applications/qwk2mart</strong><br />- <a href="#configuration-php-targets">PHP target</a><br />  or<br />  <a href="#configuration-python-targets">Python target</a>:<br />  <strong>applications/myapp/section</strong><br />- <a href="#configuration-routes">Route</a>:<br />  <strong>routes/route66</strong>, <strong>routes</strong><br />- <a href="#configuration-upstreams">Upstream</a>:<br />  <strong>upstreams/rr-lb</strong><br /><br />The value is<br /><a href="#configuration-variables">variable</a><br />-interpolated;<br />if it matches no configuration entities after interpolation,<br />a 404 “Not Found” response is returned.</p></td></tr><tr><td><p><strong>forwarded</strong></p></td><td><p>Object;<br />configures client IP address and protocol<br /><a href="#configuration-listeners-forwarded">replacement</a>.</p></td></tr><tr><td><p><strong>tls</strong></p></td><td><p>Object;<br />defines SSL/TLS<br /><a href="#configuration-listeners-ssl">settings</a>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>pass</strong> (required)</p></td><td><p>Destination to which the listener passes incoming requests. Possible alternatives:<br /><br />- <a href="#configuration-applications">Application</a>: <strong>applications/qwk2mart</strong><br />- <a href="#configuration-php-targets">PHP target</a> or <a href="#configuration-python-targets">Python target</a>: <strong>applications/myapp/section</strong><br />- <a href="#configuration-routes">Route</a>: <strong>routes/route66</strong>, <strong>routes</strong><br />- <a href="#configuration-upstreams">Upstream</a>: <strong>upstreams/rr-lb</strong><br /><br />The value is <a href="#configuration-variables">variable</a> -interpolated; if it matches no configuration entities after interpolation, a 404 “Not Found” response is returned.</p></td></tr><tr><td><p><strong>forwarded</strong></p></td><td><p>Object; configures client IP address and protocol <a href="#configuration-listeners-forwarded">replacement</a>.</p></td></tr><tr><td><p><strong>tls</strong></p></td><td><p>Object; defines SSL/TLS <a href="#configuration-listeners-ssl">settings</a>.</p></td></tr></tbody></table>
 
 Here, a local listener accepts requests at port 8300 and passes them to the **blogs** app [target](#configuration-php-targets) identified by the **uri** [variable](#configuration-variables). The wildcard listener on port 8400 relays requests at any host IPs to the **main** [route](#configuration-routes):
 
-```json
-{
+<Code_Block language="json" hints={[]}>{`{
     "127.0.0.1:8300": {
         "pass": "applications/blogs$uri"
     },
@@ -43,13 +42,11 @@ Here, a local listener accepts requests at port 8300 and passes them to the **bl
     "*:8400": {
         "pass": "routes/main"
     }
-}
-```
+}`}</Code_Block>
 
 Also, **pass** values can be [percent encoded](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1). For example, you can escape slashes in entity names:
 
-```json
-{
+<Code_Block language="json" hints={[]}>{`{
     "listeners": {
          "*:80": {
              "pass": "routes/slashes%2Fin%2Froute%2Fname"
@@ -59,16 +56,14 @@ Also, **pass** values can be [percent encoded](https://datatracker.ietf.org/doc/
     "routes": {
          "slashes/in/route/name": []
     }
-}
-```
-
-&nbsp;
+}`}</Code_Block>
 
 ### SSL/TLS configuration
 
 The **tls** object provides the following options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>certificate</strong> (required)</p></td><td><p>String or an array of strings;<br />refers to one or more<br /><a href="certificates.md#configuration-ssl">certificate bundles</a><br />uploaded earlier,<br />enabling secure communication via the listener.</p></td></tr><tr><td><p><strong>conf_commands</strong></p></td><td><p>Object;<br />defines the OpenSSL<br /><a href="https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html">configuration commands</a><br />to be set for the listener.<br /><br />To have this option,<br />Unit must be built and run with OpenSSL 1.0.2+:<br /><br /><code>bash&lt;br/&gt;$ openssl version&lt;br/&gt;&lt;br/&gt;      OpenSSL 1.1.1d  10 Sep 2019&lt;br/&gt;</code><br /><br />Also, make sure your OpenSSL version supports the commands<br />set by this option.</p></td></tr><tr><td><p><strong>session</strong></p></td><td><p>Object; configures the TLS session cache and tickets<br />for the listener.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>certificate</strong> (required)</p></td><td><p>String or an array of strings; refers to one or more <a href="certificates.md#configuration-ssl">certificate bundles</a> uploaded earlier, enabling secure communication via the listener.</p></td></tr><tr><td><p><strong>conf_commands</strong></p></td><td><p>Object; defines the OpenSSL <a href="https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html">configuration commands</a> to be set for the listener.<br /><br />To have this option, Unit must be built and run with OpenSSL 1.0.2+:<br /></p><Code_Block language="bash" hints={[]}>{`$ openssl version
+      OpenSSL 1.1.1d  10 Sep 2019`}</Code_Block><p>Also, make sure your OpenSSL version supports the commands<br />set by this option.</p></td></tr><tr><td><p><strong>session</strong></p></td><td><p>Object; configures the TLS session cache and tickets for the listener.</p></td></tr></tbody></table>
 
 To use a certificate bundle you [uploaded](certificates.md#configuration-ssl) earlier, name it in the **certificate** option of the **tls** object:
 
@@ -83,6 +78,7 @@ To use a certificate bundle you [uploaded](certificates.md#configuration-ssl) ea
     }
 }`}</Code_Block>
 
+<Dropdown label="Configuring multiple bundles">
 Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](https://datatracker.ietf.org/doc/html/rfc6066#section-3) on a listener by supplying an array of certificate bundle names for the **certificate** option value:
 
 ```json
@@ -103,6 +99,7 @@ Since version 1.23.0, Unit supports configuring [Server Name Indication (SNI)](h
 * If the connecting client sends a server name, Unit responds with the matching certificate bundle.
 * If the name matches several bundles, exact matches have priority over wildcards; if this doesn’t help, the one listed first is used.
 * If there’s no match or no server name was sent, Unit uses the first bundle on the list.
+</Dropdown>
 
 To set custom OpenSSL [configuration commands](https://www.openssl.org/docs/manmaster/man3/SSL_CONF_cmd.html) for a listener, use the **conf\_commands** object in **tls**:
 
@@ -118,7 +115,7 @@ To set custom OpenSSL [configuration commands](https://www.openssl.org/docs/manm
 
 The **session** object in **tls** configures the session settings of the listener:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>cache_size</strong></p></td><td><p>Integer;<br />sets the number of sessions in the TLS session cache.<br /><br />The default is <strong>0</strong><br />(caching is disabled).</p></td></tr><tr><td><p><strong>tickets</strong></p></td><td><p>Boolean, string, or an array of strings;<br />configures TLS session tickets.<br /><br />The default is <strong>false</strong><br />(tickets are disabled).</p></td></tr><tr><td><p><strong>timeout</strong></p></td><td><p>Integer;<br />sets the session timeout for the TLS session cache.<br /><br />When a new session is created,<br />its lifetime derives from current time and <strong>timeout</strong>.<br />If a cached session is requested past its lifetime,<br />it is not reused.<br /><br />The default is <strong>300</strong><br />(5 minutes).</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>cache_size</strong></p></td><td><p>Integer; sets the number of sessions in the TLS session cache.<br /><br />The default is <strong>0 </strong>(caching is disabled).</p></td></tr><tr><td><p><strong>tickets</strong></p></td><td><p>Boolean, string, or an array of strings; configures TLS session tickets.<br /><br />The default is <strong>false </strong>(tickets are disabled).</p></td></tr><tr><td><p><strong>timeout</strong></p></td><td><p>Integer; sets the session timeout for the TLS session cache.<br /><br />When a new session is created, its lifetime derives from current time and <strong>timeout</strong>. If a cached session is requested past its lifetime, it is not reused.<br /><br />The default is <strong>300 </strong>(5 minutes).</p></td></tr></tbody></table>
 
 Example:
 
@@ -202,7 +199,8 @@ Unit supports AES256 (80-byte keys) or AES128 (48-byte keys); the bytes should b
 <Code_Block language="console" hints={[]}>{`$ openssl rand -base64 48
         LoYjFVxpUFFOj4TzGkr5MsSIRMjhuh8RCsVvtIJiQ12FGhn0nhvvQsEND1+OugQ7
 $ openssl rand -base64 80
-        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK       YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA=`}</Code_Block>
+        GQczhdXawyhTrWrtOXI7l3YYUY98PrFYzjGhBbiQsAWgaxm+mbkm4MmZZpDw0tkK
+        YTqYWxofDtDC4VBznbBwTJTCgYkJXknJc4Gk2zqD1YA=`}</Code_Block>
 
 * An array of strings just like the one above:
 
@@ -225,7 +223,7 @@ An empty array effectively disables session tickets, same as setting **tickets**
 
 Unit enables the **X-Forwarded-\*** header fields with the **forwarded** object and its options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>source</strong> (required)</p></td><td><p>String or an array of strings;<br />defines<br /><a href="#configuration-routes-matching-patterns">address-based patterns</a><br />for trusted addresses.<br />Replacement occurs only if the source IP of the request is a<br /><a href="#configuration-routes-matching-resolution">match</a>.<br /><br />A special case here is the <strong>“unix”</strong> string;<br />it matches <em>any</em> UNIX domain sockets.</p></td></tr><tr><td><p><strong>client_ip</strong></p></td><td><p>String;<br />names the HTTP header fields to expect in the request.<br />They should use the<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For">X-Forwarded-For</a><br />format where the value is a comma- or space-separated list<br />of IPv4s or IPv6s.</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String;<br />defines the relevant HTTP header field to look for in the request.<br />Unit expects it to follow the<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto">X-Forwarded-Proto</a><br />notation,<br />with the field value itself<br />being <strong>http</strong>, <strong>https</strong>, or <strong>on</strong>.</p></td></tr><tr><td><p><strong>recursive</strong></p></td><td><p>Boolean;<br />controls how the <strong>client_ip</strong> fields are traversed.<br /><br />The default is <strong>false</strong><br />(no recursion).</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>source</strong> (required)</p></td><td><p>String or an array of strings; defines <a href="#configuration-routes-matching-patterns">address-based patterns</a> for trusted addresses. Replacement occurs only if the source IP of the request is a <a href="#configuration-routes-matching-resolution">match</a>.<br /><br />A special case here is the <strong>“unix”</strong> string; it matches <em>any</em> UNIX domain sockets.</p></td></tr><tr><td><p><strong>client_ip</strong></p></td><td><p>String; names the HTTP header fields to expect in the request. They should use the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For">X-Forwarded-For</a> format where the value is a comma- or space-separated list of IPv4s or IPv6s.</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String; defines the relevant HTTP header field to look for in the request. Unit expects it to follow the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto">X-Forwarded-Proto</a> notation, with the field value itself being <strong>http</strong>, <strong>https</strong>, or <strong>on</strong>.</p></td></tr><tr><td><p><strong>recursive</strong></p></td><td><p>Boolean; controls how the <strong>client_ip</strong> fields are traversed.<br /><br />The default is <strong>false </strong>(no recursion).</p></td></tr></tbody></table>
 
 <Note type="note">
 Besides **source**, the **forwarded** object must specify **client\_ip**, **protocol**, or both.
@@ -346,7 +344,7 @@ Another form is an object with one or more named route arrays as members:
 
 A [route](#configuration-routes) array contains step objects as elements; they accept the following options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>action</strong> (required)</p></td><td><p>Object;<br />defines how matching requests are<br /><a href="#configuration-routes-action">handled</a>.</p></td></tr><tr><td><p><strong>match</strong></p></td><td><p>Object;<br />defines the step’s<br /><a href="#configuration-routes-matching">conditions</a><br />to be matched.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>action</strong> (required)</p></td><td><p>Object; defines how matching requests are <a href="#configuration-routes-action">handled</a>.</p></td></tr><tr><td><p><strong>match</strong></p></td><td><p>Object; defines the step’s <a href="#configuration-routes-matching">conditions</a> to be matched.</p></td></tr></tbody></table>
 
 A request passed to a route traverses its steps sequentially:
 
@@ -448,7 +446,7 @@ Here, a route called **main** is explicitly defined, so **routes** is an object 
 
 Conditions in a [route step](#configuration-routes-step)’s **match** object define patterns to be compared to the request’s properties:
 
-<table><thead><tr><th><p>Property</p></th><th><p>Patterns Are Matched Against</p></th><th><p>Case‑</p></th></tr></thead><tbody><tr><td><p><strong>arguments</strong></p></td><td><p>Arguments supplied with the request’s<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a>;<br />these names and value pairs are<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>,<br />with plus signs<br />(<strong>+</strong>)<br />replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>cookies</strong></p></td><td><p>Cookies supplied with the request.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>destination</strong></p></td><td><p>Target IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>headers</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-6.3">Header fields</a><br />supplied with the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p><strong>Host</strong><br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-7.2">header field</a>,<br />converted to lower case and normalized<br />by removing the port number and the trailing period<br />(if any).</p></td><td><p>No</p></td></tr><tr><td><p><strong>method</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">Method</a><br />from the request line,<br />uppercased.</p></td><td><p>No</p></td></tr><tr><td><p><strong>query</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">Query string</a>,<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>,<br />with plus signs<br />(<strong>+</strong>)<br />replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>scheme</strong></p></td><td><p>URI<br /><a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">scheme</a>.<br />Accepts only two patterns,<br />either <strong>http</strong> or <strong>https</strong>.</p></td><td><p>No</p></td></tr><tr><td><p><strong>source</strong></p></td><td><p>Source IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>uri</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#target.resource">Request target</a>,<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a><br />and normalized<br />by removing the<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a><br />and resolving<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-4.2">relative references</a><br />(“.” and “..”, “//”).</p></td><td><p>Yes</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Property</p></th><th><p>Patterns Are Matched Against</p></th><th><p>Case‑</p></th></tr></thead><tbody><tr><td><p><strong>arguments</strong></p></td><td><p>Arguments supplied with the request’s <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a>; these names and value pairs are <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>, with plus signs (<strong>+</strong>) replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>cookies</strong></p></td><td><p>Cookies supplied with the request.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>destination</strong></p></td><td><p>Target IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>headers</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-6.3">Header fields</a> supplied with the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p><strong>Host </strong><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-7.2">header field</a>, converted to lower case and normalized by removing the port number and the trailing period (if any).</p></td><td><p>No</p></td></tr><tr><td><p><strong>method</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">Method</a> from the request line, uppercased.</p></td><td><p>No</p></td></tr><tr><td><p><strong>query</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">Query string</a>, <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>, with plus signs (<strong>+</strong>) replaced by spaces.</p></td><td><p>Yes</p></td></tr><tr><td><p><strong>scheme</strong></p></td><td><p>URI <a href="https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml">scheme</a>. Accepts only two patterns, either <strong>http</strong> or <strong>https</strong>.</p></td><td><p>No</p></td></tr><tr><td><p><strong>source</strong></p></td><td><p>Source IP address and optional port of the request.</p></td><td><p>No</p></td></tr><tr><td><p><strong>uri</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc9110#target.resource">Request target</a>, <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a> and normalized by removing the <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query string</a> and resolving <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-4.2">relative references</a><br />(“.” and “..”, “//”).</p></td><td><p>Yes</p></td></tr></tbody></table>
 
 <Dropdown label="Arguments vs. query">
 Both **arguments** and **query** operate on the query string, but **query** is matched against the entire string whereas **arguments** considers only the key-value pairs such as **key1=4861&key2=a4f3**.
@@ -497,10 +495,11 @@ To be a match, the property must meet two requirements:
 * If there are patterns without negation (the **!** prefix), at least one of them matches the property value.
 * No negated patterns match the property value.
 
+<Dropdown label="Formal explanation">
 This logic can be described with set operations. Suppose set *U* comprises all possible values of a property; set *P* comprises strings that match any patterns without negation; set *N* comprises strings that match any negation-based patterns. In this scheme, the matching set is:
 
-*U* ∩ *P* \\ *N* if *P* ≠ ∅
-*U* \\ *N* if *P* = ∅
+*U* ∩ *P* \\ *N* if *P* ≠ ∅ *U* \\ *N* if *P* = ∅
+</Dropdown>
 
 Here, the URI of the request must fit **pattern3**, but must not match **pattern1** or **pattern2**:
 
@@ -595,6 +594,7 @@ The following example combines all matching types. Here, **host**, **method**, *
     }
 }`}</Code_Block>
 
+<Dropdown label="Object pattern examples">
 This requires **mode=strict** and any **access** argument other than **access=full** in the URI query:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_hint" }]}>{`{
@@ -629,18 +629,18 @@ This matches requests that either use **gzip** and identify as **Mozilla/5.0** o
         "pass": "NXT1"
     }
 }`}</Code_Block>
+</Dropdown>
 
 #### Pattern syntax
 
 Individual patterns can be address-based (**source** and **destination**) or string-based (other properties).
 
-String-based patterns must match the property to a character; wildcards or
-
-modify this behavior:
+String-based patterns must match the property to a character; wildcards or modify this behavior:
 
 * A wildcard pattern may contain any combination of wildcards (**\***), each standing for an arbitrary number of characters: **How\*s\*that\*to\*you**.
 * A regex pattern starts with a tilde (**~**): **~^\\d+\\.\\d+\\.\\d+\\.\\d+** (escaping backslashes is a [JSON requirement](https://www.json.org/json-en.html)). The regexes are [PCRE](https://www.pcre.org/current/doc/html/pcre2syntax.html)\-flavored.
 
+<Dropdown label="Percent encoding in arguments, query, and URI patterns">
 Argument names, non-regex string patterns in **arguments**, **query**, and **uri** can be [percent encoded](https://datatracker.ietf.org/doc/html/rfc3986#section-2.1) to mask special characters (**!** is **%21**, **~** is **%7E**, **\*** is **%2A**, **%** is **%25**) or even target single bytes. For example, you can select diacritics such as Ö or Å by their starting byte **0xC3** in UTF-8:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -681,7 +681,9 @@ This condition matches the following percent-encoded request:
       ...`}</Code_Block>
 
 Note that the encoded spaces (**%20**) in the request match their unencoded counterparts in the pattern; vice versa, the encoded tilde (**%7E**) in the condition matches **~** in the request.
+</Dropdown>
 
+<Dropdown label="String pattern examples">
 A regular expression that matches any **.php** files in the **/data/www/** directory and its subdirectories. Note the backslashes; escaping is a JSON-specific requirement:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -774,12 +776,14 @@ Here, URIs of any articles that don’t look like **YYYY-MM-DD** dates match. Ag
         "pass": "NXT1"
     }
 }`}</Code_Block>
+</Dropdown>
 
 Address-based patterns define individual IPv4 (dot-decimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4632)), IPv6 (hexadecimal or [CIDR](https://datatracker.ietf.org/doc/html/rfc4291#section-2.3)), or any [UNIX domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket) addresses that must exactly match the property; wildcards and ranges modify this behavior:
 
 * Wildcards (**\***) can only match arbitrary IPs (**\*:&lt;port&gt;**).
 * Ranges (**\-**) work with both IPs (in respective notation) and ports (**&lt;start\_port&gt;-&lt;end\_port&gt;**).
 
+<Dropdown label="Address-based allow-deny lists">
 Addresses come in handy when implementing an allow-deny mechanism with routes, for instance:
 
 ```json
@@ -814,7 +818,9 @@ location / {
     root /www/data;
 }
 ```
+</Dropdown>
 
+<Dropdown label="Address pattern examples">
 This uses IPv4-based matching with wildcards and ranges:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "...", tooltip: "Any acceptable 'pass' value may go here; see the 'Listeners' section for details", nxt_type: "nxt_ph" }]}>{`{
@@ -922,16 +928,17 @@ This matches any UNIX domain sockets:
         "pass": "NXT1"
     }
 }`}</Code_Block>
+</Dropdown>
 
 ### Handling actions
 
 If a request matches all [conditions](#configuration-routes-matching) of a route step or the step itself omits the **match** object, Unit handles the request with the respective **action**. The mutually exclusive **action** types are:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th><th><p>Details</p></th></tr></thead><tbody><tr><td><p><strong>pass</strong></p></td><td><p>Destination for the request,<br />identical to a listener’s <strong>pass</strong> option.</p></td><td><p><a href="#configuration-listeners">Listeners</a></p></td></tr><tr><td><p><strong>proxy</strong></p></td><td><p>Socket address of an HTTP server<br />to where the request is proxied.</p></td><td><p><a href="#configuration-proxy">Proxying</a></p></td></tr><tr><td><p><strong>return</strong></p></td><td><p>HTTP status code<br />with a context-dependent redirect location.</p></td><td><p><a href="#configuration-return">Instant responses, redirects</a></p></td></tr><tr><td><p><strong>share</strong></p></td><td><p>File paths that serve the request with static content.</p></td><td><p><a href="#configuration-static">Static files</a></p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th><th><p>Details</p></th></tr></thead><tbody><tr><td><p><strong>pass</strong></p></td><td><p>Destination for the request, identical to a listener’s <strong>pass</strong> option.</p></td><td><p><a href="#configuration-listeners">Listeners</a></p></td></tr><tr><td><p><strong>proxy</strong></p></td><td><p>Socket address of an HTTP server to where the request is proxied.</p></td><td><p><a href="#configuration-proxy">Proxying</a></p></td></tr><tr><td><p><strong>return</strong></p></td><td><p>HTTP status code with a context-dependent redirect location.</p></td><td><p><a href="#configuration-return">Instant responses, redirects</a></p></td></tr><tr><td><p><strong>share</strong></p></td><td><p>File paths that serve the request with static content.</p></td><td><p><a href="#configuration-static">Static files</a></p></td></tr></tbody></table>
 
 An additional option is applicable to any of these actions:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th><th><p>Details</p></th></tr></thead><tbody><tr><td><p><strong>response_headers</strong></p></td><td><p>Updates the header fields<br />of the upcoming response.</p></td><td><p><a href="#configuration-response-headers">Response headers</a></p></td></tr><tr><td><p><strong>rewrite</strong></p></td><td><p>Updated the request URI,<br />preserving the query string.</p></td><td><p><a href="#configuration-rewrite">URI rewrite</a></p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th><th><p>Details</p></th></tr></thead><tbody><tr><td><p><strong>response_headers</strong></p></td><td><p>Updates the header fields of the upcoming response.</p></td><td><p><a href="#configuration-response-headers">Response headers</a></p></td></tr><tr><td><p><strong>rewrite</strong></p></td><td><p>Updated the request URI, preserving the query string.</p></td><td><p><a href="#configuration-rewrite">URI rewrite</a></p></td></tr></tbody></table>
 
 An example:
 
@@ -994,7 +1001,7 @@ An example:
 
 Some options in Unit configuration allow the use of [variables](#configuration-variables-native) whose values are calculated at runtime. There’s a number of built-in variables available:
 
-<table><thead><tr><th><p>Variable</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>arg_\*</strong>, <strong>cookie_\*</strong>, <strong>header_\*</strong></p></td><td><p>Variables that store<br /><a href="#configuration-routes-matching">request arguments, cookies, and header fields</a>,<br />such as <strong>arg_queryTimeout</strong>,<br /><strong>cookie_sessionId</strong>,<br />or <strong>header_Accept_Encoding</strong>.<br />The names of the <strong>header_\*</strong> variables are case insensitive.</p></td></tr><tr><td><p><strong>body_bytes_sent</strong></p></td><td><p>Number of bytes sent in the response body.</p></td></tr><tr><td><p><strong>dollar</strong></p></td><td><p>Literal dollar sign (<strong>$</strong>),<br />used for escaping.</p></td></tr><tr><td><p><strong>header_referer</strong></p></td><td><p>Contents of the <strong>Referer</strong> request<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer">header field</a>.</p></td></tr><tr><td><p><strong>header_user_agent</strong></p></td><td><p>Contents of the <strong>User-Agent</strong> request<br /><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent">header field</a>.</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p><strong>Host</strong><br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-7.2">header field</a>,<br />converted to lower case and normalized<br />by removing the port number<br />and the trailing period (if any).</p></td></tr><tr><td><p><strong>method</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">Method</a><br />from the request line.</p></td></tr><tr><td><p><strong>remote_addr</strong></p></td><td><p>Remote IP address of the request.</p></td></tr><tr><td><p><strong>request_id</strong></p></td><td><p>Contains a string generated with random data. Can be used as a unique<br />request identifier.</p></td></tr><tr><td><p><strong>request_line</strong></p></td><td><p>Entire<br /><a href="https://datatracker.ietf.org/doc/html/rfc9112#section-3">request line</a>.</p></td></tr><tr><td><p><strong>request_time</strong></p></td><td><p>Request processing time in milliseconds,<br />formatted as follows:<br /><strong>1.234</strong>.</p></td></tr><tr><td><p><strong>request_uri</strong></p></td><td><p>Request target<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a><br /><em>including</em> the<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query</a>,<br />normalized by resolving relative path references<br />(“.” and “..”)<br />and collapsing adjacent slashes.</p></td></tr><tr><td><p><strong>response_header_*</strong></p></td><td><p>Variables that store<br /><a href="#configuration-response-headers">response header fields</a>,<br />such as <strong>response_header_content_type</strong>.<br />The names of these variables are case insensitive.</p></td></tr><tr><td><p><strong>status</strong></p></td><td><p>HTTP<br /><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6">status code</a><br />of the response.</p></td></tr><tr><td><p><strong>time_local</strong></p></td><td><p>Local time,<br />formatted as follows:<br /><strong>31/Dec/1986:19:40:00 +0300</strong>.</p></td></tr><tr><td><p><strong>uri</strong></p></td><td><p>Request target<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a><br /><em>without</em> the <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query</a><br />part,<br />normalized by resolving relative path references<br />(“.” and “..”)<br />and collapsing adjacent slashes.<br />The value is<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>:<br />Unit interpolates all percent-encoded entities<br />in the request target<br /><a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Variable</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>arg_\*</strong>, <strong>cookie_\*</strong>, <strong>header_\*</strong></p></td><td><p>Variables that store <a href="#configuration-routes-matching">request arguments, cookies, and header fields</a>, such as <strong>arg_queryTimeout</strong>, <strong>cookie_sessionId</strong>, or <strong>header_Accept_Encoding</strong>. The names of the <strong>header_\*</strong> variables are case insensitive.</p></td></tr><tr><td><p><strong>body_bytes_sent</strong></p></td><td><p>Number of bytes sent in the response body.</p></td></tr><tr><td><p><strong>dollar</strong></p></td><td><p>Literal dollar sign (<strong>$</strong>), used for escaping.</p></td></tr><tr><td><p><strong>header_referer</strong></p></td><td><p>Contents of the <strong>Referer</strong> request <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer">header field</a>.</p></td></tr><tr><td><p><strong>header_user_agent</strong></p></td><td><p>Contents of the <strong>User-Agent</strong> request <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent">header field</a>.</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p><strong>Host </strong><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-7.2">header field</a>, converted to lower case and normalized by removing the port number and the trailing period (if any).</p></td></tr><tr><td><p><strong>method</strong></p></td><td><p><a href="https://datatracker.ietf.org/doc/html/rfc7231#section-4">Method</a> from the request line.</p></td></tr><tr><td><p><strong>remote_addr</strong></p></td><td><p>Remote IP address of the request.</p></td></tr><tr><td><p><strong>request_id</strong></p></td><td><p>Contains a string generated with random data. Can be used as a unique request identifier.</p></td></tr><tr><td><p><strong>request_line</strong></p></td><td><p>Entire <a href="https://datatracker.ietf.org/doc/html/rfc9112#section-3">request line</a>.</p></td></tr><tr><td><p><strong>request_time</strong></p></td><td><p>Request processing time in milliseconds, formatted as follows: <strong>1.234</strong>.</p></td></tr><tr><td><p><strong>request_uri</strong></p></td><td><p>Request target <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a> <em>including</em> the <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query</a>, normalized by resolving relative path references (“.” and “..”) and collapsing adjacent slashes.</p></td></tr><tr><td><p><strong>response_header_*</strong></p></td><td><p>Variables that store <a href="#configuration-response-headers">response header fields</a>, such as <strong>response_header_content_type</strong>. The names of these variables are case insensitive.</p></td></tr><tr><td><p><strong>status</strong></p></td><td><p>HTTP <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6">status code</a> of the response.</p></td></tr><tr><td><p><strong>time_local</strong></p></td><td><p>Local time, formatted as follows: <strong>31/Dec/1986:19:40:00 +0300</strong>.</p></td></tr><tr><td><p><strong>uri</strong></p></td><td><p>Request target <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a> <em>without</em> the <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.4">query</a> part, normalized by resolving relative path references (“.” and “..”) and collapsing adjacent slashes. The value is <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-2.1">percent decoded</a>: Unit interpolates all percent-encoded entities in the request target <a href="https://datatracker.ietf.org/doc/html/rfc3986#section-3.3">path</a>.</p></td></tr></tbody></table>
 
 These variables can be used with:
 
@@ -1004,7 +1011,7 @@ These variables can be used with:
 * **location** in **return** [actions](#configuration-return) to enable HTTP redirects.
 * **format** in the [access log](#configuration-access-log) to customize Unit’s log output.
 
-To reference a variable, prefix its name with the dollar sign character (**$**), optionally enclosing the name in curly brackets (**{}**) to separate it from adjacent text or enhance visibility. Variable names can contain letters and underscores (**\_**), so use the brackets if the variable is immediately followed by such characters:
+To reference a variable, prefix its name with the dollar sign character (**$**), optionally enclosing the name in curly brackets (`{ }`) to separate it from adjacent text or enhance visibility. Variable names can contain letters and underscores (**\_**), so use the brackets if the variable is immediately followed by such characters:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "${method}", tooltip: "The method variable is thus separated from the '_route' postfix", nxt_type: "nxt_hint" }]}>{`{
     "listeners": {
@@ -1068,6 +1075,7 @@ $ curl -i --head http://localhost  # Bumpy ride ahead, no route defined
 
 If you reference a non-existing variable, it is considered empty.
 
+<Dropdown label="Examples">
 This configuration selects the static file location based on the requested hostname; if nothing’s found, it attempts to retrieve the requested file from a common storage:
 
 <Code_Block language="json" hints={[{ number: "1", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }, { number: "2", display_text: "$uri", tooltip: "Note that the $uri variable value always includes a starting slash", nxt_type: "nxt_hint" }]}>{`{
@@ -1185,6 +1193,7 @@ Here, a redirect uses the **$request\_uri** variable value to relay the request,
     }
 }
 ```
+</Dropdown>
 
 ## URI rewrite
 
@@ -1291,7 +1300,7 @@ You can use route step [actions](#configuration-routes-action) to instantly hand
 
 The **return** action provides the following options:
 
-<table><thead><tr><th><p><strong>return</strong> (required)</p></th><th><p>Integer (000–999);<br />defines the HTTP response status code<br />to be returned.</p></th></tr></thead><tbody><tr><td><p><strong>location</strong></p></td><td><p>String URI;<br />used if the <strong>return</strong> value implies redirection.</p></td></tr></tbody></table>
+<table><tbody><tr><td><p><strong>return (required)</strong></p></td><td><p>Integer (000–999); defines the HTTP response status code to be returned.</p></td></tr><tr><td><p><strong>location</strong></p></td><td><p>String URI; used if the <strong>return</strong> value implies redirection.</p></td></tr></tbody></table>
 
 Use the codes according to their intended [semantics](https://datatracker.ietf.org/doc/html/rfc7231#section-6); if you use custom codes, make sure that user agents can understand them.
 
@@ -1342,7 +1351,7 @@ Unit is capable of acting as a standalone web server, efficiently serving static
 
 A **share**\-based action provides the following options:
 
-<table><thead><tr><th><p><strong>share</strong> (required)</p></th><th><p>String or an array of strings;<br />lists file paths that are tried<br />until a file is found.<br />When no file is found,<br /><strong>fallback</strong> is used if set.<br /><br />The value is<br /><a href="#configuration-variables">variable</a>-interpolated.</p></th></tr></thead><tbody><tr><td><p><strong>index</strong></p></td><td><p>Filename;<br />tried if <strong>share</strong> is a directory.<br />When no file is found,<br /><strong>fallback</strong> is used if set.<br /><br />The default is <strong>index.html</strong>.</p></td></tr><tr><td><p><strong>fallback</strong></p></td><td><p>Action-like <a href="#configuration-fallback">object</a>;<br />used if the request<br />can’t be served by <strong>share</strong> or <strong>index</strong>.</p></td></tr><tr><td><p><strong>types</strong></p></td><td><p><a href="#configuration-share-mime">Array</a><br />of<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME type</a><br />patterns;<br />used to filter the shared files.</p></td></tr><tr><td><p><strong>chroot</strong></p></td><td><p>Directory pathname that<br /><a href="#configuration-share-path">restricts</a><br />the shareable paths.<br /><br />The value is<br /><a href="#configuration-variables">variable</a>-interpolated.</p></td></tr><tr><td><p><strong>follow_symlinks</strong>, <strong>traverse_mounts</strong></p></td><td><p>Booleans;<br />turn on and off symbolic link and mount point<br /><a href="#configuration-share-resolution">resolution</a><br />respectively;<br />if <strong>chroot</strong> is set,<br />they only<br /><a href="#configuration-share-path">affect</a><br />the insides of <strong>chroot</strong>.<br /><br />The default for both options is <strong>true</strong><br />(resolve links and mounts).</p></td></tr></tbody></table>
+<table><tbody><tr><td><p><strong>share (required)</strong></p></td><td><p>String or an array of strings; lists file paths that are tried until a file is found. When no file is found, <strong>fallback</strong> is used if set.</p><p>The value is <a href="#configuration-variables">variable</a>-interpolated.</p></td></tr><tr><td><p><strong>index</strong></p></td><td><p>Filename; tried if <strong>share</strong> is a directory. When no file is found, <strong>fallback</strong> is used if set.<br /><br />The default is <strong>index.html</strong>.</p></td></tr><tr><td><p><strong>fallback</strong></p></td><td><p>Action-like <a href="#configuration-fallback">object</a>; used if the request<br />can’t be served by <strong>share</strong> or <strong>index</strong>.</p></td></tr><tr><td><p><strong>types</strong></p></td><td><p><a href="#configuration-share-mime">Array</a> of <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME type</a> patterns; used to filter the shared files.</p></td></tr><tr><td><p><strong>chroot</strong></p></td><td><p>Directory pathname that <a href="#configuration-share-path">restricts</a> the shareable paths.<br /><br />The value is <a href="#configuration-variables">variable</a>-interpolated.</p></td></tr><tr><td><p><strong>follow_symlinks</strong>, <strong>traverse_mounts</strong></p></td><td><p>Booleans; turn on and off symbolic link and mount point <a href="#configuration-share-resolution">resolution</a> respectively; if <strong>chroot</strong> is set, they only <a href="#configuration-share-path">affect</a> the insides of <strong>chroot</strong>.<br /><br />The default for both options is <strong>true </strong>(resolve links and mounts).</p></td></tr></tbody></table>
 
 <Note type="note">
 To serve the files, Unit’s router process must be able to access them; thus, the account this process runs as must have proper permissions [assigned](howto/security.md#security-apps). When Unit is installed from the [official packages](installation.md#installation-precomp-pkgs), the process runs as **unit:unit**; for details of other installation methods, see [Installation](installation.md).
@@ -1531,6 +1540,7 @@ With **chroot** set, **follow\_symlinks** and **traverse\_mounts** only affect p
 
 Here, **www/** and interpolated **$host** can be symlinks or mount points, but any symlinks and mount points beyond them, including the **static/** portion, won’t be resolved.
 
+<Dropdown label="Details">
 Suppose you want to serve files from a share that itself includes a symlink (let’s assume **$host** always resolves to **localhost** and make it a symlink in our example) but disable any symlinks inside the share.
 
 Initial configuration:
@@ -1606,6 +1616,7 @@ $ curl http://localhost/index.html
 
       <!DOCTYPE html><title>Error 403</title><p>Error 403.
 ```
+</Dropdown>
 
 ### Fallback action
 
@@ -1646,6 +1657,7 @@ If the **fallback** itself is a **share**, it can also contain a nested **fallba
 
 The first **share** tries to serve the request from **/www/data/static/**; on failure, the second **share** tries the **/www/cache/** path with **chroot** enabled. If both attempts fail, the request is proxied elsewhere.
 
+<Dropdown label="Examples">
 One common use case that this feature enables is the separation of requests for static and dynamic content into independent routes. The following example relays all requests that target **.php** files to an application and uses a catch-all static **share** with a **fallback**:
 
 ```json
@@ -1765,6 +1777,7 @@ Another way to combine **share**, **types**, and **fallback** is exemplified by 
 ```
 
 It forwards explicit requests for PHP files to the app while serving all other types of files from the share; note that a **match** object isn’t needed here to achieve this effect.
+</Dropdown>
 
 ## Proxying
 
@@ -1877,7 +1890,7 @@ Here, Unit runs 20 processes of a PHP app called **blogs**, stored in the **/www
 
 App objects have a number of options shared between all application languages:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>type</strong> (required)</p></td><td><p>Application type:<br /><strong>external</strong><br />(Go and Node.js),<br /><strong>java</strong>,<br /><strong>perl</strong>,<br /><strong>php</strong>,<br /><strong>python</strong>,<br /><strong>ruby</strong>,<br />or <strong>wasm</strong><br />(WebAssembly).<br /><br />Except for <strong>external</strong> and <strong>wasm</strong>,<br />you can detail the runtime version:<br /><strong>“type”: “python 3”</strong>,<br /><strong>“type”: “python 3.4”</strong>,<br />or even<br /><strong>“type”: “python 3.4.9rc1”</strong>.<br />Unit searches its modules<br />and uses the latest matching one,<br />reporting an error if none match.<br /><br />For example, if you have only one PHP module,<br />7.1.9,<br />it matches <strong>“php”</strong>,<br /><strong>“php 7”</strong>,<br /><strong>“php 7.1”</strong>,<br />and <strong>“php 7.1.9”</strong>.<br />If you have modules for versions 7.0.2 and 7.0.23,<br />set <strong>“type”: “php 7.0.2”</strong> to specify the former;<br />otherwise, PHP&nbsp;7.0.23 will be used.</p></td></tr><tr><td><p><strong>environment</strong></p></td><td><p>String-valued object;<br />environment variables to be passed to the app.</p></td></tr><tr><td><p><strong>group</strong></p></td><td><p>String;<br />group name that runs the<br /><a href="howto/security.md#sec-processes">app process</a>.<br /><br />The default is the <strong>user</strong>’s primary group.</p></td></tr><tr><td><p><strong>isolation</strong></p></td><td><p>Object; manages the isolation<br />of an application process.<br />For details, see<br /><a href="#configuration-proc-mgmt-isolation">here</a>.</p></td></tr><tr><td><p><strong>limits</strong></p></td><td><p>Object; accepts two integer options,<br /><strong>timeout</strong> and <strong>requests</strong>.<br />Their values govern the life cycle of an application process.<br />For details, see<br /><a href="#configuration-proc-mgmt-lmts">here</a>.</p></td></tr><tr><td><p><strong>processes</strong></p></td><td><p>Integer or object;<br />integer sets a static number of app processes,<br />and object options <strong>max</strong>,<br /><strong>spare</strong>,<br />and <strong>idle_timeout</strong><br />enable dynamic management.<br />For details, see<br /><a href="#configuration-proc-mgmt-prcs">here</a>.<br /><br />The default is 1.</p></td></tr><tr><td><p><strong>stderr</strong>, <strong>stdout</strong></p></td><td><p>Strings;<br />filenames where Unit redirects<br />the application’s output.<br /><br />The default is <strong>/dev/null</strong>.<br /><br />When running in <strong>--no-daemon</strong> mode, application output<br />is always redirected to<br /><a href="troubleshooting.md#troubleshooting-log">Unit’s log file</a>.</p></td></tr><tr><td><p><strong>user</strong></p></td><td><p>String;<br />username that runs the<br /><a href="howto/security.md#sec-processes">app process</a>.<br /><br />The default is the username configured at<br /><a href="howto/source.md#source-config-src">build time</a><br />or at<br /><a href="howto/source.md#source-startup">startup</a>.</p></td></tr><tr><td><p><strong>working_directory</strong></p></td><td><p>String;<br />the app’s working directory.<br /><br />The default is<br />the working directory<br />of Unit’s<br /><a href="howto/security.md#sec-processes">main process</a>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>type</strong> (required)</p></td><td><p>Application type: <strong>external </strong>(Go and Node.js), <strong>java</strong>, <strong>perl</strong>, <strong>php</strong>, <strong>python</strong>, <strong>ruby</strong>, or <strong>wasm </strong>(WebAssembly).<br /><br />Except for <strong>external</strong> and <strong>wasm</strong>, you can detail the runtime version: <strong>“type”: “python 3”</strong>, <strong>“type”: “python 3.4”</strong>, or even <strong>“type”: “python 3.4.9rc1”</strong>. Unit searches its modules and uses the latest matching one, reporting an error if none match.<br /><br />For example, if you have only one PHP module, 7.1.9, it matches <strong>“php”</strong>, <strong>“php 7”</strong>, <strong>“php 7.1”</strong>, and <strong>“php 7.1.9”</strong>. If you have modules for versions 7.0.2 and 7.0.23, set <strong>“type”: “php 7.0.2”</strong> to specify the former; otherwise, PHP&nbsp;7.0.23 will be used.</p></td></tr><tr><td><p><strong>environment</strong></p></td><td><p>String-valued object; environment variables to be passed to the app.</p></td></tr><tr><td><p><strong>group</strong></p></td><td><p>String; group name that runs the <a href="howto/security.md#sec-processes">app process</a>.<br /><br />The default is the <strong>user</strong>’s primary group.</p></td></tr><tr><td><p><strong>isolation</strong></p></td><td><p>Object; manages the isolation of an application process. For details, see <a href="#configuration-proc-mgmt-isolation">here</a>.</p></td></tr><tr><td><p><strong>limits</strong></p></td><td><p>Object; accepts two integer options, <strong>timeout</strong> and <strong>requests</strong>. Their values govern the life cycle of an application process. For details, see <a href="#configuration-proc-mgmt-lmts">here</a>.</p></td></tr><tr><td><p><strong>processes</strong></p></td><td><p>Integer or object; integer sets a static number of app processes, and object options <strong>max</strong>, <strong>spare</strong>, and <strong>idle_timeout </strong>enable dynamic management. For details, see <a href="#configuration-proc-mgmt-prcs">here</a>.<br /><br />The default is 1.</p></td></tr><tr><td><p><strong>stderr</strong>, <strong>stdout</strong></p></td><td><p>Strings; filenames where Unit redirects the application’s output.<br /><br />The default is <strong>/dev/null</strong>.<br /><br />When running in <strong>--no-daemon</strong> mode, application output is always redirected to <a href="troubleshooting.md#troubleshooting-log">Unit’s log file</a>.</p></td></tr><tr><td><p><strong>user</strong></p></td><td><p>String; username that runs the <a href="howto/security.md#sec-processes">app process</a>.<br /><br />The default is the username configured at <a href="howto/source.md#source-config-src">build time</a> or at <a href="howto/source.md#source-startup">startup</a>.</p></td></tr><tr><td><p><strong>working_directory</strong></p></td><td><p>String; the app’s working directory.<br /><br />The default is the working directory of Unit’s <a href="howto/security.md#sec-processes">main process</a>.</p></td></tr></tbody></table>
 
 Also, you need to set **type**\-specific options to run the app. This [Python app](#configuration-python) sets **path** and **module**:
 
@@ -1919,7 +1932,7 @@ You can use [namespace](https://man7.org/linux/man-pages/man7/namespaces.7.html)
 
 The **isolation** application option has the following members:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>automount</strong></p></td><td><p>Object;<br />controls mount behavior<br />if <strong>rootfs</strong> is enabled.<br />By default, Unit automatically mounts the<br /><a href="#conf-rootfs">language runtime dependencies</a>,<br />a<br /><a href="https://man7.org/linux/man-pages/man5/procfs.5.html">procfs</a><br />at <strong>/proc/</strong>,<br />and a<br /><a href="https://man7.org/linux/man-pages/man5/tmpfs.5.html">tmpfs</a> at <strong>/tmp/</strong>,<br />but you can disable any of these default mounts:</p><Code_Block language="json" hints={[]}>{`{
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>automount</strong></p></td><td><p>Object; controls mount behavior if <strong>rootfs</strong> is enabled. By default, Unit automatically mounts the <a href="#conf-rootfs">language runtime dependencies</a>, a <a href="https://man7.org/linux/man-pages/man5/procfs.5.html">procfs</a> at <strong>/proc/</strong>, and a <a href="https://man7.org/linux/man-pages/man5/tmpfs.5.html">tmpfs</a> at <strong>/tmp/</strong>, but you can disable any of these default mounts:</p><Code_Block language="json" hints={[]}>{`{
     "isolation": {
         "automount": {
             "language_deps": false,
@@ -1927,7 +1940,7 @@ The **isolation** application option has the following members:
             "tmpfs": false
         }
     }
-}`}</Code_Block></td></tr><tr><td><p><strong>cgroup</strong></p></td><td><p>Object;<br />defines the app’s<br /><a href="#conf-app-cgroup">cgroup</a>.<br /><br /></p></td></tr><tr><td><p><strong>gidmap</strong></p></td><td><p>Same as <strong>uidmap</strong>,<br />but configures group IDs instead of user IDs.</p></td></tr><tr><td><p><strong>namespaces</strong></p></td><td><p>Object; configures<br /><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">namespace</a><br />isolation scheme for the application.<br /><br />Available options<br />(system-dependent;<br />check your OS manual for guidance):<br /><br /></p></td></tr><tr><td><p><strong>rootfs</strong></p></td><td><p>String; pathname of the directory<br />to be used as the new<br /><a href="#conf-rootfs">file system root</a><br />for the app.</p></td></tr><tr><td><p><strong>uidmap</strong></p></td><td><p>Array of user ID<br /><a href="#conf-uidgid-mapping">mapping objects</a>;<br />each array item must define the following:<br /><br /></p></td></tr></tbody></table>
+}`}</Code_Block></td></tr><tr><td><p><strong>cgroup</strong></p></td><td><p>Object; defines the app’s <a href="#conf-app-cgroup">cgroup</a>.</p><table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>path</strong> (required)</p></td><td><p>String; configures absolute or relative path of the app in the <a href="https://man7.org/linux/man-pages/man7/cgroups.7.html#CGROUPS_VERSION_2">cgroups v2 hierarchy</a>. The limits trickle down the hierarchy, so child cgroups can’t exceed parental thresholds.</p></td></tr></tbody></table></td></tr><tr><td><p><strong>gidmap</strong></p></td><td><p>Same as <strong>uidmap</strong>, but configures group IDs instead of user IDs.</p></td></tr><tr><td><p><strong>namespaces</strong></p></td><td><p>Object; configures <a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">namespace</a> isolation scheme for the application.<br /><br />Available options (system-dependent; check your OS manual for guidance):</p><table><tbody><tr><td><p><strong>cgroup</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/cgroup_namespaces.7.html">cgroup</a> namespace for the app.</p></td></tr><tr><td><p><strong>credential</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/user_namespaces.7.html">user</a> namespace for the app.</p></td></tr><tr><td><p><strong>mount</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/mount_namespaces.7.html">mount</a> namespace for the app.</p></td></tr><tr><td><p><strong>network</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/network_namespaces.7.html">network</a> namespace for the app.</p></td></tr><tr><td><p><strong>pid</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/pid_namespaces.7.html">PID</a> namespace for the app.</p></td></tr><tr><td><p><strong>uname</strong></p></td><td><p>Creates a new <a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">UTS</a> namespace for the app.</p></td></tr></tbody></table><p>All options listed above are Boolean; to isolate the app, set the corresponding namespace option to <strong>true</strong>; to disable isolation, set the option to <strong>false</strong> (default).</p></td></tr><tr><td><p><strong>rootfs</strong></p></td><td><p>String; pathname of the directory to be used as the new <a href="#conf-rootfs">file system root</a> for the app.</p></td></tr><tr><td><p><strong>uidmap</strong></p></td><td><p>Array of user ID <a href="#conf-uidgid-mapping">mapping objects</a>; each array item must define the following:</p><table><tbody><tr><td><p><strong>container</strong></p></td><td><p>Integer; starts the user ID mapping range in the app’s namespace.</p></td></tr><tr><td><p><strong>host</strong></p></td><td><p>Integer; starts the user ID mapping range in the OS namespace.</p></td></tr><tr><td><p><strong>size</strong></p></td><td><p>Integer; size of the ID range in both namespaces.</p></td></tr></tbody></table></td></tr></tbody></table>
 
 A sample **isolation** object that enables all namespaces and sets mappings for user and group IDs:
 
@@ -2049,8 +2062,9 @@ Ensure that the user the app *runs as* can access the **rootfs** directory.
 
 Unit mounts language-specific files and directories to the new root so the app stays operational:
 
-<table><thead><tr><th><p>Language</p></th><th><p>Language-Specific Mounts</p></th></tr></thead><tbody><tr><td><p>Java</p></td><td><p>- JVM’s <strong>libc.so</strong> directory<br />- Java module’s<br />  <a href="howto/source.md#modules-java">home</a><br />  directory</p></td></tr><tr><td><p>Python</p></td><td><p>Python’s <strong>sys.path</strong><br /><a href="https://docs.python.org/3/library/sys.html#sys.path">directories</a></p></td></tr><tr><td><p>Ruby</p></td><td><p>- Ruby’s header, interpreter, and library<br />  <a href="https://idiosyncratic-ruby.com/42-ruby-config.html">directories</a>:<br />  <strong>rubyarchhdrdir</strong>,<br />  <strong>rubyhdrdir</strong>,<br />  <strong>rubylibdir</strong>,<br />  <strong>rubylibprefix</strong>,<br />  <strong>sitedir</strong>,<br />  and <strong>topdir</strong><br />- Ruby’s gem installation directory<br />  (<strong>gem env gemdir</strong>)<br />- Ruby’s entire gem path list<br />  (<strong>gem env gempath</strong>)</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Language</p></th><th><p>Language-Specific Mounts</p></th></tr></thead><tbody><tr><td><p>Java</p></td><td><p>- JVM’s <strong>libc.so</strong> directory<br />- Java module’s <a href="howto/source.md#modules-java">home</a> directory</p></td></tr><tr><td><p>Python</p></td><td><p>Python’s <strong>sys.path </strong><a href="https://docs.python.org/3/library/sys.html#sys.path">directories</a></p></td></tr><tr><td><p>Ruby</p></td><td><p>- Ruby’s header, interpreter, and library <a href="https://idiosyncratic-ruby.com/42-ruby-config.html">directories</a>: <strong>rubyarchhdrdir</strong>, <strong>rubyhdrdir</strong>, <strong>rubylibdir</strong>, <strong>rubylibprefix</strong>, <strong>sitedir</strong>, and <strong>topdir</strong><br />- Ruby’s gem installation directory (<strong>gem env gemdir</strong>)<br />- Ruby’s entire gem path list (<strong>gem env gempath</strong>)</p></td></tr></tbody></table>
 
+<Dropdown label="Using 'uidmap', 'gidmap'">
 The **uidmap** and **gidmap** options are available only if the underlying OS supports [user namespaces](https://man7.org/linux/man-pages/man7/user_namespaces.7.html).
 
 If **uidmap** is omitted but **credential** isolation is enabled, the effective UID (EUID) of the application process in the host namespace is mapped to the same UID in the container namespace; the same applies to **gidmap** and GID, respectively. This means that the configuration below:
@@ -2094,12 +2108,15 @@ Is equivalent to the following (assuming **some\_user**’s EUID and EGID are bo
     }
 }
 ```
+</Dropdown>
 
 #### Request limits
 
 The **limits** object controls request handling by the app process and has two integer options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>requests</strong></p></td><td><p>Integer;<br />maximum number of requests<br />an app process can serve.<br />When the limit is reached,<br />the process restarts;<br />this mitigates possible memory leaks<br />or other cumulative issues.</p></td></tr><tr><td><p><strong>timeout</strong></p></td><td><p>Integer;<br />request timeout in seconds.<br />If an app process exceeds it<br />while handling a request,<br />Unit cancels the request<br />and returns a 503 “Service Unavailable” response<br />to the client.<br /><br />#### NOTE<br />Now, Unit doesn’t detect freezes,<br />so the hanging process stays on<br />the app’s process pool.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>requests</strong></p></td><td><p>Integer; maximum number of requests an app process can serve. When the limit is reached, the process restarts; this mitigates possible memory leaks or other cumulative issues.</p></td></tr><tr><td><p><strong>timeout</strong></p></td><td><p>Integer; request timeout in seconds. If an app process exceeds it while handling a request, Unit cancels the request and returns a 503 “Service Unavailable” response to the client.</p><Note type="note">{`
+Now, Unit doesn’t detect freezes, so the hanging process stays on the app’s process pool.
+`}</Note></td></tr></tbody></table>
 
 Example:
 
@@ -2121,7 +2138,7 @@ The **processes** option offers a choice between static and dynamic process mana
 
 To enable a dynamic prefork model for your app, supply a **processes** object with the following options:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Number of seconds<br />Unit waits for<br />before terminating an idle process<br />that exceeds <strong>spare</strong>.</p></td></tr><tr><td><p><strong>max</strong></p></td><td><p>Maximum number of application processes<br />that Unit maintains<br />(busy and idle).<br /><br />The default is 1.</p></td></tr><tr><td><p><strong>spare</strong></p></td><td><p>Minimum number of idle processes<br />that Unit tries to maintain for an app.<br />When the app is started,<br /><strong>spare</strong> idles are launched;<br />Unit passes new requests to existing idles,<br />forking new idles<br />to keep the <strong>spare</strong> level<br />if <strong>max</strong> allows.<br />When busy processes complete their work<br />and turn idle again,<br />Unit terminates extra idles<br />after <strong>idle_timeout</strong>.</p></td></tr></tbody></table>
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Number of seconds Unit waits for before terminating an idle process that exceeds <strong>spare</strong>.</p></td></tr><tr><td><p><strong>max</strong></p></td><td><p>Maximum number of application processes that Unit maintains (busy and idle).<br /><br />The default is 1.</p></td></tr><tr><td><p><strong>spare</strong></p></td><td><p>Minimum number of idle processes that Unit tries to maintain for an app. When the app is started, <strong>spare</strong> idles are launched; Unit passes new requests to existing idles, forking new idles to keep the <strong>spare</strong> level if <strong>max</strong> allows. When busy processes complete their work and turn idle again, Unit terminates extra idles after <strong>idle_timeout</strong>.</p></td></tr></tbody></table>
 
 If **processes** is omitted entirely, Unit creates 1 static process. If an empty object is provided: `"processes": {}`, dynamic behavior with default option values is assumed.
 
@@ -2487,8 +2504,7 @@ First, make sure to install Unit along with the [Python language module](install
 
 Besides the [common options](#configuration-apps-common), you have:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String;<br />app’s module name.<br />This module is<br /><a href="https://docs.python.org/3/reference/import.html">imported</a><br />by Unit<br />the usual Python way.</p></td></tr><tr><td><p><strong>callable</strong></p></td><td><p>String;<br />name of the <strong>module</strong>-based callable<br />that Unit runs as the app.<br /><br />The default is <strong>application</strong>.</p></td></tr><tr><td><p><strong>home</strong></p></td><td><p>String;<br />path to the app’s<br /><a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments">virtual environment</a>.<br />Absolute or relative to <strong>working_directory</strong>.</p><Note type="note">The Python version used to run the app is determined by **type**; for performance, Unit doesn’t use the command-line interpreter from the virtual environment.</Note>
-<p>Seeing this in Unit’s<br /><a href="troubleshooting.md#troubleshooting-log">log</a><br />after you set up <strong>home</strong> for your app?<br />This usually occurs<br />if the interpreter can’t use the virtual environment,<br />possible reasons including:<br /><br />- Version mismatch<br />  between the <strong>type</strong> setting<br />  and the virtual environment;<br />  check the environment’s version:<br /> </p><Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/venv", tooltip: "Path to the virtual environment; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`$ source NXT1/bin/activate
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String;<br />app’s module name.<br />This module is<br /><a href="https://docs.python.org/3/reference/import.html">imported</a><br />by Unit<br />the usual Python way.</p></td></tr><tr><td><p><strong>callable</strong></p></td><td><p>String;<br />name of the <strong>module</strong>-based callable<br />that Unit runs as the app.<br /><br />The default is <strong>application</strong>.</p></td></tr><tr><td><p><strong>home</strong></p></td><td><p>String;<br />path to the app’s<br /><a href="https://packaging.python.org/en/latest/tutorials/installing-packages/#creating-virtual-environments">virtual environment</a>.<br />Absolute or relative to <strong>working_directory</strong>.</p><p><Note type="note">The Python version used to run the app is determined by **type**; for performance, Unit doesn’t use the command-line interpreter from the virtual environment.</Note> </p><p>Seeing this in Unit’s<br /><a href="troubleshooting.md#troubleshooting-log">log</a><br />after you set up <strong>home</strong> for your app?<br />This usually occurs<br />if the interpreter can’t use the virtual environment,<br />possible reasons including:<br /><br />- Version mismatch<br />  between the <strong>type</strong> setting<br />  and the virtual environment;<br />  check the environment’s version:<br /> </p><Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/venv", tooltip: "Path to the virtual environment; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`$ source NXT1/bin/activate
 (venv) $ python --version`}</Code_Block><p><br />- Unit’s unprivileged user<br />  (usually <strong>unit</strong>)<br />  having no access to the environment’s files;<br />  assign the necessary rights:<br />  </p><Code_Block language="bash" hints={[{ number: "1", display_text: "unit:unit", tooltip: "User and group that Unit's router runs as by default", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/venv/", tooltip: "Path to the virtual environment; use a real path in your commands", nxt_type: "nxt_ph" }]}>{`# chown -R NXT1 NXT2`}</Code_Block></td></tr><tr><td><p><strong>path</strong></p></td><td><p>String or an array of strings;<br />additional Python module lookup paths.<br />These values are prepended to <strong>sys.path</strong>.</p></td></tr><tr><td><p><strong>prefix</strong></p></td><td><p>String;<br /><strong>SCRIPT_NAME</strong> context value for WSGI<br />or the <strong>root_path</strong> context value for ASGI.<br />Should start with a slash<br />(<strong>/</strong>).</p></td></tr><tr><td><p><strong>protocol</strong></p></td><td><p>String;<br />hints Unit that the app uses a certain interface.<br />Can be <strong>asgi</strong> or <strong>wsgi</strong>.</p></td></tr><tr><td><p><strong>targets</strong></p></td><td><p>Object;<br />app sections with<br /><a href="#configuration-python-targets">custom</a><br /><strong>module</strong> and <strong>callable</strong> values.</p></td></tr><tr><td><p><strong>thread_stack_size</strong></p></td><td><p>Integer;<br />stack size of a worker thread<br />(in bytes,<br />multiple of memory page size;<br />the minimum value is usually architecture specific).<br /><br />The default is usually system dependent<br />and can be set with <strong>ulimit -s &lt;SIZE_KB&gt;</strong>.</p></td></tr><tr><td><p><strong>threads</strong></p></td><td><p>Integer;<br />number of worker threads<br />per <a href="howto/security.md#sec-processes">app process</a>.<br />When started,<br />each app process creates this number of threads<br />to handle requests.<br /><br />The default is <strong>1</strong>.</p></td></tr></tbody></table>
 
 Example:
@@ -2727,7 +2743,7 @@ First, make sure to install Unit along with the [WebAssembly language module](in
 
 Besides the [common options](#configuration-apps-common), you have:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String; WebAssembly module pathname, including the <strong>.wasm</strong> extension,<br />for instance: <strong>applications/wasmapp/module.wasm</strong>.</p></td></tr><tr><td><p><strong>request_handler</strong> (required)</p></td><td><p>String; name of the request handler function. If you use Unit<br />with the official <strong>unit-wasm</strong> <a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific; see the<br /><a href="https://github.com/nginx/unit-wasm/">SDK</a> documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />The runtime calls this handler, providing the address of the<br />shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>malloc_handler</strong> (required)</p></td><td><p>String; name of the memory allocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module startup to allocate<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>free_handler</strong> (required)</p></td><td><p>String;  name of the memory deallocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module shutdown to free<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists directories<br />the application can access:</p><Code_Block language="json" hints={[]}>{`"access": {
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>module</strong> (required)</p></td><td><p>String; WebAssembly module pathname, including the <strong>.wasm</strong> extension,<br />for instance: <strong>applications/wasmapp/module.wasm</strong>.</p></td></tr><tr><td><p><strong>request_handler</strong> (required)</p></td><td><p>String; name of the request handler function. If you use Unit<br />with the official <strong>unit-wasm</strong> <a href="installation.md#installation-precomp-pkgs">package</a>,<br />the value is language specific; see the<br /><a href="https://github.com/nginx/unit-wasm/">SDK</a> documentation for details.<br />Otherwise, use the name of your custom implementation.<br /><br />The runtime calls this handler, providing the address of the<br />shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>malloc_handler</strong> (required)</p></td><td><p>String; name of the memory allocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module startup to allocate<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>free_handler</strong> (required)</p></td><td><p>String;  name of the memory deallocator function.  See note above regarding<br />language-specific handlers in the official unit-wasm package.<br /><br />The runtime calls this handler at language module shutdown to free<br />the shared memory block used to pass data in and out the app.</p></td></tr><tr><td><p><strong>access</strong></p></td><td><p>Object;  its only array member, <strong>filesystem</strong>, lists directories<br />the application can access:</p><Code_Block language="json" hints={[]}>{`"access":{
     "filesystem": [
         "/tmp/",
         "/var/tmp/"
@@ -2771,12 +2787,12 @@ Unit has a global **settings** configuration object that stores instance-wide pr
 
 In turn, the **http** option exposes the following settings:
 
-<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>body_read_timeout</strong></p></td><td><p>Maximum number of seconds to read data from the body of a client’s request. This is the interval between consecutive read operations, not the time to read the entire body. If Unit doesn’t receive any data from the client within this interval, it returns a 408 “Request Timeout” response. The default is 30.</p></td></tr><tr><td><p><strong>discard_unsafe_fields</strong></p></td><td><p>Boolean;<br />controls header field name parsing.<br />If it’s set to <strong>true</strong>,<br />Unit only processes header names<br />made of alphanumeric characters and hyphens<br />(see<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-16.3.1-6">RFC 9110</a>);<br />otherwise,<br />these characters are also permitted:**.!#$%&’\*+^\_\`|\~**<br />The default is **true**.</p></td></tr><tr><td><p><strong>header_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read the header<br />of a client’s request.<br />If Unit doesn’t receive the entire header<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Maximum number of seconds<br />between requests<br />in a keep-alive connection.<br />If no new requests<br />arrive within this interval,<br />Unit returns a 408 “Request Timeout” response<br />and closes the connection.<br /><br />The default is 180.</p></td></tr><tr><td><p><strong>log_route</strong></p></td><td><p>Boolean;<br />enables or disables<br /><a href="troubleshooting.md#troubleshooting-router-log">router logging</a>.<br /><br />The default is <strong>false</strong> (disabled).</p></td></tr><tr><td><p><strong>max_body_size</strong></p></td><td><p>Maximum number of bytes<br />in the body of a client’s request.<br />If the body size exceeds this value,<br />Unit returns a 413 “Payload Too Large” response<br />and closes the connection.<br /><br />The default is 8388608 (8 MB).</p></td></tr><tr><td><p><strong>send_timeout</strong></p></td><td><p>Maximum number of seconds<br />to transmit data<br />as a response to the client.<br />This is the interval<br />between consecutive transmissions,<br />not the time for the entire response.<br />If no data<br />is sent to the client<br />within this interval,<br />Unit closes the connection.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>server_version</strong></p></td><td><p>Boolean;<br />if set to <strong>false</strong>,<br />Unit omits version information<br />in its <strong>Server</strong> response<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110.html#section-10.2.4">header fields</a>.<br /><br />The default is <strong>true</strong>.</p></td></tr><tr><td><p><strong>static</strong></p></td><td><p>Object;<br />configures static asset handling.<br />Has a single object option named <strong>mime_types</strong><br />that defines specific<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME types</a><br />as options.<br />Their values<br />can be strings or arrays of strings;<br />each string must specify a filename extension<br />or a specific filename<br />that’s included in the MIME type.<br />You can override default MIME types<br />or add new types:</p><Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT -d '\{"text/x-code": [".c", ".h"]\}' NXT1 \\
+<table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>body_read_timeout</strong></p></td><td><p>Maximum number of seconds to read data from the body of a client’s request. This is the interval between consecutive read operations, not the time to read the entire body. If Unit doesn’t receive any data from the client within this interval, it returns a 408 “Request Timeout” response. The default is 30.</p></td></tr><tr><td><p><strong>discard_unsafe_fields</strong></p></td><td><p>Boolean;<br />controls header field name parsing.<br />If it’s set to <strong>true</strong>,<br />Unit only processes header names<br />made of alphanumeric characters and hyphens<br />(see<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110#section-16.3.1-6">RFC 9110</a>);<br />otherwise,<br />these characters are also permitted:**.!#$%&amp;’\*+^\_\`|\~**<br />The default is **true**.</p></td></tr><tr><td><p><strong>header_read_timeout</strong></p></td><td><p>Maximum number of seconds<br />to read the header<br />of a client’s request.<br />If Unit doesn’t receive the entire header<br />from the client<br />within this interval,<br />it returns a 408 “Request Timeout” response.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>idle_timeout</strong></p></td><td><p>Maximum number of seconds<br />between requests<br />in a keep-alive connection.<br />If no new requests<br />arrive within this interval,<br />Unit returns a 408 “Request Timeout” response<br />and closes the connection.<br /><br />The default is 180.</p></td></tr><tr><td><p><strong>log_route</strong></p></td><td><p>Boolean;<br />enables or disables<br /><a href="troubleshooting.md#troubleshooting-router-log">router logging</a>.<br /><br />The default is <strong>false</strong> (disabled).</p></td></tr><tr><td><p><strong>max_body_size</strong></p></td><td><p>Maximum number of bytes<br />in the body of a client’s request.<br />If the body size exceeds this value,<br />Unit returns a 413 “Payload Too Large” response<br />and closes the connection.<br /><br />The default is 8388608 (8 MB).</p></td></tr><tr><td><p><strong>send_timeout</strong></p></td><td><p>Maximum number of seconds<br />to transmit data<br />as a response to the client.<br />This is the interval<br />between consecutive transmissions,<br />not the time for the entire response.<br />If no data<br />is sent to the client<br />within this interval,<br />Unit closes the connection.<br /><br />The default is 30.</p></td></tr><tr><td><p><strong>server_version</strong></p></td><td><p>Boolean;<br />if set to <strong>false</strong>,<br />Unit omits version information<br />in its <strong>Server</strong> response<br /><a href="https://datatracker.ietf.org/doc/html/rfc9110.html#section-10.2.4">header fields</a>.<br /><br />The default is <strong>true</strong>.</p></td></tr><tr><td><p><strong>static</strong></p></td><td><p>Object;<br />configures static asset handling.<br />Has a single object option named <strong>mime_types</strong><br />that defines specific<br /><a href="https://www.iana.org/assignments/media-types/media-types.xhtml">MIME types</a><br />as options.<br />Their values<br />can be strings or arrays of strings;<br />each string must specify a filename extension<br />or a specific filename<br />that’s included in the MIME type.<br />You can override default MIME types<br />or add new types:</p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p><code_block language="bash" hints={[{ number: "1", display_text: " path to control.unit.sock", tooltip: "path unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT -d '\{"text/x-code": [".c", ".h"]\}' NXT1 \\
         http://localhost/config/settings/http/static/mime_types
-\{       
+\{
     "success": "Reconfiguration done."
 \}
-`}</Code_Block><p>Defaults:<br /><strong>.aac</strong>, <strong>.apng</strong>, <strong>.atom</strong>,<br /><strong>.avi</strong>, <strong>.avif</strong>, <strong>avifs</strong>, <strong>.bin</strong>, <strong>.css</strong>,<br /><strong>.deb</strong>, <strong>.dll</strong>, <strong>.exe</strong>, <strong>.flac</strong>, <strong>.gif</strong>,<br /><strong>.htm</strong>, <strong>.html</strong>, <strong>.ico</strong>, <strong>.img</strong>, <strong>.iso</strong>,<br /><strong>.jpeg</strong>, <strong>.jpg</strong>, <strong>.js</strong>, <strong>.json</strong>, <strong>.md</strong>,<br /><strong>.mid</strong>, <strong>.midi</strong>, <strong>.mp3</strong>, <strong>.mp4</strong>, <strong>.mpeg</strong>,<br /><strong>.mpg</strong>, <strong>.msi</strong>, <strong>.ogg</strong>, <strong>.otf</strong>, <strong>.pdf</strong>,<br /><strong>.php</strong>, <strong>.png</strong>, <strong>.rpm</strong>, <strong>.rss</strong>, <strong>.rst</strong>,<br /><strong>.svg</strong>, <strong>.ttf</strong>, <strong>.txt</strong>, <strong>.wav</strong>, <strong>.webm</strong>,<br /><strong>.webp</strong>, <strong>.woff2</strong>, <strong>.woff</strong>, <strong>.xml</strong>, and<br /><strong>.zip</strong>.</p></td></tr></tbody></table>
+`}</code_block></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>Defaults:<br /><strong>.aac</strong>, <strong>.apng</strong>, <strong>.atom</strong>,<br /><strong>.avi</strong>, <strong>.avif</strong>, <strong>avifs</strong>, <strong>.bin</strong>, <strong>.css</strong>,<br /><strong>.deb</strong>, <strong>.dll</strong>, <strong>.exe</strong>, <strong>.flac</strong>, <strong>.gif</strong>,<br /><strong>.htm</strong>, <strong>.html</strong>, <strong>.ico</strong>, <strong>.img</strong>, <strong>.iso</strong>,<br /><strong>.jpeg</strong>, <strong>.jpg</strong>, <strong>.js</strong>, <strong>.json</strong>, <strong>.md</strong>,<br /><strong>.mid</strong>, <strong>.midi</strong>, <strong>.mp3</strong>, <strong>.mp4</strong>, <strong>.mpeg</strong>,<br /><strong>.mpg</strong>, <strong>.msi</strong>, <strong>.ogg</strong>, <strong>.otf</strong>, <strong>.pdf</strong>,<br /><strong>.php</strong>, <strong>.png</strong>, <strong>.rpm</strong>, <strong>.rss</strong>, <strong>.rst</strong>,<br /><strong>.svg</strong>, <strong>.ttf</strong>, <strong>.txt</strong>, <strong>.wav</strong>, <strong>.webm</strong>,<br /><strong>.webp</strong>, <strong>.woff2</strong>, <strong>.woff</strong>, <strong>.xml</strong>, and<br /><strong>.zip</strong>.</p></td></tr></tbody></table>
 
 ## Access log
 
@@ -2784,13 +2800,11 @@ To enable basic access logging, specify the log file path in the **access\_log**
 
 In the example below, all requests will be logged to **/var/log/access.log**:
 
-<Code_Block language="bash" hints={[{ number: "1", display_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt_type: "nxt_ph" }]}>{`# curl -X PUT -d '"/var/log/access.log"' \\
-       --unix-socket NXT1 \\
-       http://localhost/config/access_log
+&lt;Code\_Block language="bash" hints=\{\[\{ number: "1", display\_text: "/path/to/control.unit.sock", tooltip: "Path to Unit's control socket in your installation", nxt\_type: "nxt\_ph" \}\]\}&gt;\{\`# curl -X PUT -d '"/var/log/access.log"' \\ --unix-socket NXT1 \\ http://localhost/config/access\_log
 
-    {
-        "success": "Reconfiguration done."
-    }`}</Code_Block>
+```
+<span data-cms-snippet-type="inline" data-cms-snippet-id="4018f0f3-e94b-4f9d-9ad7-b851d75afb09" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxuICAgICAgICBcInN1Y2Nlc3NcIjogXCJSZWNvbmZpZ3VyYXRpb24gZG9uZS5cIlxuICAgICIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJcbiAgICAgICAgXCJzdWNjZXNzXCI6IFwiUmVjb25maWd1cmF0aW9uIGRvbmUuXCJcbiAgICAifV19fX0="></span>`}</Code_Block>
+```
 
 By default, the log is written in the [Combined Log Format](https://httpd.apache.org/docs/2.2/logs.html#combined). Example of a CLF line:
 
@@ -2806,23 +2820,13 @@ The **access\_log** option can be also set to an object to customize both the lo
 
 Example:
 
-<Code_Block language="json" hints={[]}>{`{
-    "access_log": {
-        "path": "/var/log/unit/access.log",
-        "format": "$remote_addr - - [$time_local] \"$request_line\" $status $body_bytes_sent \"$header_referer\" \"$header_user_agent\""
-    }
-}`}</Code_Block>
+&lt;Code\_Block language="json" hints=&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="e02e7625-07f3-4dd9-b4dc-79e73ae8b068" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxcW1xcXVxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcW1xcXVxcIn1dfX19"&gt;&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="db467af8-b5b7-48ee-aa93-738bd44acca8" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6ImB7ICAgICBcImFjY2Vzc19sb2dcIjogeyAgICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYWNjZXNzLmxvZ1wiLCAgICAgICAgIFwiZm9ybWF0XCI6IFwiJHJlbW90ZV9hZGRyIC0gLSBbJHRpbWVfbG9jYWxdIFxcXCIkcmVxdWVzdF9saW5lXFxcIiAkc3RhdHVzICRib2R5X2J5dGVzX3NlbnQgXFxcIiRoZWFkZXJfcmVmZXJlclxcXCIgXFxcIiRoZWFkZXJfdXNlcl9hZ2VudFxcXCJcIiAgICAgfSB9YFxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6ImB7ICAgICBcImFjY2Vzc19sb2dcIjogeyAgICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYWNjZXNzLmxvZ1wiLCAgICAgICAgIFwiZm9ybWF0XCI6IFwiJHJlbW90ZV9hZGRyIC0gLSBbJHRpbWVfbG9jYWxdIFxcXCIkcmVxdWVzdF9saW5lXFxcIiAkc3RhdHVzICRib2R5X2J5dGVzX3NlbnQgXFxcIiRoZWFkZXJfcmVmZXJlclxcXCIgXFxcIiRoZWFkZXJfdXNlcl9hZ2VudFxcXCJcIiAgICAgfSB9YFxcIn1dfX19"&gt;&lt;/Code\_Block&gt;
 
 By a neat coincidence, the above **format** is the default setting. Also, mind that the log entry is formed *after* the request has been handled.
 
 Besides [built-in variables](#configuration-variables-native), you can use **njs** [templates](scripting.md) to define the log format:
 
-<Code_Block language="json" hints={[]}>{`{
-    "access_log": {
-        "path": "/var/log/unit/basic_access.log",
-        "format": "\`$\{host + ': ' + uri\}\`"
-    }
-}`}</Code_Block>
+&lt;Code\_Block language="json" hints=&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="389dd149-b97e-4dc5-89ce-45c69ed8d167" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxcW1xcXVxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcW1xcXVxcIn1dfX19"&gt;&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="c516c572-980c-443f-9f36-b2a97ed5854b" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6ImB7ICAgICBcImFjY2Vzc19sb2dcIjogeyAgICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYmFzaWNfYWNjZXNzLmxvZ1wiLCAgICAgICAgIFwiZm9ybWF0XCI6IFwiXFxgJFxce2hvc3QgKyAnOiAnICsgdXJpXFx9XFxgXCIgXFx9IFxcfVxcYFxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6ImB7ICAgICBcImFjY2Vzc19sb2dcIjogeyAgICAgICAgIFwicGF0aFwiOiBcIi92YXIvbG9nL3VuaXQvYmFzaWNfYWNjZXNzLmxvZ1wiLCAgICAgICAgIFwiZm9ybWF0XCI6IFwiXFxgJFxcIn0seyJ0ZW1wbGF0ZSI6Imhvc3QgKyAnOiAnICsgdXJpXFwiLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiaG9zdCArICc6ICcgKyB1cmlcXCJ9XX19fSx7Il90eXBlIjoidGV4dCIsInRleHQiOiJcXGBcIiBcXH0gXFx9XFxgXFwifV19fX0="&gt;&lt;/Code\_Block&gt;
 
 ### Conditional access log
 
@@ -2834,31 +2838,16 @@ This feature lets users set conditions to determine whether access logs are reco
 
 Example without NJS:
 
-<Code_Block language="json" hints={[]}>{`{
-   "access_log": {
-      "if": "$cookie_session",
-      "path": "..."
-   }
-}`}</Code_Block>
+&lt;Code\_Block language="json" hints=&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="de32cd03-a5b7-490a-9684-ed028745478d" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxcW1xcXVxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcW1xcXVxcIn1dfX19"&gt;&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="36282777-4b9a-48ed-91b2-f94f783dd16d" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6ImB7ICAgIFwiYWNjZXNzX2xvZ1wiOiB7ICAgICAgIFwiaWZcIjogXCIkY29va2llX3Nlc3Npb25cIiwgICAgICAgXCJwYXRoXCI6IFwiLi4uXCIgICAgfSB9YFxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6ImB7ICAgIFwiYWNjZXNzX2xvZ1wiOiB7ICAgICAgIFwiaWZcIjogXCIkY29va2llX3Nlc3Npb25cIiwgICAgICAgXCJwYXRoXCI6IFwiLi4uXCIgICAgfSB9YFxcIn1dfX19"&gt;&lt;/Code\_Block&gt;
 
 All requests using a session cookie named **session** will be logged.
 
 We can add ! to inverse the condition.
 
-<Code_Block language="json" hints={[]}>{`{
-   "access_log": {
-      "if": "!$cookie_session",
-      "path": "..."
-   }
-}`}</Code_Block>
+&lt;Code\_Block language="json" hints=&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="73ffea7f-ee7d-4836-b993-0276ddf64aff" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxcW1xcXVxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcW1xcXVxcIn1dfX19"&gt;&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="c2a448ea-34a2-4459-919c-1df255225eb4" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6ImB7ICAgIFwiYWNjZXNzX2xvZ1wiOiB7ICAgICAgIFwiaWZcIjogXCIhJGNvb2tpZV9zZXNzaW9uXCIsICAgICAgIFwicGF0aFwiOiBcIi4uLlwiICAgIH0gfWBcXCIsIl9oaWRkZW4iOnRydWUsIl9zbmlwcGV0X3R5cGUiOiJfY2NfbWR4X3Vua25vd25fdGVtcGxhdGUiLCJfbWV0YSI6eyJ0ZW1wbGF0ZSI6eyJvcmlnaW5hbERhdGEiOlt7Il90eXBlIjoidGV4dCIsInRleHQiOiJgeyAgICBcImFjY2Vzc19sb2dcIjogeyAgICAgICBcImlmXCI6IFwiISRjb29raWVfc2Vzc2lvblwiLCAgICAgICBcInBhdGhcIjogXCIuLi5cIiAgICB9IH1gXFwifV19fX0="&gt;&lt;/Code\_Block&gt;
 
 Now, all requests without a session cookie will be logged.
 
 Example with NJS and the use of a template literal:
 
-<Code_Block language="json" hints={[]}>{`{
-   "access_log": {
-      "if": "\`$\{uri == '/health' ? false : true\}\`",
-      "path": "..."
-   }
-}`}</Code_Block>
+&lt;Code\_Block language="json" hints=&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="f617d517-0d02-461e-959f-a965d58444e1" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6IlxcW1xcXVxcIiwiX2hpZGRlbiI6dHJ1ZSwiX3NuaXBwZXRfdHlwZSI6Il9jY19tZHhfdW5rbm93bl90ZW1wbGF0ZSIsIl9tZXRhIjp7InRlbXBsYXRlIjp7Im9yaWdpbmFsRGF0YSI6W3siX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcW1xcXVxcIn1dfX19"&gt;&gt;&lt;span data-cms-snippet-type="inline" data-cms-snippet-id="b511d1ea-73e4-45bb-aa5e-20d524fe7edc" data-cms-snippet-data="eyJ0ZW1wbGF0ZSI6ImB7ICAgIFwiYWNjZXNzX2xvZ1wiOiB7ICAgICAgIFwiaWZcIjogXCJcXGAkXFx7dXJpID09ICcvaGVhbHRoJyA/IGZhbHNlIDogdHJ1ZVxcfVxcYFwiLCBcInBhdGhcIjogXCIuLi5cIiBcXH0gXFx9XFxgXFwiLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoiYHsgICAgXCJhY2Nlc3NfbG9nXCI6IHsgICAgICAgXCJpZlwiOiBcIlxcYCRcXCJ9LHsidGVtcGxhdGUiOiJ1cmkgPT0gJy9oZWFsdGgnID8gZmFsc2UgOiB0cnVlXFwiLCJfaGlkZGVuIjp0cnVlLCJfc25pcHBldF90eXBlIjoiX2NjX21keF91bmtub3duX3RlbXBsYXRlIiwiX21ldGEiOnsidGVtcGxhdGUiOnsib3JpZ2luYWxEYXRhIjpbeyJfdHlwZSI6InRleHQiLCJ0ZXh0IjoidXJpID09ICcvaGVhbHRoJyA/IGZhbHNlIDogdHJ1ZVxcIn1dfX19LHsiX3R5cGUiOiJ0ZXh0IiwidGV4dCI6IlxcYFwiLCBcInBhdGhcIjogXCIuLi5cIiBcXH0gXFx9XFxgXFwifV19fX0="&gt;&lt;/Code\_Block&gt;

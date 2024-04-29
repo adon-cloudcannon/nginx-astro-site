@@ -1,8 +1,15 @@
 ---
+import { parse_marked } from "@utils/nxt"
 const { type } = Astro.props
-const body = await Astro.slots.render('default')
+let body = await Astro.slots.render('default')
+body = body.replaceAll("&quot;",`"`)
+            .replaceAll("&amp;","&")
+            .replaceAll("&#39;","'")
+            .replaceAll("&lt;","<")
+            .replaceAll("&gt;",">")
+let parsed = parse_marked(body)
 ---
 <div class=`admonition ${type}`>
     { type && <p class="first admonition-title">{type}</p>}
-    <Fragment set:html={body}>
+    <Fragment set:html={parsed} />
 </div>

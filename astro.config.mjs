@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import markdoc from '@astrojs/markdoc';
 import AutoImport from 'astro-auto-import';
 
 // https://astro.build/config
@@ -15,7 +16,8 @@ export default defineConfig({
                 '@components/Tab.astro',
             ],
         }),
-        mdx()
+        mdx(),
+        markdoc()
     ],
 
     markdown: {

@@ -2180,9 +2180,6 @@ $ go env -w CGO_ENABLED=1`}</Code_Block>
 * If you installed Unit from [source](howto/source.md), install the include files and libraries:
 
 <Code_Block language="console" hints={[]}>{`# make libunit-install`}</Code_Block>
-</Dropdown>
-
-&nbsp;
 
 In the **import** section, list the **unit.nginx.org/go** package:
 
@@ -2227,6 +2224,7 @@ The resulting executable works as follows:
 
 * When you run it standalone, the **unit.ListenAndServe** call falls back to **http** functionality.
 * When Unit runs it, **unit.ListenAndServe** directly communicates with Unit’s router process, ignoring the address supplied as its first argument and relying on the [listener’s settings](#configuration-listeners) instead.
+</Dropdown>
 
 Next, configure the app on Unit; besides the [common options](#configuration-apps-common), you have:
 

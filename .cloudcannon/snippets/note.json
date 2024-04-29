@@ -1,5 +1,5 @@
 {
-      "snippet": "<Note type=[[type]]>\n[[body]]\n</Note>",
+      "snippet": "<Note type=[[type]]>[[body]]</Note>",
       "inline": false,
       "preview": {
         "text": [   

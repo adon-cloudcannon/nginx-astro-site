@@ -2115,8 +2115,7 @@ Is equivalent to the following (assuming **some\_user**’s EUID and EGID are bo
 The **limits** object controls request handling by the app process and has two integer options:
 
 <table><thead><tr><th><p>Option</p></th><th><p>Description</p></th></tr></thead><tbody><tr><td><p><strong>requests</strong></p></td><td><p>Integer; maximum number of requests an app process can serve. When the limit is reached, the process restarts; this mitigates possible memory leaks or other cumulative issues.</p></td></tr><tr><td><p><strong>timeout</strong></p></td><td><p>Integer; request timeout in seconds. If an app process exceeds it while handling a request, Unit cancels the request and returns a 503 “Service Unavailable” response to the client.</p><Note type="note">
-Now, Unit doesn’t detect freezes, so the hanging process stays on the app’s process pool.
-</Note></td></tr></tbody></table>
+Now, Unit doesn’t detect freezes, so the hanging process stays on the app’s process pool.</Note></td></tr></tbody></table>
 
 Example:
 

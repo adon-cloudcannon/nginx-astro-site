@@ -22,5 +22,6 @@ export default defineConfig({
 
     markdown: {
         syntaxHighlight: 'prism',
+        smartypants: false
       },
 });

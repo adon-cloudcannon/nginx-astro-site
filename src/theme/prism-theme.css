@@ -57,6 +57,11 @@ code[class*="language-"]::mozselection {
 }
 
 #content > .highlight > pre > code[class*="language-"],
+#content > table .highlight > pre > code[class*="language-"],
+#content > .admonition > .highlight > pre > code[class*="language-"],
+#content > .admonition > pre > code[class*="language-"],
+#content > details > .highlight > pre > code[class*="language-"],
+#content > details > pre > code[class*="language-"],
 #content > pre > code[class*="language-"]{
   white-space: pre;
 }

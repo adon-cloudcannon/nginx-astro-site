@@ -168,9 +168,8 @@ KEY2=$(openssl rand -base64 48)
 KEY3=$(openssl rand -base64 48)
 
 for SRV in $SERVERS; do
-&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket NXT2  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'
+    curl -X PUT -d '["$KEY1", "$KEY2", "$KEY3"]' --unix-socket NXT2  \\
+        'http://localhost/config/listeners/*:443/tls/session/tickets/'
 done`}</Code_Block>
 
 To add a new key on each server:
@@ -178,17 +177,17 @@ To add a new key on each server:
 <Code_Block language="shell" hints={[{ number: "1", display_text: "root", tooltip: "Assuming Unit runs as root on each server", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to the remote control socket", nxt_type: "nxt_ph" }]}>{`NEWKEY=$(openssl rand -base64 48)
 
 for SRV in $SERVERS; do
-&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X POST -d '"$NEWKEY"' --unix-socket NXT2  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/'"
+    ssh NXT1@$SRV  \\
+        curl -X POST -d '"$NEWKEY"' --unix-socket NXT2  \\
+            'http://localhost/config/listeners/*:443/tls/session/tickets/'"
 done`}</Code_Block>
 
 To delete the oldest key after adding the new one:
 
 <Code_Block language="shell" hints={[{ number: "1", display_text: "root", tooltip: "Assuming Unit runs as root on each server", nxt_type: "nxt_hint" }, { number: "2", display_text: "/path/to/control.unit.sock", tooltip: "Path to the remote control socket", nxt_type: "nxt_ph" }]}>{`for SRV in $SERVERS; do
-&nbsp;&nbsp;&nbsp;&nbsp;ssh NXT1@$SRV  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;curl -X DELETE --unix-socket NXT2  \\
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'http://localhost/config/listeners/*:443/tls/session/tickets/0'
+    ssh NXT1@$SRV  \\
+        curl -X DELETE --unix-socket NXT2  \\
+            'http://localhost/config/listeners/*:443/tls/session/tickets/0'
 done`}</Code_Block>
 
 This scheme enables safely sharing session ticket keys between individual Unit instances.
